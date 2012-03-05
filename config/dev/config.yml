@@ -1,0 +1,30 @@
+# development
+server:
+  host: 127.0.0.1
+  port: 4000
+  timezone: 'UTC'
+  cluster: false
+
+db:
+  db: forum.coke-dev
+  host: localhost
+  # optional, default: 27017
+  port : 27017
+  # optional
+  username :
+  # optional
+  password :
+  # optional, default: sessions
+  collection : sessions
+
+logs:
+  - sys
+  - request
+  - response
+  - error
+  - debug
+
+libs: []
+
+# libs that must run after server started
+started: []

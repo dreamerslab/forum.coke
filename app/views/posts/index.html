@@ -10,6 +10,12 @@
           UserId
         </th>
         <th nowrap="nowrap">
+          UserName
+        </th>
+        <th nowrap="nowrap">
+          UserAvatar
+        </th>
+        <th nowrap="nowrap">
           Title
         </th>
         <th nowrap="nowrap">
@@ -17,6 +23,9 @@
         </th>
         <th nowrap="nowrap">
           Tag
+        </th>
+        <th nowrap="nowrap">
+          Subscriber
         </th>
         <th nowrap="nowrap">
           ReadCount
@@ -37,6 +46,12 @@
           <?= post.user_id ?>
         </td>
         <td>
+          <?= post.user_name ?>
+        </td>
+        <td>
+          <?= post.user_avatar ?>
+        </td>
+        <td>
           <?= post.title ?>
         </td>
         <td>
@@ -44,6 +59,9 @@
         </td>
         <td>
           <?= post.tags ?>
+        </td>
+        <td>
+          <?= post.subscribers ?>
         </td>
         <td>
           <?= post.read_count ?>

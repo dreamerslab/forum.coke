@@ -14,9 +14,12 @@ var Model = {
 
   Post : new Schema({
     user_id : { type : ObjectId, required : true, index : true },
+    user_name : { type : String },
+    user_avatar : { type : String },
     title : { type : String },
     content : { type : String },
     tags : { type : Array },
+    subscribers : { type : Array },
     read_count : { type : Number },
     comment_count : { type : Number },
     created_at : { type : Number, 'default' : Date.now },

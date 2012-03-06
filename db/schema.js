@@ -6,7 +6,7 @@ var Model = {
 
   Comment : new Schema({
     user_id : { type : ObjectId, required : true, index : true },
-    post_id : { type : ObjectIds },
+    post_id : { type : ObjectId },
     content : { type : String },
     created_at : { type : Number, 'default' : Date.now },
     updated_at : { type : Number, 'default' : Date.now }

@@ -6,7 +6,7 @@ server:
   cluster: false
 
 db:
-  db: forum.coke-dev
+  db: forum_coke-dev
   host: localhost
   # optional, default: 27017
   port : 27017

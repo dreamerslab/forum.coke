@@ -4,6 +4,22 @@ var ObjectId = Schema.ObjectId;
 
 var Model = {
 
+  Notificationbackup : new Schema({
+    user_id : { type : ObjectId, required : true, index : true },
+    post_id : { type : ObjectId },
+    msg : { type : String },
+    created_at : { type : Number, 'default' : Date.now },
+    updated_at : { type : Number, 'default' : Date.now }
+  }),
+
+  Notification : new Schema({
+    user_id : { type : ObjectId, required : true, index : true },
+    post_id : { type : ObjectId },
+    msg : { type : String },
+    created_at : { type : Number, 'default' : Date.now },
+    updated_at : { type : Number, 'default' : Date.now }
+  }),
+
   Comment : new Schema({
     user_id : { type : ObjectId, required : true, index : true },
     post_id : { type : ObjectId },

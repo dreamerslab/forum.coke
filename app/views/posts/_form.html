@@ -1,0 +1,25 @@
+<input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
+<div class="form-row">
+  <label class="form-title" for="post[user_id]">UserId : </label>
+  <input class="text-input" type="text" name="post[user_id]" value="<?= it.val( it.post, 'user_id' ) ?>"/>
+</div>
+<div class="form-row">
+  <label class="form-title" for="post[title]">Title : </label>
+  <input class="text-input" type="text" name="post[title]" value="<?= it.val( it.post, 'title' ) ?>"/>
+</div>
+<div class="form-row">
+  <label class="form-title" for="post[content]">Content : </label>
+  <input class="text-input" type="text" name="post[content]" value="<?= it.val( it.post, 'content' ) ?>"/>
+</div>
+<div class="form-row">
+  <label class="form-title" for="post[tags]">Tag : </label>
+  <input class="text-input" type="text" name="post[tags]" value="<?= it.val( it.post, 'tags' ) ?>"/>
+</div>
+<div class="form-row">
+  <label class="form-title" for="post[read_count]">ReadCount : </label>
+  <input class="text-input" type="text" name="post[read_count]" value="<?= it.val( it.post, 'read_count' ) ?>"/>
+</div>
+<div class="form-row">
+  <label class="form-title" for="post[comment_count]">CommentCount : </label>
+  <input class="text-input" type="text" name="post[comment_count]" value="<?= it.val( it.post, 'comment_count' ) ?>"/>
+</div>

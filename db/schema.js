@@ -3,6 +3,17 @@ var Schema   = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var Model = {
+
+  User : new Schema({
+    name : { type : String, required : true, index : true },
+    email : { type : String },
+    avatar : { type : String },
+    rate : { type : Number },
+    post_count : { type : String },
+    comment_count : { type : String },
+    created_at : { type : Number, 'default' : Date.now },
+    updated_at : { type : Number, 'default' : Date.now }
+  })
 };
 
 

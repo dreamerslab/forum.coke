@@ -9,7 +9,10 @@
 - /forum/notifications
 
 ## Post controller
+- /forum/posts
 - /forum/posts/new
+- /forum/posts/:id
+- /forum/posts/:id/edit
 - /forum/posts/latest
 - /forum/posts/hot
 - /forum/posts/unsolved

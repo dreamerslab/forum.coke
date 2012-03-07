@@ -1,3 +1,6 @@
+var passport = require( 'passport' );
+var GoogleStrategy = require( 'passport-google-oauth' ).OAuth2Strategy;
+
 module.exports = function ( express, app, middleware ){
   app.configure( function (){
     app.set( 'views', BASE_DIR + 'app/views' );

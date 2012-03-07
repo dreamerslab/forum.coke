@@ -5,6 +5,8 @@
 - /users/signup
 - /users/signin
 - /users/signout
+- /auth/google (signin via OAuth2)
+- /auth/google/callback (signin callback)
 
 ## Notification controller
 - /notifications

@@ -16,6 +16,8 @@ module.exports = function ( express, app, middleware ){
     app.use( middleware.csrf( app, express ));
     app.use( middleware.req_log );
     app.use( express.methodOverride());
+    app.use( passport.initialize());
+    app.use( passport.session());
     app.use( app.router );
     app.use( middleware.validation );
     app.use( express.errorHandler({

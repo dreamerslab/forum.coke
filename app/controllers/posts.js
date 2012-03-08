@@ -104,4 +104,44 @@ module.exports = {
       _super.record_not_found( 'Post', req, res, err );
     });
   }
+
+  latest : function ( req, res, next ){
+    Post.latest( function ( err, posts ) {
+      if( err ){
+        next( err );
+        return;
+      }
+
+      res.render( 'posts/latest', {
+        posts : posts
+      });
+    });
+  }
+
+  hottest : function ( req, res, next ){
+    Post.hottest( function ( err, posts ) {
+      if( err ){
+        next( err );
+        return;
+      }
+
+      res.render( 'posts/hottest', {
+        posts : posts
+      });
+    });
+  }
+
+  unsolved : function ( req, res, next ){
+    Post.unsolved( function ( err, posts ) {
+      if( err ){
+        next( err );
+        return;
+      }
+
+      res.render( 'posts/unsolved', {
+        posts : posts
+      });
+    });
+  }
+
 };

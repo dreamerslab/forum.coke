@@ -13,7 +13,20 @@ Post.statics = {
     post.read_count = props.read_count;
     post.comment_count = props.comment_count;
     post.save( callback );
+  },
+
+  latest : function ( callback ){
+    Post.find().sort( 'updated_at', 'descending' ).run( callback );
+  },
+
+  hottest : function ( callback ){
+    Post.find().sort( 'read_count', 'descending' ).run( callback );
+  },
+
+  unsolved : function( callback ){
+    Post.find({ comment_count : 0}).run( callback );
   }
+
 };
 
 require( 'mongoose' ).model( 'Post', Post );

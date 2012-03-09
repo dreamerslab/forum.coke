@@ -16,15 +16,15 @@ Post.statics = {
   },
 
   latest : function ( callback ){
-    Post.find().sort( 'updated_at', 'descending' ).run( callback );
+    this.find().sort( 'updated_at', -1 ).run( callback );
   },
 
   hottest : function ( callback ){
-    Post.find().sort( 'read_count', 'descending' ).run( callback );
+    this.find().sort( 'read_count', -1 ).run( callback );
   },
 
   unsolved : function( callback ){
-    Post.find({ comment_count : 0}).run( callback );
+    this.find({ comment_count : 0}).run( callback );
   }
 
 };

@@ -112,37 +112,37 @@ module.exports = {
         return;
       }
 
-      res.render( 'posts/latest', {
+      res.render( 'posts/index', {
+        posts : posts
+      });
+    });
+  },
+
+  hottest : function ( req, res, next ){
+    Post.hottest( function ( err, posts ) {
+      if( err ){
+        next( err );
+        return;
+      }
+
+      res.render( 'posts/index', {
+        posts : posts
+      });
+    });
+  },
+
+  unsolved : function ( req, res, next ){
+    Post.unsolved( function ( err, posts ) {
+      if( err ){
+        next( err );
+        return;
+      }
+
+      res.render( 'posts/index', {
         posts : posts
       });
     });
   }
-
-  // hottest : function ( req, res, next ){
-  //   Post.hottest( function ( err, posts ) {
-  //     if( err ){
-  //       next( err );
-  //       return;
-  //     }
-
-  //     res.render( 'posts/hottest', {
-  //       posts : posts
-  //     });
-  //   });
-  // }
-
-  // unsolved : function ( req, res, next ){
-  //   Post.unsolved( function ( err, posts ) {
-  //     if( err ){
-  //       next( err );
-  //       return;
-  //     }
-
-  //     res.render( 'posts/unsolved', {
-  //       posts : posts
-  //     });
-  //   });
-  // }
 
 
 };

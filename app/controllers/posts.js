@@ -118,7 +118,7 @@ module.exports = {
     });
   },
 
-  hottest : function ( req, res, next ){
+  trending : function ( req, res, next ){
     Post.hottest( function ( err, posts ) {
       if( err ){
         next( err );

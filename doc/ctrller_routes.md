@@ -2,6 +2,7 @@
 
 ## User controller
 - /users
+- /users/:id/edit
 - /users/signup
 - /users/signin
 - /users/signout

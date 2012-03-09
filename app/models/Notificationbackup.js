@@ -1,3 +1,3 @@
-var Notificationbackup = require( BASE_DIR + 'db/schema' ).Notificationbackup;
+var NotificationBackup = require( BASE_DIR + 'db/schema' ).NotificationBackup;
 
-require( 'mongoose' ).model( 'Notificationbackup', Notificationbackup );
+require( 'mongoose' ).model( 'NotificationBackup', NotificationBackup );

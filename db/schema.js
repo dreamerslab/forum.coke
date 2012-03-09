@@ -4,56 +4,60 @@ var ObjectId = Schema.ObjectId;
 
 var Model = {
 
-  Notificationbackup : new Schema({
-    user_id : { type : ObjectId, required : true, index : true },
-    post_id : { type : ObjectId },
-    msg : { type : String },
+  NotificationBackup : new Schema({
+    user_id    : { type : ObjectId, required : true, index : true },
+    post_id    : { type : ObjectId },
+    msg        : { type : String },
     created_at : { type : Number, 'default' : Date.now },
     updated_at : { type : Number, 'default' : Date.now }
   }),
 
   Notification : new Schema({
-    user_id : { type : ObjectId, required : true, index : true },
-    post_id : { type : ObjectId },
-    msg : { type : String },
+    user_id    : { type : ObjectId, required : true, index : true },
+    post_id    : { type : ObjectId },
+    msg        : { type : String },
     created_at : { type : Number, 'default' : Date.now },
     updated_at : { type : Number, 'default' : Date.now }
   }),
 
   Comment : new Schema({
-    user_id : { type : ObjectId, required : true, index : true },
-    post_id : { type : ObjectId },
-    content : { type : String },
+    user_id    : { type : ObjectId, required : true, index : true },
+    post_id    : { type : ObjectId },
+    content    : { type : String },
     created_at : { type : Number, 'default' : Date.now },
     updated_at : { type : Number, 'default' : Date.now }
   }),
 
   Post : new Schema({
-    user_id : { type : ObjectId, required : true, index : true },
-    user_name : { type : String },
-    user_avatar : { type : String },
-    title : { type : String },
-    content : { type : String },
-    tags : { type : Array },
-    subscribers : { type : Array },
-    read_count : { type : Number },
+    user_id       : { type : ObjectId, required : true, index : true },
+    user_name     : { type : String },
+    user_avatar   : { type : String },
+    title         : { type : String },
+    content       : { type : String },
+    tags          : { type : Array },
+    subscribers   : { type : Array },
+    read_count    : { type : Number },
     comment_count : { type : Number },
-    created_at : { type : Number, 'default' : Date.now },
-    updated_at : { type : Number, 'default' : Date.now }
+    created_at    : { type : Number, 'default' : Date.now },
+    updated_at    : { type : Number, 'default' : Date.now }
   }),
 
   User : new Schema({
-    name : { type : String, required : true, index : true },
-    email : { type : String },
-    avatar : { type : String },
-    rate : { type : Number },
-    post_count : { type : String },
-    comment_count : { type : String },
-    created_at : { type : Number, 'default' : Date.now },
-    updated_at : { type : Number, 'default' : Date.now }
+    name    : { type : String, required : true, index : true },
+    email   : { type : String },
+    avatar  : { type : String },
+    rate    : { type : Number },
+    posts   : [ new Schema({
+      post_id       : { type : ObjectId },
+      title         : { type : String },
+      comment_count : { type : Number },
+      updated_at    : { type : Number, 'default' : Date.now }
+    })],
+    comment_count : { type : Number },
+    created_at    : { type : Number, 'default' : Date.now },
+    updated_at    : { type : Number, 'default' : Date.now }
   })
 };
-
 
 
 // auto update `updated_at` on save
@@ -65,7 +69,6 @@ Object.keys( Model ).forEach( function ( model ){
     });
   }
 });
-
 
 
 module.exports = Model;

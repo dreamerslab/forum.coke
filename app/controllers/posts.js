@@ -119,7 +119,7 @@ module.exports = {
   },
 
   trending : function ( req, res, next ){
-    Post.hottest( function ( err, posts ) {
+    Post.trending( function ( err, posts ) {
       if( err ){
         next( err );
         return;

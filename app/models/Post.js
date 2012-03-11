@@ -19,7 +19,7 @@ Post.statics = {
     this.find().sort( 'updated_at', -1 ).run( callback );
   },
 
-  hottest : function ( callback ){
+  trending : function ( callback ){
     this.find().sort( 'read_count', -1 ).run( callback );
   },
 

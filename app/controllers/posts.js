@@ -1,10 +1,8 @@
 var mongoose = require( 'mongoose' );
 var Post = mongoose.model( 'Post' );
-var _super = require( CONTROLLER_DIR + 'application' );
+var Application = require( CONTROLLER_DIR + 'application' );
 
-
-
-module.exports = {
+module.exports = Application.extend({
 
   'new' : function ( req, res, next ){
     res.render( 'posts/new' );
@@ -46,7 +44,8 @@ module.exports = {
         return;
       }
 
-      _super.record_not_found( 'Post', req, res, err );
+      req.msg = 'Post';
+      next( err );
     });
   },
 
@@ -60,7 +59,8 @@ module.exports = {
         return;
       }
 
-      _super.record_not_found( 'Post', req, res, err );
+      req.msg = 'Post';
+      next( err );
     });
   },
 
@@ -81,7 +81,8 @@ module.exports = {
         return;
       }
 
-      _super.record_not_found( 'Post', req, res, err );
+      req.msg = 'Post';
+      next( err );
     });
   },
 
@@ -101,7 +102,8 @@ module.exports = {
         return;
       }
 
-      _super.record_not_found( 'Post', req, res, err );
+      req.msg = 'Post';
+      next( err );
     });
   },
 
@@ -143,6 +145,4 @@ module.exports = {
       });
     });
   }
-
-
-};
+});

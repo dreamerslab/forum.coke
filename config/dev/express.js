@@ -22,7 +22,6 @@ module.exports = function ( express, app, middleware ){
     app.use( passport.initialize());
     app.use( passport.session());
     app.use( app.router );
-    app.use( middleware.validation );
     app.use( express.errorHandler({
       dumpExceptions : true,
       showStack : true

@@ -12,7 +12,7 @@ module.exports = function ( map ){
   map.resources( 'users' );
 
   // notifications controller
-  map.resources( 'notifications' );
+  // map.resources( 'notifications' );
 
   // posts and comments controller
   map.get( 'posts/latest', 'posts#latest' );

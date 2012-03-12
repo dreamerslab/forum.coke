@@ -1,10 +1,22 @@
-var mongoose = require( 'mongoose' );
-var User = mongoose.model( 'User' );
-var _super = require( CONTROLLER_DIR + 'application' );
+var mongoose    = require( 'mongoose' );
+var User        = mongoose.model( 'User' );
+var Application = require( CONTROLLER_DIR + 'application' );
 
+module.exports = Application.extend({
 
+  init : function ( before, after ){
+    after( this.validation, {
+      only : [ 'create', 'update' ]
+    });
 
-module.exports = {
+    after( this.unique, {
+      only : [ 'create', 'update' ]
+    });
+
+    after( this.record_not_found, {
+      except : [ 'new', 'create', 'index' ]
+    });
+  },
 
   'new' : function ( req, res, next ){
     res.render( 'users/new' );
@@ -46,7 +58,8 @@ module.exports = {
         return;
       }
 
-      _super.record_not_found( 'User', req, res, err );
+      req.msg = 'User';
+      next( err );
     });
   },
 
@@ -60,7 +73,8 @@ module.exports = {
         return;
       }
 
-      _super.record_not_found( 'User', req, res, err );
+      req.msg = 'User';
+      next( err );
     });
   },
 
@@ -81,7 +95,8 @@ module.exports = {
         return;
       }
 
-      _super.record_not_found( 'User', req, res, err );
+      req.msg = 'User';
+      next( err );
     });
   },
 
@@ -101,7 +116,8 @@ module.exports = {
         return;
       }
 
-      _super.record_not_found( 'User', req, res, err );
+      req.msg = 'User';
+      next( err );
     });
   }
-};
+});

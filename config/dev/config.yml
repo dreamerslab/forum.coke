@@ -24,7 +24,8 @@ logs:
   - error
   - debug
 
-libs: []
+libs:
+  - post_seed
 
 # libs that must run after server started
 started: []

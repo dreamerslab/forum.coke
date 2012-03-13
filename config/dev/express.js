@@ -1,6 +1,3 @@
-var passport = require( 'passport' );
-var GoogleStrategy = require( 'passport-google-oauth' ).OAuth2Strategy;
-
 module.exports = function ( express, app, middleware ){
   app.configure( function (){
     app.set( 'views', BASE_DIR + 'app/views' );
@@ -19,8 +16,6 @@ module.exports = function ( express, app, middleware ){
     app.use( middleware.csrf( app, express ));
     app.use( middleware.req_log );
     app.use( express.methodOverride());
-    app.use( passport.initialize());
-    app.use( passport.session());
     app.use( app.router );
     app.use( express.errorHandler({
       dumpExceptions : true,

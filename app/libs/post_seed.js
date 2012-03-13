@@ -5,18 +5,16 @@ var Post     = mongoose.model( 'Post' );
 var users    = [
   {
      name  : 'Ben Lin',
-     email :  'ben@dreamerslab.com'
+     email : 'ben@dreamerslab.com'
   } , {
      name  : 'Fred Chu',
-     email :  'fred@dreamerslab.com'
+     email : 'fred@dreamerslab.com'
   }, {
      name  : 'Mason Chang',
      email : 'mason@dreamerslab.com'
    }
 ];
 
-var i         = 0;
-var size      = 10;
 
 module.exports = {
   init : function (){
@@ -26,6 +24,8 @@ module.exports = {
 
         users.forEach( function ( u ){
           new User( u ).save( function ( err, user ){
+            var i    = 0;
+            var size = 10;
 
             for( i=0; i < size; i++ ){
               new Post({

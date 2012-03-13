@@ -1,5 +1,4 @@
 var mongoose    = require( 'mongoose' );
-var Objec
 var Post        = mongoose.model( 'Post' );
 var Application = require( CONTROLLER_DIR + 'application' );
 

@@ -1,0 +1,53 @@
+<? it.title = 'Listing users'; ?>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Id
+      </th>
+      <th>
+        Name
+      </th>
+      <th>
+        Email
+      </th>
+      <th>
+        Avatar
+      </th>
+      <th>
+        PostCount
+      </th>
+      <th>
+        CommentCount
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <? it.users.forEach( function ( user ){  ?>
+
+      <tr>
+        <td>
+          <?= user._id ?>
+        </td>
+        <td>
+          <?= user.name ?>
+        </td>
+        <td>
+          <?= user.email ?>
+        </td>
+        <td>
+          <?= user.avatar ?>
+        </td>
+        <td>
+          <?= user.post_count ?>
+        </td>
+        <td>
+          <?= user.comment_count ?>
+        </td>
+      </tr>
+
+    <? }); ?>
+  </tbody>
+</table>

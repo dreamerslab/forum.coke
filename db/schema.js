@@ -4,6 +4,22 @@ var ObjectId = Schema.ObjectId;
 
 var Model = {
 
+  User : new Schema({
+    name    : { type : String, required : true, index : true },
+    email   : { type : String },
+    avatar  : { type : String },
+    rate    : { type : Number },
+    posts   : [ new Schema({
+      post_id       : { type : ObjectId },
+      title         : { type : String },
+      comment_count : { type : Number },
+      updated_at    : { type : Number, 'default' : Date.now }
+    })],
+    comment_count : { type : Number },
+    created_at    : { type : Number, 'default' : Date.now },
+    updated_at    : { type : Number, 'default' : Date.now }
+  }),
+
   Post : new Schema({
     user_id       : { type : ObjectId, required : true, index : true },
     user_name     : { type : String },
@@ -17,6 +33,7 @@ var Model = {
     created_at    : { type : Number, 'default' : Date.now },
     updated_at    : { type : Number, 'default' : Date.now }
   })
+
 };
 
 

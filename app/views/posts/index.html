@@ -1,0 +1,56 @@
+<? it.title = 'Listing posts'; ?>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        UserName
+      </th>
+      <th>
+        Title
+      </th>
+      <th>
+        Content
+      </th>
+      <th>
+        ReadCount
+      </th>
+      <th>
+        CommentCount
+      </th>
+      <th>
+        UpdatedAt
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <? it.posts.forEach( function ( post ){  ?>
+
+      <tr>
+        <td>
+          <?= post.user_name ?>
+        </td>
+        <td>
+          <?= post.title ?>
+        </td>
+        <td>
+          <?= post.content ?>
+        </td>
+        <td>
+          <?= post.read_count ?>
+        </td>
+        <td>
+          <?= post.comment_count ?>
+        </td>
+        <td>
+          <?= post.updated_at ?>
+        </td>
+      </tr>
+
+    <? }); ?>
+  </tbody>
+</table>
+
+
+<a href="/posts/new">New post</a>

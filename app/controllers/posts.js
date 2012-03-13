@@ -45,5 +45,18 @@ module.exports = Application.extend({
     });
   },
 
+  unsolved : function ( req, res, next ){
+    Post.unsolved( function ( err, posts ){
+      if(err){
+        next( err );
+        return;
+      }
+
+      res.render( 'posts/index', {
+        posts : posts
+      });
+    });
+  },
+
 
 });

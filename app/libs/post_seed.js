@@ -13,8 +13,8 @@ module.exports = {
           user_name     : 'Mason Chang',
           title         : 'Title title title ' + i,
           content       : 'Content content content ' + i,
-          read_count    : parseInt( i / 10 ),
-          comment_count : parseInt( (99 - i) / 10 )
+          read_count    : Math.floor( Math.random() * 10 ),
+          comment_count : Math.floor( Math.random() * 10 )
         }).save();
       }
     });

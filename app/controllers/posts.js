@@ -32,5 +32,18 @@ module.exports = Application.extend({
     });
   },
 
+  trending : function ( req, res, next ){
+    Post.trending( function ( err, posts ){
+      if(err){
+        next( err );
+        return;
+      }
+
+      res.render( 'posts/index', {
+        posts : posts
+      });
+    });
+  },
+
 
 });

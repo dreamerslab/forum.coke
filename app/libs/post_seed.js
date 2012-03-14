@@ -27,7 +27,7 @@ module.exports = {
             var i    = 0;
             var size = 10;
 
-            for( i=0; i < size; i++ ){
+            for( ; i < size; i++ ){
               new Post({
                 user_id       : user._id,
                 user_name     : user.name,

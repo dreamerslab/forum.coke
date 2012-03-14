@@ -1,6 +1,7 @@
 var mongoose = require( 'mongoose' );
 var User     = mongoose.model( 'User' );
 var Post     = mongoose.model( 'Post' );
+var Comment  = mongoose.model( 'Comment' );
 
 var users    = [
   {
@@ -21,26 +22,47 @@ module.exports = {
 
     User.collection.drop( function (){
       Post.collection.drop( function (){
+        Comment.collection.drop( function (){
 
-        users.forEach( function ( u ){
-          new User( u ).save( function ( err, user ){
-            var i    = 0;
-            var size = 10;
+          users.forEach( function ( u ){
+            new User( u )
+            .save( function ( err, user ){
 
-            for( ; i < size; i++ ){
-              new Post({
-                user_id       : user._id,
-                user_name     : user.name,
-                title         : 'Title title title ' + i,
-                content       : 'Content content content ' + i,
-                read_count    : Math.floor( Math.random() * 10 ),
-                comment_count : Math.floor( Math.random() * 10 )
-              }).save();
-            }
+              var i     = 0;
+              var isize = 10;
+              for( ; i < isize; i++ ){
+                new Post({
+                  _user      : user._id,
+                  title      : 'Post title ' + i,
+                  content    : 'Post content blah blah... ' + i,
+                  read_count : Math.floor( Math.random() * 10 ),
+                })
+                .save( function ( err, post ){
 
+                  post.update_user( User );
+
+                  var j     = 0;
+                  var jsize = Math.floor( Math.random() * 10 );
+                  for( ; j < jsize; j++ ){
+                    new Comment({
+                      _user   : user._id,
+                      _post   : post._id,
+                      contnet : 'Comment content blah blah...'
+                    })
+                    .save( function ( err, comment ){
+
+                      comment.update_user( User );
+                      comment.update_post( Post );
+
+                    });
+                  }
+                });
+              }
+
+            });
           });
-        });
 
+        }); // end of drop Comment.collection
       }); // end of drop Post.collection
     }); // end of drop User.collection
 

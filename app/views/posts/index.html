@@ -29,7 +29,7 @@
 
       <tr>
         <td>
-          <?= post.user_name ?>
+          <?= post._user.name ?>
         </td>
         <td>
           <?= post.title ?>
@@ -41,7 +41,7 @@
           <?= post.read_count ?>
         </td>
         <td>
-          <?= post.comment_count ?>
+          <?= post.comments.length ?>
         </td>
         <td>
           <?= post.updated_at ?>

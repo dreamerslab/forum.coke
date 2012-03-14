@@ -25,7 +25,7 @@ logs:
   - debug
 
 libs:
-  - post_seed
+  - seed
 
 # libs that must run after server started
 started: []

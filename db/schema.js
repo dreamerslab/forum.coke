@@ -16,7 +16,7 @@ Model.User = new Schema({
 });
 
 Model.Post = new Schema({
-  _user       : { type : ObjectId, ref : 'User' },
+  _user       : { type : ObjectId, required : true, ref : 'User' },
   user_name   : { type : String },
   user_avatar : { type : String },
   title       : { type : String },
@@ -30,8 +30,8 @@ Model.Post = new Schema({
 });
 
 Model.Comment = new Schema({
-  _user       : { type : ObjectId, ref : 'User' },
-  _post       : { type : ObjectId, ref : 'Post' },
+  _user       : { type : ObjectId, required : true, ref : 'User' },
+  _post       : { type : ObjectId, required : true, ref : 'Post' },
   user_name   : { type : String },
   user_avatar : { type : String },
   content     : { type : String },

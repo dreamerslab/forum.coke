@@ -35,7 +35,6 @@ Post.methods = {
     .run( function ( err, user ){
       // Note: add err handling later
       user.posts.push( self );
-      user.post_count = user.posts.length;
       user.save( function ( err, user ){
         // callback && callback.call( self );
       });

@@ -32,7 +32,9 @@
           <?= post._user.name ?>
         </td>
         <td>
-          <?= post.title ?>
+          <a href="/posts/<?= post._id ?>">
+            <?= post.title ?>
+          </a>
         </td>
         <td>
           <?= post.content ?>

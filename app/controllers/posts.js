@@ -57,5 +57,22 @@ module.exports = Application.extend({
     });
   },
 
+  show : function ( req, res, next ){
+    Post.findById( req.params.id )
+    .populate( '_user' )
+    .populate( 'comments' )
+    .run( function ( err, post ){
+      if( post ){
+        res.render( 'posts/show', {
+          post : post
+        });
+        return;
+      }
+
+      req.msg = 'Post';
+      next( err );
+    });
+  },
+
 
 });

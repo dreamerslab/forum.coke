@@ -1,0 +1,23 @@
+<? it.title = 'Showing post'; ?>
+
+<div class="post-content">
+  <div>Author: <?= it.post._user.name ?></div>
+  <div>Avatar: <?= it.post._user.avatar ?></div>
+  <div>Tags: <?= it.post.tags ?></div>
+  <div>Title: <?= it.post.title ?></div>
+  <div>Content: <?= it.post.content ?></div>
+  <div>Modified: <?= new Date( it.post.updated_at ) ?></div>
+  <hr />
+  <div class="post-comments">
+    <? it.post.comments.forEach( function ( comment ){ ?>
+      <div>Author: <?= comment.user_name ?></div>
+      <div>Avatar: <?= comment.avatar ?></div>
+      <div>Content: <?= comment.content ?></div>
+      <div>Modified: <?= new Date( comment.updated_at ) ?></div>
+      <hr />
+    <? }); ?>
+  </div>
+</div>
+
+<a href="/posts/<?= it.post._id ?>/edit">Edit</a> |
+<a href="/posts">Back</a>

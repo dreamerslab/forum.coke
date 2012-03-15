@@ -33,8 +33,9 @@ module.exports = {
               for( ; i < isize; i++ ){
                 new Post({
                   _user      : user._id,
-                  title      : 'Post title ' + i,
-                  content    : 'Post content blah blah... ' + i,
+                  title      : 'Post title',
+                  content    : 'Post content blah blah...',
+                  tags       : [ 'tag1', 'tag2', 'tag3' ],
                   read_count : Math.floor( Math.random() * 10 ),
                 })
                 .save( function ( err, post ){

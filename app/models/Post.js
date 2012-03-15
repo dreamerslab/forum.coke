@@ -4,23 +4,21 @@ var Post = require( BASE_DIR + 'db/schema' ).Post;
 Post.statics = {
 
   latest : function ( callback ){
-    this.find()
-    .populate( '_user' )
-    .sort( 'updated_at', -1 )
-    .run( callback );
+    this.find().
+         sort( 'updated_at', -1 ).
+         run( callback );
   },
 
   trending : function ( callback ){
-    this.find()
-    .populate( '_user' )
-    .sort( 'read_count', -1 )
-    .run( callback );
+    this.find().
+         sort( 'read_count', -1 ).
+         run( callback );
   },
 
   unsolved : function( callback ){
-    this.find({ comment_count : 0})
-    .populate( '_user' )
-    .run( callback );
+    this.find().
+         size( 'comments', 0 ).
+         run( callback );
   }
 
 };

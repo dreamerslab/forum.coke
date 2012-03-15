@@ -30,16 +30,18 @@ Post.methods = {
 
   update_user : function ( User, callback ){
     var self = this;
-    User.findById( self._user )
-    .populate( 'posts' )
-    .run( function ( err, user ){
+    User.findById( self._user, function ( err, user ){
       // Note: add err handling later
       user.posts.push( self );
       user.save( function ( err, user ){
-        // callback && callback.call( self );
+        self.user_name   = user.name;
+        self.user_avatar = user.avatar;
+        self.save( function ( err, post ){
+          callback && callback.call( self );
+        });
       });
     });
-  },
+  }
 
 }
 

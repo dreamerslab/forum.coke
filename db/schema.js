@@ -17,6 +17,8 @@ Model.User = new Schema({
 
 Model.Post = new Schema({
   _user       : { type : ObjectId, ref : 'User' },
+  user_name   : { type : String },
+  user_avatar : { type : String },
   title       : { type : String },
   content     : { type : String },
   tags        : [{ type : String }],

@@ -8,6 +8,9 @@
         UserName
       </th>
       <th>
+        UserAvatar
+      </th>
+      <th>
         Title
       </th>
       <th>
@@ -29,7 +32,10 @@
 
       <tr>
         <td>
-          <?= post._user.name ?>
+          <?= post.user_name ?>
+        </td>
+        <td>
+          <?= post.user_avatar ?>
         </td>
         <td>
           <a href="/posts/<?= post._id ?>">

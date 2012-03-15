@@ -5,7 +5,6 @@ Comment.methods = {
 
   update_user : function ( User, callback ){
     var self = this;
-
     User.findById( self._user, function ( err, user ){
       // Note: add err handling later
       user.comments.push( self );
@@ -21,9 +20,7 @@ Comment.methods = {
 
   update_post : function ( Post, callback ){
     var self = this;
-    Post.findById( self._post )
-    .populate( 'comments' )
-    .run( function ( err, post ){
+    Post.findById( self._post, function ( err, post ){
       // Note: add err handling later
       post.comments.push( self );
       post.save( function ( err, post ){

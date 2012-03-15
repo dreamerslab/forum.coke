@@ -3,6 +3,13 @@ var Post = require( BASE_DIR + 'db/schema' ).Post;
 
 Post.statics = {
 
+  create_or_update : function ( post, props, callback ){
+    post.title = props.title;
+    post.content = props.content;
+    post.tags = props.tags;
+    post.save( callback );
+  },
+
   latest : function ( callback ){
     this.find().
          sort( 'updated_at', -1 ).

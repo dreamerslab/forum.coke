@@ -1,0 +1,13 @@
+<input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
+<div class="form-row">
+  <label class="form-title" for="post[title]">Title : </label>
+  <input class="text-input" type="text" name="post[title]" value="<?= it.val( it.post, 'title' ) ?>"/>
+</div>
+<div class="form-row">
+  <label class="form-title" for="post[content]">Content : </label>
+  <input class="text-input" type="text" name="post[content]" value="<?= it.val( it.post, 'content' ) ?>"/>
+</div>
+<div class="form-row">
+  <label class="form-title" for="post[tags]">Tag : </label>
+  <input class="text-input" type="textarea" name="post[tags]" value="<?= it.val( it.post, 'tags' ) ?>"/>
+</div>

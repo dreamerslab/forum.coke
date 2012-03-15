@@ -47,7 +47,7 @@ module.exports = {
                     new Comment({
                       _user   : user._id,
                       _post   : post._id,
-                      contnet : 'Comment content blah blah...'
+                      content : 'Comment content blah blah...'
                     })
                     .save( function ( err, comment ){
 

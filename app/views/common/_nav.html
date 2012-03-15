@@ -2,7 +2,17 @@
   <ul>
     <li>
       <h3>
-        <a class="<?= it.selected( 'home', it.nav_selected ) ?>" href="/">Home</a>
+        <a class="<?= it.selected( 'latest', it.nav_selected ) ?>" href="/posts/latest">Latest</a>
+      </h3>
+    </li>
+    <li>
+      <h3>
+        <a class="<?= it.selected( 'trending', it.nav_selected ) ?>" href="/posts/trending">Trending</a>
+      </h3>
+    </li>
+    <li>
+      <h3>
+        <a class="<?= it.selected( 'unsolved', it.nav_selected ) ?>" href="/posts/unsolved">Unsolved</a>
       </h3>
     </li>
   </ul>

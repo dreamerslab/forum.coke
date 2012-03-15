@@ -30,6 +30,8 @@ Model.Post = new Schema({
 Model.Comment = new Schema({
   _user       : { type : ObjectId, ref : 'User' },
   _post       : { type : ObjectId, ref : 'Post' },
+  user_name   : { type : String },
+  user_avatar : { type : String },
   content     : { type : String },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }

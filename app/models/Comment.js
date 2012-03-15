@@ -5,14 +5,16 @@ Comment.methods = {
 
   update_user : function ( User, callback ){
     var self = this;
-    User.findById( self._user )
-    .populate( 'comments' )
-    .run( function ( err, user ){
+
+    User.findById( self._user, function ( err, user ){
       // Note: add err handling later
       user.comments.push( self );
-      user.comment_count = user.comments.length;
       user.save( function ( err, user ){
-        // callback && callback.call( self );
+        self.user_name   = user.name;
+        self.user_avatar = user.avatar;
+        self.save( function ( err, comment ){
+          callback && callback.call( self );
+        });
       });
     });
   },
@@ -24,7 +26,6 @@ Comment.methods = {
     .run( function ( err, post ){
       // Note: add err handling later
       post.comments.push( self );
-      post.comment_count = post.comments.length;
       post.save( function ( err, post ){
         // callback && callback.call( self );
       });

@@ -26,6 +26,7 @@ logs:
 
 libs:
   - seed
+  - sidebar
 
 # libs that must run after server started
 started: []

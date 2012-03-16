@@ -4,11 +4,16 @@ var ObjectId = Schema.ObjectId;
 
 var Model = {};
 
+Model.Cache = new Schema({
+  name        : { type : String, required : true, index : true },
+  hash        : { type : Schema.Types.Mixed }
+});
+
 Model.User = new Schema({
   name        : { type : String, required : true, index : true },
   email       : { type : String },
   avatar      : { type : String },
-  rate        : { type : Number },
+  rating      : { type : Number },
   posts       : [{ type : ObjectId, ref : 'Post' }],
   comments    : [{ type : ObjectId, ref : 'Comment' }],
   created_at  : { type : Number, 'default' : Date.now },

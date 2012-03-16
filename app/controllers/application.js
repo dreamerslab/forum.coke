@@ -1,4 +1,6 @@
-var Class = require( 'resig-class' );
+var Class    = require( 'resig-class' );
+var mongoose = require( 'mongoose' );
+var Cache    = mongoose.model( 'Cache' );
 
 module.exports = Class.extend({
 
@@ -51,11 +53,10 @@ module.exports = Class.extend({
   },
 
   fill_sidebar : function ( req, res, next ){
-    req.sidebar = {
-      tags   : [ 'aaa', 'bbb', 'ccc' ],
-      users  : [ 'ben', 'fred', 'mason' ],
-      issues : [ 'ISSUEs on github' ]
-    };
+    Cache.findOne({ name : 'sidebar' }, function ( err, cache ){
+      console.log( cache.hash );
+      req.sidebar = cache.hash;
+    });
 
     next();
   }

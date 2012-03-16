@@ -6,6 +6,10 @@ var Application = require( CONTROLLER_DIR + 'application' );
 
 module.exports = Application.extend({
 
+  init : function ( before, after ){
+    before( this.fill_sidebar );
+  },
+
   index : function ( req, res, next ){
     res.redirect( '/posts/latest' );
     // Post.find( function ( err, posts ){
@@ -28,6 +32,7 @@ module.exports = Application.extend({
       }
 
       res.render( 'posts/index', {
+        sidebar      : req.sidebar,
         posts        : posts,
         nav_selected : 'latest'
       });
@@ -42,6 +47,7 @@ module.exports = Application.extend({
       }
 
       res.render( 'posts/index', {
+        sidebar      : req.sidebar,
         posts        : posts,
         nav_selected : 'trending'
       });
@@ -56,6 +62,7 @@ module.exports = Application.extend({
       }
 
       res.render( 'posts/index', {
+        sidebar      : req.sidebar,
         posts        : posts,
         nav_selected : 'unsolved'
       });
@@ -63,7 +70,9 @@ module.exports = Application.extend({
   },
 
   'new' : function ( req, res, next ){
-    res.render( 'posts/new' );
+    res.render( 'posts/new', {
+        sidebar : req.sidebar
+    });
   },
 
   create : function ( req, res, next ){
@@ -92,7 +101,8 @@ module.exports = Application.extend({
     .run( function ( err, post ){
       if( post ){
         res.render( 'posts/show', {
-          post : post
+          sidebar : req.sidebar,
+          post    : post
         });
         return;
       }
@@ -111,7 +121,8 @@ module.exports = Application.extend({
       }
 
       res.render( 'posts/edit', {
-        post : post
+        sidebar : req.sidebar,
+        post    : post
       });
     });
   },

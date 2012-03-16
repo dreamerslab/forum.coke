@@ -48,5 +48,17 @@ module.exports = Class.extend({
     }
 
     next( err );
+  },
+
+  fill_sidebar : function ( req, res, next ){
+    req.sidebar = {
+      tags   : [ 'aaa', 'bbb', 'ccc' ],
+      users  : [ 'ben', 'fred', 'mason' ],
+      issues : [ 'ISSUEs on github' ]
+    };
+
+    next();
   }
+
+
 });

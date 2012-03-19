@@ -30,6 +30,7 @@ module.exports = {
 
               var i     = 0;
               var isize = 10;
+
               for( ; i < isize; i++ ){
                 new Post({
                   _user      : user._id,
@@ -44,6 +45,7 @@ module.exports = {
 
                   var j     = 0;
                   var jsize = Math.floor( Math.random() * 10 );
+
                   for( ; j < jsize; j++ ){
                     new Comment({
                       _user   : user._id,

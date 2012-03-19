@@ -6,7 +6,7 @@ var Model = {};
 
 Model.Cache = new Schema({
   name        : { type : String, required : true, index : true },
-  hash        : { type : Schema.Types.Mixed }
+  trunk       : { type : Schema.Types.Mixed }
 });
 
 Model.User = new Schema({

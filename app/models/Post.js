@@ -33,17 +33,19 @@ Post.statics = {
 
 Post.methods = {
 
-  update_user : function ( User, callback ){
+  update_user : function ( user, callback ){
     var self = this;
-    User.findById( self._user, function ( err, user ){
-      // Note: add err handling later
-      user.posts.push( self );
-      user.save( function ( err, user ){
-        self.user_name   = user.name;
-        self.user_avatar = user.avatar;
-        self.save( function ( err, post ){
-          callback && callback.call( self );
-        });
+
+    user.posts.push( this );
+    user.save( function ( err, user ){
+      if( err ){
+        console.log( err.message );
+      }
+
+      self.user_name   = user.name;
+      self.user_avatar = user.avatar;
+      self.save( function ( err, post ){
+        callback && callback();
       });
     });
   }

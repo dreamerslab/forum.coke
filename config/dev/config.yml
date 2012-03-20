@@ -25,7 +25,7 @@ logs:
   - debug
 
 libs:
-  - seed
+  - background
 
 # libs that must run after server started
 started: []

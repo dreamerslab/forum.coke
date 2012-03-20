@@ -1,45 +1,53 @@
+var Flow     = require( 'node.flow' );
 var mongoose = require( 'mongoose' );
-var Cache    = mongoose.model( 'Cache' );
 var User     = mongoose.model( 'User' );
 var Post     = mongoose.model( 'Post' );
+var Cache    = mongoose.model( 'Cache' );
+var flow     = new Flow();
 
-var fill_sidebar = function (){
-  var sidebar      = {};
-  var cache_tags   = []; // tags
-  var cache_users  = []; // users
-  var cache_issues = []; // issues
 
-  Cache.findOne({ name : 'sidebar' }, function ( err, cache ){
-    // Note: add error handling later
-    if( cache ){
-      cache = cache;
-    } else {
-      cache = new Cache({ name : 'sidebar', objects : {}});
-    }
+module.exports = {
+  init : function ( callback ){
+    var cache        = {};
+    var trunk_tags   = [];
+    var trunk_users  = [];
+    var trunk_issues = [];
 
-    User.find().sort( 'rating', -1 ).limit( 5 ).run( function ( err, users ){
-      users.forEach( function ( user ){
-        cache_users.push({
-          name   : user.name,
-          avatar : user.avatar,
-          link   : '/users/' + user._id
+    flow.series( function( next ){
+      Cache.findOne({ name : 'sidebar' }, function( err, cache ){
+        if(cache){
+          cache = cache;
+        }else{
+          cache = new Cache({ name : 'sidebar', trunk : {}});
+        }
+
+        User.find().sort( 'rating', -1 ).limit( 20 ).run( function ( err, users ){
+          users.forEach( function( user ){
+            // console.log( "user : ", user.name );
+            trunk_users.push({
+              name   : user.name,
+              avatar : user.avatar,
+              link   : '/users/' + user._id
+            });
+          });
+
+          cache.trunk = {
+            tags   : trunk_tags,
+            users  : trunk_users,
+            issues : trunk_issues
+          };
+
+          cache.save( function ( err, cache ){
+            next();
+          });
+
         });
-
-        cache.hash = {
-          tags   : cache_tags,
-          users  : cache_users,
-          issues : cache_issues
-        };
-        cache.save();
       });
     });
 
-  });
-};
+    flow.end( function (){
+      callback && callback();
+    });
 
-module.exports = {
-  init : function(){
-
-    fill_sidebar();
   }
-}
+};

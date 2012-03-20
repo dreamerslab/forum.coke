@@ -1,6 +1,7 @@
 module.exports = function ( map ){
 
   map.get( 'users', 'users#index' );
+  map.get( 'users/:id', 'users#show' );
 
   map.get( 'posts/latest', 'posts#latest' );
   map.get( 'posts/trending', 'posts#trending' );

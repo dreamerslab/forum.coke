@@ -29,13 +29,6 @@ module.exports = {
             Comment.collection.drop( function (){
               Cache.collection.drop( function (){
                 next();
-                // new Cache({
-                //   name  : 'sidebar',
-                //   trunk : {
-                //     tags   : [],
-                //     users  : [],
-                //     issues : []}
-                // }).save( next());
               }); // end of drop Cache.collection
             }); // end of drop Comment.collection
           }); // end of drop Post.collection

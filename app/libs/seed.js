@@ -8,22 +8,19 @@ var flow     = new Flow();
 
 module.exports = {
 
-  users : [
-    {
-       name  : 'Ben Lin',
-       email : 'ben@dreamerslab.com'
-    } , {
-       name  : 'Fred Chu',
-       email : 'fred@dreamerslab.com'
-    }, {
-       name  : 'Mason Chang',
-       email : 'mason@dreamerslab.com'
-     }
-  ],
-
-
-  init : function (){
-    var self = this;
+  init : function ( callback ){
+    var users = [
+      {
+         name  : 'Ben Lin',
+         email : 'ben@dreamerslab.com'
+      } , {
+         name  : 'Fred Chu',
+         email : 'fred@dreamerslab.com'
+      }, {
+         name  : 'Mason Chang',
+         email : 'mason@dreamerslab.com'
+       }
+    ]
 
     // clearing all collections
     flow.series( function( next ){
@@ -31,13 +28,14 @@ module.exports = {
           Post.collection.drop( function (){
             Comment.collection.drop( function (){
               Cache.collection.drop( function (){
-                new Cache({
-                  name  : 'sidebar',
-                  trunk : {
-                    tags   : [],
-                    users  : [],
-                    issues : []}
-                }).save( next());
+                next();
+                // new Cache({
+                //   name  : 'sidebar',
+                //   trunk : {
+                //     tags   : [],
+                //     users  : [],
+                //     issues : []}
+                // }).save( next());
               }); // end of drop Cache.collection
             }); // end of drop Comment.collection
           }); // end of drop Post.collection
@@ -45,7 +43,7 @@ module.exports = {
     });
 
     // creating users
-    this.users.forEach( function ( user ){
+    users.forEach( function ( user ){
       flow.parallel( function ( user, ready ){
         new User( user ).save( function ( err, user ){
           ready();
@@ -56,7 +54,7 @@ module.exports = {
     flow.join();
 
     // creating posts
-    var i = 60;
+    var i = 30;
 
     for( ; i--; ){
       flow.parallel( function ( ready ){
@@ -84,7 +82,7 @@ module.exports = {
     flow.join();
 
     // create comments
-    var j = 200;
+    var j = 100;
 
     for( ; j--; ){
       flow.parallel( function ( ready ){
@@ -117,7 +115,7 @@ module.exports = {
     flow.join();
 
     flow.end( function (){
-      console.log( 'finished' );
+      callback && callback();
     });
   }
 

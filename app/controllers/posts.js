@@ -69,14 +69,14 @@ module.exports = Application.extend({
     // Note: should replace this user by session user later
     User.findOne( function ( err, user ){
 
-      Post.create_or_update( new Post( { _user : user._id }), req.body.post,
+      Post.create_or_update( new Post( { user_id : user._id }), req.body.post,
         function ( err, post ){
           if( err ){
             next( err );
             return;
           }
 
-          post.update_user( User );
+          post.update_user( user );
           req.flash( 'flash-info', 'Post created' );
           res.redirect( '/posts/' + post._id );
         });

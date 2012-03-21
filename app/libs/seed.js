@@ -64,7 +64,7 @@ module.exports = {
             read_count : Math.floor( Math.random() * 10 ),
           }).save( function ( err, post ){
 
-            post.update_user( user, function (){
+            post.add_to_user( user, function (){
               ready();
             });
           });
@@ -94,8 +94,8 @@ module.exports = {
               post_id : post._id,
               content : 'Comment content blah blah...'
             }).save( function ( err, comment ){
-              comment.update_user( user, function (){
-                comment.update_post( post, function (){
+              comment.add_to_user( user, function (){
+                comment.add_to_post( post, function (){
                   ready();
                 });
               });

@@ -33,7 +33,7 @@ Post.statics = {
 
 Post.methods = {
 
-  update_user : function ( user, callback ){
+  add_to_user : function ( user, callback ){
     var self = this;
 
     user.post_ids.push( this._id );

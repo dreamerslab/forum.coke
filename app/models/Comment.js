@@ -3,7 +3,7 @@ var Comment = require( BASE_DIR + 'db/schema' ).Comment;
 
 Comment.methods = {
 
-  update_user : function ( user, callback ){
+  add_to_user : function ( user, callback ){
     var self = this;
 
     user.comment_ids.push( this._id );
@@ -15,7 +15,7 @@ Comment.methods = {
     });
   },
 
-  update_post : function ( post, callback ){
+  add_to_post : function ( post, callback ){
     post.comment_ids.push( this._id );
     post.save( function ( err, post ){
       callback && callback();

@@ -76,7 +76,7 @@ module.exports = Application.extend({
             return;
           }
 
-          post.update_user( user );
+          post.add_to_user( user );
           req.flash( 'flash-info', 'Post created' );
           res.redirect( '/posts/' + post._id );
         });

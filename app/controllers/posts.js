@@ -125,16 +125,15 @@ module.exports = Application.extend({
         return;
       }
 
-      Post.create_or_update( post, req.body.post,
-        function ( err, post ){
-          if( err ){
-            next( err );
-            return;
-          }
+      Post.create_or_update( post, req.body.post, function ( err, post ){
+        if( err ){
+          next( err );
+          return;
+        }
 
-          req.flash( 'flash-info', 'Post updated' );
-          res.redirect( '/posts/' + post._id );
-        });
+        req.flash( 'flash-info', 'Post updated' );
+        res.redirect( '/posts/' + post._id );
+      });
     });
   },
 

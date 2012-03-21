@@ -23,12 +23,7 @@ module.exports = {
 
         User.find().sort( 'rating', -1 ).limit( 20 ).run( function ( err, users ){
           users.forEach( function( user ){
-            // console.log( "user : ", user.name );
-            trunk_users.push({
-              name   : user.name,
-              avatar : user.avatar,
-              link   : '/users/' + user._id
-            });
+            trunk_users.push( user.obj_attrs());
           });
 
           cache.trunk = {

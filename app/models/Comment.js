@@ -6,10 +6,9 @@ Comment.methods = {
   update_user : function ( user, callback ){
     var self = this;
 
-    user.comments.push( this );
+    user.comment_ids.push( this._id );
     user.save( function ( err, user ){
-      self.user_name = user.name;
-      self.user_avatar = user.avatar;
+      self.user = user.obj_attrs();
       self.save( function ( err, comment ){
         callback && callback();
       });
@@ -17,12 +16,11 @@ Comment.methods = {
   },
 
   update_post : function ( post, callback ){
-    post.comments.push( this );
+    post.comment_ids.push( this._id );
     post.save( function ( err, post ){
       callback && callback();
     });
   },
-
 
 };
 

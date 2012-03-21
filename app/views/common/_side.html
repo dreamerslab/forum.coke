@@ -1,20 +1,20 @@
 <div class="sidebar">
   <div class="tags">
     <b>All Tags:</b>
-    <? it.sidebar.tags.forEach(function ( tag ){ ?>
+    <? it.sidebar.tags.forEach( function ( tag ){ ?>
       <a href="<?= tag.name ?>"><?= tag.link ?></a>
     <? }); ?>
   </div>
   <div class="users">
     <b>All User:</b>
-    <? it.sidebar.users.forEach(function ( user ){ ?>
-      <a href="<?=user.link ?>"><?= user.name ?></a>
+    <? it.sidebar.users.forEach( function ( user ){ ?>
+      <a href="/users/<?= user._id ?>"><?= user.name ?></a>
     <? }); ?>
   </div>
   <div class="issues">
     <b>All Issues:</b>
-    <? it.sidebar.issues.forEach(function ( issue ){ ?>
-      <a href="<?=issue.link ?>"><?= issue.name ?></a>
+    <? it.sidebar.issues.forEach( function ( issue ){ ?>
+      <a href="<?= issue.link ?>"><?= issue.name ?></a>
     <? }); ?>
   </div>
 </div>

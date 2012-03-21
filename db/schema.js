@@ -14,31 +14,29 @@ Model.User = new Schema({
   email       : { type : String },
   avatar      : { type : String },
   rating      : { type : Number },
-  posts       : [{ type : ObjectId, ref : 'Post' }],
-  comments    : [{ type : ObjectId, ref : 'Comment' }],
+  post_ids    : [{ type : ObjectId, ref : 'Post' }],
+  comment_ids : [{ type : ObjectId, ref : 'Comment' }],
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
 });
 
 Model.Post = new Schema({
-  _user       : { type : ObjectId, required : true, ref : 'User' },
-  user_name   : { type : String },
-  user_avatar : { type : String },
+  user        : { type : Schema.Types.Mixed },
+  user_id     : { type : ObjectId, required : true, ref : 'User' },
   title       : { type : String },
   content     : { type : String },
   tags        : [{ type : String }],
   read_count  : { type : Number, 'default' : 0 },
   subscribers : [{ type : ObjectId, ref : 'User' }],
-  comments    : [{ type : ObjectId, ref : 'Comment' }],
+  comment_ids : [{ type : ObjectId, ref : 'Comment' }],
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
 });
 
 Model.Comment = new Schema({
-  _user       : { type : ObjectId, required : true, ref : 'User' },
-  _post       : { type : ObjectId, required : true, ref : 'Post' },
-  user_name   : { type : String },
-  user_avatar : { type : String },
+  user        : { type : Schema.Types.Mixed },
+  user_id     : { type : ObjectId, required : true, ref : 'User' },
+  post_id     : { type : ObjectId, required : true, ref : 'Post' },
   content     : { type : String },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }

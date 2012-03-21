@@ -12,16 +12,6 @@ module.exports = Application.extend({
 
   index : function ( req, res, next ){
     res.redirect( '/posts/latest' );
-    // Post.find( function ( err, posts ){
-    //   if( err ){
-    //     next( err );
-    //     return;
-    //   }
-
-    //   res.render( 'posts/index', {
-    //     posts : posts
-    //   });
-    // });
   },
 
   latest : function ( req, res, next ){
@@ -71,7 +61,7 @@ module.exports = Application.extend({
 
   'new' : function ( req, res, next ){
     res.render( 'posts/new', {
-        sidebar : req.sidebar
+      sidebar : req.sidebar
     });
   },
 
@@ -96,8 +86,8 @@ module.exports = Application.extend({
 
   show : function ( req, res, next ){
     Post.findById( req.params.id )
-    .populate( '_user' )
-    .populate( 'comments' )
+    .populate( 'user_id' )
+    .populate( 'comment_ids' )
     .run( function ( err, post ){
       if( post ){
         res.render( 'posts/show', {

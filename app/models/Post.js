@@ -24,7 +24,7 @@ Post.statics = {
 
   unsolved : function( callback ){
     this.find().
-         size( 'comments', 0 ).
+         size( 'comment_ids', 0 ).
          run( callback );
   }
 
@@ -36,14 +36,12 @@ Post.methods = {
   update_user : function ( user, callback ){
     var self = this;
 
-    user.posts.push( this );
+    user.post_ids.push( this._id );
     user.save( function ( err, user ){
       if( err ){
         console.log( err.message );
       }
-
-      self.user_name   = user.name;
-      self.user_avatar = user.avatar;
+      self.user = user.obj_attrs();
       self.save( function ( err, post ){
         callback && callback();
       });

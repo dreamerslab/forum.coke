@@ -57,7 +57,7 @@ module.exports = {
           var user = users[ Math.floor( Math.random() * umax )];
 
           new Post({
-            _user      : user._id,
+            user_id    : user._id,
             title      : 'Post title',
             content    : 'Post content blah blah...',
             tags       : [ 'tag1', 'tag2', 'tag3' ],
@@ -90,8 +90,8 @@ module.exports = {
             var post = posts[ Math.floor( Math.random() * pmax )];
 
             new Comment({
-              _user   : user._id,
-              _post   : post._id,
+              user_id : user._id,
+              post_id : post._id,
               content : 'Comment content blah blah...'
             }).save( function ( err, comment ){
               comment.update_user( user, function (){

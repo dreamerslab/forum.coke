@@ -2,6 +2,7 @@ var mongoose = require( 'mongoose' );
 var User     = mongoose.model( 'User' );
 var Post     = mongoose.model( 'Post' );
 var Comment  = mongoose.model( 'Comment' );
+var Tag      = mongoose.model( 'Tag' );
 var Cache    = mongoose.model( 'Cache' );
 var Flow     = require( 'node.flow' );
 var flow     = new Flow();
@@ -22,7 +23,6 @@ var random_post = function (){
   return {
     title      : Faker.Lorem.sentence(),
     content    : Faker.Lorem.paragraphs( random( 3 )),
-    tag_names  : Faker.Lorem.words( random( 5 )),
     read_count : random( 10 )
   };
 };
@@ -71,10 +71,12 @@ module.exports = {
       flow.parallel( function ( ready ){
         User.find( function ( err, users ){
           // get a random user
-          var user = users[ random( users.length )];
-          var post = random_post();
+          var user   = users[ random( users.length )];
+          var post   = random_post();
+          var string = Faker.Lorem.words( random( 5 )).join(', ');
 
-          post.user_id = user._id;
+          post.user_id   = user._id;
+          post.tag_names = Tag.extract_names( string );
           new Post( post ).save( function ( err, post ){
             post.add_to_user( user, function (){
               ready();

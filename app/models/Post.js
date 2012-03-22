@@ -99,7 +99,6 @@ Post.methods = {
 
         flow.parallel( function ( name, ready ){
           Tag.findOne({ name : name }, function ( err, tag ){
-
             if( tag ){
               self.tag_ids.push( tag._id );
               self.add_to_tag( tag, function ( err, tag ){
@@ -107,14 +106,12 @@ Post.methods = {
               });
             }else{
               new Tag({ name : name }).save( function ( err, tag ){
-                console.log( tag._id );
                 self.tag_ids.push( tag._id );
                 self.add_to_tag( tag, function ( err, tag ){
                   ready();
                 });
               });
             }
-
           });
         }, name );
 
@@ -131,7 +128,6 @@ Post.methods = {
     });
 
     flow.end( function (){
-       console.log( 'Tags updated!' );
     });
   }
 }

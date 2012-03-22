@@ -39,15 +39,17 @@ module.exports = {
 
     // clearing all collections
     flow.series( function( next ){
-        User.collection.drop( function (){
-          Post.collection.drop( function (){
-            Comment.collection.drop( function (){
-              Cache.collection.drop( function (){
+      User.collection.drop( function (){
+        Post.collection.drop( function (){
+          Comment.collection.drop( function (){
+            Cache.collection.drop( function (){
+              Tag.collection.drop( function (){
                 next();
-              }); // end of drop Cache.collection
-            }); // end of drop Comment.collection
-          }); // end of drop Post.collection
-        }); // end of drop User.collection
+              }); // end of drop Tap.collection
+            }); // end of drop Cache.collection
+          }); // end of drop Comment.collection
+        }); // end of drop Post.collection
+      }); // end of drop User.collection
     });
 
     // creating users
@@ -78,6 +80,7 @@ module.exports = {
           post.user_id   = user._id;
           post.tag_names = Tag.extract_names( string );
           new Post( post ).save( function ( err, post ){
+            post.update_tags( Tag ); // async but no callback
             post.add_to_user( user, function (){
               ready();
             });

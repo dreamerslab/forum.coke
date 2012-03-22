@@ -25,10 +25,11 @@ Model.Post = new Schema({
   user_id     : { type : ObjectId, required : true, ref : 'User' },
   title       : { type : String },
   content     : { type : String },
+  tag_names   : [{ type : String}],
   tags        : [{ type : Schema.Types.Mixed }],
-  read_count  : { type : Number, 'default' : 0 },
   subscribers : [{ type : ObjectId, ref : 'User' }],
   comment_ids : [{ type : ObjectId, ref : 'Comment' }],
+  read_count  : { type : Number, 'default' : 0 },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
 });

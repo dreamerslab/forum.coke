@@ -1,26 +1,41 @@
-var Flow     = require( 'node.flow' );
 var mongoose = require( 'mongoose' );
 var User     = mongoose.model( 'User' );
 var Post     = mongoose.model( 'Post' );
 var Comment  = mongoose.model( 'Comment' );
 var Cache    = mongoose.model( 'Cache' );
+var Flow     = require( 'node.flow' );
 var flow     = new Flow();
+var Faker    = require( 'faker' );
+
+var random = function ( max ){
+  return Faker.Helpers.randomNumber( max );
+};
+
+var random_user = function (){
+  return {
+    name  : Faker.Name.findName(),
+    email : Faker.Internet.email(),
+  };
+};
+
+var random_post = function (){
+  return {
+    title      : Faker.Lorem.sentence(),
+    content    : Faker.Lorem.paragraphs( random( 3 )),
+    tag_names  : Faker.Lorem.words( random( 5 )),
+    read_count : random( 10 )
+  };
+};
+
+var random_comment = function(){
+  return {
+    content : Faker.Lorem.paragraphs( random( 3 )),
+  };
+};
 
 module.exports = {
 
   init : function ( callback ){
-    var users = [
-      {
-         name  : 'Ben Lin',
-         email : 'ben@dreamerslab.com'
-      } , {
-         name  : 'Fred Chu',
-         email : 'fred@dreamerslab.com'
-      }, {
-         name  : 'Mason Chang',
-         email : 'mason@dreamerslab.com'
-       }
-    ]
 
     // clearing all collections
     flow.series( function( next ){
@@ -36,33 +51,31 @@ module.exports = {
     });
 
     // creating users
-    users.forEach( function ( user ){
-      flow.parallel( function ( user, ready ){
+    var i = 5;
+
+    for( ; i--; ){
+      flow.parallel( function ( ready ){
+        var user = random_user();
         new User( user ).save( function ( err, user ){
           ready();
         });
-      }, user );
-    });
+      });
+    }
 
     flow.join();
 
     // creating posts
-    var i = 30;
+    var j = 50;
 
-    for( ; i--; ){
+    for( ; j--; ){
       flow.parallel( function ( ready ){
         User.find( function ( err, users ){
           // get a random user
-          var umax = users.length;
-          var user = users[ Math.floor( Math.random() * umax )];
+          var user = users[ random( users.length )];
+          var post = random_post();
+          post.user_id = user._id;
 
-          new Post({
-            user_id    : user._id,
-            title      : 'Post title',
-            content    : 'Post content blah blah...',
-            tags       : [ 'tag1', 'tag2', 'tag3' ],
-            read_count : Math.floor( Math.random() * 10 ),
-          }).save( function ( err, post ){
+          new Post( post ).save( function ( err, post ){
 
             post.add_to_user( user, function (){
               ready();
@@ -75,25 +88,22 @@ module.exports = {
     flow.join();
 
     // create comments
-    var j = 100;
+    var k = 100;
 
-    for( ; j--; ){
+    for( ; k--; ){
       flow.parallel( function ( ready ){
         User.find( function ( err, users ){
           // get a random user
-          var umax = users.length;
-          var user = users[ Math.floor( Math.random() * umax )];
+          var user = users[ random( users.length )];
 
           Post.find( function ( err, posts ){
             // get a random post
-            var pmax = posts.length;
-            var post = posts[ Math.floor( Math.random() * pmax )];
+            var post = posts[ random( posts.length )];
+            var comment = random_comment();
+            comment.user_id = user._id;
+            comment.post_id = post._id;
 
-            new Comment({
-              user_id : user._id,
-              post_id : post._id,
-              content : 'Comment content blah blah...'
-            }).save( function ( err, comment ){
+            new Comment( comment ).save( function ( err, comment ){
               comment.add_to_user( user, function (){
                 comment.add_to_post( post, function (){
                   ready();

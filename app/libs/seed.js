@@ -73,10 +73,9 @@ module.exports = {
           // get a random user
           var user = users[ random( users.length )];
           var post = random_post();
+
           post.user_id = user._id;
-
           new Post( post ).save( function ( err, post ){
-
             post.add_to_user( user, function (){
               ready();
             });
@@ -98,11 +97,11 @@ module.exports = {
 
           Post.find( function ( err, posts ){
             // get a random post
-            var post = posts[ random( posts.length )];
+            var post    = posts[ random( posts.length )];
             var comment = random_comment();
+
             comment.user_id = user._id;
             comment.post_id = post._id;
-
             new Comment( comment ).save( function ( err, comment ){
               comment.add_to_user( user, function (){
                 comment.add_to_post( post, function (){

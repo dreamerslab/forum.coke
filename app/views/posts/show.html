@@ -7,7 +7,7 @@
     </a>
  </div>
   <div>Avatar: <?= it.post.user.avatar ?></div>
-  <div>Tags: <?= it.post.tags ?></div>
+  <div>Tags: <?= it.post.tag_names.join(', ') ?></div>
   <div>Title: <?= it.post.title ?></div>
   <div>Content: <?= it.post.content ?></div>
   <div>Modified: <?= new Date( it.post.updated_at ) ?></div>

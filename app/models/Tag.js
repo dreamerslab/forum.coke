@@ -20,4 +20,13 @@ Tag.statics = {
   }
 };
 
+Tag.methods = {
+  obj_attrs : function (){
+    return {
+      _id  : this._id,
+      name : this.name
+    };
+  }
+};
+
 require( 'mongoose' ).model( 'Tag', Tag );

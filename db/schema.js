@@ -44,7 +44,7 @@ Model.Comment = new Schema({
 });
 
 Model.Tag = new Schema({
-  name        : { type : String, required : true, index : true },
+  name        : { type : String, required : true, index : { unique : true, dropDups : true }},
   posts       : [{ type : ObjectId, ref : 'Post' }]
 });
 

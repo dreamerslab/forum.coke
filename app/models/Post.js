@@ -27,8 +27,8 @@ Post.statics = {
          size( 'comment_ids', 0 ).
          run( callback );
   }
-
 };
+
 
 
 Post.methods = {
@@ -41,6 +41,7 @@ Post.methods = {
       if( err ){
         console.log( err.message );
       }
+
       self.user = user.obj_attrs();
       self.save( function ( err, post ){
         callback && callback();
@@ -64,6 +65,7 @@ Post.methods = {
     if( idx !== -1 ){
       tag.post_ids.splice( idx, 1 );
     }
+
     tag.save( function ( err, tag ){
       callback && callback( err, tag );
     });
@@ -79,7 +81,7 @@ Post.methods = {
         flow.parallel( function( tag_id, ready ){
           Tag.findById( tag_id, function ( err, tag ){
            self.remove_from_tag( tag, function ( err, tag ){
-              ready();
+             ready();
            });
          });
         }, tag_id );
@@ -90,7 +92,7 @@ Post.methods = {
 
     flow.series( function ( next ){
       self.tag_ids = [];
-         next();
+        next();
     });
 
     // add new tags
@@ -98,14 +100,18 @@ Post.methods = {
       this.tag_names.forEach( function( name ){
 
         flow.parallel( function ( name, ready ){
-          Tag.findOne({ name : name }, function ( err, tag ){
+          Tag.findOne({
+            name : name
+          }, function ( err, tag ){
             if( tag ){
               self.tag_ids.push( tag._id );
               self.add_to_tag( tag, function ( err, tag ){
                 ready();
               });
             }else{
-              new Tag({ name : name }).save( function ( err, tag ){
+              new Tag({
+                name : name
+              }).save( function ( err, tag ){
                 self.tag_ids.push( tag._id );
                 self.add_to_tag( tag, function ( err, tag ){
                   ready();

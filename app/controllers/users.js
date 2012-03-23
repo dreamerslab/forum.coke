@@ -23,8 +23,7 @@ module.exports = Application.extend({
   },
 
   show : function ( req, res, next ){
-
-    User.findOne({ _id : req.params.id }, function ( err, user ){
+    User.findById( req.params.id, function ( err, user ){
       if( err ){
         next( err );
         return;

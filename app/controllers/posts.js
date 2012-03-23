@@ -1,6 +1,7 @@
 var mongoose    = require( 'mongoose' );
 var User        = mongoose.model( 'User' );
 var Post        = mongoose.model( 'Post' );
+var Tag         = mongoose.model( 'Tag' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
 
@@ -16,7 +17,7 @@ module.exports = Application.extend({
 
   latest : function ( req, res, next ){
     Post.latest( function ( err, posts ){
-      if(err){
+      if( err ){
         next( err );
         return;
       }
@@ -31,7 +32,7 @@ module.exports = Application.extend({
 
   trending : function ( req, res, next ){
     Post.trending( function ( err, posts ){
-      if(err){
+      if( err ){
         next( err );
         return;
       }
@@ -46,7 +47,7 @@ module.exports = Application.extend({
 
   unsolved : function ( req, res, next ){
     Post.unsolved( function ( err, posts ){
-      if(err){
+      if( err ){
         next( err );
         return;
       }
@@ -69,7 +70,9 @@ module.exports = Application.extend({
     // Note: should replace this user by session user later
     User.findOne( function ( err, user ){
 
-      Post.create_or_update( new Post( { user_id : user._id }), req.body.post,
+      Post.create_or_update( new Post({
+        user_id : user._id
+      }), req.body.post,
         function ( err, post ){
           if( err ){
             next( err );
@@ -80,26 +83,25 @@ module.exports = Application.extend({
           req.flash( 'flash-info', 'Post created' );
           res.redirect( '/posts/' + post._id );
         });
-
     });
   },
 
   show : function ( req, res, next ){
-    Post.findById( req.params.id )
-    .populate( 'user_id' )
-    .populate( 'comment_ids' )
-    .run( function ( err, post ){
-      if( post ){
-        res.render( 'posts/show', {
-          sidebar : req.sidebar,
-          post    : post
-        });
-        return;
-      }
+    Post.findById( req.params.id ).
+         populate( 'user_id' ).
+         populate( 'comment_ids' ).
+         run( function ( err, post ){
+           if( post ){
+             res.render( 'posts/show', {
+               sidebar : req.sidebar,
+               post    : post
+             });
+             return;
+           }
 
-      req.msg = 'Post';
-      next( err );
-    });
+           req.msg = 'Post';
+           next( err );
+         });
   },
 
   edit : function ( req, res, next ){

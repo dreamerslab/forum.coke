@@ -132,19 +132,30 @@ module.exports = Application.extend({
         return;
       }
 
-      post.title     = req.body.title;
-      post.content   = req.body.content;
-      post.tag_names = Tag.extract_names( post.tag_names );
-
+      post.title     = req.body.post.title;
+      post.content   = req.body.post.content;
+      post.tag_names = Tag.extract_names( req.body.post.tag_names );
       post.save( function ( err, post ){
         if( err ){
           next( err );
           return;
         }
 
+        post.update_tags( Tag );
         req.flash( 'flash-info', 'Post updated' );
         res.redirect( '/posts/' + post._id );
       });
+    });
+  },
+
+  tags : function ( req, res, next ){
+    Tag.find().sort( 'name', 1 ).run( function ( err, tags ){
+
+      res.render( 'posts/tags', {
+        sidebar : req.sidebar,
+        tags    : tags
+      });
+
     });
   },
 

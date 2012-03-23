@@ -2,12 +2,13 @@ var Flow     = require( 'node.flow' );
 var mongoose = require( 'mongoose' );
 var User     = mongoose.model( 'User' );
 var Post     = mongoose.model( 'Post' );
+var Tag      = mongoose.model( 'Tag' );
 var Cache    = mongoose.model( 'Cache' );
-var flow     = new Flow();
 
 
 module.exports = {
   init : function ( callback ){
+    var flow         = new Flow();
     var cache        = {};
     var trunk_tags   = [];
     var trunk_users  = [];
@@ -41,6 +42,7 @@ module.exports = {
     });
 
     flow.end( function (){
+      console.log( 'sidebar updated!' );
       callback && callback();
     });
 

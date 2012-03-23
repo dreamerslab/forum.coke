@@ -99,14 +99,14 @@ Post.methods = {
     if( this.tag_names.length !== 0 ){
       this.tag_names.forEach( function( name ){
 
-        flow.parallel( function ( name, ready ){
+        flow.series( function( name, next ){
           Tag.findOne({
             name : name
           }, function ( err, tag ){
             if( tag ){
               self.tags.push( tag._id );
               self.add_to_tag( tag, function ( err, tag ){
-                ready();
+                next();
               });
             }else{
               new Tag({
@@ -114,7 +114,7 @@ Post.methods = {
               }).save( function ( err, tag ){
                 self.tags.push( tag._id );
                 self.add_to_tag( tag, function ( err, tag ){
-                  ready();
+                  next();
                 });
               });
             }
@@ -123,7 +123,6 @@ Post.methods = {
 
       });
 
-      flow.join();
     }
 
     // save the current post
@@ -134,6 +133,7 @@ Post.methods = {
     });
 
     flow.end( function (){
+      callback && callback();
     });
   }
 }

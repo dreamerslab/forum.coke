@@ -122,6 +122,7 @@ module.exports = {
     flow.join();
 
     flow.end( function (){
+      console.log( 'seed filled!' );
       callback && callback();
     });
   }

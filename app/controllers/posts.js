@@ -71,7 +71,7 @@ module.exports = Application.extend({
     User.findOne( function ( err, user ){
 
       Post.create_or_update( new Post({
-        user_id : user._id
+        user : user
       }), req.body.post,
         function ( err, post ){
           if( err ){
@@ -88,8 +88,8 @@ module.exports = Application.extend({
 
   show : function ( req, res, next ){
     Post.findById( req.params.id ).
-         populate( 'user_id' ).
-         populate( 'comment_ids' ).
+         populate( 'user' ).
+         populate( 'comments' ).
          run( function ( err, post ){
            if( post ){
              res.render( 'posts/show', {

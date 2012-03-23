@@ -2,25 +2,25 @@
 
 <div class="post-content">
   <div>Post Author:
-    <a href="/users/<?= it.post.user._id ;?>">
-      <?= it.post.user.name ?>
+    <a href="/users/<?= it.post.as_user._id ;?>">
+      <?= it.post.as_user.name ?>
     </a>
  </div>
-  <div>Avatar: <?= it.post.user.avatar ?></div>
+  <div>Avatar: <?= it.post.as_user.avatar ?></div>
   <div>Tags: <?= it.post.tag_names.join(', ') ?></div>
   <div>Title: <?= it.post.title ?></div>
   <div>Content: <?= it.post.content ?></div>
   <div>Modified: <?= new Date( it.post.updated_at ) ?></div>
   <hr />
   <div class="post-comments">
-    <? it.post.comment_ids.forEach( function ( comment ){ ?>
+    <? it.post.comments.forEach( function ( comment ){ ?>
       <div>
         Commentor:
-        <a href="/users/<?= comment.user._id ;?>">
-          <?= comment.user.name ?>
+        <a href="/users/<?= comment.as_user._id ;?>">
+          <?= comment.as_user.name ?>
         </a>
       </div>
-      <div>Avatar: <?= comment.user.avatar ?></div>
+      <div>Avatar: <?= comment.as_user.avatar ?></div>
       <div>Content: <?= comment.content ?></div>
       <div>Modified: <?= new Date( comment.updated_at ) ?></div>
       <hr />

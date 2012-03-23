@@ -77,7 +77,7 @@ module.exports = {
           var post   = random_post();
           var string = Faker.Lorem.words( random( 5 )).join(', ');
 
-          post.user_id   = user._id;
+          post.user      = user;
           post.tag_names = Tag.extract_names( string );
           new Post( post ).save( function ( err, post ){
             post.update_tags( Tag ); // async but no callback
@@ -105,8 +105,8 @@ module.exports = {
             var post    = posts[ random( posts.length )];
             var comment = random_comment();
 
-            comment.user_id = user._id;
-            comment.post_id = post._id;
+            comment.user = user;
+            comment.post = post;
             new Comment( comment ).save( function ( err, comment ){
               comment.add_to_user( user, function (){
                 comment.add_to_post( post, function (){

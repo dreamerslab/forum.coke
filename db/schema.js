@@ -14,30 +14,30 @@ Model.User = new Schema({
   email       : { type : String },
   avatar      : { type : String },
   rating      : { type : Number },
-  post_ids    : [{ type : ObjectId, ref : 'Post' }],
-  comment_ids : [{ type : ObjectId, ref : 'Comment' }],
+  posts       : [{ type : ObjectId, ref : 'Post' }],
+  comments    : [{ type : ObjectId, ref : 'Comment' }],
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
 });
 
 Model.Post = new Schema({
-  user        : { type : Schema.Types.Mixed },
-  user_id     : { type : ObjectId, required : true, ref : 'User' },
+  user        : { type : ObjectId, required : true, ref : 'User' },
+  as_user     : { type : Schema.Types.Mixed },
   title       : { type : String },
   content     : { type : String },
   tag_names   : [{ type : String}],
-  tag_ids     : [{ type : ObjectId, ref : 'Tag' }],
+  tags        : [{ type : ObjectId, ref : 'Tag' }],
   subscribers : [{ type : ObjectId, ref : 'User' }],
-  comment_ids : [{ type : ObjectId, ref : 'Comment' }],
+  comments    : [{ type : ObjectId, ref : 'Comment' }],
   read_count  : { type : Number, 'default' : 0 },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
 });
 
 Model.Comment = new Schema({
-  user        : { type : Schema.Types.Mixed },
-  user_id     : { type : ObjectId, required : true, ref : 'User' },
-  post_id     : { type : ObjectId, required : true, ref : 'Post' },
+  user        : { type : ObjectId, required : true, ref : 'User' },
+  as_user     : { type : Schema.Types.Mixed },
+  post        : { type : ObjectId, required : true, ref : 'Post' },
   content     : { type : String },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
@@ -45,7 +45,7 @@ Model.Comment = new Schema({
 
 Model.Tag = new Schema({
   name        : { type : String, required : true, index : true },
-  post_ids    : [{ type : ObjectId, ref : 'Post' }]
+  posts       : [{ type : ObjectId, ref : 'Post' }]
 });
 
 

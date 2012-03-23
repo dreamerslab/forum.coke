@@ -24,7 +24,7 @@ Post.statics = {
 
   unsolved : function( callback ){
     this.find().
-         size( 'comment_ids', 0 ).
+         size( 'comments', 0 ).
          run( callback );
   }
 };
@@ -36,13 +36,13 @@ Post.methods = {
   add_to_user : function ( user, callback ){
     var self = this;
 
-    user.post_ids.push( this._id );
+    user.posts.push( this );
     user.save( function ( err, user ){
       if( err ){
         console.log( err.message );
       }
 
-      self.user = user.obj_attrs();
+      self.as_user = user.obj_attrs();
       self.save( function ( err, post ){
         callback && callback();
       });
@@ -52,7 +52,7 @@ Post.methods = {
   add_to_tag : function ( tag, callback ){
     var self = this;
 
-    tag.post_ids.push( this._id );
+    tag.posts.push( this );
     tag.save( function ( err, tag){
       callback && callback( err, tag );
     });
@@ -60,10 +60,10 @@ Post.methods = {
 
   remove_from_tag : function ( tag, callback ){
     var self = this;
-    var idx  = tag.post_ids.indexOf( this._id );
+    var idx  = tag.posts.indexOf( this._id );
 
     if( idx !== -1 ){
-      tag.post_ids.splice( idx, 1 );
+      tag.posts.splice( idx, 1 );
     }
 
     tag.save( function ( err, tag ){
@@ -76,8 +76,8 @@ Post.methods = {
     var flow = new Flow();
 
     // clear previous tags
-    if( this.tag_ids.length !== 0 ){
-      this.tag_ids.forEach( function ( tag_id ){
+    if( this.tags.length !== 0 ){
+      this.tags.forEach( function ( tag_id ){
         flow.parallel( function( tag_id, ready ){
           Tag.findById( tag_id, function ( err, tag ){
            self.remove_from_tag( tag, function ( err, tag ){
@@ -91,7 +91,7 @@ Post.methods = {
     }
 
     flow.series( function ( next ){
-      self.tag_ids = [];
+      self.tags = [];
         next();
     });
 
@@ -104,7 +104,7 @@ Post.methods = {
             name : name
           }, function ( err, tag ){
             if( tag ){
-              self.tag_ids.push( tag._id );
+              self.tags.push( tag._id );
               self.add_to_tag( tag, function ( err, tag ){
                 ready();
               });
@@ -112,7 +112,7 @@ Post.methods = {
               new Tag({
                 name : name
               }).save( function ( err, tag ){
-                self.tag_ids.push( tag._id );
+                self.tags.push( tag._id );
                 self.add_to_tag( tag, function ( err, tag ){
                   ready();
                 });

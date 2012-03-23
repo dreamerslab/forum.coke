@@ -6,9 +6,9 @@ Comment.methods = {
   add_to_user : function ( user, callback ){
     var self = this;
 
-    user.comment_ids.push( this._id );
+    user.comments.push( this._id );
     user.save( function ( err, user ){
-      self.user = user.obj_attrs();
+      self.as_user = user.obj_attrs();
       self.save( function ( err, comment ){
         callback && callback();
       });
@@ -16,7 +16,7 @@ Comment.methods = {
   },
 
   add_to_post : function ( post, callback ){
-    post.comment_ids.push( this._id );
+    post.comments.push( this );
     post.save( function ( err, post ){
       callback && callback();
     });

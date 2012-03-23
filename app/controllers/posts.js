@@ -70,15 +70,20 @@ module.exports = Application.extend({
     // Note: should replace this user by session user later
     User.findOne( function ( err, user ){
 
-      Post.create_or_update( new Post({
-        user : user
-      }), req.body.post,
-        function ( err, post ){
+      var post = new Post({
+        user      : user,
+        title     : req.body.post.title,
+        content   : req.body.post.content,
+        tag_names : Tag.extract_names( req.body.post.tag_names )
+      });
+
+      post.save( function ( err, post ){
           if( err ){
             next( err );
             return;
           }
 
+          post.update_tags( Tag );
           post.add_to_user( user );
           req.flash( 'flash-info', 'Post created' );
           res.redirect( '/posts/' + post._id );
@@ -127,7 +132,11 @@ module.exports = Application.extend({
         return;
       }
 
-      Post.create_or_update( post, req.body.post, function ( err, post ){
+      post.title     = req.body.title;
+      post.content   = req.body.content;
+      post.tag_names = Tag.extract_names( post.tag_names );
+
+      post.save( function ( err, post ){
         if( err ){
           next( err );
           return;

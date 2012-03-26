@@ -2,7 +2,7 @@
   <div class="tags">
     <b>Hot Tags:</b>
     <? it.sidebar.tags.forEach( function ( tag ){ ?>
-      <a href="/tag?name=<?= tag.name ?>"><?= tag.name ?></a>
+      <a href="/posts/tag?name=<?= tag.name ?>"><?= tag.name ?></a>
       (<?= tag.post_count ?>)
     <? }); ?>
     <a href="/posts/tags">... more tags</a>

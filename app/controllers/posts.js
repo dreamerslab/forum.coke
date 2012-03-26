@@ -60,6 +60,25 @@ module.exports = Application.extend({
     });
   },
 
+  tag : function ( req, res, next ){
+    Post.
+      find().
+      where( 'tag_names' ).
+      in([ req.query.name ]).
+      run( function ( err, posts ){
+        if( err ){
+          next( err );
+          return;
+        }
+
+        res.render( 'posts/index', {
+          sidebar      : req.sidebar,
+          posts        : posts,
+          nav_selected : 'unsolved'
+        });
+    });
+  },
+
   'new' : function ( req, res, next ){
     res.render( 'posts/new', {
       sidebar : req.sidebar

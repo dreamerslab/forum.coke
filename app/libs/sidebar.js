@@ -5,7 +5,6 @@ var Post     = mongoose.model( 'Post' );
 var Tag      = mongoose.model( 'Tag' );
 var Cache    = mongoose.model( 'Cache' );
 
-
 module.exports = {
   init : function ( callback ){
     var flow         = new Flow();
@@ -14,29 +13,48 @@ module.exports = {
     var trunk_users  = [];
     var trunk_issues = [];
 
+    flow.series( function ( next ){
+      Tag.
+        find().
+        sort( 'post_count', -1 ).
+        limit( 20 ).
+        run( function ( err, tags ){
+          tags.forEach( function ( tag ){
+            trunk_tags.push( tag.obj_attrs());
+          });
+          next();
+        });
+    });
+
     flow.series( function( next ){
+      User.
+        find().
+        sort( 'rating', -1 ).
+        limit( 20 ).
+        run( function ( err, users ){
+          users.forEach( function( user ){
+            trunk_users.push( user.obj_attrs());
+          });
+          next();
+        });
+    });
+
+    flow.series( function ( next ){
       Cache.findOne({ name : 'sidebar' }, function( err, cache ){
-        if(cache){
+        if( cache ){
           cache = cache;
         }else{
           cache = new Cache({ name : 'sidebar', trunk : {}});
         }
 
-        User.find().sort( 'rating', -1 ).limit( 20 ).run( function ( err, users ){
-          users.forEach( function( user ){
-            trunk_users.push( user.obj_attrs());
-          });
+        cache.trunk = {
+          tags   : trunk_tags,
+          users  : trunk_users,
+          issues : trunk_issues
+        };
 
-          cache.trunk = {
-            tags   : trunk_tags,
-            users  : trunk_users,
-            issues : trunk_issues
-          };
-
-          cache.save( function ( err, cache ){
-            next();
-          });
-
+        cache.save( function ( err, cache ){
+          next();
         });
       });
     });

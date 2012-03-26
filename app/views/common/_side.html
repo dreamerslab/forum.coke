@@ -2,7 +2,8 @@
   <div class="tags">
     <b>All Tags:</b>
     <? it.sidebar.tags.forEach( function ( tag ){ ?>
-      <a href="<?= tag.name ?>"><?= tag.link ?></a>
+      <a href="/tag?name=<?= tag.name ?>"><?= tag.name ?></a>
+      (<?= tag.post_count ?>)
     <? }); ?>
   </div>
   <div class="users">

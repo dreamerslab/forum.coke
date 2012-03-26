@@ -23,8 +23,9 @@ Tag.statics = {
 Tag.methods = {
   obj_attrs : function (){
     return {
-      _id  : this._id,
-      name : this.name
+      _id        : this._id,
+      name       : this.name,
+      post_count : this.post_count
     };
   }
 };

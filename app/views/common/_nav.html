@@ -16,4 +16,18 @@
       </h3>
     </li>
   </ul>
+
+  <div class="search">
+    <form action="/posts/search" method="GET" accept-charset="UTF-8" >
+      <input type="hidden" name="_method" value="get" />
+      <div id="table">
+        <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
+        <div class="form-row">
+          <label class="form-title" for="keywords">Keywords : </label>
+          <input class="text-input" type="text" name="keywords" value=""/>
+        </div>
+      </div>
+      <input class="submit-link" type="submit" value="Search post" /> |
+    </form>
+  </div>
 </nav>

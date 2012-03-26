@@ -54,7 +54,7 @@ module.exports = Class.extend({
 
   fill_sidebar : function ( req, res, next ){
     Cache.findOne({ name : 'sidebar' }, function ( err, cache ){
-      console.log( cache.trunk );
+      // console.log( cache.trunk );
       req.sidebar = cache.trunk;
       next();
     });

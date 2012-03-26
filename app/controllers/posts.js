@@ -74,9 +74,32 @@ module.exports = Application.extend({
         res.render( 'posts/index', {
           sidebar      : req.sidebar,
           posts        : posts,
-          nav_selected : 'unsolved'
         });
     });
+  },
+
+  search : function ( req, res, next ){
+    if( ! req.query.keywords ){
+      req.flash( 'flash-info', 'unknown keywords' );
+      res.redirect( '/posts' );
+      return;
+    }else{
+
+      var keywords   = req.query.keywords.split(/\s+/);
+      var conditions = new RegExp( keywords.join( '|' ), 'gi');
+      Post.
+        find({ $and : [{
+          title : conditions
+        }, {
+          content : conditions
+        }] }).
+        run( function ( err, posts ){
+          res.render( 'posts/index', {
+            sidebar      : req.sidebar,
+            posts        : posts
+          });
+        });
+    }
   },
 
   'new' : function ( req, res, next ){

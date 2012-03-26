@@ -3,6 +3,7 @@ module.exports = function ( map ){
   map.get( 'users', 'users#index' );
   map.get( 'users/:id', 'users#show' );
 
+  map.get( 'posts/search', 'posts#search' );
   map.get( 'posts/tag', 'posts#tag' );
   map.get( 'posts/tags', 'posts#tags' );
   map.post( 'posts/:id/comments', 'comments#create' );

@@ -1,6 +1,6 @@
 <div class="sidebar">
   <div class="tags">
-    <b>Hot Tags:</b>
+    <b>Hot tags:</b>
     <? it.sidebar.tags.forEach( function ( tag ){ ?>
       <a href="/posts/tag?name=<?= tag.name ?>"><?= tag.name ?></a>
       (<?= tag.post_count ?>)
@@ -8,16 +8,25 @@
     <a href="/posts/tags">... more tags</a>
   </div>
   <div class="users">
-    <b>Active user:</b>
-    <? it.sidebar.users.forEach( function ( user ){ ?>
-      <a href="/users/<?= user._id ?>"><?= user.name ?></a>
-    <? }); ?>
-    <a href="/users">... more users</a>
+    <b>Active users:</b>
+    <ol>
+      <? it.sidebar.users.forEach( function ( user ){ ?>
+        <li>
+          <a href="/users/<?= user._id ?>"><?= user.name ?></a>
+        </li>
+      <? }); ?>
+      <a href="/users">... more users</a>
+    </ol>
   </div>
   <div class="issues">
-    <b>All Issues:</b>
-    <? it.sidebar.issues.forEach( function ( issue ){ ?>
-      <a href="<?= issue.link ?>"><?= issue.name ?></a>
-    <? }); ?>
+    <b>Open issues:</b>
+    <ol>
+      <? it.sidebar.issues.forEach( function ( issue ){ ?>
+        <li>
+          <a href="<?= issue.link ?>"><?= issue.title ?></a>
+        </li>
+      <? }); ?>
+      <a href="https://github.com/dreamerslab/coke/issues">... more issues</a>
+    </ol>
   </div>
 </div>

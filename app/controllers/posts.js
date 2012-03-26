@@ -148,6 +148,11 @@ module.exports = Application.extend({
     });
   },
 
+  create_comment : function ( req, res, next ){
+
+
+  },
+
   tags : function ( req, res, next ){
     Tag.find().sort( 'name', 1 ).run( function ( err, tags ){
 

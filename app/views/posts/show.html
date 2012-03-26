@@ -26,6 +26,19 @@
       <hr />
     <? }); ?>
   </div>
+  <div class="new-comment">
+    <h2> New comment </h2>
+    <form action="/posts/<?= it.post._id ?>/comments" method="POST" accept-charset="UTF-8" >
+      <div id="table">
+        <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
+        <div class="form-row">
+          <label class="form-title" for="comment[content]">Content : </label>
+          <input class="text-input" type="text" name="comment[content]" value=""/>
+        </div>
+      </div>
+      <input class="submit-link" type="submit" value="Create comment" />
+    </form>
+  </div>
 </div>
 
 <a href="/posts/<?= it.post._id ?>/edit">Edit</a> |

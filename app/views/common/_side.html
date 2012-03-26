@@ -1,16 +1,18 @@
 <div class="sidebar">
   <div class="tags">
-    <b>All Tags:</b>
+    <b>Hot Tags:</b>
     <? it.sidebar.tags.forEach( function ( tag ){ ?>
       <a href="/tag?name=<?= tag.name ?>"><?= tag.name ?></a>
       (<?= tag.post_count ?>)
     <? }); ?>
+    <a href="/posts/tags">... more tags</a>
   </div>
   <div class="users">
-    <b>All User:</b>
+    <b>Active user:</b>
     <? it.sidebar.users.forEach( function ( user ){ ?>
       <a href="/users/<?= user._id ?>"><?= user.name ?></a>
     <? }); ?>
+    <a href="/users">... more users</a>
   </div>
   <div class="issues">
     <b>All Issues:</b>

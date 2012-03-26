@@ -70,7 +70,7 @@ module.exports = {
     var j = 50;
 
     for( ; j--; ){
-      flow.parallel( function ( ready ){
+      flow.series( function ( ready ){
         User.find( function ( err, users ){
           // get a random user
           var user   = users[ random( users.length )];
@@ -89,7 +89,7 @@ module.exports = {
       });
     }
 
-    flow.join();
+    // flow.join();
 
     // create comments
     var k = 100;

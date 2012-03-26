@@ -45,7 +45,8 @@ Model.Comment = new Schema({
 
 Model.Tag = new Schema({
   name        : { type : String, required : true, index : { unique : true, dropDups : true }},
-  posts       : [{ type : ObjectId, ref : 'Post' }]
+  posts       : [{ type : ObjectId, ref : 'Post' }],
+  post_count  : { type : Number, 'default' : 0 }
 });
 
 
@@ -57,6 +58,11 @@ Object.keys( Model ).forEach( function ( model ){
       next();
     });
   }
+});
+
+Model.Tag.pre( 'save', function ( next ){
+  this.post_count = this.posts.length;
+  next();
 });
 
 

@@ -1,3 +1,5 @@
+<hr />
+
 <? it.title = 'Showing post'; ?>
 
 <div class="post-content">
@@ -11,6 +13,7 @@
   <div>Title: <?= it.post.title ?></div>
   <div>Content: <?= it.post.content ?></div>
   <div>Modified: <?= new Date( it.post.updated_at ) ?></div>
+  <a href="/posts/<?= it.post._id ?>/edit">Edit the post</a>
   <hr />
   <div class="post-comments">
     <? it.post.comments.forEach( function ( comment ){ ?>
@@ -40,6 +43,3 @@
     </form>
   </div>
 </div>
-
-<a href="/posts/<?= it.post._id ?>/edit">Edit</a> |
-<a href="/posts">Back</a>

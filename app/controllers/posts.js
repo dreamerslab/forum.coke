@@ -78,16 +78,16 @@ module.exports = Application.extend({
       });
 
       post.save( function ( err, post ){
-          if( err ){
-            next( err );
-            return;
-          }
+        if( err ){
+          next( err );
+          return;
+        }
 
-          post.update_tags( Tag );
-          post.add_to_user( user );
-          req.flash( 'flash-info', 'Post created' );
-          res.redirect( '/posts/' + post._id );
-        });
+        post.update_tags( Tag );
+        post.add_to_user( user );
+        req.flash( 'flash-info', 'Post created' );
+        res.redirect( '/posts/' + post._id );
+      });
     });
   },
 
@@ -146,11 +146,6 @@ module.exports = Application.extend({
         res.redirect( '/posts/' + post._id );
       });
     });
-  },
-
-  create_comment : function ( req, res, next ){
-
-
   },
 
   tags : function ( req, res, next ){

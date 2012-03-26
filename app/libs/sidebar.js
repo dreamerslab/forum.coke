@@ -13,6 +13,14 @@ module.exports = {
     var trunk_users  = [];
     var trunk_issues = [];
 
+    function compare( a, b ){
+      if( a.name > b.name )
+        return 1;
+      if( a.name < b.name )
+        return -1
+      return 0
+    };
+
     flow.series( function ( next ){
       Tag.
         find().
@@ -22,6 +30,7 @@ module.exports = {
           tags.forEach( function ( tag ){
             trunk_tags.push( tag.obj_attrs());
           });
+          trunk_tags.sort( compare );
           next();
         });
     });
@@ -35,6 +44,7 @@ module.exports = {
           users.forEach( function( user ){
             trunk_users.push( user.obj_attrs());
           });
+          trunk_users.sort( compare );
           next();
         });
     });

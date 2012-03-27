@@ -84,9 +84,9 @@ module.exports = Application.extend({
       res.redirect( '/posts' );
       return;
     }else{
-
       var keywords   = req.query.keywords.split(/\s+/);
       var conditions = new RegExp( keywords.join( '|' ), 'gi');
+
       Post.
         find({ $and : [{
           title : conditions

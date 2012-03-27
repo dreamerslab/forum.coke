@@ -10,7 +10,7 @@ Post.statics = {
     post.save( callback );
   },
 
-  paginate : function ( conds, from, num, callback ){
+  paginate : function ( conds, from, limit, callback ){
     var Model = this;
     var sort  = [ 'updated_at', -1 ];
 
@@ -25,7 +25,7 @@ Post.statics = {
         Model.
           find( conds ).
           skip( from ).
-          limit( num ).
+          limit( limit ).
           sort( sort[ 0 ], sort[ 1 ]).
           run( function ( err, docs ){
             callback && callback( total, docs );
@@ -57,7 +57,7 @@ Post.methods = {
     var self = this;
 
     tag.posts.push( this );
-    tag.save( function ( err, tag){
+    tag.save( function ( err, tag ){
       callback && callback( err, tag );
     });
   },
@@ -126,7 +126,6 @@ Post.methods = {
         }, name );
 
       });
-
     }
 
     // save the current post

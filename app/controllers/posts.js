@@ -4,6 +4,27 @@ var Post        = mongoose.model( 'Post' );
 var Tag         = mongoose.model( 'Tag' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
+var paginate = function( Model, conds, from, num, callback ){
+  var sort = [ 'updated_at', -1 ];
+
+  if( 'sort' in conds ){
+    sort = conds.sort;
+    delete conds.sort;
+  }
+
+  Model.
+    count( conds ).
+    run( function ( err, total ){
+      Model.
+        find( conds ).
+        sort( sort[ 0 ], sort[ 1 ]).
+        skip( from ).
+        limit( num ).
+        run( function ( err, docs ){
+          callback && callback( total, docs );
+        });
+    });
+}
 
 module.exports = Application.extend({
 
@@ -16,66 +37,105 @@ module.exports = Application.extend({
   },
 
   latest : function ( req, res, next ){
-    Post.latest( function ( err, posts ){
-      if( err ){
-        next( err );
-        return;
-      }
+    var conds = { sort : [ 'updated_at', -1 ]};
 
+    paginate( Post, conds, 0, 10, function ( total, posts ){
       res.render( 'posts/index', {
         sidebar      : req.sidebar,
         posts        : posts,
         nav_selected : 'latest'
       });
     });
+
+    // Post.latest( function ( err, posts ){
+    //   if( err ){
+    //     next( err );
+    //     return;
+    //   }
+
+    //   res.render( 'posts/index', {
+    //     sidebar      : req.sidebar,
+    //     posts        : posts,
+    //     nav_selected : 'latest'
+    //   });
+    // });
   },
 
   trending : function ( req, res, next ){
-    Post.trending( function ( err, posts ){
-      if( err ){
-        next( err );
-        return;
-      }
+    var conds = { sort : [ 'read_count', -1 ]};
 
+    paginate( Post, conds, 0, 10, function ( total, posts ){
       res.render( 'posts/index', {
         sidebar      : req.sidebar,
         posts        : posts,
         nav_selected : 'trending'
       });
     });
+
+    // Post.trending( function ( err, posts ){
+    //   if( err ){
+    //     next( err );
+    //     return;
+    //   }
+
+    //   res.render( 'posts/index', {
+    //     sidebar      : req.sidebar,
+    //     posts        : posts,
+    //     nav_selected : 'trending'
+    //   });
+    // });
   },
 
   unsolved : function ( req, res, next ){
-    Post.unsolved( function ( err, posts ){
-      if( err ){
-        next( err );
-        return;
-      }
+    var conds = { comments : { $size : 0 }};
 
+    paginate( Post, conds, 0, 10, function ( total, posts ){
       res.render( 'posts/index', {
         sidebar      : req.sidebar,
         posts        : posts,
         nav_selected : 'unsolved'
       });
     });
+
+    // Post.unsolved( function ( err, posts ){
+    //   if( err ){
+    //     next( err );
+    //     return;
+    //   }
+
+    //   res.render( 'posts/index', {
+    //     sidebar      : req.sidebar,
+    //     posts        : posts,
+    //     nav_selected : 'unsolved'
+    //   });
+    // });
   },
 
   tag : function ( req, res, next ){
-    Post.
-      find().
-      where( 'tag_names' ).
-      in([ req.query.name ]).
-      run( function ( err, posts ){
-        if( err ){
-          next( err );
-          return;
-        }
+    var conds = { tag_names : { $in : [ req.query.name ]}};
 
-        res.render( 'posts/index', {
-          sidebar      : req.sidebar,
-          posts        : posts,
-        });
+    paginate( Post, conds, 0, 10, function ( total, posts ){
+      res.render( 'posts/index', {
+        sidebar      : req.sidebar,
+        posts        : posts
+      });
     });
+
+    // Post.
+    //   find().
+    //   where( 'tag_names' ).
+    //   in([ req.query.name ]).
+    //   run( function ( err, posts ){
+    //     if( err ){
+    //       next( err );
+    //       return;
+    //     }
+
+    //     res.render( 'posts/index', {
+    //       sidebar      : req.sidebar,
+    //       posts        : posts,
+    //     });
+    // });
   },
 
   search : function ( req, res, next ){
@@ -84,21 +144,29 @@ module.exports = Application.extend({
       res.redirect( '/posts' );
       return;
     }else{
-      var keywords   = req.query.keywords.split(/\s+/);
-      var conditions = new RegExp( keywords.join( '|' ), 'gi');
+      var keywords = req.query.keywords.split(/\s+/);
+      var regexp   = new RegExp( keywords.join( '|' ), 'gi');
+      var conds    = { $or : [{ title : regexp }, { content : regexp }]};
 
-      Post.
-        find({ $and : [{
-          title : conditions
-        }, {
-          content : conditions
-        }] }).
-        run( function ( err, posts ){
-          res.render( 'posts/index', {
-            sidebar      : req.sidebar,
-            posts        : posts
-          });
+      paginate( Post, conds, 0, 10, function ( total, posts ){
+        res.render( 'posts/index', {
+          sidebar      : req.sidebar,
+          posts        : posts
         });
+      });
+
+      // Post.
+      //   find({ $and : [{
+      //     title : conditions
+      //   }, {
+      //     content : conditions
+      //   }] }).
+      //   run( function ( err, posts ){
+      //     res.render( 'posts/index', {
+      //       sidebar      : req.sidebar,
+      //       posts        : posts
+      //     });
+      //   });
     }
   },
 
@@ -197,9 +265,7 @@ module.exports = Application.extend({
         sidebar : req.sidebar,
         tags    : tags
       });
-
     });
   },
-
 
 });

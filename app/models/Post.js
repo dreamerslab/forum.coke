@@ -10,23 +10,23 @@ Post.statics = {
     post.save( callback );
   },
 
-  latest : function ( callback ){
-    this.find().
-         sort( 'updated_at', -1 ).
-         run( callback );
-  },
+  // latest : function ( callback ){
+  //   this.find().
+  //        sort( 'updated_at', -1 ).
+  //        run( callback );
+  // },
 
-  trending : function ( callback ){
-    this.find().
-         sort( 'read_count', -1 ).
-         run( callback );
-  },
+  // trending : function ( callback ){
+  //   this.find().
+  //        sort( 'read_count', -1 ).
+  //        run( callback );
+  // },
 
-  unsolved : function( callback ){
-    this.find().
-         size( 'comments', 0 ).
-         run( callback );
-  }
+  // unsolved : function( callback ){
+  //   this.find().
+  //        size( 'comments', 0 ).
+  //        run( callback );
+  // }
 };
 
 

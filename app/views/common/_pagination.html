@@ -1,0 +1,31 @@
+<? if( it.count > it.limit ){ ?>
+<? var p = it.pager( it.from, it.count, it.limit ); ?>
+<div id="pagenation">
+  <a class="<?= p.pre ?>"
+    href="/<?= it.action ?>?<?= it.find_raw ?>&sort=<?= it.sort ?>&asc=<?= it.asc ?>&from=<?= p.pre_from ?>">
+    <
+  </a>
+  <a class="<?= p.first ?>"
+    href="/<?= it.action ?>?<?= it.find_raw ?>&sort=<?= it.sort ?>&asc=<?= it.asc ?>&from=0">
+   1
+ </a>
+  <span class="p.start_spacer"> ... </span>
+  <? for( var i = p.start, j = p.end; i < j; i++ ){ ?>
+    <? var selected = p.page == i ? 'selected' : ''; ?>
+    <a class="<?= selected ?>"
+      href="/<?= it.action ?>?<?= it.find_raw ?>&sort=<?= it.sort ?>&asc=<?= it.asc ?>&from=<?= p.each_from ?>">
+      <?= i ?>
+      <? p.each_from += it.limit; ?>
+    </a>
+  <? } ?>
+  <span class="p.end_spacer"> ... </span>
+   <a class="<?= p.last ?>"
+    href="/<?= it.action ?>?<?= it.find_raw ?>&sort=<?= it.sort ?>&asc=<?= it.asc ?>&from=<?= p.end_from ?>">
+     <?= p.total ?>
+   </a>
+   <a class="<?= p.next ?>"
+    href="/<?= it.action ?>?<?= it.find_raw ?>&sort=<?= it.sort ?>&asc=<?= it.asc ?>&from=<?= p.next_from ?>">
+    >
+  </a>
+</div>
+<? } ?>

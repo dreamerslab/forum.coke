@@ -4,27 +4,35 @@ var Post        = mongoose.model( 'Post' );
 var Tag         = mongoose.model( 'Tag' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
-// var paginate = function( Model, conds, from, num, callback ){
-//   var sort = [ 'updated_at', -1 ];
+var _cond = function ( query ){
+  var find     = {};
+  var find_raw = '';
+  var i        = 0;
+  var name;
 
-//   if( 'sort' in conds ){
-//     sort = conds.sort;
-//     delete conds.sort;
-//   }
+  Object.keys( query ).forEach( function ( name ){
+    var key = name.split( '.' );
 
-//   Model.
-//     count( conds ).
-//     run( function ( err, total ){
-//       Model.
-//         find( conds ).
-//         skip( from ).
-//         limit( num ).
-//         sort( sort[ 0 ], sort[ 1 ]).
-//         run( function ( err, docs ){
-//           callback && callback( total, docs );
-//         });
-//     });
-// }
+    if( key.length > 1 ){
+      find[ key[ 1 ]] = query[ name ];
+    }
+
+    if( name.match( 'find' )){
+      if( i == 0 ){
+        find_raw = '?';
+      }else{
+        find_raw += '&';
+      }
+      find_raw += name + '=' + query[ name ];
+      i++;
+    }
+  });
+
+  return {
+    find     : find,
+    find_raw : find_raw
+  };
+};
 
 module.exports = Application.extend({
 
@@ -32,31 +40,71 @@ module.exports = Application.extend({
     before( this.fill_sidebar );
   },
 
-  index : function ( req, res, next ){
-    res.redirect( '/posts/latest' );
-  },
+  // index : function ( req, res, next ){
+  //   res.redirect( '/posts/latest' );
+  // },
 
   latest : function ( req, res, next ){
-    var conds = { sort : [ 'updated_at', -1 ]};
+    var conds    = { sort : [ 'updated_at', -1 ]};
+    var page     = parseInt( req.query.page );
+    var skip     = 0;
+    var limit    = 10;
 
-    Post.paginate( conds, 0, 10, function ( total, posts ){
+    if( ! page ) page = 1;
+    skip = ( page - 1 ) * limit;
+
+    Post.paginate( conds, skip, limit, function ( total, posts ){
+
       res.render( 'posts/index', {
         sidebar      : req.sidebar,
         posts        : posts,
+        page_count   : Math.ceil( total / limit),
+        page_number  : page,
+        request_url  : '/posts/latest?',
         nav_selected : 'latest'
       });
     });
   },
 
   trending : function ( req, res, next ){
-    var conds = { sort : [ 'read_count', -1 ]};
+    // var conds = { sort : [ 'read_count', -1 ]};
 
-    Post.paginate( conds, 0, 10, function ( total, posts ){
-      res.render( 'posts/index', {
-        sidebar      : req.sidebar,
-        posts        : posts,
-        nav_selected : 'trending'
-      });
+    // Post.paginate( conds, 0, 10, function ( total, posts ){
+    //   res.render( 'posts/index', {
+    //     sidebar      : req.sidebar,
+    //     posts        : posts,
+    //     nav_selected : 'trending'
+    //   });
+    // });
+
+    var query = req.query;
+    var cond  = _cond( query );
+    var args = {
+      action   : 'posts/trending',
+      find     : cond.find,
+      find_raw : cond.find_raw,
+      sort     : query.sort || 'created_at',
+      asc      : query.asc || 1,
+      from     : query.from || 0,
+      limit    : 20,
+      sidebar  : req.sidebar
+    };
+
+    Post.count( args.find, function( e, count ){
+      args.count = count;
+
+      Post.find( args.find ).
+           sort( args.sort, args.asc ).
+           skip( args.from ).
+           limit( args.limit ).run( function( err, posts ){
+             if( err ){
+               next( err );
+               return;
+             }
+
+             args.posts = posts || [];
+             res.render( 'posts/index', args );
+           });
     });
   },
 
@@ -77,8 +125,8 @@ module.exports = Application.extend({
 
     Post.paginate( conds, 0, 10, function ( total, posts ){
       res.render( 'posts/index', {
-        sidebar      : req.sidebar,
-        posts        : posts
+        sidebar : req.sidebar,
+        posts   : posts
       });
     });
   },
@@ -95,8 +143,8 @@ module.exports = Application.extend({
 
       Post.paginate( conds, 0, 10, function ( total, posts ){
         res.render( 'posts/index', {
-          sidebar      : req.sidebar,
-          posts        : posts
+          sidebar : req.sidebar,
+          posts   : posts
         });
       });
     }

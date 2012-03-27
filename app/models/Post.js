@@ -10,23 +10,29 @@ Post.statics = {
     post.save( callback );
   },
 
-  // latest : function ( callback ){
-  //   this.find().
-  //        sort( 'updated_at', -1 ).
-  //        run( callback );
-  // },
+  paginate : function ( conds, from, num, callback ){
+    var Model = this;
+    var sort  = [ 'updated_at', -1 ];
 
-  // trending : function ( callback ){
-  //   this.find().
-  //        sort( 'read_count', -1 ).
-  //        run( callback );
-  // },
+    if( 'sort' in conds ){
+      sort = conds.sort;
+      delete conds.sort;
+    }
 
-  // unsolved : function( callback ){
-  //   this.find().
-  //        size( 'comments', 0 ).
-  //        run( callback );
-  // }
+    Model.
+      count( conds ).
+      run( function ( err, total ){
+        Model.
+          find( conds ).
+          skip( from ).
+          limit( num ).
+          sort( sort[ 0 ], sort[ 1 ]).
+          run( function ( err, docs ){
+            callback && callback( total, docs );
+          });
+      });
+  },
+
 };
 
 
@@ -137,6 +143,5 @@ Post.methods = {
     });
   }
 }
-
 
 require( 'mongoose' ).model( 'Post', Post );

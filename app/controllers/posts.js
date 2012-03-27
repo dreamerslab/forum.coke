@@ -4,27 +4,27 @@ var Post        = mongoose.model( 'Post' );
 var Tag         = mongoose.model( 'Tag' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
-var paginate = function( Model, conds, from, num, callback ){
-  var sort = [ 'updated_at', -1 ];
+// var paginate = function( Model, conds, from, num, callback ){
+//   var sort = [ 'updated_at', -1 ];
 
-  if( 'sort' in conds ){
-    sort = conds.sort;
-    delete conds.sort;
-  }
+//   if( 'sort' in conds ){
+//     sort = conds.sort;
+//     delete conds.sort;
+//   }
 
-  Model.
-    count( conds ).
-    run( function ( err, total ){
-      Model.
-        find( conds ).
-        sort( sort[ 0 ], sort[ 1 ]).
-        skip( from ).
-        limit( num ).
-        run( function ( err, docs ){
-          callback && callback( total, docs );
-        });
-    });
-}
+//   Model.
+//     count( conds ).
+//     run( function ( err, total ){
+//       Model.
+//         find( conds ).
+//         skip( from ).
+//         limit( num ).
+//         sort( sort[ 0 ], sort[ 1 ]).
+//         run( function ( err, docs ){
+//           callback && callback( total, docs );
+//         });
+//     });
+// }
 
 module.exports = Application.extend({
 
@@ -39,103 +39,48 @@ module.exports = Application.extend({
   latest : function ( req, res, next ){
     var conds = { sort : [ 'updated_at', -1 ]};
 
-    paginate( Post, conds, 0, 10, function ( total, posts ){
+    Post.paginate( conds, 0, 10, function ( total, posts ){
       res.render( 'posts/index', {
         sidebar      : req.sidebar,
         posts        : posts,
         nav_selected : 'latest'
       });
     });
-
-    // Post.latest( function ( err, posts ){
-    //   if( err ){
-    //     next( err );
-    //     return;
-    //   }
-
-    //   res.render( 'posts/index', {
-    //     sidebar      : req.sidebar,
-    //     posts        : posts,
-    //     nav_selected : 'latest'
-    //   });
-    // });
   },
 
   trending : function ( req, res, next ){
     var conds = { sort : [ 'read_count', -1 ]};
 
-    paginate( Post, conds, 0, 10, function ( total, posts ){
+    Post.paginate( conds, 0, 10, function ( total, posts ){
       res.render( 'posts/index', {
         sidebar      : req.sidebar,
         posts        : posts,
         nav_selected : 'trending'
       });
     });
-
-    // Post.trending( function ( err, posts ){
-    //   if( err ){
-    //     next( err );
-    //     return;
-    //   }
-
-    //   res.render( 'posts/index', {
-    //     sidebar      : req.sidebar,
-    //     posts        : posts,
-    //     nav_selected : 'trending'
-    //   });
-    // });
   },
 
   unsolved : function ( req, res, next ){
     var conds = { comments : { $size : 0 }};
 
-    paginate( Post, conds, 0, 10, function ( total, posts ){
+    Post.paginate( conds, 0, 10, function ( total, posts ){
       res.render( 'posts/index', {
         sidebar      : req.sidebar,
         posts        : posts,
         nav_selected : 'unsolved'
       });
     });
-
-    // Post.unsolved( function ( err, posts ){
-    //   if( err ){
-    //     next( err );
-    //     return;
-    //   }
-
-    //   res.render( 'posts/index', {
-    //     sidebar      : req.sidebar,
-    //     posts        : posts,
-    //     nav_selected : 'unsolved'
-    //   });
-    // });
   },
 
   tag : function ( req, res, next ){
     var conds = { tag_names : { $in : [ req.query.name ]}};
 
-    paginate( Post, conds, 0, 10, function ( total, posts ){
+    Post.paginate( conds, 0, 10, function ( total, posts ){
       res.render( 'posts/index', {
         sidebar      : req.sidebar,
         posts        : posts
       });
     });
-
-    // Post.
-    //   find().
-    //   where( 'tag_names' ).
-    //   in([ req.query.name ]).
-    //   run( function ( err, posts ){
-    //     if( err ){
-    //       next( err );
-    //       return;
-    //     }
-
-    //     res.render( 'posts/index', {
-    //       sidebar      : req.sidebar,
-    //       posts        : posts,
-    //     });
-    // });
   },
 
   search : function ( req, res, next ){
@@ -148,25 +93,12 @@ module.exports = Application.extend({
       var regexp   = new RegExp( keywords.join( '|' ), 'gi');
       var conds    = { $or : [{ title : regexp }, { content : regexp }]};
 
-      paginate( Post, conds, 0, 10, function ( total, posts ){
+      Post.paginate( conds, 0, 10, function ( total, posts ){
         res.render( 'posts/index', {
           sidebar      : req.sidebar,
           posts        : posts
         });
       });
-
-      // Post.
-      //   find({ $and : [{
-      //     title : conditions
-      //   }, {
-      //     content : conditions
-      //   }] }).
-      //   run( function ( err, posts ){
-      //     res.render( 'posts/index', {
-      //       sidebar      : req.sidebar,
-      //       posts        : posts
-      //     });
-      //   });
     }
   },
 

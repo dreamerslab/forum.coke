@@ -15,7 +15,7 @@ Tag.statics = {
           names.push( name );
         }
       });
-      return names;
+      return names.sort();
     }
   }
 };

@@ -35,8 +35,6 @@ Post.statics = {
 
 };
 
-
-
 Post.methods = {
 
   add_to_user : function ( user, callback ){

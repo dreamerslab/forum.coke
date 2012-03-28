@@ -89,8 +89,6 @@ module.exports = {
       });
     }
 
-    // flow.join();
-
     // create comments
     var k = 150;
 

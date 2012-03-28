@@ -141,8 +141,7 @@ module.exports = Application.extend({
       res.redirect( '/posts' );
       return;
     }else{
-      var keywords = req.query.keywords.split(/\s+|\+/);
-      console.log( 'keywords: ', keywords );
+      var keywords = req.query.keywords.split( /\s+|\+/ );
       var regexp   = new RegExp( keywords.join( '|' ), 'gi' );
       var conds    = { $or : [{ title : regexp }, { content : regexp }]};
       var opts     = { sort  : [ 'updated_at', -1 ],
@@ -161,13 +160,14 @@ module.exports = Application.extend({
 
                // args.posts = posts || [];
                res.render( 'posts/index', {
-                 sidebar : req.sidebar,
-                 path    : '/posts/search',
-                 query   : '?keywords=' + keywords.join( '+' ),
-                 posts   : posts,
-                 count   : count,
-                 from    : opts.skip,
-                 limit   : opts.limit
+                 sidebar  : req.sidebar,
+                 keywords : keywords.join( ' ' ),
+                 path     : '/posts/search',
+                 query    : '?keywords=' + keywords.join( '+' ),
+                 posts    : posts,
+                 count    : count,
+                 from     : opts.skip,
+                 limit    : opts.limit
                });
              });
       });

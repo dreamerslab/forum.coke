@@ -141,15 +141,35 @@ module.exports = Application.extend({
       res.redirect( '/posts' );
       return;
     }else{
-      var keywords = req.query.keywords.split(/\s+/);
-      var regexp   = new RegExp( keywords.join( '|' ), 'gi');
+      var keywords = req.query.keywords.split(/\s+|\+/);
+      console.log( 'keywords: ', keywords );
+      var regexp   = new RegExp( keywords.join( '|' ), 'gi' );
       var conds    = { $or : [{ title : regexp }, { content : regexp }]};
+      var opts     = { sort  : [ 'updated_at', -1 ],
+                       skip  : req.query.from || 0,
+                       limit : 20 };
 
-      Post.paginate( conds, 0, 10, function ( total, posts ){
-        res.render( 'posts/index', {
-          sidebar : req.sidebar,
-          posts   : posts
-        });
+      Post.count( conds, function( err, count ){
+        Post.find( conds ).
+             sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+             skip( opts.skip ).
+             limit( opts.limit ).run( function( err, posts ){
+               if( err ){
+                 next( err );
+                 return;
+               }
+
+               // args.posts = posts || [];
+               res.render( 'posts/index', {
+                 sidebar : req.sidebar,
+                 path    : '/posts/search',
+                 query   : '?keywords=' + keywords.join( '+' ),
+                 posts   : posts,
+                 count   : count,
+                 from    : opts.skip,
+                 limit   : opts.limit
+               });
+             });
       });
     }
   },

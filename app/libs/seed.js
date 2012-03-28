@@ -53,7 +53,7 @@ module.exports = {
     });
 
     // creating users
-    var i = 5;
+    var i = 10;
 
     for( ; i--; ){
       flow.parallel( function ( ready ){
@@ -67,7 +67,7 @@ module.exports = {
     flow.join();
 
     // creating posts
-    var j = 50;
+    var j = 100;
 
     for( ; j--; ){
       flow.series( function ( ready ){
@@ -92,7 +92,7 @@ module.exports = {
     // flow.join();
 
     // create comments
-    var k = 100;
+    var k = 150;
 
     for( ; k--; ){
       flow.parallel( function ( ready ){

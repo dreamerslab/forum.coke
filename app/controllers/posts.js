@@ -107,12 +107,31 @@ module.exports = Application.extend({
 
   tag : function ( req, res, next ){
     var conds = { tag_names : { $in : [ req.query.name ]}};
+    var opts  = { sort  : [ 'updated_at', -1 ],
+                  skip  : req.query.from || 0,
+                  limit : 20 };
 
-    Post.paginate( conds, 0, 10, function ( total, posts ){
-      res.render( 'posts/index', {
-        sidebar : req.sidebar,
-        posts   : posts
-      });
+    Post.count( conds, function( err, count ){
+      Post.find( conds ).
+           sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+           skip( opts.skip ).
+           limit( opts.limit ).run( function( err, posts ){
+             if( err ){
+               next( err );
+               return;
+             }
+
+             // args.posts = posts || [];
+             res.render( 'posts/index', {
+               sidebar : req.sidebar,
+               path    : '/posts/tag',
+               query   : '?name=' + req.query.name,
+               posts   : posts,
+               count   : count,
+               from    : opts.skip,
+               limit   : opts.limit
+             });
+           });
     });
   },
 

@@ -11,10 +11,6 @@ module.exports = Application.extend({
     before( this.fill_sidebar );
   },
 
-  // index : function ( req, res, next ){
-  //   res.redirect( '/posts/latest' );
-  // },
-
   latest : function ( req, res, next ){
     var conds = {};
     var opts  = { sort  : [ 'updated_at', -1 ],

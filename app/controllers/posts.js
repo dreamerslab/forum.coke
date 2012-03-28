@@ -4,35 +4,6 @@ var Post        = mongoose.model( 'Post' );
 var Tag         = mongoose.model( 'Tag' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
-// var _cond = function ( query ){
-//   var find     = {};
-//   var find_raw = '';
-//   var i        = 0;
-//   var name;
-
-//   Object.keys( query ).forEach( function ( name ){
-//     var key = name.split( '.' );
-
-//     if( key.length > 1 ){
-//       find[ key[ 1 ]] = query[ name ];
-//     }
-
-//     if( name.match( 'find' )){
-//       if( i == 0 ){
-//         find_raw = '?';
-//       }else{
-//         find_raw += '&';
-//       }
-//       find_raw += name + '=' + query[ name ];
-//       i++;
-//     }
-//   });
-
-//   return {
-//     find     : find,
-//     find_raw : find_raw
-//   };
-// };
 
 module.exports = Application.extend({
 
@@ -45,37 +16,45 @@ module.exports = Application.extend({
   // },
 
   latest : function ( req, res, next ){
-    var conds    = { sort : [ 'updated_at', -1 ]};
-    var page     = parseInt( req.query.page );
-    var skip     = 0;
-    var limit    = 10;
+    var conds = {};
+    var opts  = { sort  : [ 'updated_at', -1 ],
+                  skip  : req.query.from || 0,
+                  limit : 20 };
 
-    if( ! page ) page = 1;
-    skip = ( page - 1 ) * limit;
+    Post.count( conds, function( err, count ){
+      Post.find( conds ).
+           sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+           skip( opts.skip ).
+           limit( opts.limit ).run( function( err, posts ){
+             if( err ){
+               next( err );
+               return;
+             }
 
-    Post.paginate( conds, skip, limit, function ( total, posts ){
-
-      res.render( 'posts/index', {
-        sidebar      : req.sidebar,
-        posts        : posts,
-        page_count   : Math.ceil( total / limit),
-        page_number  : page,
-        request_url  : '/posts/latest?',
-        nav_selected : 'latest'
-      });
+             // args.posts = posts || [];
+             res.render( 'posts/index', {
+               sidebar : req.sidebar,
+               path    : '/posts/latest',
+               query   : '?',
+               posts   : posts,
+               count   : count,
+               from    : opts.skip,
+               limit   : opts.limit
+             });
+           });
     });
   },
 
   trending : function ( req, res, next ){
     var conds = {};
     var opts  = { sort  : [ 'read_count', -1 ],
-                  skip  : req.query.from,
+                  skip  : req.query.from || 0,
                   limit : 20 };
 
     Post.count( conds, function( err, count ){
       Post.find( conds ).
            sort( opts.sort[ 0 ], opts.sort[ 1 ]).
-           skip( req.query.from || 0 ).
+           skip( opts.skip ).
            limit( opts.limit ).run( function( err, posts ){
              if( err ){
                next( err );
@@ -89,7 +68,7 @@ module.exports = Application.extend({
                query   : '?',
                posts   : posts,
                count   : count,
-               from    : req.query.from,
+               from    : opts.skip,
                limit   : opts.limit
              });
            });

@@ -39,7 +39,7 @@ module.exports = {
       User.
         find().
         sort( 'rating', -1 ).
-        limit( 20 ).
+        limit( 6 ).
         run( function ( err, users ){
           users.forEach( function( user ){
             trunk_users.push( user.obj_attrs());

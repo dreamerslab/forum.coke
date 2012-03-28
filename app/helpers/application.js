@@ -15,7 +15,7 @@ module.exports = function ( app ){
       return date_format( date, format );
     },
 
-    pager : function( from, count, limit ){
+    pager : function ( from, count, limit ){
       from = parseInt( from, 10 );
 
       var total = Math.ceil( count / limit );

@@ -9,30 +9,6 @@ Post.statics = {
     post.tags = props.tags;
     post.save( callback );
   },
-
-  paginate : function ( conds, from, limit, callback ){
-    var Model = this;
-    var sort  = [ 'updated_at', -1 ];
-
-    if( 'sort' in conds ){
-      sort = conds.sort;
-      delete conds.sort;
-    }
-
-    Model.
-      count( conds ).
-      run( function ( err, total ){
-        Model.
-          find( conds ).
-          skip( from ).
-          limit( limit ).
-          sort( sort[ 0 ], sort[ 1 ]).
-          run( function ( err, docs ){
-            callback && callback( total, docs );
-          });
-      });
-  },
-
 };
 
 Post.methods = {
@@ -139,6 +115,6 @@ Post.methods = {
       callback && callback();
     });
   }
-}
+};
 
 require( 'mongoose' ).model( 'Post', Post );

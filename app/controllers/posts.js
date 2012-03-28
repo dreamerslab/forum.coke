@@ -4,35 +4,35 @@ var Post        = mongoose.model( 'Post' );
 var Tag         = mongoose.model( 'Tag' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
-var _cond = function ( query ){
-  var find     = {};
-  var find_raw = '';
-  var i        = 0;
-  var name;
+// var _cond = function ( query ){
+//   var find     = {};
+//   var find_raw = '';
+//   var i        = 0;
+//   var name;
 
-  Object.keys( query ).forEach( function ( name ){
-    var key = name.split( '.' );
+//   Object.keys( query ).forEach( function ( name ){
+//     var key = name.split( '.' );
 
-    if( key.length > 1 ){
-      find[ key[ 1 ]] = query[ name ];
-    }
+//     if( key.length > 1 ){
+//       find[ key[ 1 ]] = query[ name ];
+//     }
 
-    if( name.match( 'find' )){
-      if( i == 0 ){
-        find_raw = '?';
-      }else{
-        find_raw += '&';
-      }
-      find_raw += name + '=' + query[ name ];
-      i++;
-    }
-  });
+//     if( name.match( 'find' )){
+//       if( i == 0 ){
+//         find_raw = '?';
+//       }else{
+//         find_raw += '&';
+//       }
+//       find_raw += name + '=' + query[ name ];
+//       i++;
+//     }
+//   });
 
-  return {
-    find     : find,
-    find_raw : find_raw
-  };
-};
+//   return {
+//     find     : find,
+//     find_raw : find_raw
+//   };
+// };
 
 module.exports = Application.extend({
 
@@ -67,43 +67,31 @@ module.exports = Application.extend({
   },
 
   trending : function ( req, res, next ){
-    // var conds = { sort : [ 'read_count', -1 ]};
+    var conds = {};
+    var opts  = { sort  : [ 'read_count', -1 ],
+                  skip  : req.query.from,
+                  limit : 20 };
 
-    // Post.paginate( conds, 0, 10, function ( total, posts ){
-    //   res.render( 'posts/index', {
-    //     sidebar      : req.sidebar,
-    //     posts        : posts,
-    //     nav_selected : 'trending'
-    //   });
-    // });
-
-    var query = req.query;
-    var cond  = _cond( query );
-    var args = {
-      action   : 'posts/trending',
-      find     : cond.find,
-      find_raw : cond.find_raw,
-      sort     : query.sort || 'created_at',
-      asc      : query.asc || 1,
-      from     : query.from || 0,
-      limit    : 20,
-      sidebar  : req.sidebar
-    };
-
-    Post.count( args.find, function( e, count ){
-      args.count = count;
-
-      Post.find( args.find ).
-           sort( args.sort, args.asc ).
-           skip( args.from ).
-           limit( args.limit ).run( function( err, posts ){
+    Post.count( conds, function( err, count ){
+      Post.find( conds ).
+           sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+           skip( req.query.from || 0 ).
+           limit( opts.limit ).run( function( err, posts ){
              if( err ){
                next( err );
                return;
              }
 
-             args.posts = posts || [];
-             res.render( 'posts/index', args );
+             // args.posts = posts || [];
+             res.render( 'posts/index', {
+               sidebar : req.sidebar,
+               path    : '/posts/trending',
+               query   : '?',
+               posts   : posts,
+               count   : count,
+               from    : req.query.from,
+               limit   : opts.limit
+             });
            });
     });
   },

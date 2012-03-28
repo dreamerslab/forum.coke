@@ -32,10 +32,10 @@
 
       <tr>
         <td>
-          <?= post.user.name ?>
+          <?= post.as_user.name ?>
         </td>
         <td>
-          <?= post.user.avatar ?>
+          <?= post.as_user.avatar ?>
         </td>
         <td>
           <a href="/posts/<?= post._id ?>">
@@ -59,10 +59,7 @@
     <? }); ?>
   </tbody>
 </table>
+
 <?= it.partial( 'common/_pagination' )?>
-
-
-
-
 
 <a href="/posts/new">New post</a>

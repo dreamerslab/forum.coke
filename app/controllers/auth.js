@@ -1,5 +1,7 @@
 var Application = require( CONTROLLER_DIR + 'application' );
 var passport    = require( 'passport' );
+var mongoose    = require( 'mongoose' );
+var User        = mongoose.model( 'User' );
 
 module.exports = Application.extend({
 
@@ -18,8 +20,24 @@ module.exports = Application.extend({
       failureRedirect : '/'
     })( req, res, function (){
 
-      console.log( 'Do somthing after successful callback.' );
-      res.redirect( '/posts/latest' );
+      User.findOne( { google_id : req.user.id }, function ( err, user ){
+        if( ! user ){
+          var profile = req.user;
+
+          new User({
+            google_id  : profile.id,
+            google_raw : profile,
+            name       : profile._json.name,
+            email      : profile._json.email,
+            avatar     : profile._json.picture
+          }).save( function ( err, user ){
+            res.redirect( '/posts/latest' );
+          });
+        }else{
+          res.redirect( '/posts/latest' );
+        }
+      });
+
     });
   },
 

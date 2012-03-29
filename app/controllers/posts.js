@@ -30,6 +30,7 @@ module.exports = Application.extend({
              // args.posts = posts || [];
              res.render( 'posts/index', {
                sidebar : req.sidebar,
+               user    : req.user,
                path    : '/posts/latest',
                query   : '?',
                posts   : posts,

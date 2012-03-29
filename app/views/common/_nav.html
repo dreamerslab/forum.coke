@@ -1,3 +1,15 @@
+<? if( ! it.user ) { ?>
+  <p>
+    <a href="/posts/latest">Home</a> |
+    <a href="/auth/google">Log In with google</a>
+  </p>
+<? }else{ ?>
+  <p>
+    <a href="/posts/latest">Home</a> |
+    <a href="/logout">Log Out</a>
+  </p>
+<? } ?>
+
 <nav>
   <ul>
     <li>

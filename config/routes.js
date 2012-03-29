@@ -1,5 +1,9 @@
 module.exports = function ( map ){
 
+  map.get( 'logout', 'auth#logout' );
+  map.get( 'auth/google', 'auth#google' );
+  map.get( 'auth/callback', 'auth#callback' );
+
   map.get( 'users', 'users#index' );
   map.get( 'users/:id', 'users#show' );
 

@@ -14,8 +14,9 @@ var random = function ( max ){
 
 var random_user = function (){
   return {
-    name  : Faker.Name.findName(),
-    email : Faker.Internet.email(),
+    google_id : ( random( 1000000 ).toString()),
+    name      : Faker.Name.findName(),
+    email     : Faker.Internet.email(),
   };
 };
 

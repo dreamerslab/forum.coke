@@ -10,7 +10,9 @@ Model.Cache = new Schema({
 });
 
 Model.User = new Schema({
-  name        : { type : String, required : true, index : true },
+  google_id   : { type : String, required : true, index : true },
+  google_raw  : { type : Schema.Types.Mixed },
+  name        : { type : String, required : true },
   email       : { type : String },
   avatar      : { type : String },
   rating      : { type : Number },

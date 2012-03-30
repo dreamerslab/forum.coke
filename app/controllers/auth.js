@@ -52,10 +52,6 @@ module.exports = Application.extend({
   //   successRedirect : '/posts/latest'
   // }),
 
-  login : function ( req, res, next ){
-
-  },
-
   logout : function ( req, res, next ){
     req.logout();
     res.redirect( '/posts/latest' );

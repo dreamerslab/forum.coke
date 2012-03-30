@@ -7,72 +7,66 @@ var Application = require( CONTROLLER_DIR + 'application' );
 
 module.exports = Application.extend({
 
+  _merge : function ( req, result, base_query ){
+    return UTILS.merge( result, {
+      sidebar  : req.sidebar,
+      user     : req.user,
+      path     : req.path,
+      query    : base_query
+    });
+  },
+
   init : function ( before, after ){
     before( this.fill_sidebar );
   },
 
   latest : function ( req, res, next ){
-    console.log( 'posts/latest req.user: ', req.user );
+    console.log( req.url );
+    var self  = this;
     var conds = {};
     var opts  = { sort  : [ 'updated_at', -1 ],
                   skip  : req.query.from || 0,
                   limit : 20 };
 
     Post.paginate( conds, opts, next, function ( result ){
-      res.render( 'posts/index', UTILS.merge( result, {
-        sidebar : req.sidebar,
-        user    : req.user,
-        path    : '/posts/latest',
-        query   : '?'
-      }));
+      res.render( 'posts/index', self._merge( req, result, '?' ));
     });
   },
 
   trending : function ( req, res, next ){
+    var self  = this;
     var conds = {};
     var opts  = { sort  : [ 'read_count', -1 ],
                   skip  : req.query.from || 0,
                   limit : 20 };
 
     Post.paginate( conds, opts, next, function ( result ){
-      res.render( 'posts/index', UTILS.merge( result, {
-        sidebar : req.sidebar,
-        user    : req.user,
-        path    : '/posts/trending',
-        query   : '?'
-      }));
+      res.render( 'posts/index', self._merge( req, result, '?' ));
     });
   },
 
   unsolved : function ( req, res, next ){
+    var self  = this;
     var conds = { comments : { $size : 0 }};
     var opts  = { sort  : [ 'updated_at', -1 ],
                   skip  : req.query.from || 0,
                   limit : 20 };
 
     Post.paginate( conds, opts, next, function ( result ){
-      res.render( 'posts/index', UTILS.merge( result, {
-        sidebar : req.sidebar,
-        user    : req.user,
-        path    : '/posts/unsolved',
-        query   : '?'
-      }));
+      res.render( 'posts/index', self._merge( req, result, '?' ));
     });
   },
 
   tag : function ( req, res, next ){
+    var self  = this;
     var conds = { tag_names : { $in : [ req.query.name ]}};
     var opts  = { sort  : [ 'updated_at', -1 ],
                   skip  : req.query.from || 0,
                   limit : 20 };
 
     Post.paginate( conds, opts, next, function ( result ){
-      res.render( 'posts/index', UTILS.merge( result, {
-        sidebar : req.sidebar,
-        user    : req.user,
-        path    : '/posts/tag',
-        query   : '?name=' + req.query.name
-      }));
+      res.render( 'posts/index',
+        self._merge( req, result, '?name=' + req.query.name ));
     });
   },
 
@@ -84,19 +78,16 @@ module.exports = Application.extend({
     }else{
       var keywords = req.query.keywords.split( /\s+|\+/ );
       var regexp   = new RegExp( keywords.join( '|' ), 'gi' );
+      var self     = this;
       var conds    = { $or : [{ title : regexp }, { content : regexp }]};
       var opts     = { sort  : [ 'updated_at', -1 ],
                        skip  : req.query.from || 0,
                        limit : 20 };
 
       Post.paginate( conds, opts, next, function ( result ){
-        res.render( 'posts/index', UTILS.merge( result, {
-          sidebar  : req.sidebar,
-          user     : req.user,
-          keywords : keywords.join( ' ' ),
-          path     : '/posts/search',
-          query    : '?keywords=' + keywords.join( '+' )
-        }));
+        result.keywords = keywords.join( ' ' );
+        res.render( 'posts/index',
+          self._merge( req, result, '?keywords=' + keywords.join( '+' ) ));
       });
     }
   },

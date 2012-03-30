@@ -4,9 +4,9 @@ var Flow = require( 'node.flow' );
 Post.statics = {
 
   create_or_update : function ( post, props, callback ){
-    post.title = props.title;
+    post.title   = props.title;
     post.content = props.content;
-    post.tags = props.tags;
+    post.tags    = props.tags;
     post.save( callback );
   },
 
@@ -59,8 +59,6 @@ Post.methods = {
   },
 
   add_to_tag : function ( tag, callback ){
-    var self = this;
-
     tag.posts.push( this );
     tag.save( function ( err, tag ){
       callback && callback( err, tag );
@@ -68,8 +66,7 @@ Post.methods = {
   },
 
   remove_from_tag : function ( tag, callback ){
-    var self = this;
-    var idx  = tag.posts.indexOf( this._id );
+    var idx = tag.posts.indexOf( this._id );
 
     if( idx !== -1 ){
       tag.posts.splice( idx, 1 );
@@ -101,7 +98,7 @@ Post.methods = {
 
     flow.series( function ( next ){
       self.tags = [];
-        next();
+      next();
     });
 
     // add new tags

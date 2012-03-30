@@ -18,28 +18,13 @@ module.exports = Application.extend({
                   skip  : req.query.from || 0,
                   limit : 20 };
 
-    Post.count( conds, function( err, count ){
-      Post.find( conds ).
-           sort( opts.sort[ 0 ], opts.sort[ 1 ]).
-           skip( opts.skip ).
-           limit( opts.limit ).run( function( err, posts ){
-             if( err ){
-               next( err );
-               return;
-             }
-
-             // args.posts = posts || [];
-             res.render( 'posts/index', {
-               sidebar : req.sidebar,
-               user    : req.user,
-               path    : '/posts/latest',
-               query   : '?',
-               posts   : posts,
-               count   : count,
-               from    : opts.skip,
-               limit   : opts.limit
-             });
-           });
+    Post.paginate( conds, opts, next, function ( result ){
+      res.render( 'posts/index', UTILS.merge( result, {
+        sidebar : req.sidebar,
+        user    : req.user,
+        path    : '/posts/latest',
+        query   : '?'
+      }));
     });
   },
 
@@ -49,28 +34,13 @@ module.exports = Application.extend({
                   skip  : req.query.from || 0,
                   limit : 20 };
 
-    Post.count( conds, function( err, count ){
-      Post.find( conds ).
-           sort( opts.sort[ 0 ], opts.sort[ 1 ]).
-           skip( opts.skip ).
-           limit( opts.limit ).run( function( err, posts ){
-             if( err ){
-               next( err );
-               return;
-             }
-
-             // args.posts = posts || [];
-             res.render( 'posts/index', {
-               sidebar : req.sidebar,
-               user    : req.user,
-               path    : '/posts/trending',
-               query   : '?',
-               posts   : posts,
-               count   : count,
-               from    : opts.skip,
-               limit   : opts.limit
-             });
-           });
+    Post.paginate( conds, opts, next, function ( result ){
+      res.render( 'posts/index', UTILS.merge( result, {
+        sidebar : req.sidebar,
+        user    : req.user,
+        path    : '/posts/trending',
+        query   : '?'
+      }));
     });
   },
 
@@ -80,28 +50,13 @@ module.exports = Application.extend({
                   skip  : req.query.from || 0,
                   limit : 20 };
 
-    Post.count( conds, function( err, count ){
-      Post.find( conds ).
-           sort( opts.sort[ 0 ], opts.sort[ 1 ]).
-           skip( opts.skip ).
-           limit( opts.limit ).run( function( err, posts ){
-             if( err ){
-               next( err );
-               return;
-             }
-
-             // args.posts = posts || [];
-             res.render( 'posts/index', {
-               sidebar : req.sidebar,
-               user    : req.user,
-               path    : '/posts/unsolved',
-               query   : '?',
-               posts   : posts,
-               count   : count,
-               from    : opts.skip,
-               limit   : opts.limit
-             });
-           });
+    Post.paginate( conds, opts, next, function ( result ){
+      res.render( 'posts/index', UTILS.merge( result, {
+        sidebar : req.sidebar,
+        user    : req.user,
+        path    : '/posts/unsolved',
+        query   : '?'
+      }));
     });
   },
 
@@ -111,28 +66,13 @@ module.exports = Application.extend({
                   skip  : req.query.from || 0,
                   limit : 20 };
 
-    Post.count( conds, function( err, count ){
-      Post.find( conds ).
-           sort( opts.sort[ 0 ], opts.sort[ 1 ]).
-           skip( opts.skip ).
-           limit( opts.limit ).run( function( err, posts ){
-             if( err ){
-               next( err );
-               return;
-             }
-
-             // args.posts = posts || [];
-             res.render( 'posts/index', {
-               sidebar : req.sidebar,
-               user    : req.user,
-               path    : '/posts/tag',
-               query   : '?name=' + req.query.name,
-               posts   : posts,
-               count   : count,
-               from    : opts.skip,
-               limit   : opts.limit
-             });
-           });
+    Post.paginate( conds, opts, next, function ( result ){
+      res.render( 'posts/index', UTILS.merge( result, {
+        sidebar : req.sidebar,
+        user    : req.user,
+        path    : '/posts/tag',
+        query   : '?name=' + req.query.name
+      }));
     });
   },
 
@@ -149,29 +89,14 @@ module.exports = Application.extend({
                        skip  : req.query.from || 0,
                        limit : 20 };
 
-      Post.count( conds, function( err, count ){
-        Post.find( conds ).
-             sort( opts.sort[ 0 ], opts.sort[ 1 ]).
-             skip( opts.skip ).
-             limit( opts.limit ).run( function( err, posts ){
-               if( err ){
-                 next( err );
-                 return;
-               }
-
-               // args.posts = posts || [];
-               res.render( 'posts/index', {
-                 sidebar  : req.sidebar,
-                 user     : req.user,
-                 keywords : keywords.join( ' ' ),
-                 path     : '/posts/search',
-                 query    : '?keywords=' + keywords.join( '+' ),
-                 posts    : posts,
-                 count    : count,
-                 from     : opts.skip,
-                 limit    : opts.limit
-               });
-             });
+      Post.paginate( conds, opts, next, function ( result ){
+        res.render( 'posts/index', UTILS.merge( result, {
+          sidebar  : req.sidebar,
+          user     : req.user,
+          keywords : keywords.join( ' ' ),
+          path     : '/posts/search',
+          query    : '?keywords=' + keywords.join( '+' )
+        }));
       });
     }
   },

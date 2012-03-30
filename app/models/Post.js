@@ -9,6 +9,35 @@ Post.statics = {
     post.tags = props.tags;
     post.save( callback );
   },
+
+  paginate : function ( conds, opts, next, callback ){
+    var reslut = {};
+    var self   = this;
+
+    self.count( conds, function ( err, count ){
+      if( err ){
+        next( err );
+        return;
+      }
+
+      self.find( conds ).
+           sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+           skip( opts.skip ).
+           limit( opts.limit ).run( function ( err, posts ){
+             if( err ){
+               next( err );
+               return;
+             }
+
+             callback && callback({
+               posts : posts,
+               count : count,
+               from  : opts.skip,
+               limit : opts.limit
+             });
+           });
+    });
+  },
 };
 
 Post.methods = {

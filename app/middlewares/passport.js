@@ -7,30 +7,22 @@ var User     = require( 'mongoose' ).model( 'User' );
 var source = fs.readFileSync( CONF_DIR + NODE_ENV + '/config.yml', 'utf8' );
 var config = yaml.load( source ).passport;
 
-
 passport.serializeUser( function( user, done ){
-  console.log( 'Serialize USER: ', user )
   if( user.id ){
     done( null, user.id );
   }else{
     done( null, user.google_id );
   }
-
-  // done( null, user );
 });
 
 passport.deserializeUser( function ( id, done ){
   User.findOne({ google_id : id }, function ( err, user ){
-
     if( user ){
       done( null, user );
     }else{
       done( null, id );
     }
-
   });
-
-  // done( null, id );
 });
 
 passport.use( new Strategy({
@@ -43,7 +35,6 @@ passport.use( new Strategy({
     });
   }
 ));
-
 
 module.exports = function (){
   return function ( req, res, next ){

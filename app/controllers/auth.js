@@ -6,11 +6,11 @@ var User        = mongoose.model( 'User' );
 module.exports = Application.extend({
 
   google : function ( req, res, next ){
-    if( req.query ){
-      res.cookie( 'referrer', decodeURIComponent( req.query.referrer ));
-    }else{
-      res.cookie( 'referrer', '/posts/latest' );
-    }
+    var referrer = req.query ?
+      decodeURIComponent( req.query.referrer ) :
+      '/posts/latest';
+
+    res.cookie( 'referrer', referrer );
 
     passport.authenticate( 'google', {
       scope : [
@@ -25,8 +25,10 @@ module.exports = Application.extend({
     })( req, res, function (){
       console.log( 'referrer in callback :', req.cookies.referrer );
 
-      User.findOne( { google_id : req.user.id }, function ( err, user ){
-        if( ! user ){
+      User.findOne({
+        google_id : req.user.id
+      }, function ( err, user ){
+        if( !user ){
           var profile = req.user;
 
           new User({
@@ -38,20 +40,21 @@ module.exports = Application.extend({
           }).save( function ( err, user ){
             res.redirect( req.cookies.referrer );
           });
+
         }else{
           res.redirect( req.cookies.referrer );
         }
       });
-
     });
   },
 
   logout : function ( req, res, next ){
     req.logout();
-    if( req.query.referrer ){
-      res.redirect( decodeURIComponent( req.query.referrer ));
-    }else{
-      res.redirect( '/posts/latest' );
-    }
+
+    var redirect = req.query.referrer ?
+      decodeURIComponent( req.query.referrer ) :
+      '/posts/latest';
+
+    res.redirect( redirect );
   },
 });

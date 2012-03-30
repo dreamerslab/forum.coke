@@ -111,6 +111,5 @@ module.exports = {
       console.log( 'sidebar updated!' );
       callback && callback();
     });
-
   }
 };

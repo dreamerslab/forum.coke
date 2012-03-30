@@ -35,6 +35,4 @@ module.exports = Application.extend({
       });
     });
   }
-
-
 });

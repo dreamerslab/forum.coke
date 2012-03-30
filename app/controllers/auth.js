@@ -40,7 +40,6 @@ module.exports = Application.extend({
           res.redirect( req.cookies.referrer );
         }
       });
-
     });
   },
 

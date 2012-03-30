@@ -1,12 +1,12 @@
 <? if( ! it.user ) { ?>
   <p>
     <a href="/posts/latest">Home</a> |
-    <a href="/auth/google">Log In with google</a>
+    <a href="/auth/google?referrer=<?= encodeURIComponent( it.referrer ) ?>">Log In with google</a>
   </p>
 <? }else{ ?>
   <p>
     <a href="/posts/latest">Home</a> |
-    <a href="/logout">Log Out</a>
+    <a href="/logout?referrer=<?= encodeURIComponent( it.referrer ) ?>">Log Out</a>
   </p>
 <? } ?>
 

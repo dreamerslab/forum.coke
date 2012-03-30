@@ -11,6 +11,7 @@ module.exports = Application.extend({
     return UTILS.merge( result, {
       sidebar  : req.sidebar,
       user     : req.user,
+      referrer : req.url,
       path     : req.path,
       query    : base_query
     });
@@ -21,7 +22,6 @@ module.exports = Application.extend({
   },
 
   latest : function ( req, res, next ){
-    console.log( req.url );
     var self  = this;
     var conds = {};
     var opts  = { sort  : [ 'updated_at', -1 ],

@@ -6,7 +6,11 @@ var User        = mongoose.model( 'User' );
 module.exports = Application.extend({
 
   google : function ( req, res, next ){
-    console.log( 'Do something before redirect to google.' );
+    if( req.query ){
+      res.cookie( 'referrer', decodeURIComponent( req.query.referrer ));
+    }else{
+      res.cookie( 'referrer', '/posts/latest' );
+    }
 
     passport.authenticate( 'google', {
       scope : [
@@ -19,6 +23,7 @@ module.exports = Application.extend({
     passport.authenticate( 'google', {
       failureRedirect : '/'
     })( req, res, function (){
+      console.log( 'referrer in callback :', req.cookies.referrer );
 
       User.findOne( { google_id : req.user.id }, function ( err, user ){
         if( ! user ){
@@ -31,10 +36,10 @@ module.exports = Application.extend({
             email      : profile._json.email,
             avatar     : profile._json.picture
           }).save( function ( err, user ){
-            res.redirect( '/posts/latest' );
+            res.redirect( req.cookies.referrer );
           });
         }else{
-          res.redirect( '/posts/latest' );
+          res.redirect( req.cookies.referrer );
         }
       });
 
@@ -43,7 +48,10 @@ module.exports = Application.extend({
 
   logout : function ( req, res, next ){
     req.logout();
-    res.redirect( '/posts/latest' );
+    if( req.query.referrer ){
+      res.redirect( decodeURIComponent( req.query.referrer ));
+    }else{
+      res.redirect( '/posts/latest' );
+    }
   },
-
 });

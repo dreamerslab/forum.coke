@@ -41,17 +41,6 @@ module.exports = Application.extend({
     });
   },
 
-  // google : passport.authenticate( 'google', {
-  //   scope : [
-  //     'https://www.googleapis.com/auth/userinfo.profile',
-  //     'https://www.googleapis.com/auth/userinfo.email'
-  // ]}),
-
-  // callback : passport.authenticate( 'google', {
-  //   failureRedirect : '/',
-  //   successRedirect : '/posts/latest'
-  // }),
-
   logout : function ( req, res, next ){
     req.logout();
     res.redirect( '/posts/latest' );

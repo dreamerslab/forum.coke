@@ -11,10 +11,12 @@ Tag.statics = {
 
       candidates.forEach( function ( name ){
         name = name.toLowerCase();
+
         if( names.indexOf( name ) === -1 && name.length < 20 ){
           names.push( name );
         }
       });
+
       return names.sort();
     }
   }

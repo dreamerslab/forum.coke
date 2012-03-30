@@ -129,6 +129,7 @@ module.exports = Application.extend({
          populate( 'comments' ).
          run( function ( err, post ){
            if( post ){
+             post.inc_read_count();
              res.render( 'posts/show', {
                sidebar : req.sidebar,
                post    : post

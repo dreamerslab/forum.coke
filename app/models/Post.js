@@ -42,6 +42,11 @@ Post.statics = {
 
 Post.methods = {
 
+  inc_read_count : function (){
+    this.read_count = this.read_count + 1;
+    this.save();
+  },
+
   add_to_user : function ( user, callback ){
     var self = this;
 

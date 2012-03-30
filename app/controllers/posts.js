@@ -12,6 +12,7 @@ module.exports = Application.extend({
   },
 
   latest : function ( req, res, next ){
+    console.log( 'posts/latest req.user: ', req.user );
     var conds = {};
     var opts  = { sort  : [ 'updated_at', -1 ],
                   skip  : req.query.from || 0,
@@ -61,6 +62,7 @@ module.exports = Application.extend({
              // args.posts = posts || [];
              res.render( 'posts/index', {
                sidebar : req.sidebar,
+               user    : req.user,
                path    : '/posts/trending',
                query   : '?',
                posts   : posts,
@@ -91,6 +93,7 @@ module.exports = Application.extend({
              // args.posts = posts || [];
              res.render( 'posts/index', {
                sidebar : req.sidebar,
+               user    : req.user,
                path    : '/posts/unsolved',
                query   : '?',
                posts   : posts,
@@ -121,6 +124,7 @@ module.exports = Application.extend({
              // args.posts = posts || [];
              res.render( 'posts/index', {
                sidebar : req.sidebar,
+               user    : req.user,
                path    : '/posts/tag',
                query   : '?name=' + req.query.name,
                posts   : posts,
@@ -158,6 +162,7 @@ module.exports = Application.extend({
                // args.posts = posts || [];
                res.render( 'posts/index', {
                  sidebar  : req.sidebar,
+                 user     : req.user,
                  keywords : keywords.join( ' ' ),
                  path     : '/posts/search',
                  query    : '?keywords=' + keywords.join( '+' ),

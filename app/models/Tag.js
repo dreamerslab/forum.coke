@@ -1,9 +1,11 @@
 var Tag = require( BASE_DIR + 'db/schema' ).Tag;
 
 
+
 Tag.statics = {
+
   extract_names : function ( string ){
-    if( {}.toString.call( string ) !== '[object String]' || string === '' ){
+    if({}.toString.call( string ) !== '[object String]' || string === '' ){
       return [];
     }else{
       var candidates = string.split( /\s*[,|;]\s*/ ).slice( 0, 5 );
@@ -22,7 +24,10 @@ Tag.statics = {
   }
 };
 
+
+
 Tag.methods = {
+
   obj_attrs : function (){
     return {
       _id        : this._id,

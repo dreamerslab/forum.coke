@@ -14,7 +14,7 @@ Post.statics = {
     var reslut = {};
     var self   = this;
 
-    self.count( conds, function ( err, count ){
+    this.count( conds, function ( err, count ){
       if( err ){
         next( err );
         return;

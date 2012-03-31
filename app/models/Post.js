@@ -3,18 +3,11 @@ var Flow = require( 'node.flow' );
 
 Post.statics = {
 
-  create_or_update : function ( post, props, callback ){
-    post.title = props.title;
-    post.content = props.content;
-    post.tags = props.tags;
-    post.save( callback );
-  },
-
   paginate : function ( conds, opts, next, callback ){
     var reslut = {};
     var self   = this;
 
-    self.count( conds, function ( err, count ){
+    this.count( conds, function ( err, count ){
       if( err ){
         next( err );
         return;
@@ -57,32 +50,23 @@ Post.methods = {
       }
 
       self.as_user = user.obj_attrs();
-      self.save( function ( err, post ){
-        callback && callback();
-      });
+      self.save( callback );
     });
   },
 
   add_to_tag : function ( tag, callback ){
-    var self = this;
-
     tag.posts.push( this );
-    tag.save( function ( err, tag ){
-      callback && callback( err, tag );
-    });
+    tag.save( callback );
   },
 
   remove_from_tag : function ( tag, callback ){
-    var self = this;
-    var idx  = tag.posts.indexOf( this._id );
+    var idx = tag.posts.indexOf( this._id );
 
     if( idx !== -1 ){
       tag.posts.splice( idx, 1 );
     }
 
-    tag.save( function ( err, tag ){
-      callback && callback( err, tag );
-    });
+    tag.save( callback );
   },
 
   update_tags : function ( Tag, callback ){
@@ -106,7 +90,7 @@ Post.methods = {
 
     flow.series( function ( next ){
       self.tags = [];
-        next();
+      next();
     });
 
     // add new tags
@@ -134,7 +118,6 @@ Post.methods = {
             }
           });
         }, name );
-
       });
     }
 

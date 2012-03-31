@@ -9,19 +9,14 @@ Comment.methods = {
     user.comments.push( this._id );
     user.save( function ( err, user ){
       self.as_user = user.obj_attrs();
-      self.save( function ( err, comment ){
-        callback && callback();
-      });
+      self.save( callback );
     });
   },
 
   add_to_post : function ( post, callback ){
     post.comments.push( this );
-    post.save( function ( err, post ){
-      callback && callback();
-    });
-  },
-
+    post.save( callback );
+  }
 };
 
 

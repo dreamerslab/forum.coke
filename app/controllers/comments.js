@@ -25,6 +25,7 @@ module.exports = Application.extend({
 
           comment.add_to_post( post );
           comment.add_to_user( user );
+
           req.flash( 'flash-info', 'Comment created' );
           res.redirect( '/posts/' + post._id );
         });

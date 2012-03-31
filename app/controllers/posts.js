@@ -71,10 +71,12 @@ module.exports = Application.extend({
   },
 
   search : function ( req, res, next ){
-    if( ! req.query.keywords ){
+    if( !req.query.keywords ){
       req.flash( 'flash-info', 'unknown keywords' );
       res.redirect( '/posts' );
+
       return;
+
     }else{
       var keywords = req.query.keywords.split( /\s+|\+/ );
       var regexp   = new RegExp( keywords.join( '|' ), 'gi' );
@@ -86,6 +88,7 @@ module.exports = Application.extend({
 
       Post.paginate( conds, opts, next, function ( result ){
         result.keywords = keywords.join( ' ' );
+
         res.render( 'posts/index',
           self._merge( req, result, '?keywords=' + keywords.join( '+' ) ));
       });
@@ -117,6 +120,7 @@ module.exports = Application.extend({
 
         post.update_tags( Tag );
         post.add_to_user( user );
+
         req.flash( 'flash-info', 'Post created' );
         res.redirect( '/posts/' + post._id );
       });
@@ -189,6 +193,5 @@ module.exports = Application.extend({
         tags    : tags
       });
     });
-  },
-
+  }
 });

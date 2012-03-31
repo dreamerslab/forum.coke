@@ -52,17 +52,13 @@ Post.methods = {
       }
 
       self.as_user = user.obj_attrs();
-      self.save( function ( err, post ){
-        callback && callback();
-      });
+      self.save( callback );
     });
   },
 
   add_to_tag : function ( tag, callback ){
     tag.posts.push( this );
-    tag.save( function ( err, tag ){
-      callback && callback( err, tag );
-    });
+    tag.save( callback );
   },
 
   remove_from_tag : function ( tag, callback ){
@@ -72,9 +68,7 @@ Post.methods = {
       tag.posts.splice( idx, 1 );
     }
 
-    tag.save( function ( err, tag ){
-      callback && callback( err, tag );
-    });
+    tag.save( callback );
   },
 
   update_tags : function ( Tag, callback ){
@@ -126,7 +120,6 @@ Post.methods = {
             }
           });
         }, name );
-
       });
     }
 

@@ -5,15 +5,16 @@ var User     = require( 'mongoose' ).model( 'User' );
 var config = CONF.passport;
 
 passport.serializeUser( function( user, done ){
-  if( user.id ){
-    done( null, user.id );
-  }else{
-    done( null, user.google_id );
-  }
+  var id = user.id ?
+    user.id : user.google_id;
+
+  done( null, id );
 });
 
 passport.deserializeUser( function ( id, done ){
-  User.findOne({ google_id : id }, function ( err, user ){
+  User.findOne({
+    google_id : id
+  }, function ( err, user ){
     if( user ){
       done( null, user );
     }else{

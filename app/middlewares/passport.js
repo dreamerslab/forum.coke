@@ -1,11 +1,8 @@
-var fs       = require( 'fs' );
-var yaml     = require( 'js-yaml' );
 var passport = require( 'passport' );
 var Strategy = require( 'passport-google-oauth' ).OAuth2Strategy;
 var User     = require( 'mongoose' ).model( 'User' );
 
-var source = fs.readFileSync( CONF_DIR + NODE_ENV + '/config.yml', 'utf8' );
-var config = yaml.load( source ).passport;
+var config = CONF.passport;
 
 passport.serializeUser( function( user, done ){
   if( user.id ){

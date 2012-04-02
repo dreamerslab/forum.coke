@@ -8,7 +8,7 @@
       <?= it.post.as_user.name ?>
     </a>
  </div>
-  <div>Avatar: <?= it.post.as_user.avatar ?></div>
+  <div>Avatar: <img src="<?= it.post.as_user.avatar_link ?>" /></div>
   <div>Tags: <?= it.post.tag_names.join(', ') ?></div>
   <div>Title: <?= it.post.title ?></div>
   <div>Content: <?= it.post.content ?></div>
@@ -23,7 +23,7 @@
           <?= comment.as_user.name ?>
         </a>
       </div>
-      <div>Avatar: <?= comment.as_user.avatar ?></div>
+      <div>Avatar: <img src="<?= comment.as_user.avatar_link ?>" /></div>
       <div>Content: <?= comment.content ?></div>
       <div>Modified: <?= new Date( comment.updated_at ) ?></div>
       <hr />

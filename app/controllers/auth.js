@@ -35,7 +35,7 @@ module.exports = Application.extend({
             google_raw : profile,
             name       : profile._json.name,
             email      : profile._json.email,
-            avatar     : profile._json.picture
+            picture    : profile._json.picture
           }).save( function ( err, user ){
             res.redirect( req.cookies.referrer );
           });

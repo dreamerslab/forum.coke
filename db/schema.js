@@ -14,7 +14,7 @@ Model.User = new Schema({
   google_raw  : { type : Schema.Types.Mixed },
   name        : { type : String, required : true },
   email       : { type : String },
-  avatar      : { type : String },
+  picture     : { type : String },
   rating      : { type : Number },
   posts       : [{ type : ObjectId, ref : 'Post' }],
   comments    : [{ type : ObjectId, ref : 'Comment' }],

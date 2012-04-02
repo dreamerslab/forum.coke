@@ -106,6 +106,7 @@ module.exports = Application.extend({
   },
 
   create : function ( req, res, next ){
+    // delegate authenticaiton to 'posts/new'
     if( !req.user ){
       res.redirect( '/posts/new' );
       return;
@@ -154,22 +155,31 @@ module.exports = Application.extend({
   },
 
   edit : function ( req, res, next ){
-    Post.findById( req.params.id, function ( err, post ){
-      if( err ){
-        req.msg = 'Post';
-        next( err );
-        return;
-      }
+    this.ensure_authenticated( req, res, function (){
+      Post.findById( req.params.id, function ( err, post ){
+        if( err ){
+          req.msg = 'Post';
+          next( err );
+          return;
+        }
 
-      res.render( 'posts/edit', {
-        sidebar   : req.sidebar,
-        sess_user : req.user,
-        post      : post
+        // TODO: warn if the post is not belongs to sess_user
+        res.render( 'posts/edit', {
+          sidebar   : req.sidebar,
+          sess_user : req.user,
+          post      : post
+        });
       });
     });
   },
 
   update : function ( req, res, next ){
+    // delegate authenticaiton to 'posts/edit'
+    if( !req.user ){
+      res.redirect( '/posts/edit' );
+      return;
+    }
+
     Post.findById( req.params.id, function ( err, post ){
       if( err ){
         req.msg = 'Post';

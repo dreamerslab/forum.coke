@@ -55,6 +55,7 @@ Model.Notification = new Schema({
   user        : { type : ObjectId, required : true, ref : 'User' },
   post        : { type : ObjectId, required : true, ref : 'Post' },
   message     : { type : String, required : true },
+  is_read     : { type : Boolean, 'defaullt' : false },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
 });

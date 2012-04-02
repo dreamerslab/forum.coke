@@ -23,7 +23,6 @@ module.exports = Application.extend({
     passport.authenticate( 'google', {
       failureRedirect : '/'
     })( req, res, function (){
-      console.log( 'referrer in callback :', req.cookies.referrer );
 
       User.findOne({
         google_id : req.user.id

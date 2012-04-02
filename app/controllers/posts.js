@@ -97,11 +97,11 @@ module.exports = Application.extend({
   },
 
   'new' : function ( req, res, next ){
+    var self = this;
+
     this.ensure_authenticated( req, res, function (){
-      res.render( 'posts/new', {
-        sidebar : req.sidebar,
-        sess_user : req.user,
-      });
+      res.render( 'posts/new',
+        self._merge( req, {}, '' ));
     });
   },
 
@@ -135,17 +135,16 @@ module.exports = Application.extend({
   },
 
   show : function ( req, res, next ){
+    var self = this;
+
     Post.findById( req.params.id ).
          populate( 'user' ).
          populate( 'comments' ).
          run( function ( err, post ){
            if( post ){
              post.inc_read_count();
-             res.render( 'posts/show', {
-               sidebar   : req.sidebar,
-               sess_user : req.user,
-               post      : post
-             });
+             res.render( 'posts/show',
+               self._merge( req, { post : post }, '' ));
              return;
            }
 
@@ -155,6 +154,8 @@ module.exports = Application.extend({
   },
 
   edit : function ( req, res, next ){
+    var self = this;
+
     this.ensure_authenticated( req, res, function (){
       Post.findById( req.params.id, function ( err, post ){
         if( err ){
@@ -164,11 +165,8 @@ module.exports = Application.extend({
         }
 
         // TODO: warn if the post is not belongs to sess_user
-        res.render( 'posts/edit', {
-          sidebar   : req.sidebar,
-          sess_user : req.user,
-          post      : post
-        });
+        res.render( 'posts/edit',
+          self._merge( req, { post : post }, '' ));
       });
     });
   },
@@ -204,13 +202,11 @@ module.exports = Application.extend({
   },
 
   tags : function ( req, res, next ){
-    Tag.find().sort( 'name', 1 ).run( function ( err, tags ){
+    var self = this;
 
-      res.render( 'posts/tags', {
-        sidebar   : req.sidebar,
-        sess_user : req.user,
-        tags      : tags
-      });
+    Tag.find().sort( 'name', 1 ).run( function ( err, tags ){
+      res.render( 'posts/tags',
+        self._merge( req, { tags : tags }, '' ));
     });
   }
 });

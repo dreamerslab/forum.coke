@@ -185,6 +185,7 @@ module.exports = Application.extend({
         return;
       }
 
+      // TODO: warn if the post is not belongs to sess_user
       post.title     = req.body.post.title;
       post.content   = req.body.post.content;
       post.tag_names = Tag.extract_names( req.body.post.tag_names );

@@ -96,6 +96,25 @@ module.exports = Application.extend({
     }
   },
 
+  show : function ( req, res, next ){
+    var self = this;
+
+    Post.findById( req.params.id ).
+         populate( 'user' ).
+         populate( 'comments' ).
+         run( function ( err, post ){
+           if( post ){
+             post.inc_read_count();
+             res.render( 'posts/show',
+               self._merge( req, { post : post }, '' ));
+             return;
+           }
+
+           req.msg = 'Post';
+           next( err );
+         });
+  },
+
   'new' : function ( req, res, next ){
     var self = this;
 
@@ -132,25 +151,6 @@ module.exports = Application.extend({
       req.flash( 'flash-info', 'Post created' );
       res.redirect( '/posts/' + post._id );
     });
-  },
-
-  show : function ( req, res, next ){
-    var self = this;
-
-    Post.findById( req.params.id ).
-         populate( 'user' ).
-         populate( 'comments' ).
-         run( function ( err, post ){
-           if( post ){
-             post.inc_read_count();
-             res.render( 'posts/show',
-               self._merge( req, { post : post }, '' ));
-             return;
-           }
-
-           req.msg = 'Post';
-           next( err );
-         });
   },
 
   edit : function ( req, res, next ){

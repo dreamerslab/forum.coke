@@ -106,6 +106,11 @@ module.exports = Application.extend({
   },
 
   create : function ( req, res, next ){
+    if( !req.user ){
+      res.redirect( '/posts/new' );
+      return;
+    }
+
     var user = req.user;
     var post = new Post({
       user      : user,

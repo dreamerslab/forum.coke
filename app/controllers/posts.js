@@ -19,6 +19,7 @@ module.exports = Application.extend({
 
   init : function ( before, after ){
     before( this.fill_sidebar );
+    // before( this.ensure_authenticated, { only : [ 'new', 'edit' ]});
   },
 
   latest : function ( req, res, next ){
@@ -96,34 +97,34 @@ module.exports = Application.extend({
   },
 
   'new' : function ( req, res, next ){
-    res.render( 'posts/new', {
-      sidebar : req.sidebar
+    this.ensure_authenticated( req, res, function (){
+      res.render( 'posts/new', {
+        sidebar : req.sidebar,
+        sess_user : req.user,
+      });
     });
   },
 
   create : function ( req, res, next ){
-    // Note: should replace this user by session user later
-    User.findOne( function ( err, user ){
+    var user = req.user;
+    var post = new Post({
+      user      : user,
+      title     : req.body.post.title,
+      content   : req.body.post.content,
+      tag_names : Tag.extract_names( req.body.post.tag_names )
+    });
 
-      var post = new Post({
-        user      : user,
-        title     : req.body.post.title,
-        content   : req.body.post.content,
-        tag_names : Tag.extract_names( req.body.post.tag_names )
-      });
+    post.save( function ( err, post ){
+      if( err ){
+        next( err );
+        return;
+      }
 
-      post.save( function ( err, post ){
-        if( err ){
-          next( err );
-          return;
-        }
+      post.update_tags( Tag );
+      post.add_to_user( user );
 
-        post.update_tags( Tag );
-        post.add_to_user( user );
-
-        req.flash( 'flash-info', 'Post created' );
-        res.redirect( '/posts/' + post._id );
-      });
+      req.flash( 'flash-info', 'Post created' );
+      res.redirect( '/posts/' + post._id );
     });
   },
 
@@ -135,8 +136,9 @@ module.exports = Application.extend({
            if( post ){
              post.inc_read_count();
              res.render( 'posts/show', {
-               sidebar : req.sidebar,
-               post    : post
+               sidebar   : req.sidebar,
+               sess_user : req.user,
+               post      : post
              });
              return;
            }
@@ -155,8 +157,9 @@ module.exports = Application.extend({
       }
 
       res.render( 'posts/edit', {
-        sidebar : req.sidebar,
-        post    : post
+        sidebar   : req.sidebar,
+        sess_user : req.user,
+        post      : post
       });
     });
   },
@@ -189,8 +192,9 @@ module.exports = Application.extend({
     Tag.find().sort( 'name', 1 ).run( function ( err, tags ){
 
       res.render( 'posts/tags', {
-        sidebar : req.sidebar,
-        tags    : tags
+        sidebar   : req.sidebar,
+        sess_user : req.user,
+        tags      : tags
       });
     });
   }

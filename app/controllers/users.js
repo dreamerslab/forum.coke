@@ -16,8 +16,10 @@ module.exports = Application.extend({
       }
 
       res.render( 'users/index', {
-        sidebar : req.sidebar,
-        users   : users
+        sidebar   : req.sidebar,
+        referrer  : req.url,
+        sess_user : req.user,
+        users     : users
       });
     });
   },
@@ -30,8 +32,10 @@ module.exports = Application.extend({
       }
 
       res.render( 'users/show', {
-        sidebar : req.sidebar,
-        user    : user
+        sidebar   : req.sidebar,
+        referrer  : req.url,
+        sess_user : req.user,
+        user      : user
       });
     });
   }

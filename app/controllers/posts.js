@@ -9,11 +9,11 @@ module.exports = Application.extend({
 
   _merge : function ( req, result, base_query ){
     return UTILS.merge( result, {
-      sidebar  : req.sidebar,
-      user     : req.user,
-      referrer : req.url,
-      path     : req.path,
-      query    : base_query
+      sidebar   : req.sidebar,
+      sess_user : req.user,
+      referrer  : req.url,
+      path      : req.path,
+      query     : base_query
     });
   },
 

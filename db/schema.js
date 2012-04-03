@@ -76,5 +76,27 @@ Model.Tag.pre( 'save', function ( next ){
   next();
 });
 
+Model.Comment.pre( 'remove', function ( next ){
+  var self = this;
+  var User = mongoose.model( 'User' );
+
+  User.findById( this.user, function ( err, user ){
+    if( err ){
+      next();
+      return;
+    }
+
+    var idx = user.comments.indexOf( self._id );
+
+    if( idx !== -1 ){
+      user.comments.splice( idx, 1 );
+    }
+
+    user.save();
+    next();
+  });
+});
+
+
 
 module.exports = Model;

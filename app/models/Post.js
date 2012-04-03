@@ -40,6 +40,14 @@ Post.methods = {
     this.save();
   },
 
+  is_owner : function( user ){
+    if( user ){
+      return this.as_user._id.toString() === user._id.toString();
+    }
+
+    return false;
+  },
+
   add_to_user : function ( user, callback ){
     var self = this;
 

@@ -164,9 +164,13 @@ module.exports = Application.extend({
           return;
         }
 
-        // TODO: warn if the post is not belongs to sess_user
-        res.render( 'posts/edit',
-          self._merge( req, { post : post }, '' ));
+        if( post.is_owner( req.user )){
+          res.render( 'posts/edit',
+            self._merge( req, { post : post }, '' ));
+        }else{
+          req.flash( 'flash-info', 'Permission denied: not your post' );
+          res.redirect( '/posts/' + post._id );
+        }
       });
     });
   },
@@ -185,20 +189,56 @@ module.exports = Application.extend({
         return;
       }
 
-      // TODO: warn if the post is not belongs to sess_user
-      post.title     = req.body.post.title;
-      post.content   = req.body.post.content;
-      post.tag_names = Tag.extract_names( req.body.post.tag_names );
-      post.save( function ( err, post ){
-        if( err ){
-          next( err );
-          return;
-        }
+      if( post.is_owner( req.user )){
+        post.title     = req.body.post.title;
+        post.content   = req.body.post.content;
+        post.tag_names = Tag.extract_names( req.body.post.tag_names );
+        post.save( function ( err, post ){
+          if( err ){
+            next( err );
+            return;
+          }
 
-        post.update_tags( Tag );
-        req.flash( 'flash-info', 'Post updated' );
+          post.update_tags( Tag );
+          req.flash( 'flash-info', 'Post updated' );
+          res.redirect( '/posts/' + post._id );
+        });
+      }else{
+        req.flash( 'flash-info', 'Permission denied: not your post' );
         res.redirect( '/posts/' + post._id );
-      });
+      }
+    });
+  },
+
+  destroy : function ( req, res, next ){
+    // delegate authenticaiton to 'posts/edit'
+    if( !req.user ){
+      res.redirect( '/posts/edit' );
+      return;
+    }
+
+    Post.findById( req.params.id, function ( err, post ){
+      if( err ){
+        req.msg = 'Post';
+        next( err );
+        return;
+      }
+
+      if( post.is_owner( req.user )){
+        post.remove( function ( err, post ){
+          if( err ){
+            req.msg = 'Post';
+            next( err );
+            return;
+          }
+
+          req.flash( 'flash-info', 'Post deleted' );
+          res.redirect( '/posts' );
+        });
+      }else{
+        req.flash( 'flash-info', 'Permission denied: not your post' );
+        res.redirect( '/posts/' + post._id );
+      }
     });
   },
 

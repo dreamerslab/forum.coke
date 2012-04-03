@@ -13,7 +13,17 @@
   <div>Title: <?= it.post.title ?></div>
   <div>Content: <?= it.post.content ?></div>
   <div>Modified: <?= new Date( it.post.updated_at ) ?></div>
-  <a href="/posts/<?= it.post._id ?>/edit">Edit the post</a>
+
+  <? if( it.post.is_owner( it.sess_user )){ ?>
+    <a href="/posts/<?= it.post._id ?>/edit">Edit the post</a>
+
+    <form action="/posts/<?= it.post._id ?>" method="POST" accept-charset="UTF-8" >
+      <input type="hidden" name="_method" value="delete" />
+      <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
+      <input class="submit-link" type="submit" value="Delete the post" />
+    </form>
+  <? }; ?>
+
   <hr />
   <div class="post-comments">
     <? it.post.comments.forEach( function ( comment ){ ?>

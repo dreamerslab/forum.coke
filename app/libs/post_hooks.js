@@ -1,15 +1,15 @@
 var mongoose = require( 'mongoose' );
+var User    = mongoose.model( 'User' );
+var Tag     = mongoose.model( 'Tag' );
+var Comment = mongoose.model( 'Comment' );
 
 module.exports = {
 
   pre_remove : function ( next ){
-    var self    = this;
-    var User    = mongoose.model( 'User' );
-    var Tag     = mongoose.model( 'Tag' );
-    var Comment = mongoose.model( 'Comment' );
+    var self = this;
 
     // remove post's _id from its user
-    User.findById( self.user, function ( err, user ){
+    User.findById( this.user, function ( err, user ){
       if( err ){
         next( err );
         return;

@@ -205,9 +205,12 @@ module.exports = Application.extend({
   tags : function ( req, res, next ){
     var self = this;
 
-    Tag.find().sort( 'name', 1 ).run( function ( err, tags ){
-      res.render( 'posts/tags',
-        self._merge( req, { tags : tags }, '' ));
-    });
+    Tag.
+      find().
+      sort( 'name', 1 ).
+      run( function ( err, tags ){
+        res.render( 'posts/tags',
+          self._merge( req, { tags : tags }, '' ));
+      });
   }
 });

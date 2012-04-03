@@ -1,6 +1,7 @@
 var mongoose = require( 'mongoose' );
 var Schema   = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
+var Flow     = require( 'node.flow' );
 
 var Model = {};
 
@@ -76,21 +77,32 @@ Model.Tag.pre( 'save', function ( next ){
   next();
 });
 
+
 Model.Comment.pre( 'remove', function ( next ){
   var self = this;
   var User = mongoose.model( 'User' );
 
   User.findById( this.user, function ( err, user ){
-    if( !err ){
-      var idx = user.comments.indexOf( self._id );
-
-      if( idx !== -1 ){
-        user.comments.splice( idx, 1 );
-      }
-
-      user.save();
-      next();
+    if( err ){
+      next( err );
+      return;
     }
+
+    User.
+      collection.
+      findAndModify(
+        { _id : user._id },
+        [],
+        { $pull : { comments : self._id }},
+        {},
+        function ( err ){
+          if( err ){
+            next( err );
+            return;
+          }else{
+            next();
+          }
+      });
   });
 });
 

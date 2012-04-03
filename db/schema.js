@@ -81,19 +81,16 @@ Model.Comment.pre( 'remove', function ( next ){
   var User = mongoose.model( 'User' );
 
   User.findById( this.user, function ( err, user ){
-    if( err ){
+    if( !err ){
+      var idx = user.comments.indexOf( self._id );
+
+      if( idx !== -1 ){
+        user.comments.splice( idx, 1 );
+      }
+
+      user.save();
       next();
-      return;
     }
-
-    var idx = user.comments.indexOf( self._id );
-
-    if( idx !== -1 ){
-      user.comments.splice( idx, 1 );
-    }
-
-    user.save();
-    next();
   });
 });
 

@@ -3,7 +3,6 @@ var Tag = require( BASE_DIR + 'db/schema' ).Tag;
 
 
 Tag.statics = {
-
   extract_names : function ( string ){
     if( UTILS.is( string ) !== 'String' || string === '' ){
       return [];
@@ -24,10 +23,7 @@ Tag.statics = {
   }
 };
 
-
-
 Tag.methods = {
-
   obj_attrs : function (){
     return {
       _id        : this._id,
@@ -36,5 +32,7 @@ Tag.methods = {
     };
   }
 };
+
+
 
 require( 'mongoose' ).model( 'Tag', Tag );

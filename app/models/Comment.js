@@ -1,8 +1,8 @@
 var Comment = require( BASE_DIR + 'db/schema' ).Comment;
 
 
-Comment.methods = {
 
+Comment.methods = {
   add_to_user : function ( user, callback ){
     var self = this;
 
@@ -18,6 +18,7 @@ Comment.methods = {
     post.save( callback );
   }
 };
+
 
 
 require( 'mongoose' ).model( 'Comment', Comment );

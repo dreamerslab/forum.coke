@@ -72,11 +72,6 @@ Object.keys( Model ).forEach( function ( model ){
   }
 });
 
-Model.Tag.pre( 'save', function ( next ){
-  this.post_count = this.posts.length;
-  next();
-});
-
 
 
 var post_hooks    = require( LIB_DIR + 'post_hooks' );
@@ -84,6 +79,10 @@ var comment_hooks = require( LIB_DIR + 'comment_hooks' );
 
 Model.Post.pre( 'remove', post_hooks.pre_remove );
 Model.Comment.pre( 'remove', comment_hooks.pre_remove );
+Model.Tag.pre( 'save', function ( next ){
+  this.post_count = this.posts.length;
+  next();
+});
 
 
 

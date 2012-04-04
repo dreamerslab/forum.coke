@@ -1,33 +1,21 @@
 var mongoose = require( 'mongoose' );
 
-module.exports = {
 
+
+module.exports = {
   pre_remove : function ( next ){
-    var self = this;
     var User = mongoose.model( 'User' );
 
-    User.findById( this.user, function ( err, user ){
-      if( err ){
-        next( err );
-        return;
-      }
-
-      User.
-        collection.
-        findAndModify({
-          _id : user._id
-        }, [], {
-          $pull : {
-            comments : self._id
-        }}, {}, function ( err ){
-            if( err ){
-              next( err );
-              return;
-            }else{
-              next();
-            }
-        });
-    });
+    User.update(
+      { _id : this.user },
+      { $pull : { comments : this._id }},
+      function ( err ){
+        if( err ){
+          next( err );
+          return;
+        }else{
+          next();
+        }
+      });
   }
-
 };

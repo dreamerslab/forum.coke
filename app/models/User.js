@@ -1,8 +1,8 @@
 var User = require( BASE_DIR + 'db/schema' ).User;
 
 
-User.methods = {
 
+User.methods = {
   // this a virtual property
   avatar_link : function(){
     if( UTILS.is( this.picture ) === 'String' ){
@@ -19,7 +19,8 @@ User.methods = {
       avatar_link : this.avatar_link()
     };
   }
-
 };
+
+
 
 require( 'mongoose' ).model( 'User', User );

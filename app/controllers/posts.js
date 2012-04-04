@@ -19,7 +19,8 @@ module.exports = Application.extend({
 
   init : function ( before, after ){
     before( this.fill_sidebar );
-    // before( this.ensure_authenticated, { only : [ 'new', 'edit' ]});
+    before( this.ensure_authenticated, {
+      only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
   },
 
   latest : function ( req, res, next ){
@@ -116,12 +117,8 @@ module.exports = Application.extend({
   },
 
   'new' : function ( req, res, next ){
-    var self = this;
-
-    this.ensure_authenticated( req, res, function (){
-      res.render( 'posts/new',
-        self._merge( req, {}, '' ));
-    });
+    res.render( 'posts/new',
+      this._merge( req, {}, '' ));
   },
 
   create : function ( req, res, next ){
@@ -156,22 +153,20 @@ module.exports = Application.extend({
   edit : function ( req, res, next ){
     var self = this;
 
-    this.ensure_authenticated( req, res, function (){
-      Post.findById( req.params.id, function ( err, post ){
-        if( err ){
-          req.msg = 'Post';
-          next( err );
-          return;
-        }
+    Post.findById( req.params.id, function ( err, post ){
+      if( err ){
+        req.msg = 'Post';
+        next( err );
+        return;
+      }
 
-        if( post.is_owner( req.user )){
-          res.render( 'posts/edit',
-            self._merge( req, { post : post }, '' ));
-        }else{
-          req.flash( 'flash-info', 'Permission denied: not your post' );
-          res.redirect( '/posts/' + post._id );
-        }
-      });
+      if( post.is_owner( req.user )){
+        res.render( 'posts/edit',
+          self._merge( req, { post : post }, '' ));
+      }else{
+        req.flash( 'flash-info', 'Permission denied: not your post' );
+        res.redirect( '/posts/' + post._id );
+      }
     });
   },
 

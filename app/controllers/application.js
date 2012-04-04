@@ -72,12 +72,10 @@ module.exports = Class.extend({
 
   ensure_authenticated : function ( req, res, next ){
     if( req.isAuthenticated()){
-      console.log( 'in' );
       next();
       return;
     }
 
-    console.log( 'out' );
     res.redirect( '/auth/google?referrer=' + encodeURIComponent( req.url ));
   },
 });

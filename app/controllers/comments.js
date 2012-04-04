@@ -6,6 +6,11 @@ var Application = require( CONTROLLER_DIR + 'application' );
 
 module.exports = Application.extend({
 
+  init : function ( before, after ){
+    before( this.ensure_authenticated, {
+      only : [ 'create' ]});
+  },
+
   create : function ( req, res, next ){
     // redirect to 'posts/show' if not authenticated
     if( !req.user ){

@@ -8,10 +8,10 @@ module.exports = {
     var Tag     = mongoose.model( 'Tag' );
     var Comment = mongoose.model( 'Comment' );
 
-    // remove post's _id from its user
+    // remove topic's _id from its user
     User.update(
       { _id : this.user },
-      { $pull : { posts : this._id }},
+      { $pull : { topics : this._id }},
       function ( err ){
         if( err ){
           next( err );
@@ -19,10 +19,10 @@ module.exports = {
         }
       });
 
-    // remove post's _id from its tags
+    // remove topic's _id from its tags
     Tag.update(
       { _id : { $in : this.tags }},
-      { $pull : { posts : this._id }},
+      { $pull : { topics : this._id }},
       { multi : true },
       function ( err ){
         if( err ){
@@ -31,7 +31,7 @@ module.exports = {
         }
       });
 
-    // remove post comments' _ids from their users
+    // remove topic comments' _ids from their users
     Comment.find(
       { _id : { $in : this.comments }},
       function ( err, comments ){

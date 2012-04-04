@@ -1,13 +1,13 @@
 <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
 <div class="form-row">
-  <label class="form-title" for="post[title]">Title : </label><br />
-  <input class="text-input" type="text" name="post[title]" value="<?= it.val( it.post, 'title' ) ?>"/>
+  <label class="form-title" for="topic[title]">Title : </label><br />
+  <input class="text-input" type="text" name="topic[title]" value="<?= it.val( it.topic, 'title' ) ?>"/>
 </div>
 <div class="form-row">
-  <label class="form-title" for="post[tag_names]">Tag : </label><br />
-  <input class="text-input" type="text" name="post[tag_names]" value="<?= it.val( it.post, 'tag_names' ) ?>"/>
+  <label class="form-title" for="topic[tag_names]">Tag : </label><br />
+  <input class="text-input" type="text" name="topic[tag_names]" value="<?= it.val( it.topic, 'tag_names' ) ?>"/>
 </div>
 <div class="form-row">
-  <label class="form-title" for="post[content]">Content : </label><br />
-  <textarea class="text-input" name="post[content]" rows="10" cols="50"><?= it.val( it.post, 'content' ) ?></textarea>
+  <label class="form-title" for="topic[content]">Content : </label><br />
+  <textarea class="text-input" name="topic[content]" rows="10" cols="50"><?= it.val( it.topic, 'content' ) ?></textarea>
 </div>

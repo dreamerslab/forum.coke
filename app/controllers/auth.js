@@ -8,7 +8,7 @@ module.exports = Application.extend({
   google : function ( req, res, next ){
     var referrer = req.query ?
       decodeURIComponent( req.query.referrer ) :
-      '/posts/latest';
+      '/topics/latest';
 
     res.cookie( 'referrer', referrer );
 
@@ -52,7 +52,7 @@ module.exports = Application.extend({
 
     var redirect = req.query.referrer ?
       decodeURIComponent( req.query.referrer ) :
-      '/posts/latest';
+      '/topics/latest';
 
     res.redirect( redirect );
   },

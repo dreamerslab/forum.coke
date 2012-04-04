@@ -1,4 +1,4 @@
-<? it.title = 'Listing posts'; ?>
+<? it.title = 'Listing topics'; ?>
 
 
 <table>
@@ -28,31 +28,31 @@
     </tr>
   </thead>
   <tbody>
-    <? it.posts.forEach( function ( post ){  ?>
+    <? it.topics.forEach( function ( topic ){  ?>
 
       <tr>
         <td>
-          <?= post.as_user.name ?>
+          <?= topic.as_user.name ?>
         </td>
         <td>
-          <img src="<?= post.as_user.avatar_link ?>" />
+          <img src="<?= topic.as_user.avatar_link ?>" />
         </td>
         <td>
-          <a href="/posts/<?= post._id ?>">
-            <?= post.title ?>
+          <a href="/topics/<?= topic._id ?>">
+            <?= topic.title ?>
           </a>
         </td>
         <td>
-          <?= post.content ?> (Tags: <?= post.tag_names.join(', ') ?>)
+          <?= topic.content ?> (Tags: <?= topic.tag_names.join(', ') ?>)
         </td>
         <td>
-          <?= post.read_count ?>
+          <?= topic.read_count ?>
         </td>
         <td>
-          <?= post.comments.length ?>
+          <?= topic.comments.length ?>
         </td>
         <td>
-          <?= post.updated_at ?>
+          <?= topic.updated_at ?>
         </td>
       </tr>
 
@@ -62,4 +62,4 @@
 
 <?= it.partial( 'common/_pagination' )?>
 
-<a href="/posts/new">New post</a>
+<a href="/topics/new">New topic</a>

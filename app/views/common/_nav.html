@@ -1,12 +1,12 @@
 <? if( ! it.sess_user ) { ?>
   <p>
-    <a href="/posts/latest">Home</a> |
+    <a href="/topics/latest">Home</a> |
     <a href="/auth/google?referrer=<?= encodeURIComponent( it.referrer ) ?>">Log In with google</a>
   </p>
 <? }else{ ?>
   <p>
-    <a href="/posts/latest">Home</a> |
-    <a href="/logout?referrer=<?= encodeURIComponent( '/posts/latest' ) ?>">Log Out</a>
+    <a href="/topics/latest">Home</a> |
+    <a href="/logout?referrer=<?= encodeURIComponent( '/topics/latest' ) ?>">Log Out</a>
   </p>
 <? } ?>
 
@@ -14,28 +14,28 @@
   <ul>
     <li>
       <h3>
-        <a class="<?= it.selected( 'latest', it.nav_selected ) ?>" href="/posts/latest">Latest</a>
+        <a class="<?= it.selected( 'latest', it.nav_selected ) ?>" href="/topics/latest">Latest</a>
       </h3>
     </li>
     <li>
       <h3>
-        <a class="<?= it.selected( 'trending', it.nav_selected ) ?>" href="/posts/trending">Trending</a>
+        <a class="<?= it.selected( 'trending', it.nav_selected ) ?>" href="/topics/trending">Trending</a>
       </h3>
     </li>
     <li>
       <h3>
-        <a class="<?= it.selected( 'unsolved', it.nav_selected ) ?>" href="/posts/unsolved">Unsolved</a>
+        <a class="<?= it.selected( 'unsolved', it.nav_selected ) ?>" href="/topics/unsolved">Unsolved</a>
       </h3>
     </li>
   </ul>
 
   <div class="search">
-    <form action="/posts/search" method="GET" accept-charset="UTF-8" >
+    <form action="/topics/search" method="GET" accept-charset="UTF-8" >
       <div id="table">
         <div class="form-row">
           <label class="form-title" for="keywords">Keywords : </label>
           <input class="text-input" type="text" name="keywords" value="<?= it.keywords ? it.keywords : '' ?>"/>
-          <input class="submit-link" type="submit" value="Search Post" />
+          <input class="submit-link" type="submit" value="Search Topic" />
         </div>
       </div>
     </form>

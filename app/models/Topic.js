@@ -1,7 +1,7 @@
-var Post = require( BASE_DIR + 'db/schema' ).Post;
-var Flow = require( 'node.flow' );
+var Topic = require( BASE_DIR + 'db/schema' ).Topic;
+var Flow  = require( 'node.flow' );
 
-Post.statics = {
+Topic.statics = {
 
   paginate : function ( conds, opts, next, callback ){
     var reslut = {};
@@ -16,24 +16,24 @@ Post.statics = {
       self.find( conds ).
            sort( opts.sort[ 0 ], opts.sort[ 1 ]).
            skip( opts.skip ).
-           limit( opts.limit ).run( function ( err, posts ){
+           limit( opts.limit ).run( function ( err, topics ){
              if( err ){
                next( err );
                return;
              }
 
              callback && callback({
-               posts : posts,
-               count : count,
-               from  : opts.skip,
-               limit : opts.limit
+               topics : topics,
+               count  : count,
+               from   : opts.skip,
+               limit  : opts.limit
              });
            });
     });
   },
 };
 
-Post.methods = {
+Topic.methods = {
 
   inc_read_count : function (){
     this.read_count = this.read_count + 1;
@@ -51,7 +51,7 @@ Post.methods = {
   add_to_user : function ( user, callback ){
     var self = this;
 
-    user.posts.push( this );
+    user.topics.push( this );
     user.save( function ( err, user ){
       if( err ){
         console.log( err.message );
@@ -63,15 +63,15 @@ Post.methods = {
   },
 
   add_to_tag : function ( tag, callback ){
-    tag.posts.push( this );
+    tag.topics.push( this );
     tag.save( callback );
   },
 
   remove_from_tag : function ( tag, callback ){
-    var idx = tag.posts.indexOf( this._id );
+    var idx = tag.topics.indexOf( this._id );
 
     if( idx !== -1 ){
-      tag.posts.splice( idx, 1 );
+      tag.topics.splice( idx, 1 );
     }
 
     tag.save( callback );
@@ -129,9 +129,9 @@ Post.methods = {
       });
     }
 
-    // save the current post
+    // save the current topic
     flow.series( function ( next ){
-      self.save( function ( err, post ){
+      self.save( function ( err, topic ){
         next();
       });
     });
@@ -142,4 +142,4 @@ Post.methods = {
   }
 };
 
-require( 'mongoose' ).model( 'Post', Post );
+require( 'mongoose' ).model( 'Topic', Topic );

@@ -1,6 +1,6 @@
 var mongoose    = require( 'mongoose' );
 var User        = mongoose.model( 'User' );
-var Post        = mongoose.model( 'Post' );
+var Topic       = mongoose.model( 'Topic' );
 var Comment     = mongoose.model( 'Comment' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
@@ -12,17 +12,17 @@ module.exports = Application.extend({
   },
 
   create : function ( req, res, next ){
-    // redirect to 'posts/show' if not authenticated
+    // redirect to 'topics/show' if not authenticated
     if( !req.user ){
-      res.redirect( '/posts/show' );
+      res.redirect( '/topics/show' );
       return;
     }
 
-    Post.findById( req.params.id, function ( err, post ){
+    Topic.findById( req.params.id, function ( err, topic ){
       var user = req.user;
       var comment = new Comment({
         user    : user,
-        post    : post,
+        topic   : topic,
         content : req.body.comment.content
       });
 
@@ -32,11 +32,11 @@ module.exports = Application.extend({
           return;
         }
 
-        comment.add_to_post( post );
+        comment.add_to_topic( topic );
         comment.add_to_user( user );
 
         req.flash( 'flash-info', 'Comment created' );
-        res.redirect( '/posts/' + post._id );
+        res.redirect( '/topics/' + topic._id );
       });
     });
   },

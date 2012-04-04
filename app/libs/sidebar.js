@@ -1,7 +1,7 @@
 var Flow     = require( 'node.flow' );
 var mongoose = require( 'mongoose' );
 var User     = mongoose.model( 'User' );
-var Post     = mongoose.model( 'Post' );
+var Topic    = mongoose.model( 'Topic' );
 var Tag      = mongoose.model( 'Tag' );
 var Cache    = mongoose.model( 'Cache' );
 
@@ -24,7 +24,7 @@ module.exports = {
     flow.series( function ( next ){
       Tag.
         find().
-        sort( 'post_count', -1 ).
+        sort( 'topic_count', -1 ).
         limit( 20 ).
         run( function ( err, tags ){
           tags.forEach( function ( tag ){

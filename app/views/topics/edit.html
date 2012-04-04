@@ -1,11 +1,11 @@
-<? it.title = 'Editing posts'; ?>
+<? it.title = 'Editing topics'; ?>
 
-<form action="/posts/<?= it.post._id ?>" method="POST" accept-charset="UTF-8" >
+<form action="/topics/<?= it.topic._id ?>" method="POST" accept-charset="UTF-8" >
   <input type="hidden" name="_method" value="put" />
   <div id="table">
-    <?= it.partial( 'posts/_form' ) ?>
+    <?= it.partial( 'topics/_form' ) ?>
   </div>
-  <input class="submit-link" type="submit" value="Update post" /> |
+  <input class="submit-link" type="submit" value="Update topic" /> |
 </form>
 
-<a href="/posts/<?= it.post._id ?>">Show</a>
+<a href="/topics/<?= it.topic._id ?>">Show</a>

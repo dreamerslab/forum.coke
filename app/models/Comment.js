@@ -13,9 +13,9 @@ Comment.methods = {
     });
   },
 
-  add_to_post : function ( post, callback ){
-    post.comments.push( this );
-    post.save( callback );
+  add_to_topic : function ( topic, callback ){
+    topic.comments.push( this );
+    topic.save( callback );
   }
 };
 

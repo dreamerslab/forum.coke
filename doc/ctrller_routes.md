@@ -15,20 +15,20 @@
 ## Notification controller
 - /notifications
 
-## Post controller
-- /posts
-- /posts/new
-- /posts/:id
-- /posts/:id/edit
-- /posts/latest
-- /posts/trending
-- /posts/unsolved
-- /posts/search?keyword=xxx
-- /posts/tag?name=xxx
+## Topic controller
+- /topics
+- /topics/new
+- /topics/:id
+- /topics/:id/edit
+- /topics/latest
+- /topics/trending
+- /topics/unsolved
+- /topics/search?keyword=xxx
+- /topics/tag?name=xxx
 
 ## Comment controller
-- /posts/:id/comments [GET]
-- /posts/:id/comments [POST]
+- /topics/:id/comments [GET]
+- /topics/:id/comments [POST]
 
 ## Tag controller
 - /tags

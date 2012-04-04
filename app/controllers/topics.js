@@ -1,6 +1,6 @@
 var mongoose    = require( 'mongoose' );
 var User        = mongoose.model( 'User' );
-var Post        = mongoose.model( 'Post' );
+var Topic       = mongoose.model( 'Topic' );
 var Tag         = mongoose.model( 'Tag' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
@@ -30,8 +30,8 @@ module.exports = Application.extend({
                   skip  : req.query.from || 0,
                   limit : 20 };
 
-    Post.paginate( conds, opts, next, function ( result ){
-      res.render( 'posts/index', self._merge( req, result, '?' ));
+    Topic.paginate( conds, opts, next, function ( result ){
+      res.render( 'topics/index', self._merge( req, result, '?' ));
     });
   },
 
@@ -42,8 +42,8 @@ module.exports = Application.extend({
                   skip  : req.query.from || 0,
                   limit : 20 };
 
-    Post.paginate( conds, opts, next, function ( result ){
-      res.render( 'posts/index', self._merge( req, result, '?' ));
+    Topic.paginate( conds, opts, next, function ( result ){
+      res.render( 'topics/index', self._merge( req, result, '?' ));
     });
   },
 
@@ -54,8 +54,8 @@ module.exports = Application.extend({
                   skip  : req.query.from || 0,
                   limit : 20 };
 
-    Post.paginate( conds, opts, next, function ( result ){
-      res.render( 'posts/index', self._merge( req, result, '?' ));
+    Topic.paginate( conds, opts, next, function ( result ){
+      res.render( 'topics/index', self._merge( req, result, '?' ));
     });
   },
 
@@ -66,8 +66,8 @@ module.exports = Application.extend({
                   skip  : req.query.from || 0,
                   limit : 20 };
 
-    Post.paginate( conds, opts, next, function ( result ){
-      res.render( 'posts/index',
+    Topic.paginate( conds, opts, next, function ( result ){
+      res.render( 'topics/index',
         self._merge( req, result, '?name=' + req.query.name ));
     });
   },
@@ -75,7 +75,7 @@ module.exports = Application.extend({
   search : function ( req, res, next ){
     if( !req.query.keywords ){
       req.flash( 'flash-info', 'unknown keywords' );
-      res.redirect( '/posts' );
+      res.redirect( '/topics' );
 
       return;
 
@@ -88,10 +88,10 @@ module.exports = Application.extend({
                        skip  : req.query.from || 0,
                        limit : 20 };
 
-      Post.paginate( conds, opts, next, function ( result ){
+      Topic.paginate( conds, opts, next, function ( result ){
         result.keywords = keywords.join( ' ' );
 
-        res.render( 'posts/index',
+        res.render( 'topics/index',
           self._merge( req, result, '?keywords=' + keywords.join( '+' ) ));
       });
     }
@@ -100,139 +100,139 @@ module.exports = Application.extend({
   show : function ( req, res, next ){
     var self = this;
 
-    Post.findById( req.params.id ).
+    Topic.findById( req.params.id ).
          populate( 'user' ).
          populate( 'comments' ).
-         run( function ( err, post ){
-           if( post ){
-             post.inc_read_count();
-             res.render( 'posts/show',
-               self._merge( req, { post : post }, '' ));
+         run( function ( err, topic ){
+           if( topic ){
+             topic.inc_read_count();
+             res.render( 'topics/show',
+               self._merge( req, { topic : topic }, '' ));
              return;
            }
 
-           req.msg = 'Post';
+           req.msg = 'Topic';
            next( err );
          });
   },
 
   'new' : function ( req, res, next ){
-    res.render( 'posts/new',
+    res.render( 'topics/new',
       this._merge( req, {}, '' ));
   },
 
   create : function ( req, res, next ){
-    // delegate authenticaiton to 'posts/new'
+    // delegate authenticaiton to 'topics/new'
     if( !req.user ){
-      res.redirect( '/posts/new' );
+      res.redirect( '/topics/new' );
       return;
     }
 
     var user = req.user;
-    var post = new Post({
+    var topic = new Topic({
       user      : user,
-      title     : req.body.post.title,
-      content   : req.body.post.content,
-      tag_names : Tag.extract_names( req.body.post.tag_names )
+      title     : req.body.topic.title,
+      content   : req.body.topic.content,
+      tag_names : Tag.extract_names( req.body.topic.tag_names )
     });
 
-    post.save( function ( err, post ){
+    topic.save( function ( err, topic ){
       if( err ){
         next( err );
         return;
       }
 
-      post.update_tags( Tag );
-      post.add_to_user( user );
+      topic.update_tags( Tag );
+      topic.add_to_user( user );
 
-      req.flash( 'flash-info', 'Post created' );
-      res.redirect( '/posts/' + post._id );
+      req.flash( 'flash-info', 'Topic created' );
+      res.redirect( '/topics/' + topic._id );
     });
   },
 
   edit : function ( req, res, next ){
     var self = this;
 
-    Post.findById( req.params.id, function ( err, post ){
+    Topic.findById( req.params.id, function ( err, topic ){
       if( err ){
-        req.msg = 'Post';
+        req.msg = 'Topic';
         next( err );
         return;
       }
 
-      if( post.is_owner( req.user )){
-        res.render( 'posts/edit',
-          self._merge( req, { post : post }, '' ));
+      if( topic.is_owner( req.user )){
+        res.render( 'topics/edit',
+          self._merge( req, { topic : topic }, '' ));
       }else{
-        req.flash( 'flash-info', 'Permission denied: not your post' );
-        res.redirect( '/posts/' + post._id );
+        req.flash( 'flash-info', 'Permission denied: not your topic' );
+        res.redirect( '/topics/' + topic._id );
       }
     });
   },
 
   update : function ( req, res, next ){
-    // delegate authenticaiton to 'posts/edit'
+    // delegate authenticaiton to 'topics/edit'
     if( !req.user ){
-      res.redirect( '/posts/edit' );
+      res.redirect( '/topics/edit' );
       return;
     }
 
-    Post.findById( req.params.id, function ( err, post ){
+    Topic.findById( req.params.id, function ( err, topic ){
       if( err ){
-        req.msg = 'Post';
+        req.msg = 'Topic';
         next( err );
         return;
       }
 
-      if( post.is_owner( req.user )){
-        post.title     = req.body.post.title;
-        post.content   = req.body.post.content;
-        post.tag_names = Tag.extract_names( req.body.post.tag_names );
-        post.save( function ( err, post ){
+      if( topic.is_owner( req.user )){
+        topic.title     = req.body.topic.title;
+        topic.content   = req.body.topic.content;
+        topic.tag_names = Tag.extract_names( req.body.topic.tag_names );
+        topic.save( function ( err, topic ){
           if( err ){
             next( err );
             return;
           }
 
-          post.update_tags( Tag );
-          req.flash( 'flash-info', 'Post updated' );
-          res.redirect( '/posts/' + post._id );
+          topic.update_tags( Tag );
+          req.flash( 'flash-info', 'Topic updated' );
+          res.redirect( '/topics/' + topic._id );
         });
       }else{
-        req.flash( 'flash-info', 'Permission denied: not your post' );
-        res.redirect( '/posts/' + post._id );
+        req.flash( 'flash-info', 'Permission denied: not your topic' );
+        res.redirect( '/topics/' + topic._id );
       }
     });
   },
 
   destroy : function ( req, res, next ){
-    // delegate authenticaiton to 'posts/edit'
+    // delegate authenticaiton to 'topics/edit'
     if( !req.user ){
-      res.redirect( '/posts/edit' );
+      res.redirect( '/topics/edit' );
       return;
     }
 
-    Post.findById( req.params.id, function ( err, post ){
+    Topic.findById( req.params.id, function ( err, topic ){
       if( err ){
-        req.msg = 'Post';
+        req.msg = 'Topic';
         next( err );
         return;
       }
 
-      if( post.is_owner( req.user )){
-        post.remove( function ( err, post ){
+      if( topic.is_owner( req.user )){
+        topic.remove( function ( err, topic ){
           if( err ){
-            req.msg = 'Post';
+            req.msg = 'Topic';
             next( err );
             return;
           }
 
-          req.flash( 'flash-info', 'Post deleted' );
-          res.redirect( '/posts' );
+          req.flash( 'flash-info', 'Topic deleted' );
+          res.redirect( '/topics' );
         });
       }else{
-        req.flash( 'flash-info', 'Permission denied: not your post' );
-        res.redirect( '/posts/' + post._id );
+        req.flash( 'flash-info', 'Permission denied: not your topic' );
+        res.redirect( '/topics/' + topic._id );
       }
     });
   },
@@ -244,7 +244,7 @@ module.exports = Application.extend({
       find().
       sort( 'name', 1 ).
       run( function ( err, tags ){
-        res.render( 'posts/tags',
+        res.render( 'topics/tags',
           self._merge( req, { tags : tags }, '' ));
       });
   }

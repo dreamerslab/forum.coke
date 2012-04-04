@@ -3,9 +3,9 @@ var mongoose = require( 'mongoose' );
 
 
 module.exports = {
-  post_save : function ( next ){
-    var User = mongoose.model( 'User' );
-    var Post = mongoose.model( 'Post' );
+  topic_save : function ( next ){
+    var User  = mongoose.model( 'User' );
+    var topic = mongoose.model( 'topic' );
 
     // // add comment's _id to its user
     // User.update(
@@ -18,9 +18,9 @@ module.exports = {
     //     }
     //   });
 
-    // // add comment's _id to its post
-    // Post.update(
-    //   { _id : this.post },
+    // // add comment's _id to its topic
+    // topic.update(
+    //   { _id : this.topic },
     //   { $push : { comments : this._id }},
     //   function ( err ){
     //     if( err ){

@@ -16,13 +16,13 @@ Model.User = new Schema({
   email       : { type : String },
   picture     : { type : String },
   rating      : { type : Number },
-  posts       : [{ type : ObjectId, ref : 'Post' }],
+  topics      : [{ type : ObjectId, ref : 'Topic' }],
   comments    : [{ type : ObjectId, ref : 'Comment' }],
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
 });
 
-Model.Post = new Schema({
+Model.Topic = new Schema({
   user        : { type : ObjectId, required : true, ref : 'User' },
   as_user     : { type : Schema.Types.Mixed },
   title       : { type : String },
@@ -39,7 +39,7 @@ Model.Post = new Schema({
 Model.Comment = new Schema({
   user        : { type : ObjectId, required : true, ref : 'User' },
   as_user     : { type : Schema.Types.Mixed },
-  post        : { type : ObjectId, required : true, ref : 'Post' },
+  topic       : { type : ObjectId, required : true, ref : 'Topic' },
   content     : { type : String },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
@@ -48,13 +48,13 @@ Model.Comment = new Schema({
 Model.Tag = new Schema({
   name        : { type : String, required : true,
                   index : { unique : true, dropDups : true }},
-  posts       : [{ type : ObjectId, ref : 'Post' }],
-  post_count  : { type : Number, 'default' : 0 }
+  topics      : [{ type : ObjectId, ref : 'Topic' }],
+  topic_count : { type : Number, 'default' : 0 }
 });
 
 Model.Notification = new Schema({
   user        : { type : ObjectId, required : true, ref : 'User' },
-  post        : { type : ObjectId, required : true, ref : 'Post' },
+  topic       : { type : ObjectId, required : true, ref : 'Topic' },
   message     : { type : String, required : true },
   is_read     : { type : Boolean, 'defaullt' : false },
   created_at  : { type : Number, 'default' : Date.now },
@@ -74,13 +74,13 @@ Object.keys( Model ).forEach( function ( model ){
 
 
 
-var post_hooks    = require( LIB_DIR + 'post_hooks' );
+var topic_hooks    = require( LIB_DIR + 'topic_hooks' );
 var comment_hooks = require( LIB_DIR + 'comment_hooks' );
 
-Model.Post.pre( 'remove', post_hooks.pre_remove );
+Model.Topic.pre( 'remove', topic_hooks.pre_remove );
 Model.Comment.pre( 'remove', comment_hooks.pre_remove );
 Model.Tag.pre( 'save', function ( next ){
-  this.post_count = this.posts.length;
+  this.topic_count = this.topics.length;
   next();
 });
 

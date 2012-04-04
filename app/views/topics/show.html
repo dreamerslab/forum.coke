@@ -1,32 +1,32 @@
 <hr />
 
-<? it.title = 'Showing post'; ?>
+<? it.title = 'Showing topic'; ?>
 
-<div class="post-content">
-  <div>Post Author:
-    <a href="/users/<?= it.post.as_user._id ;?>">
-      <?= it.post.as_user.name ?>
+<div class="topic-content">
+  <div>Topic Author:
+    <a href="/users/<?= it.topic.as_user._id ;?>">
+      <?= it.topic.as_user.name ?>
     </a>
  </div>
-  <div>Avatar: <img src="<?= it.post.as_user.avatar_link ?>" /></div>
-  <div>Tags: <?= it.post.tag_names.join(', ') ?></div>
-  <div>Title: <?= it.post.title ?></div>
-  <div>Content: <?= it.post.content ?></div>
-  <div>Modified: <?= new Date( it.post.updated_at ) ?></div>
+  <div>Avatar: <img src="<?= it.topic.as_user.avatar_link ?>" /></div>
+  <div>Tags: <?= it.topic.tag_names.join(', ') ?></div>
+  <div>Title: <?= it.topic.title ?></div>
+  <div>Content: <?= it.topic.content ?></div>
+  <div>Modified: <?= new Date( it.topic.updated_at ) ?></div>
 
-  <? if( it.post.is_owner( it.sess_user )){ ?>
-    <a href="/posts/<?= it.post._id ?>/edit">Edit the post</a>
+  <? if( it.topic.is_owner( it.sess_user )){ ?>
+    <a href="/topics/<?= it.topic._id ?>/edit">Edit the topic</a>
 
-    <form action="/posts/<?= it.post._id ?>" method="POST" accept-charset="UTF-8" >
+    <form action="/topics/<?= it.topic._id ?>" method="POST" accept-charset="UTF-8" >
       <input type="hidden" name="_method" value="delete" />
       <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
-      <input class="submit-link" type="submit" value="Delete the post" />
+      <input class="submit-link" type="submit" value="Delete the topic" />
     </form>
   <? }; ?>
 
   <hr />
-  <div class="post-comments">
-    <? it.post.comments.forEach( function ( comment ){ ?>
+  <div class="topic-comments">
+    <? it.topic.comments.forEach( function ( comment ){ ?>
       <div>
         Commentor:
         <a href="/users/<?= comment.as_user._id ;?>">
@@ -43,7 +43,7 @@
   <? if( it.sess_user ){ ?>
     <div class="new-comment">
       <h2> New comment </h2>
-      <form action="/posts/<?= it.post._id ?>/comments" method="POST" accept-charset="UTF-8" >
+      <form action="/topics/<?= it.topic._id ?>/comments" method="POST" accept-charset="UTF-8" >
         <div id="table">
           <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
           <div class="form-row">

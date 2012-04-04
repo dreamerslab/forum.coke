@@ -1,10 +1,10 @@
 var mongoose = require( 'mongoose' );
-var User     = mongoose.model( 'User' );
 
 module.exports = {
 
   pre_remove : function ( next ){
     var self = this;
+    var User = mongoose.model( 'User' );
 
     User.findById( this.user, function ( err, user ){
       if( err ){

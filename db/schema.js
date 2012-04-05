@@ -78,7 +78,9 @@ Object.keys( Model ).forEach( function ( model ){
 var topic_hooks   = require( LIB_DIR + 'topic_hooks' );
 var comment_hooks = require( LIB_DIR + 'comment_hooks' );
 
+Model.Topic.pre( 'save', topic_hooks.pre_save );
 Model.Topic.pre( 'remove', topic_hooks.pre_remove );
+
 Model.Comment.pre( 'save', comment_hooks.pre_save );
 Model.Comment.post( 'save', comment_hooks.post_save );
 Model.Comment.pre( 'remove', comment_hooks.pre_remove );

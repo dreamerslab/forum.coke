@@ -3,6 +3,21 @@ var mongoose = require( 'mongoose' );
 
 
 module.exports = {
+  pre_save : function ( next ){
+    var self = this;
+    var User = mongoose.model( 'User' );
+
+    User.findById( this.user, function ( err, user ){
+      if( err ){
+        next( err );
+        return;
+      }
+
+      self.as_user = user.obj_attrs();
+      next();
+    });
+  },
+
   pre_remove : function ( next ){
     var User    = mongoose.model( 'User' );
     var Tag     = mongoose.model( 'Tag' );

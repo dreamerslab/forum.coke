@@ -57,7 +57,6 @@ Topic.methods = {
         console.log( err.message );
       }
 
-      self.as_user = user.obj_attrs();
       self.save( callback );
     });
   },

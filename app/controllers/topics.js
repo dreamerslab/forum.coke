@@ -22,7 +22,7 @@ module.exports = Application.extend({
     before( this.fill_sidebar );
     before( this.ensure_authenticated, {
       only : [ 'new', 'create', 'edit', 'update', 'destroy',
-               'create_comment' ]});
+               'create_comment', 'destroy_comment' ]});
   },
 
   latest : function ( req, res, next ){

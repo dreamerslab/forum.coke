@@ -37,6 +37,7 @@ Model.Topic = new Schema({
 });
 
 Model.Comment = new Schema({
+  post : {},
   user        : { type : ObjectId, required : true, ref : 'User' },
   as_user     : { type : Schema.Types.Mixed },
   topic       : { type : ObjectId, required : true, ref : 'Topic' },
@@ -74,11 +75,14 @@ Object.keys( Model ).forEach( function ( model ){
 
 
 
-var topic_hooks    = require( LIB_DIR + 'topic_hooks' );
+var topic_hooks   = require( LIB_DIR + 'topic_hooks' );
 var comment_hooks = require( LIB_DIR + 'comment_hooks' );
 
 Model.Topic.pre( 'remove', topic_hooks.pre_remove );
+Model.Comment.pre( 'save', comment_hooks.pre_save );
+Model.Comment.post( 'save', comment_hooks.post_save );
 Model.Comment.pre( 'remove', comment_hooks.pre_remove );
+
 Model.Tag.pre( 'save', function ( next ){
   this.topic_count = this.topics.length;
   next();

@@ -32,9 +32,6 @@ module.exports = Application.extend({
           return;
         }
 
-        comment.add_to_topic( topic );
-        comment.add_to_user( user );
-
         req.flash( 'flash-info', 'Comment created' );
         res.redirect( '/topics/' + topic._id );
       });

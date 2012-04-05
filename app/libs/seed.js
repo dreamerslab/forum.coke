@@ -107,11 +107,7 @@ module.exports = {
             comment.user  = user;
             comment.topic = topic;
             new Comment( comment ).save( function ( err, comment ){
-              comment.add_to_user( user, function (){
-                comment.add_to_topic( topic, function (){
-                  ready();
-                });
-              });
+              ready();
             });
           });
         });

@@ -18,6 +18,33 @@ module.exports = {
     });
   },
 
+  post_save : function (){
+    var self = this;
+    var User = mongoose.model( 'User' );
+
+    // add topic's _id to its user
+    User.findById( this.user, function ( err, user ){
+      if( err ){
+        next( err );
+        return;
+      }
+
+      if( user.topics.indexOf( self._id ) === -1 ){
+        User.update(
+          { _id : self.user },
+          { $push : { topics : self._id }},
+          function ( err ){
+            if( err ){
+              // next( err );
+              // NOTE: there is not 'next' in mongoose's
+              // post middleware, how can I handle error?
+              return;
+            }
+          });
+        }
+      });
+  },
+
   pre_remove : function ( next ){
     var User    = mongoose.model( 'User' );
     var Tag     = mongoose.model( 'Tag' );

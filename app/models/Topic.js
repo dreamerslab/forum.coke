@@ -48,19 +48,6 @@ Topic.methods = {
     return false;
   },
 
-  add_to_user : function ( user, callback ){
-    var self = this;
-
-    user.topics.push( this );
-    user.save( function ( err, user ){
-      if( err ){
-        console.log( err.message );
-      }
-
-      self.save( callback );
-    });
-  },
-
   add_to_tag : function ( tag, callback ){
     tag.topics.push( this );
     tag.save( callback );

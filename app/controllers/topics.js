@@ -143,7 +143,6 @@ module.exports = Application.extend({
       }
 
       topic.update_tags( Tag );
-      topic.add_to_user( user );
 
       req.flash( 'flash-info', 'Topic created' );
       res.redirect( '/topics/' + topic._id );

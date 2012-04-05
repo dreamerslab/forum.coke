@@ -62,7 +62,7 @@ module.exports = {
 
     // remove topic's _id from its tags
     Tag.update(
-      { _id : { $in : this.tags }},
+      { name : { $in : this.tag_names }},
       { $pull : { topics : this._id }},
       { multi : true },
       function ( err ){

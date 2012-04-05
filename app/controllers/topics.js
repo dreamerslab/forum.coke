@@ -277,4 +277,30 @@ module.exports = Application.extend({
     });
   },
 
+  destroy_comment : function ( req, res, next ){
+    Comment.findById( req.body.comment_id, function ( err, comment ){
+      if( err ){
+        req.msg = 'Topic';
+        next( err );
+        return;
+      }
+
+      if( comment.is_owner( req.user )){
+        comment.remove( function ( err, comment ){
+          if( err ){
+            req.msg = 'Comment';
+            next( err );
+            return;
+          }
+
+          req.flash( 'flash-info', 'Comment deleted' );
+          res.redirect( '/topics/' + req.params.id );
+        });
+      }else{
+        req.flash( 'flash-info', 'Permission denied: not your comment' );
+        res.redirect( '/topics/' + req.params.id );
+      }
+    });
+  },
+
 });

@@ -2,6 +2,7 @@ var mongoose    = require( 'mongoose' );
 var User        = mongoose.model( 'User' );
 var Topic       = mongoose.model( 'Topic' );
 var Tag         = mongoose.model( 'Tag' );
+var Comment     = mongoose.model( 'Comment' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
 
@@ -20,7 +21,8 @@ module.exports = Application.extend({
   init : function ( before, after ){
     before( this.fill_sidebar );
     before( this.ensure_authenticated, {
-      only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
+      only : [ 'new', 'create', 'edit', 'update', 'destroy',
+               'create_comment' ]});
   },
 
   latest : function ( req, res, next ){
@@ -246,5 +248,33 @@ module.exports = Application.extend({
         res.render( 'topics/tags',
           self._merge( req, { tags : tags }, '' ));
       });
-  }
+  },
+
+  create_comment : function ( req, res, next ){
+    // redirect to 'topics/show' if not authenticated
+    if( !req.user ){
+      res.redirect( '/topics/show' );
+      return;
+    }
+
+    Topic.findById( req.params.id, function ( err, topic ){
+      var user = req.user;
+      var comment = new Comment({
+        user    : user,
+        topic   : topic,
+        content : req.body.comment.content
+      });
+
+      comment.save( function ( err, comment ){
+        if( err ){
+          next( err );
+          return;
+        }
+
+        req.flash( 'flash-info', 'Comment created' );
+        res.redirect( '/topics/' + topic._id );
+      });
+    });
+  },
+
 });

@@ -10,7 +10,8 @@ module.exports = function ( map ){
   map.get( 'topics/search', 'topics#search' );
   map.get( 'topics/tag', 'topics#tag' );
   map.get( 'topics/tags', 'topics#tags' );
-  map.post( 'topics/:id/comments', 'comments#create' );
+
+  map.post( 'topics/:id/create-comment', 'topics#create_comment' );
 
   map.get( 'topics', 'topics#latest' );
   map.get( 'topics/index', 'topics#latest' );

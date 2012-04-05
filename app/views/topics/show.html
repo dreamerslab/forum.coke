@@ -43,7 +43,7 @@
   <? if( it.sess_user ){ ?>
     <div class="new-comment">
       <h2> New comment </h2>
-      <form action="/topics/<?= it.topic._id ?>/comments" method="POST" accept-charset="UTF-8" >
+      <form action="/topics/<?= it.topic._id ?>/create-comment" method="POST" accept-charset="UTF-8" >
         <div id="table">
           <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
           <div class="form-row">

@@ -25,7 +25,6 @@ module.exports = {
     // add topic's _id to its user
     User.findById( this.user, function ( err, user ){
       if( err ){
-        next( err );
         return;
       }
 
@@ -41,8 +40,8 @@ module.exports = {
               return;
             }
           });
-        }
-      });
+      }
+    });
   },
 
   pre_remove : function ( next ){

@@ -172,12 +172,6 @@ module.exports = Application.extend({
   },
 
   update : function ( req, res, next ){
-    // delegate authenticaiton to 'topics/edit'
-    if( !req.user ){
-      res.redirect( '/topics/edit' );
-      return;
-    }
-
     Topic.findById( req.params.id, function ( err, topic ){
       if( err ){
         req.msg = 'Topic';
@@ -207,12 +201,6 @@ module.exports = Application.extend({
   },
 
   destroy : function ( req, res, next ){
-    // delegate authenticaiton to 'topics/edit'
-    if( !req.user ){
-      res.redirect( '/topics/edit' );
-      return;
-    }
-
     Topic.findById( req.params.id, function ( err, topic ){
       if( err ){
         req.msg = 'Topic';
@@ -251,12 +239,6 @@ module.exports = Application.extend({
   },
 
   create_comment : function ( req, res, next ){
-    // redirect to 'topics/show' if not authenticated
-    if( !req.user ){
-      res.redirect( '/topics/show' );
-      return;
-    }
-
     Topic.findById( req.params.id, function ( err, topic ){
       var user = req.user;
       var comment = new Comment({

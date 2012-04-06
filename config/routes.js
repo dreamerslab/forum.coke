@@ -4,6 +4,8 @@ module.exports = function ( map ){
   map.get( 'auth/google', 'auth#google' );
   map.get( 'auth/callback', 'auth#callback' );
 
+  map.get( 'notifications', 'notifications#index' );
+
   map.get( 'users', 'users#index' );
   map.get( 'users/:id', 'users#show' );
 

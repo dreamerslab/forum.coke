@@ -3,6 +3,7 @@ var User     = mongoose.model( 'User' );
 var Topic    = mongoose.model( 'Topic' );
 var Comment  = mongoose.model( 'Comment' );
 var Tag      = mongoose.model( 'Tag' );
+var Notif    = mongoose.model( 'Notification' );
 var Cache    = mongoose.model( 'Cache' );
 var Flow     = require( 'node.flow' );
 var flow     = new Flow();
@@ -45,7 +46,9 @@ module.exports = {
           Comment.collection.drop( function (){
             Cache.collection.drop( function (){
               Tag.collection.drop( function (){
-                next();
+                Notif.collection.drop( function (){
+                  next();
+                }); // end of drop Notif.collection
               }); // end of drop Tap.collection
             }); // end of drop Cache.collection
           }); // end of drop Comment.collection

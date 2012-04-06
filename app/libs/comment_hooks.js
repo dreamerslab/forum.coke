@@ -22,6 +22,7 @@ module.exports = {
     var self  = this;
     var User  = mongoose.model( 'User' );
     var Topic = mongoose.model( 'Topic' );
+    var Notif = mongoose.model( 'Notification' );
 
     // add comment's _id to its user
     User.findById( this.user, function ( err, user ){
@@ -62,7 +63,6 @@ module.exports = {
           { $push : { comments : self._id }},
           function ( err ){
             if( err ){
-              next( err );
               // next( err );
               // NOTE: there is not 'next' in mongoose's
               // post middleware, how can I handle error?
@@ -70,6 +70,9 @@ module.exports = {
             }
           });
       }
+      console.log( topic.title );
+
+      Notif.send( 'create-comment', topic, self );
     });
   },
 

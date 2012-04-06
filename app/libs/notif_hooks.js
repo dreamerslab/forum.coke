@@ -11,4 +11,13 @@ module.exports = {
     this.activity = Message[ this.type ];
     next();
   },
+
+  post_save : function (){
+    self = this;
+    mongoose.model( 'User' ).findById( this.user, function( err, user ){
+      console.log( '---' );
+      console.log( 'Hey, ' + user.name );
+      console.log( self.originator.name + ' ' + self.activity + ': ' + self.topic.title );
+    });
+  },
 };

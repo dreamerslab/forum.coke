@@ -53,9 +53,10 @@ Model.Tag = new Schema({
 
 Model.Notification = new Schema({
   user        : { type : ObjectId, required : true, ref : 'User' },
+  type        : { type : String, required : true },
   originator  : { type : Schema.Types.Mixed },
   topic       : { type : Schema.Types.Mixed },
-  activity    : { type : String, required : true },
+  activity    : { type : String },
   is_read     : { type : Boolean, 'defaullt' : false },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
@@ -76,6 +77,7 @@ Object.keys( Model ).forEach( function ( model ){
 
 var topic_hooks   = require( LIB_DIR + 'topic_hooks' );
 var comment_hooks = require( LIB_DIR + 'comment_hooks' );
+var notif_hooks   = require( LIB_DIR + 'notif_hooks' );
 
 Model.Topic.pre( 'save', topic_hooks.pre_save );
 Model.Topic.post( 'save', topic_hooks.post_save );
@@ -84,6 +86,9 @@ Model.Topic.pre( 'remove', topic_hooks.pre_remove );
 Model.Comment.pre( 'save', comment_hooks.pre_save );
 Model.Comment.post( 'save', comment_hooks.post_save );
 Model.Comment.pre( 'remove', comment_hooks.pre_remove );
+
+Model.Notification.pre( 'save', notif_hooks.pre_save );
+
 
 Model.Tag.pre( 'save', function ( next ){
   this.topic_count = this.topics.length;

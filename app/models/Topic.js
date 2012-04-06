@@ -12,22 +12,23 @@ Topic.statics = {
         return;
       }
 
-      self.find( conds ).
-           sort( opts.sort[ 0 ], opts.sort[ 1 ]).
-           skip( opts.skip ).
-           limit( opts.limit ).run( function ( err, topics ){
-             if( err ){
-               next( err );
-               return;
-             }
+      self.
+        find( conds ).
+        sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+        skip( opts.skip ).
+        limit( opts.limit ).run( function ( err, topics ){
+          if( err ){
+            next( err );
+            return;
+          }
 
-             callback && callback({
-               topics : topics,
-               count  : count,
-               from   : opts.skip,
-               limit  : opts.limit
-             });
-           });
+          callback && callback({
+            topics : topics,
+            count  : count,
+            from   : opts.skip,
+            limit  : opts.limit
+          });
+        });
     });
   },
 };

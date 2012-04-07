@@ -13,11 +13,15 @@ module.exports = {
   },
 
   post_save : function (){
-    self = this;
-    mongoose.model( 'User' ).findById( this.user, function( err, user ){
+    var self = this;
+    var User = mongoose.model( 'User' );
+
+    User.findById( this.user, function( err, user ){
       console.log( '---' );
       console.log( 'Hey, ' + user.name );
-      console.log( self.originator.name + ' ' + self.activity + ': ' + self.topic.title );
+      console.log(
+        self.originator.name + ' ' +
+        self.activity + ': ' + self.topic.title );
     });
   },
 };

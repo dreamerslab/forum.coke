@@ -76,6 +76,7 @@ Object.keys( Model ).forEach( function ( model ){
 
 
 var topic_hooks   = require( LIB_DIR + 'topic_hooks' );
+var tag_hooks     = require( LIB_DIR + 'tag_hooks' );
 var comment_hooks = require( LIB_DIR + 'comment_hooks' );
 var notif_hooks   = require( LIB_DIR + 'notif_hooks' );
 
@@ -83,18 +84,14 @@ Model.Topic.pre( 'save', topic_hooks.pre_save );
 Model.Topic.post( 'save', topic_hooks.post_save );
 Model.Topic.pre( 'remove', topic_hooks.pre_remove );
 
+Model.Tag.pre( 'save', tag_hooks.pre_save );
+
 Model.Comment.pre( 'save', comment_hooks.pre_save );
 Model.Comment.post( 'save', comment_hooks.post_save );
 Model.Comment.pre( 'remove', comment_hooks.pre_remove );
 
 Model.Notification.pre( 'save', notif_hooks.pre_save );
 Model.Notification.post( 'save', notif_hooks.post_save );
-
-
-Model.Tag.pre( 'save', function ( next ){
-  this.topic_count = this.topics.length;
-  next();
-});
 
 
 

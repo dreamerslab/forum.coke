@@ -19,8 +19,9 @@ module.exports = {
   },
 
   post_save : function (){
-    var self = this;
-    var User = mongoose.model( 'User' );
+    var self  = this;
+    var User  = mongoose.model( 'User' );
+    var Notif = mongoose.model( 'Notification' );
 
     // add topic's _id to its user
     User.findById( this.user, function ( err, user ){
@@ -42,6 +43,9 @@ module.exports = {
           });
       }
     });
+
+    if( this.updated_at !== this.created_at )
+      Notif.send( 'update-topic', this );
   },
 
   pre_remove : function ( next ){

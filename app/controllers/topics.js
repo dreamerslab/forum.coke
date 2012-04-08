@@ -6,8 +6,8 @@ var Comment     = mongoose.model( 'Comment' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
 
-module.exports = Application.extend({
 
+module.exports = Application.extend({
   _merge : function ( req, result, base_query ){
     return UTILS.merge( result, {
       sidebar   : req.sidebar,
@@ -78,9 +78,7 @@ module.exports = Application.extend({
     if( !req.query.keywords ){
       req.flash( 'flash-info', 'unknown keywords' );
       res.redirect( '/topics' );
-
       return;
-
     }else{
       var keywords = req.query.keywords.split( /\s+|\+/ );
       var regexp   = new RegExp( keywords.join( '|' ), 'gi' );
@@ -102,20 +100,21 @@ module.exports = Application.extend({
   show : function ( req, res, next ){
     var self = this;
 
-    Topic.findById( req.params.id ).
-         populate( 'user' ).
-         populate( 'comments' ).
-         run( function ( err, topic ){
-           if( topic ){
-             topic.inc_read_count();
-             res.render( 'topics/show',
-               self._merge( req, { topic : topic }, '' ));
-             return;
-           }
+    Topic.
+      findById( req.params.id ).
+      populate( 'user' ).
+      populate( 'comments' ).
+      run( function ( err, topic ){
+        if( topic ){
+          topic.inc_read_count();
+          res.render( 'topics/show',
+            self._merge( req, { topic : topic }, '' ));
+          return;
+        }
 
-           req.msg = 'Topic';
-           next( err );
-         });
+        req.msg = 'Topic';
+        next( err );
+      });
   },
 
   'new' : function ( req, res, next ){

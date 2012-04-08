@@ -2,8 +2,9 @@ var mongoose    = require( 'mongoose' );
 var User        = mongoose.model( 'User' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
-module.exports = Application.extend({
 
+
+module.exports = Application.extend({
   init : function ( before, after ){
     before( this.fill_sidebar );
   },

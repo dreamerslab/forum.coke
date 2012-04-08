@@ -56,15 +56,9 @@ module.exports = Class.extend({
     Cache.findOne({
       name : 'sidebar'
     }, function ( err, cache ){
-      if( cache && cache.trunk ){
-        req.sidebar = cache.trunk;
-      }else{
-        req.sidebar = {
-          tags   : [],
-          users  : [],
-          issues : []
-        };
-      }
+      req.sidebar = cache && cache.trunk ?
+        cache.trunk :
+        { tags : [], users : [], issues : []};
 
       next();
     });

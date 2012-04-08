@@ -73,8 +73,23 @@ Notification.statics = {
               }).save();
             }
           });
-        }else if( type === 'update-topic' ){
+        }
 
+        if( type === 'update-topic' ){
+          User.findById( topic_user_id, function ( err, user ){
+            if( err ) return;
+
+            // notify all subscribers
+            subscribers.forEach( function ( subr ){
+              new self({
+                user       : subr._id,
+                type       : type,
+                originator : user.obj_attrs(),
+                topic      : topic.obj_attrs(),
+                activity   : 'updated on the topic'
+              }).save();
+            });
+          });
         }
       });
   }

@@ -49,7 +49,10 @@ Notification.statics = {
 
           subscribers = exclude( subscribers, comment_user_id );
           User.findById( comment_user_id, function ( err, user ){
-            if( err ) return;
+            if( err ){
+              // TODO: log the error
+              return;
+            }
 
             // notify all subscribers
             subscribers.forEach( function ( subr ){
@@ -77,7 +80,10 @@ Notification.statics = {
 
         if( type === 'update-topic' ){
           User.findById( topic_user_id, function ( err, user ){
-            if( err ) return;
+            if( err ){
+              // TODO: log the error
+              return;
+            }
 
             // notify all subscribers
             subscribers.forEach( function ( subr ){

@@ -47,11 +47,9 @@ Topic.methods = {
   },
 
   is_owner : function( user ){
-    if( user ){
-      return this.as_user._id.toString() === user._id.toString();
-    }
-
-    return false;
+    return user ?
+      this.as_user._id.toString() === user._id.toString() :
+      false;
   },
 
   add_to_tag : function ( tag, callback ){

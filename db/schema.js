@@ -25,8 +25,8 @@ Model.User = new Schema({
 Model.Topic = new Schema({
   user        : { type : ObjectId, required : true, ref : 'User' },
   as_user     : { type : Schema.Types.Mixed },
-  title       : { type : String },
-  content     : { type : String },
+  title       : { type : String, required : true },
+  content     : { type : String, required : true },
   tag_names   : [{ type : String}],
   tags        : [{ type : ObjectId, ref : 'Tag' }],
   comments    : [{ type : ObjectId, ref : 'Comment' }],
@@ -39,7 +39,7 @@ Model.Comment = new Schema({
   user        : { type : ObjectId, required : true, ref : 'User' },
   as_user     : { type : Schema.Types.Mixed },
   topic       : { type : ObjectId, required : true, ref : 'Topic' },
-  content     : { type : String },
+  content     : { type : String, required : true },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }
 });
@@ -54,9 +54,9 @@ Model.Tag = new Schema({
 Model.Notification = new Schema({
   user        : { type : ObjectId, required : true, ref : 'User' },
   type        : { type : String, required : true },
+  activity    : { type : String, required : true },
   originator  : { type : Schema.Types.Mixed },
   topic       : { type : Schema.Types.Mixed },
-  activity    : { type : String },
   is_read     : { type : Boolean, 'default' : false },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number, 'default' : Date.now }

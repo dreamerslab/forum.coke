@@ -70,7 +70,6 @@ module.exports = {
             }
           });
       }
-      console.log( topic.title );
 
       Notif.send( 'create-comment', topic, self );
     });

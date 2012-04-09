@@ -1,5 +1,6 @@
 var mongoose    = require( 'mongoose' );
 var User        = mongoose.model( 'User' );
+var Notif       = mongoose.model( 'Notification' );
 var Topic       = mongoose.model( 'Topic' );
 var Tag         = mongoose.model( 'Tag' );
 var Comment     = mongoose.model( 'Comment' );
@@ -99,6 +100,16 @@ module.exports = Application.extend({
 
   show : function ( req, res, next ){
     var self = this;
+
+    if( req.query.nid ){
+      Notif.update(
+        { _id : req.query.nid },
+        { $set : { is_read : true }},
+        function ( err ){
+          res.redirect( "/topics/" + req.params.id );
+          return;
+        });
+    }
 
     Topic.
       findById( req.params.id ).

@@ -80,6 +80,7 @@ var tag_hooks     = require( LIB_DIR + 'tag_hooks' );
 var comment_hooks = require( LIB_DIR + 'comment_hooks' );
 var notif_hooks   = require( LIB_DIR + 'notif_hooks' );
 
+Model.Topic.post( 'init', topic_hooks.post_init );
 Model.Topic.pre( 'save', topic_hooks.pre_save );
 Model.Topic.post( 'save', topic_hooks.post_save );
 Model.Topic.pre( 'remove', topic_hooks.pre_remove );

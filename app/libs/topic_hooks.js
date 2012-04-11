@@ -3,6 +3,10 @@ var mongoose = require( 'mongoose' );
 
 
 module.exports = {
+  post_init : function (){
+    this.orig_tag_names = this.tag_names;
+  },
+
   pre_save : function ( next ){
     var self = this;
     var User = mongoose.model( 'User' );

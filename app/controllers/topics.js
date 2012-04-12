@@ -154,8 +154,6 @@ module.exports = Application.extend({
         return;
       }
 
-      topic.update_tags( Tag );
-
       req.flash( 'flash-info', 'Topic created' );
       res.redirect( '/topics/' + topic._id );
     });
@@ -199,7 +197,6 @@ module.exports = Application.extend({
             return;
           }
 
-          topic.update_tags( Tag );
           req.flash( 'flash-info', 'Topic updated' );
           res.redirect( '/topics/' + topic._id );
         });

@@ -84,7 +84,6 @@ module.exports = {
           topic.user      = user;
           topic.tag_names = Tag.extract_names( string );
           new Topic( topic ).save( function ( err, topic ){
-            topic.update_tags( Tag ); // async but no callback
             ready();
           });
         });

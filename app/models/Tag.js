@@ -1,4 +1,5 @@
-var Tag = require( BASE_DIR + 'db/schema' ).Tag;
+var Tag  = require( BASE_DIR + 'db/schema' ).Tag;
+var Flow = require( 'node.flow' );
 
 
 
@@ -20,7 +21,83 @@ Tag.statics = {
 
       return names.sort();
     }
-  }
+  },
+
+  create_all : function ( tag_names, callback ){
+    var self = this;
+    var flow = new Flow();
+
+    tag_names.forEach( function ( name ){
+      flow.series( function ( name, next ){
+        self.findOne({ name : name }, function ( err, tag ){
+          if( err ){
+            flow.end( function (){
+              callback && callback( err );
+              return;
+            });
+          }
+
+          if( tag ){
+            next();
+          }else{
+            new self({ name : name }).save( function ( err, tag ){
+              if( err ){
+                flow.end( function (){
+                  callback && callback( err );
+                  return;
+                });
+              }
+              next();
+            });
+          }
+        });
+      }, name );
+    });
+
+    flow.end( function (){
+      callback && callback();
+    });
+  },
+
+  append_topic : function ( topic, callback ){
+    var self = this;
+
+    if( UTILS.is( topic.tag_names ) === 'Array' ){
+      this.update(
+        { name : { $in : topic.tag_names }},
+        { $push : { topics : topic._id }},
+        { multi : true },
+        function ( err ){
+          if( err ){
+            callback && callback( err );
+            return;
+          }
+
+          callback && callback();
+        });
+    }else{
+      callback && callback();
+    }
+  },
+
+  remove_topic : function ( topic, callback ){
+    if( UTILS.is( topic.orig_tag_names ) === 'Array' ){
+      this.update(
+        { name : { $in : topic.orig_tag_names }},
+        { $pull : { topics : topic._id }},
+        { multi : true },
+        function ( err ){
+          if( err ){
+            callback && callback( err );
+            return;
+          }
+
+          callback && callback();
+        });
+    }else{
+      callback && callback();
+    }
+  },
 };
 
 Tag.methods = {

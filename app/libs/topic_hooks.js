@@ -11,6 +11,9 @@ module.exports = {
     var self = this;
     var User = mongoose.model( 'User' );
 
+    this.tag_names_modified =
+      this.isModified( 'tag_names' );
+
     User.findById( this.user, function ( err, user ){
       if( err ){
         next( err );
@@ -25,6 +28,7 @@ module.exports = {
   post_save : function (){
     var self  = this;
     var User  = mongoose.model( 'User' );
+    var Tag   = mongoose.model( 'Tag' );
     var Notif = mongoose.model( 'Notification' );
 
     // add topic's _id to its user
@@ -47,6 +51,18 @@ module.exports = {
           });
       }
     });
+
+    if( this.tag_names_modified ){
+      Tag.remove_topic( this, function (){
+        Tag.create_all( self.tag_names, function (){
+          Tag.append_topic( self )
+        });
+      });
+    }else{
+      Tag.create_all( this.tag_names, function (){
+        Tag.append_topic( self )
+      });
+    }
 
     if( this.updated_at !== this.created_at )
       Notif.send( 'update-topic', this );

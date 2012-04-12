@@ -73,8 +73,6 @@ Object.keys( Model ).forEach( function ( model ){
   }
 });
 
-
-
 var topic_hooks   = require( LIB_DIR + 'topic_hooks' );
 var tag_hooks     = require( LIB_DIR + 'tag_hooks' );
 var comment_hooks = require( LIB_DIR + 'comment_hooks' );
@@ -97,9 +95,3 @@ Model.Notification.post( 'save', notif_hooks.post_save );
 
 
 module.exports = Model;
-
-var mongoose = require( 'mongoose' );
-var Schema   = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
-
-var Model = {Topic : new Schema({ name : { type : String, required : true, index : true },content : { type : String },created_at : { type : Number, 'default' : Date.now },updated_at : { type : Number, 'default' : Date.now }})}

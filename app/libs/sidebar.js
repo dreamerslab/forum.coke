@@ -22,14 +22,22 @@ module.exports = {
     };
 
     flow.series( function ( next ){
-      Tag.
-        find().
-        sort( 'topic_count', -1 ).
-        limit( 20 ).
-        run( function ( err, tags ){
+      Tag.find(
+        function ( err, tags ){
+          tags.sort( function ( a, b ){
+            if( a.topics.length > b.topics.length )
+              return -1;
+            if( a.topics.length < b.topics.length )
+              return 1;
+            return 0;
+          });
+
+          tags = tags.slice( 0, 20 );
+
           tags.forEach( function ( tag ){
             trunk_tags.push( tag.obj_attrs());
           });
+
           trunk_tags.sort( compare );
           next();
         });

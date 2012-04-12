@@ -48,7 +48,6 @@ Model.Tag = new Schema({
   name        : { type : String, required : true,
                   index : { unique : true, dropDups : true }},
   topics      : [{ type : ObjectId, ref : 'Topic' }],
-  topic_count : { type : Number, 'default' : 0 }
 });
 
 Model.Notification = new Schema({

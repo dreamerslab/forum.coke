@@ -105,7 +105,7 @@ Tag.methods = {
     return {
       _id         : this._id,
       name        : this.name,
-      topic_count : this.topic_count
+      topic_count : this.topics.length
     };
   }
 };

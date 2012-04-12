@@ -65,8 +65,8 @@ Model.Notification = new Schema({
 
 // auto update `updated_at` on save
 Object.keys( Model ).forEach( function ( model ){
-  if( Model[ model ].updated_at !== undefined ){
-    model.pre( 'save', function ( next ){
+  if( Model[ model ].tree.updated_at !== undefined ){
+    Model[ model ].pre( 'save', function ( next ){
       this.updated_at = Date.now();
       next();
     });
@@ -97,3 +97,9 @@ Model.Notification.post( 'save', notif_hooks.post_save );
 
 
 module.exports = Model;
+
+var mongoose = require( 'mongoose' );
+var Schema   = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
+
+var Model = {Topic : new Schema({ name : { type : String, required : true, index : true },content : { type : String },created_at : { type : Number, 'default' : Date.now },updated_at : { type : Number, 'default' : Date.now }})}

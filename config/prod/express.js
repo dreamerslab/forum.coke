@@ -1,7 +1,7 @@
 module.exports = function ( express, app, middleware ){
   app.configure( function (){
-    app.set( 'views', BASE_DIR + 'app/views' );
     app.set( 'view engine', 'html' );
+    app.set( 'views', VIEW_DIR );
     app.register( '.html', require( 'thunder' ));
     app.set( 'view options', {
       layout : 'layouts/default',

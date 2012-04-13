@@ -11,8 +11,8 @@ module.exports = {
     var self = this;
     var User = mongoose.model( 'User' );
 
-    this.tag_names_modified =
-      this.isModified( 'tag_names' );
+    this.is_updated    = !this.isNew && !!this._dirty();
+    this.tags_modified = this.isModified( 'tag_names' );
 
     User.findById( this.user, function ( err, user ){
       if( err ){
@@ -52,19 +52,15 @@ module.exports = {
       }
     });
 
-    if( this.tag_names_modified ){
-      Tag.remove_topic( this, function (){
+    if( this.tags_modified ){
+      Tag.remove_topic( self, function (){
         Tag.create_all( self.tag_names, function (){
           Tag.append_topic( self )
         });
       });
-    }else{
-      Tag.create_all( this.tag_names, function (){
-        Tag.append_topic( self )
-      });
     }
 
-    if( this.updated_at !== this.created_at )
+    if( this.is_updated )
       Notif.send( 'update-topic', this );
   },
 

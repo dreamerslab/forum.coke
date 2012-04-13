@@ -60,8 +60,6 @@ Tag.statics = {
   },
 
   append_topic : function ( topic, callback ){
-    var self = this;
-
     if( UTILS.is( topic.tag_names ) === 'Array' ){
       this.update(
         { name : { $in : topic.tag_names }},

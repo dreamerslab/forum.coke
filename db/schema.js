@@ -19,7 +19,7 @@ Model.User = new Schema({
   topics      : [{ type : ObjectId, ref : 'Topic' }],
   comments    : [{ type : ObjectId, ref : 'Comment' }],
   created_at  : { type : Number, 'default' : Date.now },
-  updated_at  : { type : Number, 'default' : Date.now }
+  updated_at  : { type : Number }
 });
 
 Model.Topic = new Schema({
@@ -32,7 +32,7 @@ Model.Topic = new Schema({
   comments    : [{ type : ObjectId, ref : 'Comment' }],
   read_count  : { type : Number, 'default' : 0 },
   created_at  : { type : Number, 'default' : Date.now },
-  updated_at  : { type : Number, 'default' : Date.now }
+  updated_at  : { type : Number}
 });
 
 Model.Comment = new Schema({
@@ -41,7 +41,7 @@ Model.Comment = new Schema({
   topic       : { type : ObjectId, required : true, ref : 'Topic' },
   content     : { type : String, required : true },
   created_at  : { type : Number, 'default' : Date.now },
-  updated_at  : { type : Number, 'default' : Date.now }
+  updated_at  : { type : Number }
 });
 
 Model.Tag = new Schema({
@@ -58,7 +58,7 @@ Model.Notification = new Schema({
   topic       : { type : Schema.Types.Mixed },
   is_read     : { type : Boolean, 'default' : false },
   created_at  : { type : Number, 'default' : Date.now },
-  updated_at  : { type : Number, 'default' : Date.now }
+  updated_at  : { type : Number }
 });
 
 
@@ -66,7 +66,10 @@ Model.Notification = new Schema({
 Object.keys( Model ).forEach( function ( model ){
   if( Model[ model ].tree.updated_at !== undefined ){
     Model[ model ].pre( 'save', function ( next ){
-      this.updated_at = Date.now();
+      this.updated_at = this.isNew?
+        this.created_at :
+        Date.now();
+
       next();
     });
   }

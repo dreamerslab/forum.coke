@@ -32,25 +32,17 @@ module.exports = {
     var Notif = mongoose.model( 'Notification' );
 
     // add topic's _id to its user
-    User.findById( this.user, function ( err, user ){
-      if( err ){
-        return;
-      }
-
-      if( user.topics.indexOf( self._id ) === -1 ){
-        User.update(
-          { _id : self.user },
-          { $push : { topics : self._id }},
-          function ( err ){
-            if( err ){
-              // next( err );
-              // NOTE: there is not 'next' in mongoose's
-              // post middleware, how can I handle error?
-              return;
-            }
-          });
-      }
-    });
+    User.update(
+      { _id : this.user },
+      { $push : { topics : this._id }},
+      function ( err ){
+        if( err ){
+          // next( err );
+          // NOTE: there is not 'next' in mongoose's
+          // post middleware, how can I handle error?
+          return;
+        }
+      });
 
     if( this.tags_modified ){
       Tag.remove_topic( self, function (){

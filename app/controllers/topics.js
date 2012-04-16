@@ -203,7 +203,7 @@ module.exports = Application.extend({
     Topic.findById( req.params.id, function ( err, topic ){
       if( topic ){
         if( topic.is_owner( req.user )){
-          topic.remove( function ( err, topic ){
+          topic.remove( function ( err ){
             if( err ){
               req.flash( 'flash-error', 'Topic deletion fail' );
             }else{

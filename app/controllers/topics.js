@@ -200,6 +200,8 @@ module.exports = Application.extend({
   },
 
   destroy : function ( req, res, next ){
+    var self = this;
+
     Topic.findById( req.params.id, function ( err, topic ){
       if( topic ){
         if( topic.is_owner( req.user )){

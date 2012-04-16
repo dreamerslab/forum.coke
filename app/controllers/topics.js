@@ -116,15 +116,15 @@ module.exports = Application.extend({
       populate( 'user' ).
       populate( 'comments' ).
       run( function ( err, topic ){
-        if( topic ){
-          topic.inc_read_count();
-          res.render( 'topics/show',
-            self._merge( req, { topic : topic }, '' ));
+        if( err ){
+          req.msg = 'Topic';
+          self.record_not_found( err, req, res, next );
           return;
         }
 
-        req.msg = 'Topic';
-        next( err );
+        topic.inc_read_count();
+        res.render( 'topics/show',
+          self._merge( req, { topic : topic }, '' ));
       });
   },
 

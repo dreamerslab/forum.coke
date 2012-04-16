@@ -23,6 +23,6 @@ module.exports = function ( map ){
   map.get( 'topics/unsolved', 'topics#unsolved' );
   map.resources( 'topics' );
 
-  map.get( '/','welcome#index' );
+  map.get( '/','topics#latest' );
 
 };

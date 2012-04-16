@@ -116,15 +116,15 @@ module.exports = Application.extend({
       populate( 'user' ).
       populate( 'comments' ).
       run( function ( err, topic ){
-        if( err ){
-          req.msg = 'Topic';
-          self.record_not_found( err, req, res, next );
+        if( topic ){
+          topic.inc_read_count();
+          res.render( 'topics/show',
+            self._merge( req, { topic : topic }, '' ));
           return;
         }
 
-        topic.inc_read_count();
-        res.render( 'topics/show',
-          self._merge( req, { topic : topic }, '' ));
+        req.msg = 'Topic';
+        self.record_not_found( err, req, res, next );
       });
   },
 
@@ -134,28 +134,19 @@ module.exports = Application.extend({
   },
 
   create : function ( req, res, next ){
-    // delegate authenticaiton to 'topics/new'
-    if( !req.user ){
-      res.redirect( '/topics/new' );
-      return;
-    }
-
-    var user = req.user;
-    var topic = new Topic({
-      user      : user,
+    new Topic({
+      user      : req.user,
       title     : req.body.topic.title,
       content   : req.body.topic.content,
       tag_names : Tag.extract_names( req.body.topic.tag_names )
-    });
-
-    topic.save( function ( err, topic ){
+    }).save( function ( err, topic ){
       if( err ){
-        next( err );
-        return;
+        req.flash( 'flash-error', 'Topic creation fail' );
+        res.redirect( '/topics' );
+      }else{
+        req.flash( 'flash-info', 'Topic created' );
+        res.redirect( '/topics/' + topic._id );
       }
-
-      req.flash( 'flash-info', 'Topic created' );
-      res.redirect( '/topics/' + topic._id );
     });
   },
 
@@ -163,73 +154,74 @@ module.exports = Application.extend({
     var self = this;
 
     Topic.findById( req.params.id, function ( err, topic ){
-      if( err ){
-        req.msg = 'Topic';
-        next( err );
+      if( topic ){
+        if( topic.is_owner( req.user )){
+          res.render( 'topics/edit', self._merge( req, { topic : topic }, '' ));
+        }else{
+          req.flash( 'flash-error', 'Permission denied: not your topic' );
+          res.redirect( '/topics/' + topic._id );
+        }
+
         return;
       }
 
-      if( topic.is_owner( req.user )){
-        res.render( 'topics/edit',
-          self._merge( req, { topic : topic }, '' ));
-      }else{
-        req.flash( 'flash-info', 'Permission denied: not your topic' );
-        res.redirect( '/topics/' + topic._id );
-      }
+      req.msg = 'Topic';
+      self.record_not_found( err, req, res, next );
     });
   },
 
   update : function ( req, res, next ){
     Topic.findById( req.params.id, function ( err, topic ){
-      if( err ){
-        req.msg = 'Topic';
-        next( err );
+      if( topic ){
+        if( topic.is_owner( req.user )){
+          topic.title     = req.body.topic.title;
+          topic.content   = req.body.topic.content;
+          topic.tag_names = Tag.extract_names( req.body.topic.tag_names );
+          topic.save( function ( err, topic ){
+            if( err ){
+              req.flash( 'flash-error', 'Topic update fail' );
+            }else{
+              req.flash( 'flash-info', 'Topic updated' );
+            }
+
+            res.redirect( '/topics/' + topic._id );
+            return;
+          });
+        }
+
+        req.flash( 'flash-info', 'Permission denied: not your topic' );
+        res.redirect( '/topics/' + topic._id );
         return;
       }
 
-      if( topic.is_owner( req.user )){
-        topic.title     = req.body.topic.title;
-        topic.content   = req.body.topic.content;
-        topic.tag_names = Tag.extract_names( req.body.topic.tag_names );
-        topic.save( function ( err, topic ){
-          if( err ){
-            next( err );
-            return;
-          }
-
-          req.flash( 'flash-info', 'Topic updated' );
-          res.redirect( '/topics/' + topic._id );
-        });
-      }else{
-        req.flash( 'flash-info', 'Permission denied: not your topic' );
-        res.redirect( '/topics/' + topic._id );
-      }
+      req.msg = 'Topic';
+      self.record_not_found( err, req, res, next );
     });
   },
 
   destroy : function ( req, res, next ){
     Topic.findById( req.params.id, function ( err, topic ){
-      if( err ){
-        req.msg = 'Topic';
-        next( err );
+      if( topic ){
+        if( topic.is_owner( req.user )){
+          topic.remove( function ( err, topic ){
+            if( err ){
+              req.flash( 'flash-error', 'Topic deletion fail' );
+            }else{
+              req.flash( 'flash-info', 'Topic deleted' );
+            }
+
+            res.redirect( '/topics' );
+            return;
+          });
+        }
+
+        req.flash( 'flash-error', 'Permission denied: not your topic' );
+        res.redirect( '/topics/' + topic._id );
         return;
       }
 
-      if( topic.is_owner( req.user )){
-        topic.remove( function ( err, topic ){
-          if( err ){
-            req.msg = 'Topic';
-            next( err );
-            return;
-          }
-
-          req.flash( 'flash-info', 'Topic deleted' );
-          res.redirect( '/topics' );
-        });
-      }else{
-        req.flash( 'flash-info', 'Permission denied: not your topic' );
-        res.redirect( '/topics/' + topic._id );
-      }
+      req.msg = 'Topic';
+      self.record_not_found( err, req, res, next );
     });
   },
 
@@ -247,6 +239,12 @@ module.exports = Application.extend({
 
   create_comment : function ( req, res, next ){
     Topic.findById( req.params.id, function ( err, topic ){
+      if( err ){
+        req.msg = 'Topic';
+        self.record_not_found( err, req, res, next );
+        return;
+      }
+
       var user = req.user;
       var comment = new Comment({
         user    : user,

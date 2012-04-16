@@ -213,12 +213,14 @@ module.exports = Application.extend({
             }
 
             res.redirect( '/topics' );
-            return;
           });
+
+          return;
         }
 
         req.flash( 'flash-error', 'Permission denied: not your topic' );
         res.redirect( '/topics/' + topic._id );
+
         return;
       }
 

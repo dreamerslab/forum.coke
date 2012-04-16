@@ -120,11 +120,11 @@ module.exports = Application.extend({
           topic.inc_read_count();
           res.render( 'topics/show',
             self._merge( req, { topic : topic }, '' ));
-          return;
+        }else{
+          req.msg = 'Topic';
+          self.record_not_found( err, req, res, next );
         }
 
-        req.msg = 'Topic';
-        self.record_not_found( err, req, res, next );
       });
   },
 

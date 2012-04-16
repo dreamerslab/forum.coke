@@ -44,6 +44,14 @@ Topic.methods = {
     };
   },
 
+  set_attrs : function ( topic ){
+    var Tag = mongoose.model( 'Tag' );
+
+    this.title     = topic.title;
+    this.content   = topic.content;
+    this.tag_names = topic.tag_names;
+  },
+
   inc_read_count : function (){
     mongoose.model( 'Topic' ).update(
       { _id : this._id },

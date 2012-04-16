@@ -134,12 +134,10 @@ module.exports = Application.extend({
   },
 
   create : function ( req, res, next ){
-    new Topic({
-      user      : req.user,
-      title     : req.body.topic.title,
-      content   : req.body.topic.content,
-      tag_names : Tag.extract_names( req.body.topic.tag_names )
-    }).save( function ( err, topic ){
+    var topic = new Topic({ user : req.user });
+
+    topic.set_attrs( req.body.topic );
+    topic.save( function ( err, topic ){
       if( err ){
         req.flash( 'flash-error', 'Topic creation fail' );
         res.redirect( '/topics' );
@@ -174,9 +172,7 @@ module.exports = Application.extend({
     Topic.findById( req.params.id, function ( err, topic ){
       if( topic ){
         if( topic.is_owner( req.user )){
-          topic.title     = req.body.topic.title;
-          topic.content   = req.body.topic.content;
-          topic.tag_names = Tag.extract_names( req.body.topic.tag_names );
+          topic.set_attrs( req.body.topic );
           topic.save( function ( err, topic ){
             if( err ){
               req.flash( 'flash-error', 'Topic update fail' );
@@ -185,12 +181,14 @@ module.exports = Application.extend({
             }
 
             res.redirect( '/topics/' + topic._id );
-            return;
           });
+
+          return;
         }
 
         req.flash( 'flash-info', 'Permission denied: not your topic' );
         res.redirect( '/topics/' + topic._id );
+
         return;
       }
 

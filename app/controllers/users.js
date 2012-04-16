@@ -26,18 +26,21 @@ module.exports = Application.extend({
   },
 
   show : function ( req, res, next ){
+    var self = this;
+
     User.findById( req.params.id, function ( err, user ){
-      if( err ){
-        next( err );
-        return;
+      if( user ){
+        res.render( 'users/show', {
+          sidebar   : req.sidebar,
+          referrer  : req.url,
+          sess_user : req.user,
+          user      : user
+        });
+      }else{
+        req.msg = 'User';
+        self.record_not_found( err, req, res, next );
       }
 
-      res.render( 'users/show', {
-        sidebar   : req.sidebar,
-        referrer  : req.url,
-        sess_user : req.user,
-        user      : user
-      });
     });
   }
 });

@@ -240,55 +240,60 @@ module.exports = Application.extend({
   },
 
   create_comment : function ( req, res, next ){
+    var self = this;
+
     Topic.findById( req.params.id, function ( err, topic ){
-      if( err ){
-        req.msg = 'Topic';
-        self.record_not_found( err, req, res, next );
+      if( topic ){
+        new Comment({
+          user    : req.user,
+          topic   : topic,
+          content : req.body.comment.content
+        }).save( function ( err, comment ){
+          if( err ){
+            req.flash( 'flash-error', 'Comment creation fail' );
+          }else{
+            req.flash( 'flash-info', 'Comment created' );
+          }
+
+          res.redirect( '/topics/' + topic._id );
+        });
+
         return;
       }
 
-      var user = req.user;
-      var comment = new Comment({
-        user    : user,
-        topic   : topic,
-        content : req.body.comment.content
-      });
-
-      comment.save( function ( err, comment ){
-        if( err ){
-          next( err );
-          return;
-        }
-
-        req.flash( 'flash-info', 'Comment created' );
-        res.redirect( '/topics/' + topic._id );
-      });
+      req.msg = 'Topic';
+      self.record_not_found( err, req, res, next );
     });
   },
 
   destroy_comment : function ( req, res, next ){
+    var self = this;
+
     Comment.findById( req.body.comment_id, function ( err, comment ){
-      if( err ){
-        req.msg = 'Topic';
-        next( err );
-        return;
-      }
+      if( comment ){
+        if( comment.is_owner( req.user )){
+          comment.remove( function ( err ){
+            if( err ){
+              req.flash( 'flash-error', 'Comment deletion fail' );
+            }else{
+              req.flash( 'flash-info', 'Comment deleted' );
+            }
 
-      if( comment.is_owner( req.user )){
-        comment.remove( function ( err, comment ){
-          if( err ){
-            req.msg = 'Comment';
-            next( err );
-            return;
-          }
+            res.redirect( '/topics/' + comment.topic );
+          });
 
-          req.flash( 'flash-info', 'Comment deleted' );
+          return;
+        }else{
+
+          req.flash( 'flash-info', 'Permission denied: not your comment' );
           res.redirect( '/topics/' + req.params.id );
-        });
-      }else{
-        req.flash( 'flash-info', 'Permission denied: not your comment' );
-        res.redirect( '/topics/' + req.params.id );
+
+          return;
+        }
       }
+
+      req.msg = 'Comment';
+      self.record_not_found( err, req, res, next );
     });
   },
 

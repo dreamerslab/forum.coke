@@ -190,46 +190,42 @@ module.exports = Application.extend({
   },
 
   update : function ( req, res, next ){
+    var self = this;
 
+    Topic.findById( req.params.id, function ( err, topic ){
+      if( topic ){
+        if( topic.is_owner( req.user )){
+          validate_topic_form( req, res );
+          topic.set_attrs( req.body.topic );
 
+          if( !req.form.isValid ){
+            res.render( 'topics/edit',
+              self._merge( req, { topic : topic }));
+          }else{
+            topic.save( function ( err, topic ){
+              if( err ){
+                req.flash( 'flash-error', 'Topic update fail' );
+              }else{
+                req.flash( 'flash-info', 'Topic updated' );
+              }
 
-      var self = this;
-
-      Topic.findById( req.params.id, function ( err, topic ){
-        if( topic ){
-          if( topic.is_owner( req.user )){
-            validate_topic_form( req, res );
-            topic.set_attrs( req.body.topic );
-
-            if( !req.form.isValid ){
-              res.render( 'topics/edit',
-                self._merge( req, { topic : topic }));
-            }else{
-              topic.save( function ( err, topic ){
-                if( err ){
-                  req.flash( 'flash-error', 'Topic update fail' );
-                }else{
-                  req.flash( 'flash-info', 'Topic updated' );
-                }
-
-                res.redirect( '/topics/' + topic._id );
-              });
-            }
-
-            return;
+              res.redirect( '/topics/' + topic._id );
+            });
           }
-
-          req.msg    = 'topic';
-          req.origin = '/topics/' + topic._id;
-          self.permission_denied( req, res, next );
 
           return;
         }
 
-        req.msg = 'Topic';
-        self.record_not_found( err, req, res, next );
-      });
+        req.msg    = 'topic';
+        req.origin = '/topics/' + topic._id;
+        self.permission_denied( req, res, next );
 
+        return;
+      }
+
+      req.msg = 'Topic';
+      self.record_not_found( err, req, res, next );
+    });
   },
 
   destroy : function ( req, res, next ){

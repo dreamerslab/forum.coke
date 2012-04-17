@@ -65,7 +65,7 @@ module.exports = Application.extend({
   tag : function ( req, res, next ){
     if( !req.query.name ){
       req.flash( 'flash-error', 'No tag name speciefied' );
-      res.redirect( '/topics' );
+      res.redirect( '/topics/tags' );
       return;
     }else{
       var self  = this;

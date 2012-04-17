@@ -66,7 +66,6 @@ module.exports = Application.extend({
     if( !req.query.name ){
       req.flash( 'flash-error', 'No tag name speciefied' );
       res.redirect( '/topics/tags' );
-      return;
     }else{
       var self  = this;
       var conds = { tag_names : { $in : [ req.query.name ]}};
@@ -85,7 +84,6 @@ module.exports = Application.extend({
     if( !req.query.keywords ){
       req.flash( 'flash-error', 'No keyword specified' );
       res.redirect( '/topics' );
-      return;
     }else{
       var keywords = req.query.keywords.split( /\s+|\+/ );
       var regexp   = new RegExp( keywords.join( '|' ), 'gi' );

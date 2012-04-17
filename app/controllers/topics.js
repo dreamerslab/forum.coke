@@ -77,7 +77,7 @@ module.exports = Application.extend({
 
   search : function ( req, res, next ){
     if( !req.query.keywords ){
-      req.flash( 'flash-info', 'unknown keywords' );
+      req.flash( 'flash-error', 'No keyword specified' );
       res.redirect( '/topics' );
       return;
     }else{

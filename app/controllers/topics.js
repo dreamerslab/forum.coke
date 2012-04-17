@@ -248,12 +248,14 @@ module.exports = Application.extend({
     var self = this;
 
     Topic.findById( req.params.id, function ( err, topic ){
+
       if( topic ){
-        new Comment({
-          user    : req.user,
-          topic   : topic,
-          content : req.body.comment.content
-        }).save( function ( err, comment ){
+        var comment = new Comment({
+          user  : req.user,
+          topic : topic });
+
+        comment.set_attrs( req.body.comment );
+        comment.save( function ( err, comment ){
           if( err ){
             req.flash( 'flash-error', 'Comment creation fail' );
           }else{

@@ -111,8 +111,8 @@ module.exports = Application.extend({
         { $set : { is_read : true }},
         function ( err ){
           res.redirect( "/topics/" + req.params.id );
-          return;
         });
+      return;
     }
 
     Topic.

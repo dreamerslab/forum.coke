@@ -15,7 +15,7 @@ module.exports = Application.extend({
       sess_user : req.user,
       referrer  : req.url,
       path      : req.path,
-      query     : base_query
+      query     : base_query || ''
     });
   },
 
@@ -119,7 +119,7 @@ module.exports = Application.extend({
         if( topic ){
           topic.inc_read_count();
           res.render( 'topics/show',
-            self._merge( req, { topic : topic }, '' ));
+            self._merge( req, { topic : topic } ));
         }else{
           req.msg = 'Topic';
           self.record_not_found( err, req, res, next );
@@ -130,7 +130,7 @@ module.exports = Application.extend({
 
   'new' : function ( req, res, next ){
     res.render( 'topics/new',
-      this._merge( req, {}, '' ));
+      this._merge( req, {} ));
   },
 
   create : function ( req, res, next ){
@@ -154,7 +154,7 @@ module.exports = Application.extend({
     Topic.findById( req.params.id, function ( err, topic ){
       if( topic ){
         if( topic.is_owner( req.user )){
-          res.render( 'topics/edit', self._merge( req, { topic : topic }, '' ));
+          res.render( 'topics/edit', self._merge( req, { topic : topic } ));
         }else{
           req.msg    = 'topic';
           req.origin = '/topics/' + topic._id;
@@ -240,7 +240,7 @@ module.exports = Application.extend({
       sort( 'name', 1 ).
       run( function ( err, tags ){
         res.render( 'topics/tags',
-          self._merge( req, { tags : tags }, '' ));
+          self._merge( req, { tags : tags } ));
       });
   },
 

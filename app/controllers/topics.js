@@ -156,8 +156,9 @@ module.exports = Application.extend({
         if( topic.is_owner( req.user )){
           res.render( 'topics/edit', self._merge( req, { topic : topic }, '' ));
         }else{
-          req.flash( 'flash-error', 'Permission denied: not your topic' );
-          res.redirect( '/topics/' + topic._id );
+          req.msg    = 'topic';
+          req.origin = '/topics/' + topic._id;
+          self.permission_denied( req, res, next );
         }
 
         return;
@@ -169,6 +170,8 @@ module.exports = Application.extend({
   },
 
   update : function ( req, res, next ){
+    var self = this;
+
     Topic.findById( req.params.id, function ( err, topic ){
       if( topic ){
         if( topic.is_owner( req.user )){
@@ -186,8 +189,9 @@ module.exports = Application.extend({
           return;
         }
 
-        req.flash( 'flash-info', 'Permission denied: not your topic' );
-        res.redirect( '/topics/' + topic._id );
+        req.msg    = 'topic';
+        req.origin = '/topics/' + topic._id;
+        self.permission_denied( req, res, next );
 
         return;
       }
@@ -216,8 +220,9 @@ module.exports = Application.extend({
           return;
         }
 
-        req.flash( 'flash-error', 'Permission denied: not your topic' );
-        res.redirect( '/topics/' + topic._id );
+        req.msg    = 'topic';
+        req.origin = '/topics/' + topic._id;
+        self.permission_denied( req, res, next );
 
         return;
       }
@@ -285,8 +290,9 @@ module.exports = Application.extend({
           return;
         }else{
 
-          req.flash( 'flash-info', 'Permission denied: not your comment' );
-          res.redirect( '/topics/' + req.params.id );
+          req.msg    = 'comment';
+          req.origin = '/topics/' + req.params.id;
+          self.permission_denied( req, res, next );
 
           return;
         }

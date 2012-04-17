@@ -11,6 +11,13 @@ module.exports = Class.extend({
     res.redirect( 'back' );
   },
 
+  permission_denied : function ( req, res, next ){
+    LOG.error( 500, res, 'Permission denied' );
+
+    req.flash( 'flash-error', 'Premission denied: not your ' + req.msg );
+    res.redirect( req.origin );
+  },
+
   validation : function ( err, req, res, next ){
     if( err.name && err.name == 'ValidationError' ){
       var error;

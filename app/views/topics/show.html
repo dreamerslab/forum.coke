@@ -57,7 +57,7 @@
           <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
           <div class="form-row">
             <label class="form-title" for="comment[content]">Content : </label><br />
-            <textarea class="text-input" name="comment[content]" rows="10" cols="50"></textarea>
+            <textarea class="text-input" name="comment[content]" rows="10" cols="50"><?= it.val( it.comment, 'content' ) ?></textarea>
           </div>
         </div>
         <input class="submit-link" type="submit" value="Create comment" />

@@ -17,6 +17,13 @@ var validate_topic_form = form(
   validate( 'topic.content', 'Content' ).required()
 );
 
+var validate_comment_form = form(
+  filter( 'comment.content' ).trim(),
+  validate( 'comment.content', 'Content' ).required()
+);
+
+
+
 module.exports = Application.extend({
   _merge : function ( req, result, base_query ){
     return UTILS.merge( result, {
@@ -130,9 +137,11 @@ module.exports = Application.extend({
       populate( 'comments' ).
       run( function ( err, topic ){
         if( topic ){
+          var comment = { content : '' };
+
           topic.inc_read_count();
           res.render( 'topics/show',
-            self._merge( req, { topic : topic } ));
+            self._merge( req, { topic : topic }));
         }else{
           req.msg = 'Topic';
           self.record_not_found( err, req, res, next );
@@ -274,23 +283,33 @@ module.exports = Application.extend({
   create_comment : function ( req, res, next ){
     var self = this;
 
-    Topic.findById( req.params.id, function ( err, topic ){
-
+    Topic.
+      findById( req.params.id ).
+      populate( 'user' ).
+      populate( 'comments' ).
+      run( function ( err, topic ){
       if( topic ){
         var comment = new Comment({
           user  : req.user,
           topic : topic });
 
+        validate_comment_form( req, res );
         comment.set_attrs( req.body.comment );
-        comment.save( function ( err, comment ){
-          if( err ){
-            req.flash( 'flash-error', 'Comment creation fail' );
-          }else{
-            req.flash( 'flash-info', 'Comment created' );
-          }
 
-          res.redirect( '/topics/' + topic._id );
-        });
+        if( !req.form.isValid ){
+          res.render( 'topics/show',
+            self._merge( req, { topic : topic, comment : comment } ));
+        }else{
+          comment.save( function ( err, comment ){
+            if( err ){
+              req.flash( 'flash-error', 'Comment creation fail' );
+            }else{
+              req.flash( 'flash-info', 'Comment created' );
+            }
+
+            res.redirect( '/topics/' + topic._id );
+          });
+        }
 
         return;
       }
@@ -318,7 +337,6 @@ module.exports = Application.extend({
 
           return;
         }else{
-
           req.msg    = 'comment';
           req.origin = '/topics/' + req.params.id;
           self.permission_denied( req, res, next );

@@ -6,7 +6,16 @@ var Tag         = mongoose.model( 'Tag' );
 var Comment     = mongoose.model( 'Comment' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
+var form        = require( 'express-form' );
+var filter      = form.filter;
+var validate    = form.validate;
 
+var validate_topic_form = form(
+  filter( 'topic.title' ).trim(),
+  validate( 'topic.title', 'Tilte' ).required(),
+  filter( 'topic.content' ).trim(),
+  validate( 'topic.content', 'Content' ).required()
+);
 
 module.exports = Application.extend({
   _merge : function ( req, result, base_query ){
@@ -138,18 +147,25 @@ module.exports = Application.extend({
   },
 
   create : function ( req, res, next ){
-    var topic = new Topic({ user : req.user });
+    validate_topic_form( req, res )
 
-    topic.set_attrs( req.body.topic );
-    topic.save( function ( err, topic ){
-      if( err ){
-        req.flash( 'flash-error', 'Topic creation fail' );
-        res.redirect( '/topics' );
-      }else{
-        req.flash( 'flash-info', 'Topic created' );
-        res.redirect( '/topics/' + topic._id );
-      }
-    });
+    if( !req.form.isValid ){
+      res.render( 'topics/new',
+        this._merge( req, { topic : req.body.topic }));
+    }else{
+      var topic = new Topic({ user : req.user });
+
+      topic.set_attrs( req.body.topic );
+      topic.save( function ( err, topic ){
+        if( err ){
+          req.flash( 'flash-error', 'Topic creation fail' );
+          res.redirect( '/topics' );
+        }else{
+          req.flash( 'flash-info', 'Topic created' );
+          res.redirect( '/topics/' + topic._id );
+        }
+      });
+    }
   },
 
   edit : function ( req, res, next ){
@@ -158,7 +174,7 @@ module.exports = Application.extend({
     Topic.findById( req.params.id, function ( err, topic ){
       if( topic ){
         if( topic.is_owner( req.user )){
-          res.render( 'topics/edit', self._merge( req, { topic : topic } ));
+          res.render( 'topics/edit', self._merge( req, { topic : topic }));
         }else{
           req.msg    = 'topic';
           req.origin = '/topics/' + topic._id;
@@ -174,35 +190,46 @@ module.exports = Application.extend({
   },
 
   update : function ( req, res, next ){
-    var self = this;
 
-    Topic.findById( req.params.id, function ( err, topic ){
-      if( topic ){
-        if( topic.is_owner( req.user )){
-          topic.set_attrs( req.body.topic );
-          topic.save( function ( err, topic ){
-            if( err ){
-              req.flash( 'flash-error', 'Topic update fail' );
+
+
+      var self = this;
+
+      Topic.findById( req.params.id, function ( err, topic ){
+        if( topic ){
+          if( topic.is_owner( req.user )){
+            validate_topic_form( req, res );
+            topic.set_attrs( req.body.topic );
+
+            if( !req.form.isValid ){
+              res.render( 'topics/edit',
+                self._merge( req, { topic : topic }));
             }else{
-              req.flash( 'flash-info', 'Topic updated' );
+              topic.save( function ( err, topic ){
+                if( err ){
+                  req.flash( 'flash-error', 'Topic update fail' );
+                }else{
+                  req.flash( 'flash-info', 'Topic updated' );
+                }
+
+                res.redirect( '/topics/' + topic._id );
+              });
             }
 
-            res.redirect( '/topics/' + topic._id );
-          });
+            return;
+          }
+
+          req.msg    = 'topic';
+          req.origin = '/topics/' + topic._id;
+          self.permission_denied( req, res, next );
 
           return;
         }
 
-        req.msg    = 'topic';
-        req.origin = '/topics/' + topic._id;
-        self.permission_denied( req, res, next );
+        req.msg = 'Topic';
+        self.record_not_found( err, req, res, next );
+      });
 
-        return;
-      }
-
-      req.msg = 'Topic';
-      self.record_not_found( err, req, res, next );
-    });
   },
 
   destroy : function ( req, res, next ){

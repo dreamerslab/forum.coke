@@ -63,16 +63,22 @@ module.exports = Application.extend({
   },
 
   tag : function ( req, res, next ){
-    var self  = this;
-    var conds = { tag_names : { $in : [ req.query.name ]}};
-    var opts  = { sort  : [ 'updated_at', -1 ],
-                  skip  : req.query.from || 0,
-                  limit : 20 };
+    if( !req.query.name ){
+      req.flash( 'flash-error', 'No tag name speciefied' );
+      res.redirect( '/topics' );
+      return;
+    }else{
+      var self  = this;
+      var conds = { tag_names : { $in : [ req.query.name ]}};
+      var opts  = { sort  : [ 'updated_at', -1 ],
+                    skip  : req.query.from || 0,
+                    limit : 20 };
 
-    Topic.paginate( conds, opts, next, function ( result ){
-      res.render( 'topics/index',
-        self._merge( req, result, '?name=' + req.query.name ));
-    });
+      Topic.paginate( conds, opts, next, function ( result ){
+        res.render( 'topics/index',
+          self._merge( req, result, '?name=' + req.query.name ));
+      });
+    }
   },
 
   search : function ( req, res, next ){

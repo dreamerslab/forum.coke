@@ -10,20 +10,14 @@ Topic.statics = {
     var self   = this;
 
     this.count( conds, function ( err, count ){
-      if( err ){
-        next( err );
-        return;
-      }
+      if( err ) return next( err );
 
       self.
         find( conds ).
         sort( opts.sort[ 0 ], opts.sort[ 1 ]).
         skip( opts.skip ).
         limit( opts.limit ).run( function ( err, topics ){
-          if( err ){
-            next( err );
-            return;
-          }
+          if( err ) return next( err );
 
           callback && callback({
             topics : topics,

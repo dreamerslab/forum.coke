@@ -15,10 +15,7 @@ module.exports = {
     this.tags_modified = this.isModified( 'tag_names' );
 
     User.findById( this.user, function ( err, user ){
-      if( err ){
-        next( err );
-        return;
-      }
+      if( err ) return next( err );
 
       self.as_user = user.obj_attrs();
       next();
@@ -66,10 +63,7 @@ module.exports = {
       { _id : this.user },
       { $pull : { topics : this._id }},
       function ( err ){
-        if( err ){
-          next( err );
-          return;
-        }
+        if( err ) return next( err );
       });
 
     // remove topic's _id from its tags
@@ -78,27 +72,18 @@ module.exports = {
       { $pull : { topics : this._id }},
       { multi : true },
       function ( err ){
-        if( err ){
-          next( err );
-          return;
-        }
+        if( err ) return next( err );
       });
 
     // remove topic comments' _ids from their users
     Comment.find(
       { _id : { $in : this.comments }},
       function ( err, comments ){
-        if( err ){
-          next( err );
-          return;
-        }
+        if( err ) return next( err );
 
         comments.forEach( function ( comment ){
           comment.remove( function ( err, comment ){
-            if( err ){
-              next( err );
-              return;
-            }
+            if( err ) return next( err );
           });
         });
     });

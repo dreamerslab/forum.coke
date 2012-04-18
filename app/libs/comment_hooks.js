@@ -8,10 +8,7 @@ module.exports = {
     var User = mongoose.model( 'User' );
 
     User.findById( this.user, function ( err, user ){
-      if( err ){
-        next( err );
-        return;
-      }
+      if( err ) return next( err );
 
       self.as_user = user.obj_attrs();
       next();
@@ -82,12 +79,9 @@ module.exports = {
       { _id : this.user },
       { $pull : { comments : this._id }},
       function ( err ){
-        if( err ){
-          next( err );
-          return;
-        }else{
-          next();
-        }
+        if( err ) return next( err );
+
+        next();
       });
   }
 };

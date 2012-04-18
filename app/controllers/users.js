@@ -11,10 +11,7 @@ module.exports = Application.extend({
 
   index : function ( req, res, next ){
     User.find( function ( err, users ){
-      if( err ){
-        next( err );
-        return;
-      }
+      if( err ) return next( err );
 
       res.render( 'users/index', {
         sidebar   : req.sidebar,

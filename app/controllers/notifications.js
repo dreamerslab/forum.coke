@@ -14,10 +14,7 @@ module.exports = Application.extend({
     Notif.find({
       user : req.user._id
     }, function ( err, notifs ){
-        if( err ){
-          next( err );
-          return;
-        }
+        if( err ) return next( err );
 
         res.render( 'notifications/index', {
           sidebar   : req.sidebar,

@@ -26,7 +26,7 @@ var validate_comment_form = form(
 
 module.exports = Application.extend({
   _merge : function ( req, result, base_query ){
-    return UTILS.merge( result, {
+    return UTILS.merge( result || {}, {
       sidebar   : req.sidebar,
       sess_user : req.user,
       referrer  : req.url,
@@ -82,40 +82,44 @@ module.exports = Application.extend({
     if( !req.query.name ){
       req.flash( 'flash-error', 'No tag name speciefied' );
       res.redirect( '/topics/tags' );
-    }else{
-      var self  = this;
-      var conds = { tag_names : { $in : [ req.query.name ]}};
-      var opts  = { sort  : [ 'updated_at', -1 ],
-                    skip  : req.query.from || 0,
-                    limit : 20 };
 
-      Topic.paginate( conds, opts, next, function ( result ){
-        res.render( 'topics/index',
-          self._merge( req, result, '?name=' + req.query.name ));
-      });
+      return;
     }
+
+    var self  = this;
+    var conds = { tag_names : { $in : [ req.query.name ]}};
+    var opts  = { sort  : [ 'updated_at', -1 ],
+                  skip  : req.query.from || 0,
+                  limit : 20 };
+
+    Topic.paginate( conds, opts, next, function ( result ){
+      res.render( 'topics/index',
+        self._merge( req, result, '?name=' + req.query.name ));
+    });
   },
 
   search : function ( req, res, next ){
     if( !req.query.keywords ){
       req.flash( 'flash-error', 'No keyword specified' );
       res.redirect( '/topics' );
-    }else{
-      var keywords = req.query.keywords.split( /\s+|\+/ );
-      var regexp   = new RegExp( keywords.join( '|' ), 'gi' );
-      var self     = this;
-      var conds    = { $or : [{ title : regexp }, { content : regexp }]};
-      var opts     = { sort  : [ 'updated_at', -1 ],
-                       skip  : req.query.from || 0,
-                       limit : 20 };
 
-      Topic.paginate( conds, opts, next, function ( result ){
-        result.keywords = keywords.join( ' ' );
-
-        res.render( 'topics/index',
-          self._merge( req, result, '?keywords=' + keywords.join( '+' ) ));
-      });
+      return;
     }
+
+    var keywords = req.query.keywords.split( /\s+|\+/ );
+    var regexp   = new RegExp( keywords.join( '|' ), 'gi' );
+    var self     = this;
+    var conds    = { $or : [{ title : regexp }, { content : regexp }]};
+    var opts     = { sort  : [ 'updated_at', -1 ],
+                     skip  : req.query.from || 0,
+                     limit : 20 };
+
+    Topic.paginate( conds, opts, next, function ( result ){
+      result.keywords = keywords.join( ' ' );
+
+      res.render( 'topics/index',
+        self._merge( req, result, '?keywords=' + keywords.join( '+' ) ));
+    });
   },
 
   show : function ( req, res, next ){
@@ -126,8 +130,9 @@ module.exports = Application.extend({
         { _id : req.query.nid },
         { $set : { is_read : true }},
         function ( err ){
-          res.redirect( "/topics/" + req.params.id );
+          res.redirect( '/topics/' + req.params.id );
         });
+
       return;
     }
 
@@ -142,17 +147,18 @@ module.exports = Application.extend({
           topic.inc_read_count();
           res.render( 'topics/show',
             self._merge( req, { topic : topic }));
-        }else{
-          req.msg = 'Topic';
-          self.record_not_found( err, req, res, next );
+
+          return;
         }
 
+        req.msg = 'Topic';
+        self.record_not_found( err, req, res );
       });
   },
 
   'new' : function ( req, res, next ){
     res.render( 'topics/new',
-      this._merge( req, {} ));
+      this._merge( req ));
   },
 
   create : function ( req, res, next ){
@@ -161,20 +167,22 @@ module.exports = Application.extend({
     if( !req.form.isValid ){
       res.render( 'topics/new',
         this._merge( req, { topic : req.body.topic }));
-    }else{
-      var topic = new Topic({ user : req.user });
-
-      topic.set_attrs( req.body.topic );
-      topic.save( function ( err, topic ){
-        if( err ){
-          req.flash( 'flash-error', 'Topic creation fail' );
-          res.redirect( '/topics' );
-        }else{
-          req.flash( 'flash-info', 'Topic created' );
-          res.redirect( '/topics/' + topic._id );
-        }
-      });
+      return;
     }
+
+    var topic = new Topic({ user : req.user });
+
+    topic.set_attrs( req.body.topic );
+    topic.save( function ( err, topic ){
+      if( err ){
+        req.flash( 'flash-error', 'Topic creation fail' );
+        res.redirect( '/topics' );
+        return;
+      }
+
+      req.flash( 'flash-info', 'Topic created' );
+      res.redirect( '/topics/' + topic._id );
+    });
   },
 
   edit : function ( req, res, next ){

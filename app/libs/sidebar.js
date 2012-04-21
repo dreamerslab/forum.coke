@@ -14,22 +14,16 @@ module.exports = {
     var trunk_issues = [];
 
     function compare( a, b ){
-      if( a.name > b.name )
-        return 1;
-      if( a.name < b.name )
-        return -1
-      return 0
+      if( a.name > b.name ) return 1;
+      if( a.name < b.name ) return -1;
+      return 0;
     };
 
     flow.series( function ( next ){
       Tag.find(
         function ( err, tags ){
           tags.sort( function ( a, b ){
-            if( a.topics.length > b.topics.length )
-              return -1;
-            if( a.topics.length < b.topics.length )
-              return 1;
-            return 0;
+            return compare( b.topics.length, a.topics.length );
           });
 
           tags = tags.slice( 0, 20 );
@@ -59,7 +53,7 @@ module.exports = {
 
     flow.series( function ( next ){
       var https   = require( 'https' );
-      var data    = "";
+      var data    = '';
       var options = {
         host: 'api.github.com',
         port: 443,
@@ -74,6 +68,7 @@ module.exports = {
 
         res.on( 'end', function (){
           var issues = JSON.parse( data );
+
           issues.forEach( function ( issue ){
             if( trunk_issues.length < 5 ){
               if( issue.state === 'open' ){
@@ -96,12 +91,14 @@ module.exports = {
     });
 
     flow.series( function ( next ){
-      Cache.findOne({ name : 'sidebar' }, function( err, cache ){
-        if( cache ){
-          cache = cache;
-        }else{
-          cache = new Cache({ name : 'sidebar', trunk : {}});
-        }
+      Cache.findOne({
+        name : 'sidebar'
+      }, function( err, cache ){
+        cache = ( cache ) ?
+          cache :
+          new Cache({
+            name : 'sidebar'
+          });
 
         cache.trunk = {
           tags   : trunk_tags,

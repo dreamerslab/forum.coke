@@ -1,3 +1,4 @@
+var Faker    = require( 'faker' );
 var mongoose = require( 'mongoose' );
 var User     = mongoose.model( 'User' );
 var Topic    = mongoose.model( 'Topic' );
@@ -7,7 +8,6 @@ var Notif    = mongoose.model( 'Notification' );
 var Cache    = mongoose.model( 'Cache' );
 var Flow     = require( 'node.flow' );
 var flow     = new Flow();
-var Faker    = require( 'faker' );
 
 var random = function ( max ){
   return Faker.Helpers.randomNumber( max );
@@ -48,18 +48,18 @@ module.exports = {
               Tag.collection.drop( function (){
                 Notif.collection.drop( function (){
                   next();
-                }); // end of drop Notif.collection
-              }); // end of drop Tap.collection
-            }); // end of drop Cache.collection
-          }); // end of drop Comment.collection
-        }); // end of drop Topic.collection
-      }); // end of drop User.collection
+                }); // Notif.collection
+              }); // Tap.collection
+            }); // Cache.collection
+          }); // Comment.collection
+        }); // Topic.collection
+      }); // User.collection
     });
 
     // creating users
     var i = 10;
 
-    for( ; i--; ){
+    for(; i--;){
       flow.parallel( function ( ready ){
         var user = random_user();
         new User( user ).save( function ( err, user ){
@@ -73,7 +73,7 @@ module.exports = {
     // creating topics
     var j = 100;
 
-    for( ; j--; ){
+    for(; j--;){
       flow.series( function ( ready ){
         User.find( function ( err, users ){
           // get a random user
@@ -83,6 +83,7 @@ module.exports = {
 
           topic.user      = user;
           topic.tag_names = Tag.extract_names( string );
+
           new Topic( topic ).save( function ( err, topic ){
             ready();
           });
@@ -93,7 +94,7 @@ module.exports = {
     // create comments
     var k = 150;
 
-    for( ; k--; ){
+    for(; k--;){
       flow.parallel( function ( ready ){
         User.find( function ( err, users ){
           // get a random user
@@ -106,6 +107,7 @@ module.exports = {
 
             comment.user  = user;
             comment.topic = topic;
+
             new Comment( comment ).save( function ( err, comment ){
               ready();
             });
@@ -121,5 +123,4 @@ module.exports = {
       callback && callback();
     });
   }
-
 };

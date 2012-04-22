@@ -5,7 +5,7 @@ var unique = function ( docs ){
   var h = {};
 
   docs.forEach( function ( doc ){
-    h[ doc._id.toString() ] = doc;
+    h[ doc._id.toString()] = doc;
   });
 
   Object.keys( h ).forEach( function ( k ){

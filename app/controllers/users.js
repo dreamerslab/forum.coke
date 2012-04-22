@@ -33,11 +33,12 @@ module.exports = Application.extend({
           sess_user : req.user,
           user      : user
         });
-      }else{
-        req.msg = 'User';
-        self.record_not_found( err, req, res, next );
+
+        return;
       }
 
+      req.msg = 'User';
+      self.record_not_found( err, req, res );
     });
   }
 });

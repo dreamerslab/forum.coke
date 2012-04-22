@@ -16,7 +16,8 @@ module.exports = {
 
     flow.end( function(){
       setInterval( sidebar.init, 3600 * 1000 );
-      console.log( 'end of background' );
+
+      LOG.debug( 'All background job finished' );
     });
   }
 }

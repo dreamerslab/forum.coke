@@ -119,7 +119,8 @@ module.exports = {
     flow.join();
 
     flow.end( function (){
-      console.log( 'seed filled!' );
+      LOG.debug( 'seed data filled' );
+
       callback && callback();
     });
   }

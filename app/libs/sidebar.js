@@ -43,9 +43,13 @@ module.exports = {
         sort( 'rating', -1 ).
         limit( 6 ).
         run( function ( err, users ){
+          if( err ) return LOG.error( 500,
+            '[libs][sidebar][init] Having trouble finding users' );
+
           users.forEach( function( user ){
             trunk_users.push( user.obj_attrs());
           });
+
           trunk_users.sort( compare );
           next();
         });
@@ -83,22 +87,25 @@ module.exports = {
           next();
         });
       });
-      req.end();
 
       req.on( 'error', function( err ){
-        console.error( err );
+        if( err ) return LOG.error( 500,
+          '[libs][sidebar][init] Having trouble getting github issues', err );
       });
+
+      req.end();
     });
 
     flow.series( function ( next ){
       Cache.findOne({
         name : 'sidebar'
       }, function( err, cache ){
-        cache = ( cache ) ?
-          cache :
-          new Cache({
-            name : 'sidebar'
-          });
+        if( err ) return LOG.error( 500,
+          '[libs][sidebar][init] Having trouble finding sidebar cache', err );
+
+        cache = !cache ?
+          new Cache({ name : 'sidebar' }) :
+          cache;
 
         cache.trunk = {
           tags   : trunk_tags,
@@ -107,13 +114,17 @@ module.exports = {
         };
 
         cache.save( function ( err, cache ){
+          if( err ) return LOG.error( 500,
+            '[libs][sidebar][init] Having trouble updating sidebar cache', err );
+
           next();
         });
       });
     });
 
     flow.end( function (){
-      console.log( 'sidebar updated!' );
+      LOG.debug( 'sidebar updated' );
+
       callback && callback();
     });
   }

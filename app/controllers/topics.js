@@ -118,7 +118,7 @@ module.exports = Application.extend({
       result.keywords = keywords.join( ' ' );
 
       res.render( 'topics/index',
-        self._merge( req, result, '?keywords=' + keywords.join( '+' ) ));
+        self._merge( req, result, '?keywords=' + keywords.join( '+' )));
     });
   },
 
@@ -191,18 +191,19 @@ module.exports = Application.extend({
     Topic.findById( req.params.id, function ( err, topic ){
       if( topic ){
         if( topic.is_owner( req.user )){
-          res.render( 'topics/edit', self._merge( req, { topic : topic }));
-        }else{
-          req.msg    = 'topic';
-          req.origin = '/topics/' + topic._id;
-          self.permission_denied( req, res, next );
+          return res.render( 'topics/edit',
+            self._merge( req, { topic : topic }));
         }
+
+        req.msg    = 'topic';
+        req.origin = '/topics/' + topic._id;
+        self.permission_denied( req, res, next );
 
         return;
       }
 
       req.msg = 'Topic';
-      self.record_not_found( err, req, res, next );
+      self.record_not_found( err, req, res );
     });
   },
 
@@ -216,19 +217,19 @@ module.exports = Application.extend({
           topic.set_attrs( req.body.topic );
 
           if( !req.form.isValid ){
-            res.render( 'topics/edit',
+            return res.render( 'topics/edit',
               self._merge( req, { topic : topic }));
-          }else{
-            topic.save( function ( err, topic ){
-              if( err ){
-                req.flash( 'flash-error', 'Topic update fail' );
-              }else{
-                req.flash( 'flash-info', 'Topic updated' );
-              }
-
-              res.redirect( '/topics/' + topic._id );
-            });
           }
+
+          topic.save( function ( err, topic ){
+            if( err ){
+              req.flash( 'flash-error', 'Topic update fail' );
+            }else{
+              req.flash( 'flash-info', 'Topic updated' );
+            }
+
+            res.redirect( '/topics/' + topic._id );
+          });
 
           return;
         }
@@ -283,8 +284,10 @@ module.exports = Application.extend({
       find().
       sort( 'name', 1 ).
       run( function ( err, tags ){
+        if( err ) return next( err );
+
         res.render( 'topics/tags',
-          self._merge( req, { tags : tags } ));
+          self._merge( req, { tags : tags }));
       });
   },
 
@@ -296,18 +299,20 @@ module.exports = Application.extend({
       populate( 'user' ).
       populate( 'comments' ).
       run( function ( err, topic ){
-      if( topic ){
-        var comment = new Comment({
-          user  : req.user,
-          topic : topic });
+        if( topic ){
+          var comment = new Comment({
+            user  : req.user,
+            topic : topic
+          });
 
-        validate_comment_form( req, res );
-        comment.set_attrs( req.body.comment );
+          validate_comment_form( req, res );
+          comment.set_attrs( req.body.comment );
 
-        if( !req.form.isValid ){
-          res.render( 'topics/show',
-            self._merge( req, { topic : topic, comment : comment } ));
-        }else{
+          if( !req.form.isValid ){
+            return res.render( 'topics/show',
+              self._merge( req, { topic : topic, comment : comment }));
+          }
+
           comment.save( function ( err, comment ){
             if( err ){
               req.flash( 'flash-error', 'Comment creation fail' );
@@ -317,14 +322,13 @@ module.exports = Application.extend({
 
             res.redirect( '/topics/' + topic._id );
           });
+
+          return;
         }
 
-        return;
-      }
-
-      req.msg = 'Topic';
-      self.record_not_found( err, req, res, next );
-    });
+        req.msg = 'Topic';
+        self.record_not_found( err, req, res );
+      });
   },
 
   destroy_comment : function ( req, res, next ){
@@ -344,17 +348,17 @@ module.exports = Application.extend({
           });
 
           return;
-        }else{
-          req.msg    = 'comment';
-          req.origin = '/topics/' + req.params.id;
-          self.permission_denied( req, res, next );
-
-          return;
         }
+
+        req.msg    = 'comment';
+        req.origin = '/topics/' + req.params.id;
+        self.permission_denied( req, res, next );
+
+        return;
       }
 
       req.msg = 'Comment';
-      self.record_not_found( err, req, res, next );
+      self.record_not_found( err, req, res );
     });
   },
 

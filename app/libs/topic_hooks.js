@@ -59,7 +59,7 @@ module.exports = {
       { _id : this.user },
       { $pull : { topics : this._id }},
       function ( err ){
-        if( err ) return next( err );
+        if( err ) next( err );
       });
 
     // remove topic's _id from its tags
@@ -68,7 +68,7 @@ module.exports = {
       { $pull : { topics : this._id }},
       { multi : true },
       function ( err ){
-        if( err ) return next( err );
+        if( err ) next( err );
       });
 
     // remove topic comments' _ids from their users
@@ -79,7 +79,7 @@ module.exports = {
 
         comments.forEach( function ( comment ){
           comment.remove( function ( err, comment ){
-            if( err ) return next( err );
+            if( err ) next( err );
           });
         });
     });

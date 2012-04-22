@@ -11,6 +11,10 @@ module.exports = function ( app ){
       return obj === undefined ? '' : obj[ prop ];
     },
 
+    exists : function ( obj ){
+      return obj === undefined ? '' : obj;
+    },
+
     date : function ( date, format ){
       return date_format( date, format );
     },

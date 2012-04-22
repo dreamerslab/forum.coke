@@ -1,40 +1,52 @@
-<? if( ! it.sess_user ) { ?>
-  <p>
-    <a href="/topics/latest">Home</a> |
-    <a href="/auth/google?referrer=<?= encodeURIComponent( it.referrer ) ?>">Log In with google</a>
-  </p>
-<? }else{ ?>
-  <p>
-    <a href="/topics/latest">Home</a> |
-    <a href="/notifications">Notifications</a> |
-    <a href="/logout?referrer=<?= encodeURIComponent( '/topics/latest' ) ?>">Log Out</a>
-  </p>
-<? } ?>
+<p>
+  <a href="/topics/latest">Home</a> |
+
+  <? if( !it.sess_user ){ ?>
+
+  <a href="/auth/google?referrer=<?= encodeURIComponent( it.referrer ) ?>">
+    Log In with google
+  </a>
+
+  <? }else{ ?>
+
+  <a href="/notifications">Notifications</a> |
+  <a href="/logout?referrer=<?= encodeURIComponent( '/topics/latest' ) ?>">
+    Log Out
+  </a>
+
+  <? } ?>
+</p>
 
 <nav>
   <table>
     <tr>
       <td>
-        <a class="<?= it.selected( 'latest', it.nav_selected ) ?>" href="/topics/latest">Latest</a>
+        <a class="<?= it.selected( 'latest', it.nav_selected ) ?>" href="/topics/latest">
+          Latest
+        </a>
       </td>
       <td>
-        <a class="<?= it.selected( 'trending', it.nav_selected ) ?>" href="/topics/trending">Trending</a>
+        <a class="<?= it.selected( 'trending', it.nav_selected ) ?>" href="/topics/trending">
+          Trending
+        </a>
       </td>
       <td>
-        <a class="<?= it.selected( 'unsolved', it.nav_selected ) ?>" href="/topics/unsolved">Unsolved</a>
+        <a class="<?= it.selected( 'unsolved', it.nav_selected ) ?>" href="/topics/unsolved">
+          Unsolved
+        </a>
       </td>
       <td>
-          <div class="search">
-            <form action="/topics/search" method="GET" accept-charset="UTF-8" >
-              <div id="table">
-                <div class="form-row">
-                  <label class="form-title" for="keywords">Keywords : </label>
-                  <input class="text-input" type="text" name="keywords" value="<?= it.keywords ? it.keywords : '' ?>"/>
-                  <input class="submit-link" type="submit" value="Search Topic" />
-                </div>
+        <div class="search">
+          <form action="/topics/search" method="GET" accept-charset="UTF-8" >
+            <div id="table">
+              <div class="form-row">
+                <label class="form-title" for="keywords">Keywords : </label>
+                <input class="text-input" type="text" name="keywords" value="<?= it.exists( it.keywords ) ?>"/>
+                <input class="submit-link" type="submit" value="Search Topic" />
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
+        </div>
       </td>
     </tr>
   </table>

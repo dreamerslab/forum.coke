@@ -7,20 +7,20 @@ Tag.statics = {
   extract_names : function ( string ){
     if( UTILS.is( string ) !== 'String' || string === '' ){
       return [];
-    }else{
-      var candidates = string.split( /\s*[,|;]\s*/ ).slice( 0, 5 );
-      var names      = [];
-
-      candidates.forEach( function ( name ){
-        name = name.toLowerCase();
-
-        if( names.indexOf( name ) === -1 && name.length < 20 ){
-          names.push( name );
-        }
-      });
-
-      return names.sort();
     }
+
+    var candidates = string.split( /\s*[,|;]\s*/ ).slice( 0, 5 );
+    var names      = [];
+
+    candidates.forEach( function ( name ){
+      name = name.toLowerCase();
+
+      if( names.indexOf( name ) === -1 && name.length < 20 ){
+        names.push( name );
+      }
+    });
+
+    return names.sort();
   },
 
   create_all : function ( tag_names, callback ){
@@ -33,23 +33,25 @@ Tag.statics = {
           if( err ){
             flow.end( function (){
               callback && callback( err );
-              return;
             });
+            return;
           }
 
           if( tag ){
-            next();
-          }else{
-            new self({ name : name }).save( function ( err, tag ){
-              if( err ){
-                flow.end( function (){
-                  callback && callback( err );
-                  return;
-                });
-              }
-              next();
-            });
+            return next();
           }
+
+          new self({ name : name }).save( function ( err, tag ){
+            if( err ){
+              flow.end( function (){
+                callback && callback( err );
+              });
+
+              return;
+            }
+
+            next();
+          });
         });
       }, name );
     });
@@ -73,9 +75,11 @@ Tag.statics = {
 
           callback && callback();
         });
-    }else{
-      callback && callback();
+
+      return;
     }
+
+    callback && callback();
   },
 
   remove_topic : function ( topic, callback ){
@@ -92,9 +96,11 @@ Tag.statics = {
 
           callback && callback();
         });
-    }else{
-      callback && callback();
+
+      return;
     }
+
+    callback && callback();
   },
 };
 

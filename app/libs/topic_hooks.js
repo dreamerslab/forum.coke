@@ -33,12 +33,8 @@ module.exports = {
       { _id : this.user },
       { $push : { topics : this._id }},
       function ( err ){
-        if( err ){
-          // next( err );
-          // NOTE: there is not 'next' in mongoose's
-          // post middleware, how can I handle error?
-          return;
-        }
+        if( err ) LOG.error( 500,
+          '[libs][topic_hooks][post_save] Having trouble updating user topic', err );
       });
 
     if( this.tags_modified ){

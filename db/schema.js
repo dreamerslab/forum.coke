@@ -27,12 +27,12 @@ Model.Topic = new Schema({
   as_user     : { type : Schema.Types.Mixed },
   title       : { type : String, required : true },
   content     : { type : String, required : true },
-  tag_names   : [{ type : String}],
+  tag_names   : [{ type : String }],
   tags        : [{ type : ObjectId, ref : 'Tag' }],
   comments    : [{ type : ObjectId, ref : 'Comment' }],
   read_count  : { type : Number, 'default' : 0 },
   created_at  : { type : Number, 'default' : Date.now },
-  updated_at  : { type : Number}
+  updated_at  : { type : Number }
 });
 
 Model.Comment = new Schema({

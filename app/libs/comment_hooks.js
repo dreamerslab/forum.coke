@@ -57,15 +57,27 @@ module.exports = {
   },
 
   pre_remove : function ( next ){
-    var User = mongoose.model( 'User' );
+    var User  = mongoose.model( 'User' );
+    var Topic = mongoose.model( 'Topic' );
 
+    // remove comment's _id from its user
     User.update(
       { _id : this.user },
       { $pull : { comments : this._id }},
       function ( err ){
-        if( err ) return next( err );
-
-        next();
+        if( err ) LOG.error( 500,
+          '[libs][comment_hooks][pre_remove] Having trouble removing comment\'s id from its user', err );
       });
+
+    // remove comment's _id from its topic
+    Topic.update(
+      { _id : this.topic },
+      { $pull : { comments : this._id }},
+      function ( err ){
+        if( err ) LOG.error( 500,
+          '[libs][comment_hooks][pre_remove] Having trouble removing comment\'s id from its topic', err );
+      });
+
+    next();
   }
 };

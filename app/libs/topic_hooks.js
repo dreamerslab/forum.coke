@@ -59,7 +59,8 @@ module.exports = {
       { _id : this.user },
       { $pull : { topics : this._id }},
       function ( err ){
-        if( err ) next( err );
+        if( err ) LOG.error( 500,
+          '[libs][topic_hooks][pre_remove] Having trouble removing topic\'s id from its user', err );
       });
 
     // remove topic's _id from its tags
@@ -68,18 +69,21 @@ module.exports = {
       { $pull : { topics : this._id }},
       { multi : true },
       function ( err ){
-        if( err ) next( err );
+        if( err ) LOG.error( 500,
+          '[libs][topic_hooks][pre_remove] Having trouble removing topic\'s id from its tags', err );
       });
 
     // remove topic comments' _ids from their users
     Comment.find(
       { _id : { $in : this.comments }},
       function ( err, comments ){
-        if( err ) return next( err );
+        if( err ) LOG.error( 500,
+          '[libs][topic_hooks][pre_remove] Having trouble find topic\'s comments', err );
 
         comments.forEach( function ( comment ){
           comment.remove( function ( err, comment ){
-            if( err ) next( err );
+            if( err ) LOG.error( 500,
+              '[libs][topic_hooks][pre_remove] Having trouble removing topic comments\' ids from their users', err );
           });
         });
     });

@@ -6,11 +6,11 @@ var User        = mongoose.model( 'User' );
 module.exports = Application.extend({
 
   google : function ( req, res, next ){
-    var referrer = req.query ?
-      decodeURIComponent( req.query.referrer ) :
+    var referer = req.headers.referer ?
+      req.headers.referer :
       '/topics/latest';
 
-    res.cookie( 'referrer', referrer );
+    res.cookie( 'referer', referer );
 
     passport.authenticate( 'google', {
       scope : [
@@ -37,11 +37,11 @@ module.exports = Application.extend({
             email      : profile._json.email,
             picture    : profile._json.picture
           }).save( function ( err, user ){
-            res.redirect( req.cookies.referrer );
+            res.redirect( req.cookies.referer );
           });
 
         }else{
-          res.redirect( req.cookies.referrer );
+          res.redirect( req.cookies.referer );
         }
       });
     });

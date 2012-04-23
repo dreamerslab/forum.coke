@@ -29,7 +29,6 @@ module.exports = Application.extend({
     return UTILS.merge( result || {}, {
       sidebar   : req.sidebar,
       sess_user : req.user,
-      referrer  : req.url,
       path      : req.path,
       query     : base_query || ''
     });

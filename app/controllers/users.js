@@ -15,7 +15,6 @@ module.exports = Application.extend({
 
       res.render( 'users/index', {
         sidebar   : req.sidebar,
-        referrer  : req.url,
         sess_user : req.user,
         users     : users
       });
@@ -29,7 +28,6 @@ module.exports = Application.extend({
       if( user ){
         res.render( 'users/show', {
           sidebar   : req.sidebar,
-          referrer  : req.url,
           sess_user : req.user,
           user      : user
         });

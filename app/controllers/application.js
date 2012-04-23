@@ -77,6 +77,6 @@ module.exports = Class.extend({
       return;
     }
 
-    res.redirect( '/auth/google?referrer=' + encodeURIComponent( req.url ));
+    res.redirect( '/auth/google' );
   },
 });

@@ -18,7 +18,6 @@ module.exports = Application.extend({
 
         res.render( 'notifications/index', {
           sidebar   : req.sidebar,
-          referrer  : req.url,
           sess_user : req.user,
           notifs    : notifs
         });

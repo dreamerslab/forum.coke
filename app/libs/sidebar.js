@@ -14,8 +14,8 @@ module.exports = {
     var trunk_issues = [];
 
     function compare( a, b ){
-      if( a.name > b.name ) return 1;
-      if( a.name < b.name ) return -1;
+      if( a > b ) return 1;
+      if( a < b ) return -1;
       return 0;
     };
 
@@ -35,7 +35,9 @@ module.exports = {
             trunk_tags.push( tag.obj_attrs());
           });
 
-          trunk_tags.sort( compare );
+          trunk_tags.sort( function ( a, b ){
+            return compare( a.name, b.name );
+          });
           next();
         });
     });
@@ -53,7 +55,9 @@ module.exports = {
             trunk_users.push( user.obj_attrs());
           });
 
-          trunk_users.sort( compare );
+          trunk_users.sort( function ( a, b ){
+            return compare( a.name, b.name );
+          });
           next();
         });
     });

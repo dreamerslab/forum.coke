@@ -49,11 +49,6 @@ module.exports = Application.extend({
 
   logout : function ( req, res, next ){
     req.logout();
-
-    var redirect = req.query.referrer ?
-      decodeURIComponent( req.query.referrer ) :
-      '/topics/latest';
-
-    res.redirect( redirect );
+    res.redirect( '/topics/latest' );
   },
 });

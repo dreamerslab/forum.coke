@@ -22,6 +22,9 @@ module.exports = {
     flow.series( function ( next ){
       Tag.find(
         function ( err, tags ){
+          if( err ) return LOG.error( 500,
+            '[libs][sidebar][init] Having trouble finding tags' );
+
           tags.sort( function ( a, b ){
             return compare( b.topics.length, a.topics.length );
           });

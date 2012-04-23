@@ -43,7 +43,7 @@ Topic.methods = {
 
     this.title     = topic.title;
     this.content   = topic.content;
-    this.tag_names = topic.tag_names;
+    this.tag_names = Tag.extract_names( topic.tag_names );
   },
 
   inc_read_count : function (){

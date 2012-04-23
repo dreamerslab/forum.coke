@@ -31,7 +31,7 @@ module.exports = {
           { _id : self.user },
           { $push : { comments : self._id }},
           function ( err ){
-            if( err ) LOG.error( 500,
+            err && LOG.error( 500,
               '[libs][comment_hooks][post_save] Having trouble updating the user', err );
           });
       }
@@ -47,7 +47,7 @@ module.exports = {
           { _id : self.topic },
           { $push : { comments : self._id }},
           function ( err ){
-            if( err ) LOG.error( 500,
+            err && LOG.error( 500,
               '[libs][comment_hooks][post_save] Having trouble updating the topic', err );
           });
       }
@@ -65,7 +65,7 @@ module.exports = {
       { _id : this.user },
       { $pull : { comments : this._id }},
       function ( err ){
-        if( err ) LOG.error( 500,
+        err && LOG.error( 500,
           '[libs][comment_hooks][pre_remove] Having trouble removing comment\'s id from its user', err );
       });
 
@@ -74,7 +74,7 @@ module.exports = {
       { _id : this.topic },
       { $pull : { comments : this._id }},
       function ( err ){
-        if( err ) LOG.error( 500,
+        err && LOG.error( 500,
           '[libs][comment_hooks][pre_remove] Having trouble removing comment\'s id from its topic', err );
       });
 

@@ -96,7 +96,7 @@ module.exports = {
       });
 
       req.on( 'error', function( err ){
-        if( err ) LOG.error( 500,
+        err && LOG.error( 500,
           '[libs][sidebar][init] Having trouble getting github issues', err );
       });
 

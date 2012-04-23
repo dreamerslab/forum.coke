@@ -33,7 +33,7 @@ module.exports = {
       { _id : this.user },
       { $push : { topics : this._id }},
       function ( err ){
-        if( err ) LOG.error( 500,
+        err && LOG.error( 500,
           '[libs][topic_hooks][post_save] Having trouble updating user topic', err );
       });
 
@@ -59,7 +59,7 @@ module.exports = {
       { _id : this.user },
       { $pull : { topics : this._id }},
       function ( err ){
-        if( err ) LOG.error( 500,
+        err && LOG.error( 500,
           '[libs][topic_hooks][pre_remove] Having trouble removing topic\'s id from its user', err );
       });
 
@@ -69,7 +69,7 @@ module.exports = {
       { $pull : { topics : this._id }},
       { multi : true },
       function ( err ){
-        if( err ) LOG.error( 500,
+        err && LOG.error( 500,
           '[libs][topic_hooks][pre_remove] Having trouble removing topic\'s id from its tags', err );
       });
 
@@ -77,12 +77,12 @@ module.exports = {
     Comment.find(
       { _id : { $in : this.comments }},
       function ( err, comments ){
-        if( err ) LOG.error( 500,
+        err && LOG.error( 500,
           '[libs][topic_hooks][pre_remove] Having trouble find topic\'s comments', err );
 
         comments.forEach( function ( comment ){
           comment.remove( function ( err, comment ){
-            if( err ) LOG.error( 500,
+            err && LOG.error( 500,
               '[libs][topic_hooks][pre_remove] Having trouble removing topic comments\' ids from their users', err );
           });
         });

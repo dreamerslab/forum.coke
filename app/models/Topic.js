@@ -50,7 +50,10 @@ Topic.methods = {
     mongoose.model( 'Topic' ).update(
       { _id : this._id },
       { $inc : { read_count : 1 }},
-      function ( err ){}
+      function ( err ){
+        err && LOG.error( 500,
+          '[app][models][Topic] Having trouble increasing read count', err )
+      }
     );
   },
 

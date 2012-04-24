@@ -91,7 +91,6 @@ Model.Comment.pre( 'save', comment_hooks.pre_save );
 Model.Comment.post( 'save', comment_hooks.post_save );
 Model.Comment.pre( 'remove', comment_hooks.pre_remove );
 
-Model.Notification.pre( 'save', notif_hooks.pre_save );
 Model.Notification.post( 'save', notif_hooks.post_save );
 
 

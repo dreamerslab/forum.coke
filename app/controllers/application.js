@@ -63,6 +63,9 @@ module.exports = Class.extend({
     Cache.findOne({
       name : 'sidebar'
     }, function ( err, cache ){
+      err && LOG.error( 500,
+        '[app][controllers][application] Having trouble filling sidebar data' );
+
       req.sidebar = cache && cache.trunk ?
         cache.trunk :
         { tags : [], users : [], issues : []};

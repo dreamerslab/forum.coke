@@ -129,6 +129,8 @@ module.exports = Application.extend({
         { _id : req.query.nid },
         { $set : { is_read : true }},
         function ( err ){
+          err && LOG.error( 500, res, 'Fail to mark notification as read' );
+
           res.redirect( '/topics/' + req.params.id );
         });
 

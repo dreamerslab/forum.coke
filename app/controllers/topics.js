@@ -163,26 +163,28 @@ module.exports = Application.extend({
   },
 
   create : function ( req, res, next ){
-    validate_topic_form( req, res )
+    var self = this;
 
-    if( !req.form.isValid ){
-      res.render( 'topics/new',
-        this._merge( req, { topic : req.body.topic }));
-      return;
-    }
-
-    var topic = new Topic({ user : req.user });
-
-    topic.set_attrs( req.body.topic );
-    topic.save( function ( err, topic ){
-      if( err ){
-        req.flash( 'flash-error', 'Topic creation fail' );
-        res.redirect( '/topics' );
+    validate_topic_form( req, res, function (){
+      if( !req.form.isValid ){
+        res.render( 'topics/new',
+          self._merge( req, { topic : req.body.topic }));
         return;
       }
 
-      req.flash( 'flash-info', 'Topic created' );
-      res.redirect( '/topics/' + topic._id );
+      var topic = new Topic({ user : req.user });
+
+      topic.set_attrs( req.body.topic );
+      topic.save( function ( err, topic ){
+        if( err ){
+          req.flash( 'flash-error', 'Topic creation fail' );
+          res.redirect( '/topics' );
+          return;
+        }
+
+        req.flash( 'flash-info', 'Topic created' );
+        res.redirect( '/topics/' + topic._id );
+      });
     });
   },
 
@@ -214,25 +216,26 @@ module.exports = Application.extend({
     Topic.findById( req.params.id, function ( err, topic ){
       if( topic ){
         if( topic.is_owner( req.user )){
-          validate_topic_form( req, res );
-          topic.set_attrs( req.body.topic );
+          validate_topic_form( req, res, function (){
+            topic.set_attrs( req.body.topic );
 
-          if( !req.form.isValid ){
-            return res.render( 'topics/edit',
-              self._merge( req, { topic : topic }));
-          }
-
-          topic.save( function ( err, topic ){
-            if( err ){
-              req.flash( 'flash-error', 'Topic update fail' );
-            }else{
-              req.flash( 'flash-info', 'Topic updated' );
+            if( !req.form.isValid ){
+              return res.render( 'topics/edit',
+                self._merge( req, { topic : topic }));
             }
 
-            res.redirect( '/topics/' + topic._id );
-          });
+            topic.save( function ( err, topic ){
+              if( err ){
+                req.flash( 'flash-error', 'Topic update fail' );
+              }else{
+                req.flash( 'flash-info', 'Topic updated' );
+              }
 
-          return;
+              res.redirect( '/topics/' + topic._id );
+            });
+
+            return;
+          });
         }
 
         req.msg    = 'topic';
@@ -306,22 +309,23 @@ module.exports = Application.extend({
             topic : topic
           });
 
-          validate_comment_form( req, res );
-          comment.set_attrs( req.body.comment );
+          validate_comment_form( req, res, function (){
+            comment.set_attrs( req.body.comment );
 
-          if( !req.form.isValid ){
-            return res.render( 'topics/show',
-              self._merge( req, { topic : topic, comment : comment }));
-          }
-
-          comment.save( function ( err, comment ){
-            if( err ){
-              req.flash( 'flash-error', 'Comment creation fail' );
-            }else{
-              req.flash( 'flash-info', 'Comment created' );
+            if( !req.form.isValid ){
+              return res.render( 'topics/show',
+                self._merge( req, { topic : topic, comment : comment }));
             }
 
-            res.redirect( '/topics/' + topic._id );
+            comment.save( function ( err, comment ){
+              if( err ){
+                req.flash( 'flash-error', 'Comment creation fail' );
+              }else{
+                req.flash( 'flash-info', 'Comment created' );
+              }
+
+              res.redirect( '/topics/' + topic._id );
+            });
           });
 
           return;

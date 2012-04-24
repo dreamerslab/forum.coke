@@ -37,7 +37,11 @@ Notification.statics = {
       find({ topic : topic._id }).
       populate( 'user' ).
       run( function ( err, comments ){
-        if( err ) return;
+        if( err ){
+          LOG.error( 500,
+            '[app][models][Notifications] Having trouble finding comments', err );
+          return;
+        }
 
         var topic_user_id = topic.user.toString();
         var subscribers   = comments.map( function ( c ){ return c.user; });
@@ -50,7 +54,8 @@ Notification.statics = {
           subscribers = exclude( subscribers, comment_user_id );
           User.findById( comment_user_id, function ( err, user ){
             if( err ){
-              // TODO: log the error
+              LOG.error( 500,
+                '[app][models][Notifications] Having trouble finding comment\'s user', err );
               return;
             }
 
@@ -62,7 +67,10 @@ Notification.statics = {
                 originator : user.obj_attrs(),
                 topic      : topic.obj_attrs(),
                 activity   : 'commented on the topic'
-              }).save();
+              }).save( function ( err ){
+                err && LOG.error( 500,
+                  '[app][models][Notifications] Having trouble saving notification', err );
+              });
             });
 
             // notify the topic author
@@ -73,7 +81,10 @@ Notification.statics = {
                 originator : user.obj_attrs(),
                 topic      : topic.obj_attrs(),
                 activity   : 'commented on your topic'
-              }).save();
+              }).save( function (){
+                err && LOG.error( 500,
+                  '[app][models][Notifications] Having trouble saving notification', err );
+              });
             }
           });
         }
@@ -81,7 +92,8 @@ Notification.statics = {
         if( type === 'update-topic' ){
           User.findById( topic_user_id, function ( err, user ){
             if( err ){
-              // TODO: log the error
+              LOG.error( 500,
+                '[app][models][Notifications] Having trouble finding topic\'s user', err );
               return;
             }
 
@@ -93,7 +105,10 @@ Notification.statics = {
                 originator : user.obj_attrs(),
                 topic      : topic.obj_attrs(),
                 activity   : 'updated on the topic'
-              }).save();
+              }).save( function ( err ){
+                err && LOG.error( 500,
+                  '[app][models][Notifications] Having trouble saving notification', err );
+              });
             });
           });
         }

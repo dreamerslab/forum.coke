@@ -23,11 +23,22 @@ module.exports = Application.extend({
     passport.authenticate( 'google', {
       failureRedirect : '/'
     })( req, res, function (){
-
       User.findOne({
         google_id : req.user.id
       }, function ( err, user ){
-        if( !user ){
+        if( err ){
+          LOG.error( 500, res, err );
+          res.redirect( '/logout' );
+          return;
+        }
+
+        var referer = req.cookies.referer ?
+          req.cookies.referer :
+          '/topics/latest'
+
+        if( user ){
+          res.redirect( referer );
+        }else{
           var profile = req.user;
 
           new User({
@@ -37,11 +48,14 @@ module.exports = Application.extend({
             email      : profile._json.email,
             picture    : profile._json.picture
           }).save( function ( err, user ){
-            res.redirect( req.cookies.referer );
-          });
+            if( err ){
+              LOG.error( 500, res, err );
+              res.redirect( '/logout' );
+              return;
+            }
 
-        }else{
-          res.redirect( req.cookies.referer );
+            res.redirect( referer );
+          });
         }
       });
     });

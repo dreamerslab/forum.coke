@@ -120,6 +120,7 @@ module.exports = {
           issues : trunk_issues
         };
 
+        cache.markModified( 'trunk' );
         cache.save( function ( err, cache ){
           if( err ) return LOG.error( 500,
             '[libs][sidebar][init] Having trouble updating sidebar cache', err );

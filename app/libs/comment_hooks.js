@@ -23,13 +23,13 @@ module.exports = {
     // append comment's _id to its user
     User.push_comment( this, function ( err, user ){
       err && LOG.error( 500,
-        '[libs][comment_hooks][pre_remove] Having trouble pushing comment\'s id to its user', err );
+        '[libs][comment_hooks][post_save] Having trouble pushing comment\'s id to its user', err );
     });
 
     // append comment's _id to its topic
     Topic.push_comment( this, function ( err, topic ){
       err && LOG.error( 500,
-        '[libs][comment_hooks][pre_remove] Having trouble pushing comment\'s id to its topic', err );
+        '[libs][comment_hooks][post_save] Having trouble pushing comment\'s id to its topic', err );
     });
   },
 

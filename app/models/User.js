@@ -2,9 +2,33 @@ var User = require( BASE_DIR + 'db/schema' ).User;
 
 
 
+User.statics = {
+  push_comment : function ( comment, callback ){
+    this.findById( comment.user, function ( err, user ){
+      if( err ) return callback && callback( err );
+
+      if( user ){
+        user.comments.$addToSet( comment._id );
+        user.save( callback );
+      }
+    });
+  },
+
+  pull_comment : function ( comment, callback ){
+    this.findById( comment.user, function ( err, user ){
+      if( err ) return callback && callback( err );
+
+      if( user ){
+        user.comments.$pull( comment._id );
+        user.save( callback );
+      }
+    });
+  }
+};
+
 User.methods = {
   // this a virtual property
-  avatar_link : function(){
+  avatar_link : function (){
     return UTILS.is( this.picture ) === 'String' ?
       this.picture :
       'http://www.gravatar.com/avatar/00000000000000000000000000000000';

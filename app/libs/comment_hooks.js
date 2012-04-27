@@ -21,31 +21,31 @@ module.exports = {
     var Topic = mongoose.model( 'Topic' );
     var Notif = mongoose.model( 'Notification' );
 
-    // add comment's _id to its user
-    User.findById( this.user, function ( err, user ){
-      if( err ) return LOG.error( 500,
-        '[libs][comment_hooks][post_save] Having trouble finding the user', err );
-
-      user.comments.$addToSet( self._id );
-      user.save( function ( err, user ){
-        err && LOG.error( 500,
-          '[libs][comment_hooks][post_save] Having trouble updating the user', err );
-      });
+    // append comment's _id to its user
+    User.push_comment( this, function ( err, user ){
+      err && LOG.error( 500,
+        '[libs][comment_hooks][pre_remove] Having trouble pushing comment\'s id to its user', err );
     });
 
-    // add comment's _id to its topic
-    Topic.findById( this.topic, function ( err, topic ){
-      if( err ) return LOG.error( 500,
-        '[libs][comment_hooks][post_save] Having trouble finding the topic', err );
-
-      topic.comments.$addToSet( self._id );
-      topic.save( function ( err, topic ){
-        err && LOG.error( 500,
-          '[libs][comment_hooks][post_save] Having trouble updating the topic', err );
-      });
-
-      Notif.send( 'create-comment', topic, self );
+    // append comment's _id to its topic
+    Topic.push_comment( this, function ( err, topic ){
+      err && LOG.error( 500,
+        '[libs][comment_hooks][pre_remove] Having trouble pushing comment\'s id to its topic', err );
     });
+
+
+    // Topic.findById( this.topic, function ( err, topic ){
+    //   if( err ) return LOG.error( 500,
+    //     '[libs][comment_hooks][post_save] Having trouble finding the topic', err );
+
+    //   topic.comments.$addToSet( self._id );
+    //   topic.save( function ( err, topic ){
+    //     err && LOG.error( 500,
+    //       '[libs][comment_hooks][post_save] Having trouble updating the topic', err );
+    //   });
+
+    //   Notif.send( 'create-comment', topic, self );
+    // });
   },
 
   pre_remove : function ( next ){
@@ -53,22 +53,24 @@ module.exports = {
     var Topic = mongoose.model( 'Topic' );
 
     // remove comment's _id from its user
-    User.update(
-      { _id : this.user },
-      { $pull : { comments : this._id }},
-      function ( err ){
-        err && LOG.error( 500,
-          '[libs][comment_hooks][pre_remove] Having trouble removing comment\'s id from its user', err );
-      });
+    User.pull_comment( this, function ( err, user ){
+      err && LOG.error( 500,
+        '[libs][comment_hooks][pre_remove] Having trouble pulling comment\'s id from its user', err );
+    });
 
     // remove comment's _id from its topic
-    Topic.update(
-      { _id : this.topic },
-      { $pull : { comments : this._id }},
-      function ( err ){
-        err && LOG.error( 500,
-          '[libs][comment_hooks][pre_remove] Having trouble removing comment\'s id from its topic', err );
-      });
+    Topic.pull_comment( this, function ( err, topic ){
+      err && LOG.error( 500,
+        '[libs][comment_hooks][pre_remove] Having trouble pulling comment\'s id from its topic', err );
+    });
+
+    // Topic.update(
+    //   { _id : this.topic },
+    //   { $pull : { comments : this._id }},
+    //   function ( err ){
+    //     err && LOG.error( 500,
+    //       '[libs][comment_hooks][pre_remove] Having trouble removing comment\'s id from its topic', err );
+    //   });
 
     next();
   }

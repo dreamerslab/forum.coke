@@ -28,6 +28,28 @@ Topic.statics = {
         });
     });
   },
+
+  push_comment : function ( comment, callback ){
+    this.findById( comment.topic, function ( err, topic ){
+      if( err ) return callback && callback( err );
+
+      if( topic ){
+        topic.comments.$addToSet( comment._id );
+        topic.save( callback );
+      }
+    });
+  },
+
+  pull_comment : function ( comment, callback ){
+    this.findById( comment.topic, function ( err, topic ){
+      if( err ) return callback && callback( err );
+
+      if( topic ){
+        topic.comments.$pull( comment._id );
+        topic.save( callback );
+      }
+    });
+  }
 };
 
 Topic.methods = {

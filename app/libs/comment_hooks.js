@@ -26,15 +26,11 @@ module.exports = {
       if( err ) return LOG.error( 500,
         '[libs][comment_hooks][post_save] Having trouble finding the user', err );
 
-      if( user.comments.indexOf( self._id ) === -1 ){
-        User.update(
-          { _id : self.user },
-          { $push : { comments : self._id }},
-          function ( err ){
-            err && LOG.error( 500,
-              '[libs][comment_hooks][post_save] Having trouble updating the user', err );
-          });
-      }
+      user.comments.$addToSet( self._id );
+      user.save( function ( err, user ){
+        err && LOG.error( 500,
+          '[libs][comment_hooks][post_save] Having trouble updating the user', err );
+      });
     });
 
     // add comment's _id to its topic
@@ -42,15 +38,11 @@ module.exports = {
       if( err ) return LOG.error( 500,
         '[libs][comment_hooks][post_save] Having trouble finding the topic', err );
 
-      if( topic.comments.indexOf( self._id ) === -1 ){
-        Topic.update(
-          { _id : self.topic },
-          { $push : { comments : self._id }},
-          function ( err ){
-            err && LOG.error( 500,
-              '[libs][comment_hooks][post_save] Having trouble updating the topic', err );
-          });
-      }
+      topic.comments.$addToSet( self._id );
+      topic.save( function ( err, topic ){
+        err && LOG.error( 500,
+          '[libs][comment_hooks][post_save] Having trouble updating the topic', err );
+      });
 
       Notif.send( 'create-comment', topic, self );
     });

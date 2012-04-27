@@ -28,14 +28,11 @@ module.exports = {
     var Tag   = mongoose.model( 'Tag' );
     var Notif = mongoose.model( 'Notification' );
 
-    // add topic's _id to its user
-    User.update(
-      { _id : this.user },
-      { $push : { topics : this._id }},
-      function ( err ){
-        err && LOG.error( 500,
-          '[libs][topic_hooks][post_save] Having trouble updating user topic', err );
-      });
+    // append topic's _id to its user
+    User.push_topic( this, function ( err, user ){
+      err && LOG.error( 500,
+        '[libs][topic_hooks][post_save] Having trouble pushing topic\'s id to its user', err );
+    });
 
     if( this.tags_modified ){
       Tag.remove_topic( self, function (){
@@ -55,13 +52,10 @@ module.exports = {
     var Comment = mongoose.model( 'Comment' );
 
     // remove topic's _id from its user
-    User.update(
-      { _id : this.user },
-      { $pull : { topics : this._id }},
-      function ( err ){
-        err && LOG.error( 500,
-          '[libs][topic_hooks][pre_remove] Having trouble removing topic\'s id from its user', err );
-      });
+    User.pull_topic( this, function ( err, user ){
+      err && LOG.error( 500,
+        '[libs][topic_hooks][pre_remove] Having trouble pulling topic\'s id from its user', err );
+    });
 
     // remove topic's _id from its tags
     Tag.update(

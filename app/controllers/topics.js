@@ -233,9 +233,9 @@ module.exports = Application.extend({
 
               res.redirect( '/topics/' + topic._id );
             });
-
-            return;
           });
+
+          return;
         }
 
         req.msg    = 'topic';

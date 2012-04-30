@@ -32,27 +32,27 @@
 
       <tr>
         <td>
-          <?= topic.as_user.name ?>
+          <?- topic.as_user.name ?>
         </td>
         <td>
           <img src="<?= topic.as_user.avatar_link ?>" />
         </td>
         <td>
           <a href="/topics/<?= topic._id ?>">
-            <?= topic.title ?>
+            <?- topic.title ?>
           </a>
         </td>
         <td>
-          <?= topic.content ?> (Tags: <?= topic.tag_names.join(', ') ?>)
+          <?- topic.content ?> (Tags: <?- topic.tag_names.join(', ') ?>)
         </td>
         <td>
-          <?= topic.read_count ?>
+          <?- topic.read_count ?>
         </td>
         <td>
-          <?= topic.comments.length ?>
+          <?- topic.comments.length ?>
         </td>
         <td>
-          <?= topic.updated_at ?>
+          <?- topic.updated_at ?>
         </td>
       </tr>
 

@@ -3,7 +3,7 @@
     <td class="tags" width="30%">
       <b>Hot tags:</b>
       <? it.sidebar.tags.forEach( function ( tag ){ ?>
-        <a href="/topics/tag?name=<?= tag.name ?>"><?= tag.name ?></a>
+        <a href="/topics/tag?name=<?= tag.name ?>"><?- tag.name ?></a>
         (<?= tag.topic_count ?>)
       <? }); ?>
       <a href="/topics/tags">... more tags</a>
@@ -13,7 +13,7 @@
       <ol>
         <? it.sidebar.users.forEach( function ( user ){ ?>
           <li>
-            <a href="/users/<?= user._id ?>"><?= user.name ?></a>
+            <a href="/users/<?= user._id ?>"><?- user.name ?></a>
           </li>
         <? }); ?>
         <a href="/users">... more users</a>
@@ -24,7 +24,7 @@
       <ol>
         <? it.sidebar.issues.forEach( function ( issue ){ ?>
           <li>
-            <a href="<?= issue.link ?>"><?= issue.title ?></a>
+            <a href="<?= issue.link ?>"><?- issue.title ?></a>
           </li>
         <? }); ?>
         <a href="https://github.com/dreamerslab/coke/issues">... more issues</a>

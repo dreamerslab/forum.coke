@@ -21,9 +21,9 @@
           <?= notif._id ?>
         </td>
         <td>
-          <a href="/users/<?= notif.originator._id ?>"><?= notif.originator.name ?></a>
+          <a href="/users/<?= notif.originator._id ?>"><?- notif.originator.name ?></a>
           <?= notif.activity ?>
-          <a href="/topics/<?= notif.topic._id ?>?nid=<?= notif._id ?>"><?= notif.topic.title ?></a>
+          <a href="/topics/<?= notif.topic._id ?>?nid=<?= notif._id ?>"><?- notif.topic.title ?></a>
         </td>
         <td>
           <?= notif.is_read ?>

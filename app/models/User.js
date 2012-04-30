@@ -51,7 +51,7 @@ User.statics = {
 User.methods = {
   // this a virtual property
   avatar_link : function (){
-    return UTILS.is( this.picture ) === 'String' ?
+    return UTILS.typeof( this.picture ) === 'string' ?
       this.picture :
       'http://www.gravatar.com/avatar/00000000000000000000000000000000';
   },

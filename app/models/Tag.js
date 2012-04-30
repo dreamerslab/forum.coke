@@ -5,7 +5,7 @@ var Flow = require( 'node.flow' );
 
 Tag.statics = {
   extract_names : function ( string ){
-    if( UTILS.is( string ) !== 'String' || string === '' ){
+    if( UTILS.typeof( string ) !== 'string' || string === '' ){
       return [];
     }
 
@@ -62,7 +62,7 @@ Tag.statics = {
   },
 
   append_topic : function ( topic, callback ){
-    if( UTILS.is( topic.tag_names ) === 'Array' ){
+    if( UTILS.typeof( topic.tag_names ) === 'array' ){
       this.update(
         { name : { $in : topic.tag_names }},
         { $push : { topics : topic._id }},
@@ -83,7 +83,7 @@ Tag.statics = {
   },
 
   remove_topic : function ( topic, callback ){
-    if( UTILS.is( topic.orig_tag_names ) === 'Array' ){
+    if( UTILS.typeof( topic.orig_tag_names ) === 'array' ){
       this.update(
         { name : { $in : topic.orig_tag_names }},
         { $pull : { topics : topic._id }},

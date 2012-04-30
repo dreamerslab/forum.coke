@@ -1,4 +1,5 @@
-var moment = require( 'moment' );
+var moment   = require( 'moment' );
+var markdown = require( 'markdown' ).markdown;
 
 module.exports = function ( app ){
   app.helpers({
@@ -65,7 +66,9 @@ module.exports = function ( app ){
       }
 
       return out;
-    }
+    },
+
+    markdown : markdown.toHTML
   });
 
   app.dynamicHelpers({

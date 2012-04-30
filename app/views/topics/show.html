@@ -11,7 +11,7 @@
   <div>Avatar: <img src="<?= it.topic.as_user.avatar_link ?>" /></div>
   <div>Tags: <?- it.topic.tag_names.join(', ') ?></div>
   <div>Title: <?- it.topic.title ?></div>
-  <div>Content: <?- it.topic.content ?></div>
+  <div>Content: <?= it.markdown( it.topic.content ) ?></div>
   <div>Modified: <?= new Date( it.topic.updated_at ) ?></div>
 
   <? if( it.topic.is_owner( it.sess_user )){ ?>
@@ -34,7 +34,7 @@
         </a>
       </div>
       <div>Avatar: <img src="<?= comment.as_user.avatar_link ?>" /></div>
-      <div>Content: <?- comment.content ?></div>
+      <div>Content: <?= it.markdown( comment.content ) ?></div>
       <div>Modified: <?= new Date( comment.updated_at ) ?></div>
 
       <? if( comment.is_owner( it.sess_user )){ ?>

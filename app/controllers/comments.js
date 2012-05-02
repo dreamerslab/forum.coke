@@ -24,8 +24,8 @@ module.exports = Application.extend({
 
   init : function ( before, after ){
     before( this.fill_sidebar );
-    before( this.ensure_authenticated, {
-      only : [ 'create', 'destroy' ]});
+    before( this.ensure_authenticated, { only : [ 'create', 'destroy' ]});
+    before( validate_comment_form, { only : [ 'create' ]});
   },
 
   create : function ( req, res, next ){
@@ -43,23 +43,21 @@ module.exports = Application.extend({
             topic : topic
           });
 
-          validate_comment_form( req, res, function (){
-            comment.set_attrs( req.body.comment );
+          comment.set_attrs( req.body.comment );
 
-            if( !req.form.isValid ){
-              return res.render( 'topics/show',
-                self._merge( req, { topic : topic, comment : comment }));
+          if( !req.form.isValid ){
+            return res.render( 'topics/show',
+              self._merge( req, { topic : topic, comment : comment }));
+          }
+
+          comment.save( function ( err, comment ){
+            if( err ){
+              req.flash( 'flash-error', 'Comment creation fail' );
+            }else{
+              req.flash( 'flash-info', 'Comment created' );
             }
 
-            comment.save( function ( err, comment ){
-              if( err ){
-                req.flash( 'flash-error', 'Comment creation fail' );
-              }else{
-                req.flash( 'flash-info', 'Comment created' );
-              }
-
-              res.redirect( '/topics/' + comment.topic );
-            });
+            res.redirect( '/topics/' + comment.topic );
           });
 
           return;

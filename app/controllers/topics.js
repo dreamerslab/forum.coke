@@ -31,6 +31,7 @@ module.exports = Application.extend({
     before( this.fill_sidebar );
     before( this.ensure_authenticated, {
       only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
+    before( validate_topic_form, { only : [ 'create', 'update' ]});
   },
 
   latest : function ( req, res, next ){
@@ -157,26 +158,24 @@ module.exports = Application.extend({
   create : function ( req, res, next ){
     var self = this;
 
-    validate_topic_form( req, res, function (){
-      if( !req.form.isValid ){
-        res.render( 'topics/new',
-          self._merge( req, { topic : req.body.topic }));
+    if( !req.form.isValid ){
+      res.render( 'topics/new',
+        self._merge( req, { topic : req.body.topic }));
+      return;
+    }
+
+    var topic = new Topic({ user : req.user });
+
+    topic.set_attrs( req.body.topic );
+    topic.save( function ( err, topic ){
+      if( err ){
+        req.flash( 'flash-error', 'Topic creation fail' );
+        res.redirect( '/topics' );
         return;
       }
 
-      var topic = new Topic({ user : req.user });
-
-      topic.set_attrs( req.body.topic );
-      topic.save( function ( err, topic ){
-        if( err ){
-          req.flash( 'flash-error', 'Topic creation fail' );
-          res.redirect( '/topics' );
-          return;
-        }
-
-        req.flash( 'flash-info', 'Topic created' );
-        res.redirect( '/topics/' + topic._id );
-      });
+      req.flash( 'flash-info', 'Topic created' );
+      res.redirect( '/topics/' + topic._id );
     });
   },
 
@@ -208,23 +207,21 @@ module.exports = Application.extend({
     Topic.findById( req.params.id, function ( err, topic ){
       if( topic ){
         if( topic.is_owner( req.user )){
-          validate_topic_form( req, res, function (){
-            topic.set_attrs( req.body.topic );
+          topic.set_attrs( req.body.topic );
 
-            if( !req.form.isValid ){
-              return res.render( 'topics/edit',
-                self._merge( req, { topic : topic }));
+          if( !req.form.isValid ){
+            return res.render( 'topics/edit',
+              self._merge( req, { topic : topic }));
+          }
+
+          topic.save( function ( err, topic ){
+            if( err ){
+              req.flash( 'flash-error', 'Topic update fail' );
+            }else{
+              req.flash( 'flash-info', 'Topic updated' );
             }
 
-            topic.save( function ( err, topic ){
-              if( err ){
-                req.flash( 'flash-error', 'Topic update fail' );
-              }else{
-                req.flash( 'flash-info', 'Topic updated' );
-              }
-
-              res.redirect( '/topics/' + topic._id );
-            });
+            res.redirect( '/topics/' + topic._id );
           });
 
           return;

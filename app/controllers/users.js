@@ -28,16 +28,6 @@ module.exports = Application.extend({
     User.paginate( conds, opts, next, function ( result ){
       res.render( 'users/index', self._merge( req, result, '?' ));
     });
-
-    // User.find( function ( err, users ){
-    //   if( err ) return next( err );
-
-    //   res.render( 'users/index', {
-    //     sidebar   : req.sidebar,
-    //     sess_user : req.user,
-    //     users     : users
-    //   });
-    // });
   },
 
   show : function ( req, res, next ){

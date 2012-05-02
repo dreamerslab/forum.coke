@@ -17,13 +17,6 @@ var validate_topic_form = form(
   validate( 'topic.content', 'Content' ).required()
 );
 
-var validate_comment_form = form(
-  filter( 'comment.content' ).trim(),
-  validate( 'comment.content', 'Content' ).required()
-);
-
-
-
 module.exports = Application.extend({
   _merge : function ( req, result, base_query ){
     return UTILS.merge( result || {}, {
@@ -37,8 +30,7 @@ module.exports = Application.extend({
   init : function ( before, after ){
     before( this.fill_sidebar );
     before( this.ensure_authenticated, {
-      only : [ 'new', 'create', 'edit', 'update', 'destroy',
-               'create_comment', 'destroy_comment' ]});
+      only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
   },
 
   latest : function ( req, res, next ){
@@ -293,78 +285,5 @@ module.exports = Application.extend({
         res.render( 'topics/tags',
           self._merge( req, { tags : tags }));
       });
-  },
-
-  create_comment : function ( req, res, next ){
-    var self = this;
-
-    Topic.
-      findById( req.params.id ).
-      populate( 'user' ).
-      populate( 'comments' ).
-      run( function ( err, topic ){
-        if( topic ){
-          var comment = new Comment({
-            user  : req.user,
-            topic : topic
-          });
-
-          validate_comment_form( req, res, function (){
-            comment.set_attrs( req.body.comment );
-
-            if( !req.form.isValid ){
-              return res.render( 'topics/show',
-                self._merge( req, { topic : topic, comment : comment }));
-            }
-
-            comment.save( function ( err, comment ){
-              if( err ){
-                req.flash( 'flash-error', 'Comment creation fail' );
-              }else{
-                req.flash( 'flash-info', 'Comment created' );
-              }
-
-              res.redirect( '/topics/' + topic._id );
-            });
-          });
-
-          return;
-        }
-
-        req.msg = 'Topic';
-        self.record_not_found( err, req, res );
-      });
-  },
-
-  destroy_comment : function ( req, res, next ){
-    var self = this;
-
-    Comment.findById( req.body.comment_id, function ( err, comment ){
-      if( comment ){
-        if( comment.is_owner( req.user )){
-          comment.remove( function ( err ){
-            if( err ){
-              req.flash( 'flash-error', 'Comment deletion fail' );
-            }else{
-              req.flash( 'flash-info', 'Comment deleted' );
-            }
-
-            res.redirect( '/topics/' + comment.topic );
-          });
-
-          return;
-        }
-
-        req.msg    = 'comment';
-        req.origin = '/topics/' + req.params.id;
-        self.permission_denied( req, res, next );
-
-        return;
-      }
-
-      req.msg = 'Comment';
-      self.record_not_found( err, req, res );
-    });
-  },
-
+  }
 });

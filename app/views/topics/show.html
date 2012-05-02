@@ -38,9 +38,9 @@
       <div>Modified: <?= new Date( comment.updated_at ) ?></div>
 
       <? if( comment.is_owner( it.sess_user )){ ?>
-        <form action="/topics/<?= it.topic._id ?>/delete-comment" method="POST" accept-charset="UTF-8" >
+        <form action="/topics/<?= it.topic._id ?>/comments/<?= comment._id ?>" method="POST" accept-charset="UTF-8" >
+          <input type="hidden" name="_method" value="delete" />
           <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
-          <input type="hidden" name="comment_id" value="<?= comment._id ?>">
           <input class="submit-link" type="submit" value="Delete the comment" />
         </form>
       <? }; ?>
@@ -52,7 +52,7 @@
   <? if( it.sess_user ){ ?>
     <div class="new-comment">
       <h2> New comment </h2>
-      <form action="/topics/<?= it.topic._id ?>/create-comment" method="POST" accept-charset="UTF-8" >
+      <form action="/topics/<?= it.topic._id ?>/comments" method="POST" accept-charset="UTF-8" >
         <div id="table">
           <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
           <div class="form-row">

@@ -21,7 +21,7 @@ module.exports = Application.extend({
   index : function ( req, res, next ){
     var self  = this;
     var conds = {};
-    var opts  = { sort  : [ 'updated_at', -1 ],
+    var opts  = { sort  : [ 'name', 1 ],
                   skip  : req.query.from || 0,
                   limit : 20 };
 

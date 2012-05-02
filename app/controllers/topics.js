@@ -1,23 +1,15 @@
+var Application = require( CONTROLLER_DIR + 'application' );
+var validate    = require( LIB_DIR + 'validate/topics' );
+var Controller  = Application.extend( validate );
+
 var mongoose    = require( 'mongoose' );
 var User        = mongoose.model( 'User' );
 var Notif       = mongoose.model( 'Notification' );
 var Topic       = mongoose.model( 'Topic' );
 var Tag         = mongoose.model( 'Tag' );
 var Comment     = mongoose.model( 'Comment' );
-var Application = require( CONTROLLER_DIR + 'application' );
 
-var form        = require( 'express-form2' );
-var filter      = form.filter;
-var validate    = form.validate;
-
-var validate_topic_form = form(
-  filter( 'topic.title' ).trim(),
-  validate( 'topic.title', 'Tilte' ).required(),
-  filter( 'topic.content' ).trim(),
-  validate( 'topic.content', 'Content' ).required()
-);
-
-module.exports = Application.extend({
+module.exports = Controller.extend({
   _merge : function ( req, result, base_query ){
     return UTILS.merge( result || {}, {
       sidebar   : req.sidebar,
@@ -31,7 +23,7 @@ module.exports = Application.extend({
     before( this.fill_sidebar );
     before( this.ensure_authenticated, {
       only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
-    before( validate_topic_form, { only : [ 'create', 'update' ]});
+    before( this.validate_topic_form, { only : [ 'create', 'update' ]});
   },
 
   latest : function ( req, res, next ){

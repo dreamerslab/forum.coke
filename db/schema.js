@@ -75,10 +75,10 @@ Object.keys( Model ).forEach( function ( model ){
   }
 });
 
-var topic_hooks   = require( LIB_DIR + 'topic_hooks' );
-var tag_hooks     = require( LIB_DIR + 'tag_hooks' );
-var comment_hooks = require( LIB_DIR + 'comment_hooks' );
-var notif_hooks   = require( LIB_DIR + 'notif_hooks' );
+var topic_hooks   = require( MODEL_DIR + 'hooks/topic' );
+var tag_hooks     = require( MODEL_DIR + 'hooks/tag' );
+var comment_hooks = require( MODEL_DIR + 'hooks/comment' );
+var notif_hooks   = require( MODEL_DIR + 'hooks/notif' );
 
 Model.Topic.post( 'init', topic_hooks.post_init );
 Model.Topic.pre( 'save', topic_hooks.pre_save );

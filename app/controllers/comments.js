@@ -1,18 +1,12 @@
+var Application = require( CONTROLLER_DIR + 'application' );
+var validate    = require( LIB_DIR + 'validate/comments' );
+var Controller  = Application.extend( validate );
+
 var mongoose    = require( 'mongoose' );
 var Topic       = mongoose.model( 'Topic' );
 var Comment     = mongoose.model( 'Comment' );
-var Application = require( CONTROLLER_DIR + 'application' );
 
-var form        = require( 'express-form2' );
-var filter      = form.filter;
-var validate    = form.validate;
-
-var validate_comment_form = form(
-  filter( 'comment.content' ).trim(),
-  validate( 'comment.content', 'Content' ).required()
-);
-
-module.exports = Application.extend({
+module.exports = Controller.extend({
   _merge : function ( req, result, base_query ){
     return UTILS.merge( result || {}, {
       sidebar   : req.sidebar,
@@ -25,7 +19,7 @@ module.exports = Application.extend({
   init : function ( before, after ){
     before( this.fill_sidebar );
     before( this.ensure_authenticated, { only : [ 'create', 'destroy' ]});
-    before( validate_comment_form, { only : [ 'create' ]});
+    before( this.validate_comment_form, { only : [ 'create' ]});
   },
 
   create : function ( req, res, next ){

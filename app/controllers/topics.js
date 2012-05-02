@@ -6,7 +6,7 @@ var Tag         = mongoose.model( 'Tag' );
 var Comment     = mongoose.model( 'Comment' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
-var form        = require( 'express-form' );
+var form        = require( 'express-form2' );
 var filter      = form.filter;
 var validate    = form.validate;
 

@@ -26,6 +26,18 @@ module.exports = Controller.extend({
     before( this.validate_topic_form, { only : [ 'create', 'update' ]});
   },
 
+  tags : function ( req, res, next ){
+    var self = this;
+    var conds = {};
+    var opts  = { sort  : [ 'name', 1 ],
+                  skip  : req.query.from || 0,
+                  limit : 20 };
+
+    Tag.paginate( conds, opts, next, function ( result ){
+      res.render( 'topics/tags', self._merge( req, result, '?' ));
+    });
+  },
+
   latest : function ( req, res, next ){
     var self  = this;
     var conds = {};
@@ -260,19 +272,5 @@ module.exports = Controller.extend({
       req.msg = 'Topic';
       self.record_not_found( err, req, res, next );
     });
-  },
-
-  tags : function ( req, res, next ){
-    var self = this;
-
-    Tag.
-      find().
-      sort( 'name', 1 ).
-      run( function ( err, tags ){
-        if( err ) return next( err );
-
-        res.render( 'topics/tags',
-          self._merge( req, { tags : tags }));
-      });
   }
 });

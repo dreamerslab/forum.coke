@@ -64,7 +64,7 @@ Model.Notification = new Schema({
 Object.keys( Model ).forEach( function ( model ){
   if( Model[ model ].tree.updated_at !== undefined ){
     Model[ model ].pre( 'save', function ( next ){
-      this.updated_at = this.isNew?
+      this.updated_at = this.isNew ?
         this.created_at :
         Date.now();
 

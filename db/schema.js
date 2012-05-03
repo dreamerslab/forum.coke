@@ -1,8 +1,7 @@
 var mongoose = require( 'mongoose' );
 var Schema   = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
-
-var Model = {};
+var Model    = {};
 
 Model.Cache = new Schema({
   name        : { type : String, required : true, index : true },
@@ -60,7 +59,6 @@ Model.Notification = new Schema({
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number }
 });
-
 
 // auto update `updated_at` on save
 Object.keys( Model ).forEach( function ( model ){

@@ -1,5 +1,11 @@
 var User = require( BASE_DIR + 'db/schema' ).User;
 
+User.virtual( 'avatar' ).get( function (){
+  return UTILS.typeof( this.picture ) === 'string' ?
+    this.picture :
+    'http://www.gravatar.com/avatar/00000000000000000000000000000000';
+});
+
 User.statics = {
   paginate : function ( conds, opts, next, callback ){
     var reslut = {};
@@ -71,18 +77,11 @@ User.statics = {
 };
 
 User.methods = {
-  // this a virtual property
-  avatar : function (){
-    return UTILS.typeof( this.picture ) === 'string' ?
-      this.picture :
-      'http://www.gravatar.com/avatar/00000000000000000000000000000000';
-  },
-
   obj_attrs : function (){
     return {
       _id    : this._id,
       name   : this.name,
-      avatar : this.avatar()};
+      avatar : this.avatar };
   }
 };
 

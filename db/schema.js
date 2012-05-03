@@ -75,24 +75,6 @@ Object.keys( Model ).forEach( function ( model ){
   }
 });
 
-var topic_hooks   = require( MODEL_DIR + 'hooks/topic' );
-var tag_hooks     = require( MODEL_DIR + 'hooks/tag' );
-var comment_hooks = require( MODEL_DIR + 'hooks/comment' );
-var notif_hooks   = require( MODEL_DIR + 'hooks/notif' );
-
-Model.Topic.post( 'init', topic_hooks.post_init );
-Model.Topic.pre( 'save', topic_hooks.pre_save );
-Model.Topic.post( 'save', topic_hooks.post_save );
-Model.Topic.pre( 'remove', topic_hooks.pre_remove );
-
-Model.Tag.pre( 'save', tag_hooks.pre_save );
-
-Model.Comment.pre( 'save', comment_hooks.pre_save );
-Model.Comment.post( 'save', comment_hooks.post_save );
-Model.Comment.pre( 'remove', comment_hooks.pre_remove );
-
-Model.Notification.post( 'save', notif_hooks.post_save );
-
-
-
 module.exports = Model;
+
+

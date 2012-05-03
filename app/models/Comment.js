@@ -1,6 +1,9 @@
 var Comment = require( BASE_DIR + 'db/schema' ).Comment;
+var hooks   = require( MODEL_DIR + 'hooks/comment' );
 
-
+Comment.pre( 'save', hooks.pre_save );
+Comment.post( 'save', hooks.post_save );
+Comment.pre( 'remove', hooks.pre_remove );
 
 Comment.methods = {
   set_attrs : function ( comment ){
@@ -14,6 +17,6 @@ Comment.methods = {
   }
 };
 
-
-
 require( 'mongoose' ).model( 'Comment', Comment );
+
+

@@ -1,4 +1,7 @@
 var Notification = require( BASE_DIR + 'db/schema' ).Notification;
+var hooks        = require( MODEL_DIR + 'hooks/notif' );
+
+Notification.post( 'save', hooks.post_save );
 
 var unique = function ( docs ){
   var a = [];
@@ -116,6 +119,6 @@ Notification.statics = {
   }
 };
 
-
-
 require( 'mongoose' ).model( 'Notification', Notification );
+
+

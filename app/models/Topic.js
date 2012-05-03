@@ -1,8 +1,12 @@
 var Topic    = require( BASE_DIR + 'db/schema' ).Topic;
-var Flow     = require( 'node.flow' );
+var hooks    = require( MODEL_DIR + 'hooks/topic' );
 var mongoose = require( 'mongoose' );
+var Flow     = require( 'node.flow' );
 
-
+Topic.post( 'init', hooks.post_init );
+Topic.pre( 'save', hooks.pre_save );
+Topic.post( 'save', hooks.post_save );
+Topic.pre( 'remove', hooks.pre_remove );
 
 Topic.statics = {
   paginate : function ( conds, opts, next, callback ){

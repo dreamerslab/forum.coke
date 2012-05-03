@@ -74,7 +74,7 @@ User.statics = {
 
 User.methods = {
   // this a virtual property
-  avatar_link : function (){
+  avatar : function (){
     return UTILS.typeof( this.picture ) === 'string' ?
       this.picture :
       'http://www.gravatar.com/avatar/00000000000000000000000000000000';
@@ -84,7 +84,7 @@ User.methods = {
     return {
       _id         : this._id,
       name        : this.name,
-      avatar_link : this.avatar_link()};
+      avatar : this.avatar()};
   }
 };
 

@@ -8,7 +8,7 @@
       <?- it.topic.as_user.name ?>
     </a>
  </div>
-  <div>Avatar: <img src="<?= it.topic.as_user.avatar_link ?>" /></div>
+  <div>Avatar: <img src="<?= it.topic.as_user.avatar ?>" /></div>
   <div>Tags: <?- it.topic.tag_names.join(', ') ?></div>
   <div>Title: <?- it.topic.title ?></div>
   <div>Content: <?= it.markdown( it.topic.content ) ?></div>
@@ -33,7 +33,7 @@
           <?= comment.as_user.name ?>
         </a>
       </div>
-      <div>Avatar: <img src="<?= comment.as_user.avatar_link ?>" /></div>
+      <div>Avatar: <img src="<?= comment.as_user.avatar ?>" /></div>
       <div>Content: <?= it.markdown( comment.content ) ?></div>
       <div>Modified: <?= new Date( comment.updated_at ) ?></div>
 

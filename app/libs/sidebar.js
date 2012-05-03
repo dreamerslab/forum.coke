@@ -55,9 +55,6 @@ module.exports = {
             trunk_users.push( user.obj_attrs());
           });
 
-          trunk_users.sort( function ( a, b ){
-            return compare( a.name, b.name );
-          });
           next();
         });
     });

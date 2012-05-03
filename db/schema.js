@@ -15,7 +15,7 @@ Model.User = new Schema({
   name        : { type : String, required : true },
   email       : { type : String },
   picture     : { type : String },
-  rating      : { type : Number },
+  rating      : { type : Number, 'default' : 0 },
   topics      : [{ type : ObjectId, ref : 'Topic' }],
   comments    : [{ type : ObjectId, ref : 'Comment' }],
   created_at  : { type : Number, 'default' : Date.now },

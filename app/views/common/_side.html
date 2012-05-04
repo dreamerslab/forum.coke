@@ -13,6 +13,22 @@
         </form>
       </div>
     </td>
+    <td>
+      <? if( !it.sess_user ){ ?>
+
+      <a href="/auth/google">
+        Log In with google
+      </a>
+
+      <? }else{ ?>
+
+      <a href="/notifications">Notifications</a> |
+      <a href="/logout">
+        Log Out
+      </a>
+
+      <? } ?>
+    </td>
     <td class="tags" width="30%">
       <b>Hot tags:</b>
       <? it.sidebar.tags.forEach( function ( tag ){ ?>

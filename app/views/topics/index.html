@@ -1,7 +1,42 @@
 <? it.title = 'Coke - Latest'; ?>
+<? it.styles.push( 'topics' ); ?>
+
+<div class="span9">
+  <?= it.partial( 'common/_nav' ) ?>
+  <ul class="article-sub-nav-list">
+    <li class="article-sub-nav-item"><a id="article-sub-nav-selected" class="article-sub-nav-link" href="/topics/latest">Latest</a></li>
+    <li class="article-sub-nav-item"><a class="article-sub-nav-link" href="/topics/trending">Hot</a></li>
+    <li class="article-sub-nav-item"><a class="article-sub-nav-link" href="/topics/unsolved">Unsolved</a></li>
+    <li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="items-wrap">
+
+      <? it.topics.forEach( function ( topic ){  ?>
+
+      <div class="article-item">
+        <h3 class="item-title"><a class="title-link" href="/topics/<?= topic._id ?>"><?- topic.title ?></a></h3>
+        <p class="item-content"><?- topic.content ?></p>
+        <a href="/topics/tag?name=<?- topic.tag_names.join(', ') ?>" class="tag"><?- topic.tag_names.join(', ') ?></a>
+        <a href="/users/<?- topic.as_user.name ?>" class="author"><?- topic.as_user.name ?></a>
+        <span class="last-reply-time"><?- topic.updated_at ?></span>
+        <a class="comment-count" href="/topics/<?= topic._id ?>#comment"><?- topic.comments.length ?></a>
+      </div> <!-- .article-item -->
+
+      <? }); ?>
+
+      <?= it.partial( 'common/_pagination' )?>
+    </div>
+  </div>
+</div> <!-- .span9 -->
 
 
-<table>
+
+
+
+
+
+<!-- <table>
   <thead>
     <tr>
       <th>
@@ -62,4 +97,4 @@
 
 <?= it.partial( 'common/_pagination' )?>
 
-<a href="/topics/new">New topic</a>
+<a href="/topics/new">New topic</a> -->

@@ -6,14 +6,11 @@
     <meta name="keywords" content="<?= it.keywords || '' ?>" />
     <meta name="description" content="<?= it.description || '' ?>" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <? it.css( it.styles ); ?>
+    <?= it.css( it.styles ) ?>
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style type="text/css">
-      .hidden { display: none; }
-      .selected { text-decoration: none; }
-    </style>
+
   </head>
   <body>
     <div id="wrap">
@@ -21,7 +18,6 @@
         <header>
           <h1><?= it.title ?></h1>
         </header>
-        <?= it.partial( 'common/_nav' ) ?>
         <?= it.partial( 'common/_side' ) ?>
       </div>
       <div id="content" role="main">

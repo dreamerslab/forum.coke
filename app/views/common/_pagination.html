@@ -1,31 +1,56 @@
+<!-- <div class="pagination article-pager">
+  <ul>
+    <li><a href="#">Prev</a></li>
+    <li class="active">
+      <a href="#">1</a>
+    </li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">Next</a></li>
+  </ul>
+</div> -->
+
 <? if( it.count > it.limit ){ ?>
 <? var p = it.pager( it.from, it.count, it.limit ); ?>
-<div id="pagination">
-  <a class="<?= p.pre ?>"
-    href="<?= it.path ?><?= it.query ?>&from=<?= p.pre_from ?>">
-    &lt
-  </a>
-  <a class="<?= p.first ?>" href="<?= it.path ?><?= it.query ?>&from=0">
-   1
-  </a>
-
-  <span class="<?= p.start_spacer ?>"> ... </span>
-
-  <? for( var i = p.start, j = p.end; i < j; i++ ){ ?>
-    <? var selected = p.page == i ? 'selected' : ''; ?>
-    <a class="<?= selected ?>" href="<?= it.path ?><?= it.query ?>&from=<?= p.each_from ?>">
-      <?= i ?>
-      <? p.each_from += it.limit; ?>
-    </a>
-  <? } ?>
-
-  <span class="<?= p.end_spacer ?>"> ... </span>
-
-  <a class="<?= p.last ?>" href="<?= it.path ?><?= it.query ?>&from=<?= p.end_from ?>">
-    <?= p.total ?>
-  </a>
-  <a class="<?= p.next ?>" href="<?= it.path ?><?= it.query ?>&from=<?= p.next_from ?>">
-    &gt
-  </a>
+<div class="pagination article-pager">
+  <ul>
+    <li>
+      <a class="<?= p.pre ?>"
+        href="<?= it.path ?><?= it.query ?>&from=<?= p.pre_from ?>">
+        &lt
+      </a>
+    </li>
+    <li>
+      <a class="<?= p.first ?>" href="<?= it.path ?><?= it.query ?>&from=0">
+       1
+      </a>
+    </li>
+    <li>
+      <span class="<?= p.start_spacer ?>"> ... </span>
+    </li>
+    <? for( var i = p.start, j = p.end; i < j; i++ ){ ?>
+      <? var active = p.page == i ? 'active' : ''; ?>
+      <li>
+        <a class="<?= active ?>" href="<?= it.path ?><?= it.query ?>&from=<?= p.each_from ?>">
+          <?= i ?>
+          <? p.each_from += it.limit; ?>
+        </a>
+      </li>
+    <? } ?>
+    <li>
+      <span class="<?= p.end_spacer ?>"> ... </span>
+    </li>
+    <li>
+      <a class="<?= p.last ?>" href="<?= it.path ?><?= it.query ?>&from=<?= p.end_from ?>">
+        <?= p.total ?>
+      </a>
+    </li>
+    <li>
+      <a class="<?= p.next ?>" href="<?= it.path ?><?= it.query ?>&from=<?= p.next_from ?>">
+        &gt
+      </a>
+    </li>
+  </ul>
 </div>
 <? } ?>

@@ -13,16 +13,12 @@ css:
   # css group name
   common:
     site:
-      - common/reset
-      - common/util
-      - common/base
-      - common/header
-      - common/nav
-      - common/flash
-      - common/footer
-  scaffold:
+      - common/bootstrap
+    cdn:
+      - http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900
+  topics:
     site:
-      - scaffold
+      - posts
 
 js:
   # js group name

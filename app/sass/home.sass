@@ -1,0 +1,105 @@
+@import "common"
+
+$code-font: "Lucida Grande"
+
+#original
+  background: url("/img/original.png") no-repeat center top
+  width: 1261px
+  height: 1238px
+  text-indent: -9999px
+  position: absolute
+  top: 0
+  left: 50%
+  margin: 0 0 0 -630px
+  opacity: 0.3
+  z-index: 9999
+
+#desc
+  @include center( $page-width - 160px)
+  clear: both
+  color: #666
+  font-size: 22px
+  font-family: $body-font
+  text-align: center
+  padding: 51px 80px 54px
+  line-height: 38px
+
+#nodejs-link
+  +inline-block
+  vertical-align: top
+  *vertical-align: middle
+  text-decoration: none
+  color: #333
+  background: url("/img/h2-link-bg.png") repeat-x center 28px
+  font-family: $body-font
+  font-weight: bold
+
+#nodejs-link:hover
+  color: #000
+
+#sample-code-bg
+  position: relative
+  background: url("/img/code-bg-35.png") repeat-x
+  height: 300px
+
+#sample-code
+  @include center( $page-width - 85px*2 )
+  position: relative
+  padding: 9px 85px 0
+  height: 291px
+
+pre.prettyprint
+  border: none
+  font-family: $code-font
+
+pre
+  background-color: transparent
+
+#current-version
+  position: absolute
+  bottom: 11px
+  right: 15px
+  color: #000
+  font-family: $body-font
+  font-size: 16px
+  text-shadow: 0px 1px #929292
+
+.intro-wrap
+  @include center( $page-width )
+  +clearfix
+  padding: 39px 0 85px 22px
+
+.intro-block
+  +float-left
+  color: #666
+  width: 279px
+  padding: 0 51px 0 0
+
+#intro-block-last
+  padding: 0
+
+.intro-title
+  font-family: $body-font
+  font-size: 24px
+  font-weight: bold
+  padding: 0 0 30px
+
+.intro-content
+  font-family: $body-font
+  font-size: 16px
+  line-height: 29px
+
+.intro-link
+  +inline-block
+  vertical-align: top
+  *vertical-align: middle
+  text-decoration: none
+  background: url("/img/intro-link-bg.png") repeat-x center 22px
+  color: #333
+  font-weight: bold
+
+.intro-link:hover
+  color: #000
+
+pre.prettyprint
+  line-height: 1.1em

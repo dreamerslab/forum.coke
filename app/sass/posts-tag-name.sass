@@ -1,0 +1,57 @@
+@import "common"
+
+$code-font: "Lucida Grande"
+$article-item-padding-top: 11px
+
+#page-title
+  padding: 0 0 20px
+
+#items-wrap
+  padding: 7px 0 0
+
+.article-item
+  +clearfix
+  padding: $article-item-padding-top 0 11px 14px
+  position: relative
+  border-bottom: 1px dotted #aaa
+
+.title-link:hover
+  text-decoration: none
+
+.article-nav-list
+  border-bottom: 1px solid #ddd
+  margin: 0
+  list-style: none
+
+.article-nav-item
+  display: inline
+
+.article-nav-link
+  +inline-block
+  border: 1px solid transparent
+  padding: 9px 12px
+  margin-right: 2px
+  line-height: 14px
+
+.article-nav-link:hover
+  text-decoration: none
+  background: #ddd
+
+#article-nav-selected
+  text-decoration: none
+  background: #ddd
+
+.comment-count
+  position: absolute
+  top: $article-item-padding-top
+  right: 0
+
+.comment-count
+  background: #d1d6db
+  color: #fff
+  padding: 1px 4px 0
+  min-width: 20px
+  text-align: center
+  &:hover
+    color: #005580
+    text-decoration: none

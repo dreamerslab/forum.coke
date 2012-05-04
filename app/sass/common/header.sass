@@ -1,0 +1,40 @@
+
+$page-width: 940px
+$body-font: Kefa, Merriweather, serif
+
+#logo
+  @include bg_text( 200px, 120px, "logo")
+  +inline-block
+
+#header
+  +clearfix
+  @include center( $page-width )
+  padding: 15px 0 4px
+
+header
+  +float-left
+
+nav
+  +float-right
+  padding: 89px 0 0
+
+.nav-item
+  +inline-block
+  padding: 0 0 0 6px
+
+.nav-link
+  display: block
+  text-decoration: none
+  color: #000
+  font-size: 20px
+  font-family: $body-font
+  padding: 5px 8px
+  font-weight: bold
+  &:hover
+    background: #000
+    color: #fff
+    text-decoration: none
+
+#nav-selected
+  background: #000
+  color: #fff

@@ -1,0 +1,148 @@
+@import "compass"
+@import "common/lib"
+// You must put a png file in /img/sprite, or the compass won't generate css file, because it can't fint any png to sprite
+@import "common/header"
+@import "common/footer"
+
+$profile-width: 135px
+
+.article-nav-list
+  +clearfix
+  padding: 0 0 21px
+  margin: 0
+
+.article-nav-item
+  +float-left
+  padding: 0 10px 0 0
+
+.article-nav-link
+  display: block
+  background: #eee
+  text-decoration: none
+  color: #000
+  font-size: 17px
+  font-family: $body-font
+  padding: 5px 8px
+  font-weight: bold
+  &:hover
+    background: #000
+    color: #fff
+    text-decoration: none
+
+#content-wrap
+  padding: 40px 0
+
+#search-input
+  width: 122px
+
+#search
+  +float-right
+  padding: 3px 0 0
+
+#new-post
+  +float-right
+
+#current-profile-link
+  display: block
+  width: $profile-width
+  line-height: 17px
+  &:hover
+    text-decoration: none
+
+#current-user:hover
+  text-decoration: none
+
+#notify
+  text-align: left
+  width: $profile-width
+  position: absolute
+  bottom: -6px
+  left: 0
+
+#notify-link:hover
+  text-decoration: none
+
+#current-user-wrap
+  +float-left
+
+#profile-avatar
+  +float-left
+
+#user-notify-wrap
+  +float-left
+  height: 50px
+  position: relative
+
+#log-out
+  +float-right
+  position: relative
+  top: -2px
+
+.side-profile
+  +clearfix
+
+#profile-avatar-photo
+  padding: 0 5px 0 0
+
+.crumb-link:hover
+  text-decoration: none
+
+.avatar
+  padding: 0 5px 0 0
+
+.tag
+  +float-left
+  height: 20px
+  background: #e2eaf0
+  padding: 1px 5px 0
+  margin: 0 7px 0 0
+
+.last-reply-time
+  +float-right
+  color: #999
+  font-weight: bold
+  padding: 0 10px 0 0
+  margin: -1px 0 0
+
+.tag:hover
+  background: #4a6d8c
+  color: #e2eaf0
+  text-decoration: none
+
+.sidebar-block
+  margin: 0 0 10px
+
+.sidebar-title
+  padding: 0 0 13px
+
+.sidebar-content
+  +clearfix
+
+.all-tag-item
+  margin-bottom: 5px
+
+.sidebar-link
+  +float-right
+  &:hover
+    text-decoration: none
+
+.sidebar-link-p
+  +clearfix
+
+.issue-title-link:hover
+  text-decoration: none
+
+.user
+  display: block
+  padding: 0 0 4px
+
+.user:hover
+  text-decoration: none
+
+.author
+  +float-right
+  &:hover
+    text-decoration: none
+
+.article-pager
+  text-align: center

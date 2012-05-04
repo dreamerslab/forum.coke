@@ -1,5 +1,18 @@
 <table class="sidebar">
   <tr>
+    <td>
+      <div class="search">
+        <form action="/topics/search" method="GET" accept-charset="UTF-8" >
+          <div id="table">
+            <div class="form-row">
+              <label class="form-title" for="keywords">Keywords : </label>
+              <input class="text-input" type="text" name="keywords" value="<?= it.exists( it.keywords ) ?>"/>
+              <input class="submit-link" type="submit" value="Search Topic" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </td>
     <td class="tags" width="30%">
       <b>Hot tags:</b>
       <? it.sidebar.tags.forEach( function ( tag ){ ?>

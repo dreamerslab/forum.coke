@@ -1,0 +1,101 @@
+@import "common"
+
+$article-item-padding-top: 11px
+
+#profile
+  +clearfix
+
+#user-profile-avatar
+  +float-left
+  padding: 6px 8px 0 0
+
+#name
+  color: #08c
+  font-size: 19px
+  padding: 0 0 8px
+
+#user-profile-avatar-img
+  display: block
+
+#meta
+  +float-left
+
+#posts
+  padding: 0 0 30px
+
+#posts-title
+  padding: 0 0 10px
+
+#replies
+  padding: 0 0 30px
+
+.article-item
+  +clearfix
+  padding: $article-item-padding-top 0 11px 14px
+  position: relative
+  border-bottom: 1px dotted #aaa
+
+.block-title
+  padding: 0 0 10px
+  border-bottom: 1px dotted #aaa
+
+.item-title
+  padding: 0 0 2px
+
+.title-link:hover
+  text-decoration: none
+
+.article-nav-list
+  +clearfix
+  border-bottom: 1px solid #ddd
+  margin-left: 0
+  margin-bottom: 18px
+  list-style: none
+
+.article-nav-item
+  +float-left
+  padding: 0 2px 0 0
+
+.article-nav-link
+  +float-left
+  border: 1px solid transparent
+  padding: 7px 11px
+  line-height: 14px
+
+.article-nav-link:hover
+  text-decoration: none
+  background: #ddd
+
+#article-nav-selected
+  text-decoration: none
+  background: #ddd
+
+.comment-count
+  position: absolute
+  top: $article-item-padding-top
+  right: 0
+
+.comment-count
+  background: #d1d6db
+  color: #fff
+  padding: 1px 4px 0
+  min-width: 20px
+  text-align: center
+  &:hover
+    color: #005580
+    text-decoration: none
+
+#bio-notes
+  padding: 0 0 10px
+
+#textarea
+  width: 690px
+
+.reply-actions
+  text-align: right
+
+.more-link
+  +float-right
+  padding: 5px 0 0
+  &:hover
+    text-decoration: none

@@ -96,8 +96,6 @@ Notification.statics = {
               });
             });
 
-            console.log( topic_user_id, comment_user_id );
-
             // notify the topic author
             if( topic_user_id !== comment_user_id ){
               new self({

@@ -14,11 +14,18 @@ css:
   common:
     site:
       - bootstrap
+      - desert
     cdn:
       - http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900
   topics:
     site:
       - posts
+  user:
+    site:
+      - user
+  article:
+    site:
+      - article
 
 js:
   # js group name
@@ -29,3 +36,4 @@ js:
       - common/prettify
       - common/jquery-1.7.1.min
       - common/bootstrap
+      - common/forum

@@ -2,5 +2,9 @@
   <li class="article-sub-nav-item"><a id="<?= it.sub_nav_selected( 'latest', it.nav_selected ) ?>" class="article-sub-nav-link " href="/topics/latest">Latest</a></li>
   <li class="article-sub-nav-item"><a id="<?= it.sub_nav_selected( 'trending', it.nav_selected ) ?>" class="article-sub-nav-link" href="/topics/trending">Hot</a></li>
   <li class="article-sub-nav-item"><a id="<?= it.sub_nav_selected( 'unsolved', it.nav_selected ) ?>" class="article-sub-nav-link" href="/topics/unsolved">Unsolved</a></li>
+
+  <? if( it.sess_user ){ ?>
   <li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>
+  <? } ?>
+
 </ul>

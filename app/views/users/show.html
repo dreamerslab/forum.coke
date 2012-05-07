@@ -1,8 +1,48 @@
-<? console.log( it.user ); ?>
+<? it.title = 'COKE - ' + it.user.name + '\'s Profile'; ?>
+<? it.styles.push( 'user' ); ?>
 
-<? it.title = 'Showing user'; ?>
+<div class="span9">
+  <?= it.partial( 'common/_breadcrumb' ) ?>
+  <div class="well" id="profile">
+    <div id="user-profile-avatar"><img id="user-profile-avatar-img" src="<?= it.user.avatar ?>" alt="Avatar"></div>
+    <div id="meta">
+      <h3 id="name"><?= it.user.name ?></h3>
+      <h4>Posts: 143</h4>
+      <h4>Comments: 256</h4>
+      <h4>Created at: <?= it.date( it.user.created_at ) ?></h4>
+    </div>
+  </div>
 
-<div class="user-content">
-  <div>Name: <?- it.user.name ?></div>
-  <div>Avatar: <img src="<?= it.user.avatar ?>" /></div>
+  <div id="posts">
+    <h2 class="block-title">Recent Posts</h2>
+
+    <? it.user.topics.forEach( function ( topic ){ ?>
+    <div class="article-item">
+      <h3 class="item-title"><a class="title-link" href="/article.html"><?- it.truncate( topic.title, 40 ) ?></a></h3>
+      <a class="comment-count" href="/topics/<?= topic._id ?>#comment"><?- topic.comments.length ?></a>
+    </div> <!-- .article-item -->
+    <? }); ?>
+
+    <a class="more-link" href="/">more &#187</a>
+  </div> <!-- #recent-posts-wrap -->
+
+  <div id="replies">
+    <h2 class="block-title">Recent Posts <?= it.user.name ?> Reply</h2>
+
+    <? it.user.comments.forEach( function ( comment ){ ?>
+    <div class="article-item">
+      <h3 class="item-title"><a class="title-link" href="/article.html"><?- it.truncate( comment.title, 40 ) ?></a></h3>
+      <a class="comment-count" href="/topics/<?= commment._id ?>#comment"><?- comment.comments.length ?></a>
+    </div> <!-- .article-item -->
+    <? }); ?>
+
+    <a class="more-link" href="/">more &#187</a>
+  </div> <!-- #recent-reply-wrap -->
 </div>
+
+<?= it.partial( 'common/_side' ) ?>
+
+
+
+
+

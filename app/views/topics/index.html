@@ -1,4 +1,4 @@
-<? it.title = 'Coke - Latest'; ?>
+<? it.title = 'COKE - Forum'; ?>
 <? it.styles.push( 'topics' ); ?>
 
 <div class="span9">
@@ -7,7 +7,7 @@
   <div class="tab-content">
     <div class="tab-pane active" id="items-wrap">
 
-      <? it.topics.forEach( function ( topic ){  ?>
+      <? it.topics.forEach( function ( topic ){ ?>
 
       <div class="article-item">
         <h3 class="item-title"><a class="title-link" href="/topics/<?= topic._id ?>"><?- it.truncate( topic.title, 40 ) ?></a></h3>

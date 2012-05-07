@@ -1,67 +1,83 @@
-<hr />
-
 <? it.title = 'Showing topic'; ?>
+<? it.styles.push( 'article' ); ?>
 
-<div class="topic-content">
-  <div>Topic Author:
-    <a href="/users/<?= it.topic.as_user._id ;?>">
-      <?- it.topic.as_user.name ?>
-    </a>
- </div>
-  <div>Avatar: <img src="<?= it.topic.as_user.avatar ?>" /></div>
-  <div>Tags: <?- it.topic.tag_names.join(', ') ?></div>
-  <div>Title: <?- it.topic.title ?></div>
-  <div>Content: <?= it.markdown( it.topic.content ) ?></div>
-  <div>Modified: <?= new Date( it.topic.updated_at ) ?></div>
+<div class="span9">
+  <?= it.partial( 'common/_breadcrumb' ) ?>
+  <div id="article-wrap">
 
-  <? if( it.topic.is_owner( it.sess_user )){ ?>
-    <a href="/topics/<?= it.topic._id ?>/edit">Edit the topic</a>
+    <? if( it.sess_user ){ ?>
+    <a class="reply btn btn-primary" href="#reply-area">Reply</a>
+    <? } ?>
 
-    <form action="/topics/<?= it.topic._id ?>" method="POST" accept-charset="UTF-8" >
+    <? if( it.topic.is_owner( it.sess_user )){ ?>
+    <a class="edit btn btn-info" href="/topics/<?= it.topic._id ?>/edit">Edit</a>
+
+    <form class="delete" action="/topics/<?= it.topic._id ?>" method="POST" accept-charset="UTF-8" >
       <input type="hidden" name="_method" value="delete" />
       <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
-      <input class="submit-link" type="submit" value="Delete the topic" />
+      <input class="btn btn-danger" type="submit" value="Delete" />
     </form>
-  <? }; ?>
+    <? }; ?>
 
-  <hr />
-  <div class="topic-comments">
+    <h2 id="article-title" ><?- it.topic.title ?></h2>
+    <p class="content-p"></p>
+
+    <?= it.markdown( it.topic.content ) ?>
+
+    <div class="meta-wrap">
+      <a href="/users/<?= it.topic.as_user._id ;?>" id="article-author"><?- it.topic.as_user.name ?></a>
+      <span class="last-reply-time"><?= it.from_now( it.topic.updated_at ) ?></span>
+
+      <? it.topic.tag_names.forEach( function( tag ){ ?>
+      <a href="/topics/tag?name=<?- tag ?>" class="tag"><?- tag ?></a>
+      <? }); ?>
+
+    </div>
+  </div> <!-- #article-wrap -->
+  <div id="comment">
+
     <? it.topic.comments.forEach( function ( comment ){ ?>
-      <div>
-        Commentor:
-        <a href="/users/<?= comment.as_user._id ;?>">
-          <?= comment.as_user.name ?>
-        </a>
-      </div>
-      <div>Avatar: <img src="<?= comment.as_user.avatar ?>" /></div>
-      <div>Content: <?= it.markdown( comment.content ) ?></div>
-      <div>Modified: <?= new Date( comment.updated_at ) ?></div>
+    <div class="comment-wrap">
 
-      <? if( comment.is_owner( it.sess_user )){ ?>
-        <form action="/topics/<?= it.topic._id ?>/comments/<?= comment._id ?>" method="POST" accept-charset="UTF-8" >
-          <input type="hidden" name="_method" value="delete" />
+      <?= it.markdown( comment.content ) ?>
+
+      <div class="meta-wrap">
+        <a href="/users/<?= comment.as_user._id ;?>" class="comment-author"><?= comment.as_user.name ?></a>
+        <span class="last-reply-time"><?= it.from_now( comment.updated_at ) ?></span>
+
+        <? if( it.sess_user ){ ?>
+        <a class="comment-reply btn btn-primary" href="#reply-area" class="btn btn-primary">Reply</a>
+        <? } ?>
+
+        <? if( comment.is_owner( it.sess_user )){ ?>
+        <form class="comment-delete" action="/topics/<?= it.topic._id ?>/comments/<?= comment._id ?>" method="POST" accept-charset="UTF-8" >
           <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
-          <input class="submit-link" type="submit" value="Delete the comment" />
+          <input type="hidden" name="_method" value="delete" />
+          <input type="submit" class="btn btn-danger" value="Delete">
         </form>
-      <? }; ?>
+        <? }; ?>
 
-      <hr />
+      </div>
+    </div> <!-- .comment-wrap -->
     <? }); ?>
-  </div>
+
+  </div><!-- #comment -->
+
+  <?= it.partial( 'common/_pagination' )?>
 
   <? if( it.sess_user ){ ?>
-    <div class="new-comment">
-      <h2> New comment </h2>
-      <form action="/topics/<?= it.topic._id ?>/comments" method="POST" accept-charset="UTF-8" >
-        <div id="table">
-          <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
-          <div class="form-row">
-            <label class="form-title" for="comment[content]">Content : </label><br />
-            <textarea class="text-input" name="comment[content]" rows="10" cols="50"><?= it.val( it.comment, 'content' ) ?></textarea>
-          </div>
+  <form id="reply-area" action="/topics/<?= it.topic._id ?>/comments" method="POST" accept-charset="UTF-8" >
+    <fieldset>
+      <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
+      <legend>Reply</legend>
+      <div class="control-group">
+        <div class="controls">
+          <textarea class="input-xlarge" id="textarea" name="comment[content]" rows="10"><?= it.val( it.comment, 'content' ) ?></textarea>
         </div>
-        <input class="submit-link" type="submit" value="Create comment" />
-      </form>
-    </div>
+      </div>
+      <?= it.partial( 'common/_form_actions' ) ?>
+    </fieldset>
+  </form>
   <? } ?>
-</div>
+</div> <!-- .span9 -->
+<?= it.partial( 'common/_side' )  ?>

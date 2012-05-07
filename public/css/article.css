@@ -388,7 +388,7 @@ footer {
 .reply, .edit, .delete {
   display: inline;
   float: right;
-  margin: 0 0 0 5px;
+  margin: 3px 0 0 5px;
 }
 
 /* line 11, ../../app/sass/article.sass */
@@ -405,7 +405,7 @@ footer {
 }
 
 /* line 20, ../../app/sass/article.sass */
-.content-p {
+#article-wrap p, #comment p {
   font-size: 14px;
   line-height: 19px;
 }
@@ -435,24 +435,26 @@ footer {
 .comment-reply, .comment-delete {
   position: relative;
   top: -7px;
+  float: left;
+  margin: 0 3px 0 0;
 }
 
-/* line 41, ../../app/sass/article.sass */
+/* line 43, ../../app/sass/article.sass */
 #article-author {
   display: inline;
   float: right;
 }
-/* line 43, ../../app/sass/article.sass */
+/* line 45, ../../app/sass/article.sass */
 #article-author:hover {
   text-decoration: none;
 }
 
-/* line 46, ../../app/sass/article.sass */
+/* line 48, ../../app/sass/article.sass */
 .comment-author {
   display: inline;
   float: right;
 }
-/* line 48, ../../app/sass/article.sass */
+/* line 50, ../../app/sass/article.sass */
 .comment-author:hover {
   text-decoration: none;
 }

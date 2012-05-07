@@ -394,7 +394,7 @@ footer {
 #name {
   color: #0088cc;
   font-size: 19px;
-  padding: 0 0 8px;
+  padding: 0 0 7px;
 }
 
 /* line 17, ../../app/sass/user.sass */
@@ -452,48 +452,23 @@ footer {
 .article-nav-list {
   overflow: hidden;
   *zoom: 1;
-  border-bottom: 1px solid #dddddd;
-  margin-left: 0;
-  margin-bottom: 18px;
   list-style: none;
 }
 
-/* line 55, ../../app/sass/user.sass */
-.article-nav-item {
-  display: inline;
-  float: left;
-  padding: 0 2px 0 0;
-}
-
-/* line 59, ../../app/sass/user.sass */
-.article-nav-link {
-  display: inline;
-  float: left;
-  border: 1px solid transparent;
-  padding: 7px 11px;
-  line-height: 14px;
-}
-
-/* line 65, ../../app/sass/user.sass */
-.article-nav-link:hover {
-  text-decoration: none;
-  background: #dddddd;
-}
-
-/* line 69, ../../app/sass/user.sass */
+/* line 52, ../../app/sass/user.sass */
 #article-nav-selected {
   text-decoration: none;
   background: #dddddd;
 }
 
-/* line 73, ../../app/sass/user.sass */
+/* line 56, ../../app/sass/user.sass */
 .comment-count {
   position: absolute;
   top: 11px;
   right: 0;
 }
 
-/* line 78, ../../app/sass/user.sass */
+/* line 61, ../../app/sass/user.sass */
 .comment-count {
   background: #d1d6db;
   color: white;
@@ -501,34 +476,34 @@ footer {
   min-width: 20px;
   text-align: center;
 }
-/* line 84, ../../app/sass/user.sass */
+/* line 67, ../../app/sass/user.sass */
 .comment-count:hover {
   color: #005580;
   text-decoration: none;
 }
 
-/* line 88, ../../app/sass/user.sass */
+/* line 71, ../../app/sass/user.sass */
 #bio-notes {
   padding: 0 0 10px;
 }
 
-/* line 91, ../../app/sass/user.sass */
+/* line 74, ../../app/sass/user.sass */
 #textarea {
   width: 690px;
 }
 
-/* line 94, ../../app/sass/user.sass */
+/* line 77, ../../app/sass/user.sass */
 .reply-actions {
   text-align: right;
 }
 
-/* line 97, ../../app/sass/user.sass */
+/* line 80, ../../app/sass/user.sass */
 .more-link {
   display: inline;
   float: right;
   padding: 5px 0 0;
 }
-/* line 100, ../../app/sass/user.sass */
+/* line 83, ../../app/sass/user.sass */
 .more-link:hover {
   text-decoration: none;
 }

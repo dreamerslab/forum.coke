@@ -14,6 +14,7 @@ module.exports = {
   },
 
   post_save : function (){
+    var self  = this;
     var User  = mongoose.model( 'User' );
     var Topic = mongoose.model( 'Topic' );
     var Notif = mongoose.model( 'Notification' );
@@ -25,9 +26,18 @@ module.exports = {
     });
 
     // append comment's _id to its topic
-    Topic.push_comment( this, function ( err, topic ){
+    Topic.push_comment( this, function ( err ){
       err && LOG.error( 500,
         '[libs][comment_hooks][post_save] Having trouble pushing comment\'s id to its topic', err );
+    });
+
+    Topic.findById( this.topic, function( err, topic ){
+      if( err ){
+        return LOG.error( 500,
+          '[libs][comment_hooks][post_save] Having trouble finding comment\'s topic', err );
+      }
+
+      Notif.send( 'create-comment', topic, self );
     });
   },
 
@@ -42,7 +52,7 @@ module.exports = {
     });
 
     // remove comment's _id from its topic
-    Topic.pull_comment( this, function ( err, topic ){
+    Topic.pull_comment( this, function ( err ){
       err && LOG.error( 500,
         '[libs][comment_hooks][pre_remove] Having trouble pulling comment\'s id from its topic', err );
     });

@@ -46,6 +46,7 @@ module.exports = Controller.extend({
                   limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result = UTILS.merge( result, { nav_selected : 'latest' });
       res.render( 'topics/index', self._merge( req, result, '?' ));
     });
   },
@@ -58,6 +59,7 @@ module.exports = Controller.extend({
                   limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result = UTILS.merge( result, { nav_selected : 'trending' });
       res.render( 'topics/index', self._merge( req, result, '?' ));
     });
   },
@@ -70,6 +72,7 @@ module.exports = Controller.extend({
                   limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result = UTILS.merge( result, { nav_selected : 'unsolved' });
       res.render( 'topics/index', self._merge( req, result, '?' ));
     });
   },
@@ -122,6 +125,12 @@ module.exports = Controller.extend({
     var self = this;
 
     if( req.query.nid ){
+      // Notif.mark_read( req.query.nid, function ( err ){
+      //   err && LOG.error( 500, res, 'Fail to mark notification as read' );
+
+      //   res.redirect( '/topics/' + req.params.id );
+      // });
+
       Notif.update(
         { _id : req.query.nid },
         { $set : { is_read : true }},

@@ -9,16 +9,17 @@ Model.Cache = new Schema({
 });
 
 Model.User = new Schema({
-  google_id   : { type : String, required : true, index : true },
-  google_raw  : { type : Schema.Types.Mixed },
-  name        : { type : String, required : true },
-  email       : { type : String },
-  picture     : { type : String },
-  rating      : { type : Number, 'default' : 0 },
-  topics      : [{ type : ObjectId, ref : 'Topic' }],
-  comments    : [{ type : ObjectId, ref : 'Comment' }],
-  created_at  : { type : Number, 'default' : Date.now },
-  updated_at  : { type : Number }
+  google_id     : { type : String, required : true, index : true },
+  google_raw    : { type : Schema.Types.Mixed },
+  name          : { type : String, required : true },
+  email         : { type : String },
+  picture       : { type : String },
+  rating        : { type : Number, 'default' : 0 },
+  unread_notifs : { type : Number, 'default' : 0 },
+  topics        : [{ type : ObjectId, ref : 'Topic' }],
+  comments      : [{ type : ObjectId, ref : 'Comment' }],
+  created_at    : { type : Number, 'default' : Date.now },
+  updated_at    : { type : Number }
 });
 
 Model.Topic = new Schema({

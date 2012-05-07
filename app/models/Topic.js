@@ -34,25 +34,21 @@ Topic.statics = {
   },
 
   push_comment : function ( comment, callback ){
-    this.findById( comment.topic, function ( err, topic ){
-      if( err ) return callback && callback( err );
-
-      if( topic ){
-        topic.comments.$addToSet( comment._id );
-        topic.save( callback );
-      }
-    });
+    this.update(
+      { _id : comment.topic },
+      { $addToSet : { comments : comment._id }},
+      function ( err ){
+        callback && callback( err );
+      });
   },
 
   pull_comment : function ( comment, callback ){
-    this.findById( comment.topic, function ( err, topic ){
-      if( err ) return callback && callback( err );
-
-      if( topic ){
-        topic.comments.$pull( comment._id );
-        topic.save( callback );
-      }
-    });
+    this.update(
+      { _id : comment.topic },
+      { $pull : { comments : comment._id }},
+      function ( err ){
+        callback && callback( err );
+      });
   }
 };
 

@@ -58,7 +58,7 @@
           <p class="sidebar-content">
             <? it.sidebar.users.forEach( function ( user ){ ?>
 
-            <a href="/users/<?= user._id ?>" class="user"><img class="avatar" src="<?= user.avatar ?>" alt="Avatar"><?- user.name ?></a>
+            <a href="/users/<?= user._id ?>" class="user"><img class="avatar" src="<?= user.avatar ?>" alt="Avatar"><?- it.truncate( user.name, 20 ) ?></a>
 
             <? }); ?>
           </p>

@@ -1,5 +1,6 @@
 var Notification = require( BASE_DIR + 'db/schema' ).Notification;
 var hooks        = require( MODEL_DIR + 'hooks/notif' );
+var mongoose     = require( 'mongoose' );
 
 Notification.post( 'save', hooks.post_save );
 
@@ -30,6 +31,25 @@ var exclude = function ( docs, id ){
 };
 
 Notification.statics = {
+  mark_read : function( id, callback ){
+    var self = this;
+    var User = mongoose.model( 'User' );
+
+    this.update(
+      { _id : id },
+      { $set : { is_read : true }},
+      function ( err ){
+        if( err ) return callback && callback( err );
+
+        User.update(
+          { _id : self.user },
+          { $inc : { unread_notifs : 1 }},
+          function ( err ){
+            callback && callback( err );
+          });
+      });
+  },
+
   send : function ( type, topic, comment ){
     var self     = this;
     var mongoose = require( 'mongoose' );
@@ -75,6 +95,8 @@ Notification.statics = {
                   '[app][models][Notifications] Having trouble saving notification', err );
               });
             });
+
+            console.log( topic_user_id, comment_user_id );
 
             // notify the topic author
             if( topic_user_id !== comment_user_id ){

@@ -125,20 +125,11 @@ module.exports = Controller.extend({
     var self = this;
 
     if( req.query.nid ){
-      // Notif.mark_read( req.query.nid, function ( err ){
-      //   err && LOG.error( 500, res, 'Fail to mark notification as read' );
+      Notif.mark_read( req.query.nid, function ( err ){
+        err && LOG.error( 500, res, 'Fail to mark notification as read' );
 
-      //   res.redirect( '/topics/' + req.params.id );
-      // });
-
-      Notif.update(
-        { _id : req.query.nid },
-        { $set : { is_read : true }},
-        function ( err ){
-          err && LOG.error( 500, res, 'Fail to mark notification as read' );
-
-          res.redirect( '/topics/' + req.params.id );
-        });
+        res.redirect( '/topics/' + req.params.id );
+      });
 
       return;
     }

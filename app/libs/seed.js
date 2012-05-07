@@ -95,7 +95,7 @@ module.exports = {
     var k = 150;
 
     for(; k--;){
-      flow.parallel( function ( ready ){
+      flow.series( function ( ready ){
         User.find( function ( err, users ){
           // get a random user
           var user = users[ random( users.length )];
@@ -115,8 +115,6 @@ module.exports = {
         });
       });
     }
-
-    flow.join();
 
     flow.end( function (){
       LOG.debug( 'seed data filled' );

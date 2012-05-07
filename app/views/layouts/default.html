@@ -15,22 +15,33 @@
       .selected { text-decoration: none; }
     </style>
   </head>
-  <body>
-    <div id="wrap">
-      <div id="header">
-        <header>
-          <h1><?= it.title ?></h1>
-        </header>
-        <?= it.partial( 'common/_side' ) ?>
-      </div>
-      <div id="content" role="main">
+
+  <body onload="prettyPrint()">
+    <div id="header">
+      <header>
+        <h1><a href="/" id="logo">Coke - node.js MVC</a></h1>
+      </header>
+      <nav>
+        <ul>
+          <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Demos</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Docs</a></li>
+          <li class="nav-item"><a href="/posts.html" id="nav-selected" class="nav-link">Forum</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Source</a></li>
+        </ul>
+      </nav>
+    </div> <!-- #header -->
+
+    <div id="content-wrap" class="container">
+      <div class="row">
         <?= it.messages() ?>
         <?= it.body ?>
-      </div>
-      <footer>
-        Powered by <a id="logo-s" href="http://coke-js.org">COKE</a>
-      </footer>
+      </div> <!-- .row -->
     </div>
+
+    <footer>
+      Powered by <a href="/" id="sublogo">Coke</a> | Sponsored by <a href="#" id="dreamerslab">DreamersLab</a>
+    </footer>
     <?= it.js( it.scripts ) ?>
   </body>
 </html>

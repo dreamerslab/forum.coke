@@ -3,12 +3,6 @@
 
 <div class="span9">
   <?= it.partial( 'common/_nav' ) ?>
-  <ul class="article-sub-nav-list">
-    <li class="article-sub-nav-item"><a id="article-sub-nav-selected" class="article-sub-nav-link" href="/topics/latest">Latest</a></li>
-    <li class="article-sub-nav-item"><a class="article-sub-nav-link" href="/topics/trending">Hot</a></li>
-    <li class="article-sub-nav-item"><a class="article-sub-nav-link" href="/topics/unsolved">Unsolved</a></li>
-    <li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>
-  </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="items-wrap">
 
@@ -17,7 +11,9 @@
       <div class="article-item">
         <h3 class="item-title"><a class="title-link" href="/topics/<?= topic._id ?>"><?- topic.title ?></a></h3>
         <p class="item-content"><?- topic.content ?></p>
-        <a href="/topics/tag?name=<?- topic.tag_names.join(', ') ?>" class="tag"><?- topic.tag_names.join(', ') ?></a>
+        <? topic.tag_names.forEach( function( tag ){ ?>
+          <a href="/topics/tag?name=<?- tag ?>" class="tag"><?- tag ?></a>
+        <? }); ?>
         <a href="/users/<?- topic.as_user.name ?>" class="author"><?- topic.as_user.name ?></a>
         <span class="last-reply-time"><?- topic.updated_at ?></span>
         <a class="comment-count" href="/topics/<?= topic._id ?>#comment"><?- topic.comments.length ?></a>
@@ -30,71 +26,4 @@
   </div>
 </div> <!-- .span9 -->
 
-
-
-
-
-
-
-<!-- <table>
-  <thead>
-    <tr>
-      <th>
-        UserName
-      </th>
-      <th>
-        UserAvatar
-      </th>
-      <th>
-        Title
-      </th>
-      <th>
-        Content
-      </th>
-      <th>
-        ReadCount
-      </th>
-      <th>
-        CommentCount
-      </th>
-      <th>
-        UpdatedAt
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <? it.topics.forEach( function ( topic ){  ?>
-
-      <tr>
-        <td>
-          <?- topic.as_user.name ?>
-        </td>
-        <td>
-          <img src="<?= topic.as_user.avatar ?>" />
-        </td>
-        <td>
-          <a href="/topics/<?= topic._id ?>">
-            <?- topic.title ?>
-          </a>
-        </td>
-        <td>
-          <?- topic.content ?> (Tags: <?- topic.tag_names.join(', ') ?>)
-        </td>
-        <td>
-          <?- topic.read_count ?>
-        </td>
-        <td>
-          <?- topic.comments.length ?>
-        </td>
-        <td>
-          <?- topic.updated_at ?>
-        </td>
-      </tr>
-
-    <? }); ?>
-  </tbody>
-</table>
-
-<?= it.partial( 'common/_pagination' )?>
-
-<a href="/topics/new">New topic</a> -->
+<?= it.partial( 'common/_side' ) ?>

@@ -73,7 +73,7 @@ $profile-width: 135px
   height: 50px
   position: relative
 
-#log-out
+#log-btn
   +float-right
   position: relative
   top: -2px
@@ -83,12 +83,14 @@ $profile-width: 135px
 
 #profile-avatar-photo
   padding: 0 5px 0 0
+  width: 50px
 
 .crumb-link:hover
   text-decoration: none
 
 .avatar
   padding: 0 5px 0 0
+  width: 15px
 
 .tag
   +float-left
@@ -129,8 +131,11 @@ $profile-width: 135px
 .sidebar-link-p
   +clearfix
 
-.issue-title-link:hover
-  text-decoration: none
+.issue-title-link
+  display: block
+  padding: 0 0 5px
+  &:hover
+    text-decoration: none
 
 .user
   display: block

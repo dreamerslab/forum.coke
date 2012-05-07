@@ -1,63 +1,89 @@
-<table class="sidebar">
-  <tr>
-    <td>
-      <div class="search">
-        <form action="/topics/search" method="GET" accept-charset="UTF-8" >
-          <div id="table">
-            <div class="form-row">
-              <label class="form-title" for="keywords">Keywords : </label>
-              <input class="text-input" type="text" name="keywords" value="<?= it.exists( it.keywords ) ?>"/>
-              <input class="submit-link" type="submit" value="Search Topic" />
+<div class="span3">
+  <ul class="thumbnails">
+    <div class="span3">
+      <form action="/topics/search" method="GET" accept-charset="UTF-8" id="search" class="form-search">
+        <input type="text" id="search-input" class="input-small search-query" name="keywords" value="<?= it.exists( it.keywords ) ?>">
+        <button type="submit" class="btn">Search</button>
+      </form>
+    </div>
+    <li class="span3">
+      <div class="thumbnail sidebar-block">
+        <div class="caption side-profile">
+          <div id="current-user-wrap">
+
+            <? if( !it.sess_user ){ ?>
+
+            <div id="profile-avatar"><img id="profile-avatar-photo" src="http://www.gravatar.com/avatar/00000000000000000000000000000000" alt="Avatar"></div>
+            <div id="user-notify-wrap">
+
+              <a id="current-profile-link" href="/auth/google" id="current-user">Guest</a>
+
+              <div id="notify">
+                <a href="/auth/google" id="log-btn" class="btn btn-primary btn-mini">Log in with Google</a>
+              </div>
             </div>
+
+            <? }else{ ?>
+
+            <div id="profile-avatar"><img id="profile-avatar-photo" src="<?- it.sess_user.picture ?>" alt="Avatar"></div>
+            <div id="user-notify-wrap">
+
+              <a id="current-profile-link" href="/users/<?= it.sess_user._id ?>" id="current-user"><?- it.sess_user.name ?></a>
+
+              <div id="notify">
+                <i id="profile-comment" class="icon-exclamation-sign"></i>
+                <a id="notify-link" href="/notifications">12</a>
+                <a href="/logout" id="log-btn" class="btn btn-inverse btn-mini">Log out</a>
+              </div>
+            </div>
+
+            <? } ?>
+
           </div>
-        </form>
-      </div>
-    </td>
-    <td>
-      <? if( !it.sess_user ){ ?>
+        </div>
+      </div> <!-- .thumbnail -->
+      <div class="thumbnail sidebar-block">
+        <div class="caption">
+          <h4 class="sidebar-title">Hot Tags</h4>
+          <p class="sidebar-content">
+            <? it.sidebar.tags.forEach( function ( tag ){ ?>
+            <a href="/topics/tag?name=<?= tag.name ?>" class="all-tag-item tag"><?- tag.name ?></a>
+            <? }); ?>
+          </p>
+          <p class="sidebar-link-p"><a href="/topics/tags" class="sidebar-link">All Tags &#187;</a></p>
+        </div>
+      </div> <!-- .thumbnail -->
+      <div class="thumbnail sidebar-block">
+        <div class="caption">
+          <h4 class="sidebar-title">Active Users</h4>
+          <p class="sidebar-content">
+            <? it.sidebar.users.forEach( function ( user ){ ?>
 
-      <a href="/auth/google">
-        Log In with google
-      </a>
+            <a href="/users/<?= user._id ?>" class="user"><img class="avatar" src="<?= user.avatar ?>" alt="Avatar"><?- user.name ?></a>
 
-      <? }else{ ?>
+            <? }); ?>
+          </p>
+          <p class="sidebar-link-p"><a href="/users" class="sidebar-link">All Users &#187;</a></p>
+        </div>
+      </div> <!-- .thumbnail -->
+      <div class="thumbnail sidebar-block">
+        <div class="caption">
+          <h4 class="sidebar-title">Issues</h4>
+          <p class="sidebar-content">
 
-      <a href="/notifications">Notifications</a> |
-      <a href="/logout">
-        Log Out
-      </a>
+            <? it.sidebar.issues.forEach( function ( issue ){ ?>
 
-      <? } ?>
-    </td>
-    <td class="tags" width="30%">
-      <b>Hot tags:</b>
-      <? it.sidebar.tags.forEach( function ( tag ){ ?>
-        <a href="/topics/tag?name=<?= tag.name ?>"><?- tag.name ?></a>
-        (<?= tag.topic_count ?>)
-      <? }); ?>
-      <a href="/topics/tags">... more tags</a>
-    </td>
-    <td class="users" width="30%">
-      <b>Active users:</b>
-      <ol>
-        <? it.sidebar.users.forEach( function ( user ){ ?>
-          <li>
-            <a href="/users/<?= user._id ?>"><?- user.name ?></a>
-          </li>
-        <? }); ?>
-        <a href="/users">... more users</a>
-      </ol>
-    </td>
-    <td class="issues" width="40%">
-      <b>Open issues:</b>
-      <ol>
-        <? it.sidebar.issues.forEach( function ( issue ){ ?>
-          <li>
-            <a href="<?= issue.link ?>"><?- issue.title ?></a>
-          </li>
-        <? }); ?>
-        <a href="https://github.com/dreamerslab/coke/issues">... more issues</a>
-      </ol>
-    </td>
-  </tr>
-</table>
+            <h5><a href="<?= issue.link ?>" class="issue-title-link">- <?- issue.title ?></a></h5>
+            <!-- <p></p> -->
+
+            <? console.log( issue ); ?>
+
+            <? }); ?>
+
+          </p>
+          <p class="sidebar-link-p"><a href="https://github.com/dreamerslab/coke/issues" class="sidebar-link">All Issues &#187;</a></p>
+        </div>
+      </div> <!-- .thumbnail -->
+    </li>
+  </ul>
+</div>

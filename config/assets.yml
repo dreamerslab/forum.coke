@@ -13,7 +13,7 @@ css:
   # css group name
   common:
     site:
-      - common/bootstrap
+      - bootstrap
     cdn:
       - http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900
   topics:
@@ -26,4 +26,5 @@ js:
     cdn:
       # - https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
     site:
-      - common/ga
+      - common/prettify
+      - common/jquery-1.7.1.min

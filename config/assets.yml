@@ -28,3 +28,4 @@ js:
     site:
       - common/prettify
       - common/jquery-1.7.1.min
+      - common/bootstrap

@@ -43,7 +43,7 @@ module.exports = function ( app ){
         end_from     : ( total - 1 ) * limit
       };
 
-      if( from == 0 )             out.pre          = 'hidden';
+      if( from == 0 )             out.pre          = 'active';
       if( from >= count - limit ) out.next         = 'hidden';
       if( out.page <= 3 )         out.first        = 'hidden';
       if( out.page <= 4 )         out.start_spacer = 'hidden';

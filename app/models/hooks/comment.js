@@ -2,14 +2,21 @@ var mongoose = require( 'mongoose' );
 
 module.exports = {
   pre_save : function ( next ){
-    var self = this;
-    var User = mongoose.model( 'User' );
+    var self  = this;
+    var User  = mongoose.model( 'User' );
+    var Topic = mongoose.model( 'Topic' );
 
     User.findById( this.user, function ( err, user ){
       if( err ) return next( err );
 
       self.as_user = user.obj_attrs();
-      next();
+      Topic.findById( self.topic, function ( err, topic){
+        if( err ) return next( err );
+
+        self.as_topic = topic.obj_attrs();
+        self.as_topic.comment_count += 1;
+        next();
+      });
     });
   },
 

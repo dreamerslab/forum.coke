@@ -33,7 +33,11 @@ module.exports = Application.extend({
   show : function ( req, res, next ){
     var self = this;
 
-    User.findById( req.params.id, function ( err, user ){
+    User.
+      findById( req.params.id ).
+      populate( 'topics', null, {}, { sort : [['updated_at', -1]], limit : 3 }).
+      populate( 'comments', null, {}, { sort : [['updated_at', -1]], limit : 3 }).
+      run( function ( err, user ){
       if( user ){
         res.render( 'users/show', {
           sidebar   : req.sidebar,

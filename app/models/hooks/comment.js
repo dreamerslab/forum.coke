@@ -1,7 +1,5 @@
 var mongoose = require( 'mongoose' );
 
-
-
 module.exports = {
   pre_save : function ( next ){
     var self = this;
@@ -52,3 +50,5 @@ module.exports = {
     next();
   }
 };
+
+

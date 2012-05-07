@@ -81,8 +81,9 @@ module.exports = {
             if( trunk_issues.length < 5 ){
               if( issue.state === 'open' ){
                 trunk_issues.push({
-                  title : issue.title,
-                  link  : issue.html_url
+                  title   : issue.title,
+                  content : issue.body,
+                  link    : issue.html_url
                 });
               }
             }

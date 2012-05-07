@@ -1,3 +1,9 @@
+String.prototype.bytes = function(){
+  var arr = this.match( /[^\x00-\xff]/ig );
+
+  return arr === null ? this.length : this.length + arr.length;
+};
+
 var moment   = require( 'moment' );
 var markdown = require( 'markdown' ).markdown;
 
@@ -10,6 +16,18 @@ module.exports = function ( app ){
 
     sub_nav_selected : function ( target, current ){
       return target === current ? 'article-sub-nav-selected' : '';
+    },
+
+    truncate : function ( str, length ){
+      var _length = length === undefined ? 20 : length;
+
+      var tmp = str.length > _length ?
+        str.substr( 0, _length ) + '...' :
+        str;
+
+      return ( tmp.bytes() - 3 ) > _length ?
+        tmp.substr( 0, _length / ( tmp.bytes() / _length )) + '...' :
+        tmp;
     },
 
     val : function ( obj, prop ){

@@ -344,7 +344,7 @@ footer {
 /* line 140, ../../app/sass/common.sass */
 .issue-title-link {
   display: block;
-  padding: 0 0 5px;
+  padding: 4px 0 0;
 }
 /* line 143, ../../app/sass/common.sass */
 .issue-title-link:hover {

@@ -32,24 +32,31 @@ module.exports = Application.extend({
 
   show : function ( req, res, next ){
     var self = this;
+    var id = req.params.id;
 
     User.
-      findById( req.params.id ).
-      populate( 'topics', null, {}, { sort : [['updated_at', -1]], limit : 3 }).
-      populate( 'comments', null, {}, { sort : [['updated_at', -1]], limit : 3 }).
-      run( function ( err, user ){
-      if( user ){
-        res.render( 'users/show', {
-          sidebar   : req.sidebar,
-          sess_user : req.user,
-          user      : user
-        });
+      findById( id ).
+      populate( 'topics', null, {}, { sort : [[ 'updated_at', -1 ]], limit : 3 }).
+      populate( 'comments', null, {}, { sort : [[ 'updated_at', -1 ]], limit : 3 }).
+      run( function ( err, populated_user ){
+        if( populated_user ){
+          User.findById( id, function ( err, user ){
+            // NOTE: the following vars will not appear in console.log()
+            populated_user.topic_count   = user.topics.length;
+            populated_user.comment_count = user.comments.length;
 
-        return;
-      }
+            res.render( 'users/show', {
+              sidebar   : req.sidebar,
+              sess_user : req.user,
+              user      : populated_user,
+            });
+          });
 
-      req.msg = 'User';
-      self.record_not_found( err, req, res );
-    });
+          return;
+        }
+
+        req.msg = 'User';
+        self.record_not_found( err, req, res );
+      });
   }
 });

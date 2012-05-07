@@ -36,8 +36,8 @@ module.exports = Application.extend({
 
     User.
       findById( id ).
-      populate( 'topics', null, {}, { sort : [[ 'updated_at', -1 ]], limit : 3 }).
-      populate( 'comments', null, {}, { sort : [[ 'updated_at', -1 ]], limit : 3 }).
+      populate( 'topics', null, {}, { sort : [[ 'updated_at', -1 ]], limit : 5 }).
+      populate( 'comments', null, {}, { sort : [[ 'updated_at', -1 ]], limit : 5 }).
       run( function ( err, populated_user ){
         if( populated_user ){
           User.findById( id, function ( err, user ){
@@ -58,5 +58,11 @@ module.exports = Application.extend({
         req.msg = 'User';
         self.record_not_found( err, req, res );
       });
-  }
+  },
+
+  // topics : function ( req, res, next ){
+  // },
+
+  // replies : function ( req, res, next ){
+  // }
 });

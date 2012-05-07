@@ -42,6 +42,10 @@ module.exports = function ( app ){
       return moment( date ).format( format || 'MMM Do YYYY, h:m:s' );
     },
 
+    from_now : function ( date ){
+      return moment( date ).add( 'hours', 1 ).fromNow();
+    },
+
     pager : function ( from, count, limit ){
       from = parseInt( from, 10 );
 

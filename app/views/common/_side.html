@@ -28,9 +28,7 @@
 
             <div id="profile-avatar"><img id="profile-avatar-photo" src="<?- it.sess_user.picture ?>" alt="Avatar"></div>
             <div id="user-notify-wrap">
-
               <a id="current-profile-link" href="/users/<?= it.sess_user._id ?>" id="current-user"><?- it.sess_user.name ?></a>
-
               <div id="notify">
                 <i id="profile-comment" class="icon-exclamation-sign"></i>
                 <a id="notify-link" href="/notifications">12</a>
@@ -73,12 +71,12 @@
 
           <? it.sidebar.issues.forEach( function ( issue ){ ?>
 
-          <h4><a href="<?= issue.link ?>" class="issue-title-link"><?- it.truncate( issue.title ) ?></a></h4>
+          <h4><a href="<?= issue.link ?>" class="issue-title-link" target="_blank"><?- it.truncate( issue.title ) ?></a></h4>
           <p><?- it.truncate( issue.content ) ?></p>
 
           <? }); ?>
 
-          <p class="sidebar-link-p"><a href="https://github.com/dreamerslab/coke/issues" class="sidebar-link">All Issues &#187;</a></p>
+          <p class="sidebar-link-p"><a href="https://github.com/dreamerslab/coke/issues" class="sidebar-link" target="_blank">All Issues &#187;</a></p>
         </div>
       </div> <!-- .thumbnail -->
     </li>

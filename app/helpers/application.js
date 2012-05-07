@@ -8,6 +8,10 @@ module.exports = function ( app ){
       return target === current ? 'selected' : '';
     },
 
+    sub_nav_selected : function ( target, current ){
+      return target === current ? 'article-sub-nav-selected' : '';
+    },
+
     val : function ( obj, prop ){
       return obj === undefined ? '' : obj[ prop ];
     },

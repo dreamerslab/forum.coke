@@ -73,8 +73,8 @@
 
             <? it.sidebar.issues.forEach( function ( issue ){ ?>
 
-            <h5><a href="<?= issue.link ?>" class="issue-title-link">- <?- issue.title ?></a></h5>
-            <!-- <p></p> -->
+            <h4><a href="<?= issue.link ?>" class="issue-title-link"><?- issue.title ?></a></h4>
+            <p><?- issue.content ?></p>
 
             <? console.log( issue ); ?>
 

@@ -2,10 +2,16 @@
   <div class="controls">
     <h3>Title</h3>
     <input type="text" name="topic[title]" value="<?= it.val( it.topic, 'title' ) ?>"/>
+    <?= it.error()[ 'topic.title' ] ?
+        it.show_err( it.error()[ 'topic.title' ]) :
+        '' ?>
   </div>
   <div class="controls">
     <h3>Content</h3>
     <textarea class="input-xlarge" id="textarea" name="topic[content]" rows="10"><?= it.val( it.topic, 'content' ) ?></textarea>
+    <?= it.error()[ 'topic.content' ] ?
+        it.show_err( it.error()[ 'topic.content' ]) :
+        '' ?>
   </div>
 </div>
 <label for="topic[tag_names]">Tags</label>

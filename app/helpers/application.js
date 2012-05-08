@@ -29,6 +29,16 @@ module.exports = function ( app ){
         tmp;
     },
 
+    show_err : function ( err ){
+      return err ?
+        '<label class="error">' + err + '</label>' : '';
+    },
+
+    show_info : function ( info ){
+      return info ?
+        '<li class="article-nav-item"><span class="info">' + info + '</span></li>' : '';
+    },
+
     val : function ( obj, prop ){
       return obj === undefined ? '' : obj[ prop ];
     },
@@ -97,6 +107,24 @@ module.exports = function ( app ){
   });
 
   app.dynamicHelpers({
+    error : function ( req, res ){
+      return function (){
+        return req.form ?
+          req.form.getErrors() :
+          {};
+      }
+    },
+
+    success_info : function ( req, res ){
+      return function (){
+        var _info = req.flash();
+        var info  = _info ? _info[ 'flash-info' ] : [];
+        return info ?
+          info[ 0 ] :
+          undefined;
+      }
+    },
+
     messages : require( 'express-messages' )
   });
 };

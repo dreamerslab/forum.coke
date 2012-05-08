@@ -138,6 +138,17 @@ footer {
 }
 
 /* line 18, ../../app/sass/common.sass */
+.info {
+  display: block;
+  background: black;
+  color: white;
+  font-size: 17px;
+  font-family: Kefa, Merriweather, serif;
+  padding: 5px 8px;
+  font-weight: bold;
+}
+
+/* line 27, ../../app/sass/common.sass */
 .article-nav-link {
   display: block;
   background: #eeeeee;
@@ -148,53 +159,53 @@ footer {
   padding: 5px 8px;
   font-weight: bold;
 }
-/* line 27, ../../app/sass/common.sass */
+/* line 36, ../../app/sass/common.sass */
 .article-nav-link:hover {
   background: black;
   color: white;
   text-decoration: none;
 }
 
-/* line 32, ../../app/sass/common.sass */
+/* line 41, ../../app/sass/common.sass */
 #content-wrap {
   padding: 40px 0;
 }
 
-/* line 35, ../../app/sass/common.sass */
+/* line 44, ../../app/sass/common.sass */
 #search-input {
   width: 122px;
 }
 
-/* line 38, ../../app/sass/common.sass */
+/* line 47, ../../app/sass/common.sass */
 #search {
   display: inline;
   float: right;
   padding: 3px 0 0;
 }
 
-/* line 42, ../../app/sass/common.sass */
+/* line 51, ../../app/sass/common.sass */
 #new-post {
   display: inline;
   float: right;
 }
 
-/* line 45, ../../app/sass/common.sass */
+/* line 54, ../../app/sass/common.sass */
 #current-profile-link {
   display: block;
   width: 135px;
   line-height: 17px;
 }
-/* line 49, ../../app/sass/common.sass */
+/* line 58, ../../app/sass/common.sass */
 #current-profile-link:hover {
   text-decoration: none;
 }
 
-/* line 52, ../../app/sass/common.sass */
+/* line 61, ../../app/sass/common.sass */
 #current-user:hover {
   text-decoration: none;
 }
 
-/* line 55, ../../app/sass/common.sass */
+/* line 64, ../../app/sass/common.sass */
 #notify {
   text-align: left;
   width: 135px;
@@ -203,24 +214,24 @@ footer {
   left: 0;
 }
 
-/* line 62, ../../app/sass/common.sass */
+/* line 71, ../../app/sass/common.sass */
 #notify-link:hover {
   text-decoration: none;
 }
 
-/* line 65, ../../app/sass/common.sass */
+/* line 74, ../../app/sass/common.sass */
 #current-user-wrap {
   display: inline;
   float: left;
 }
 
-/* line 68, ../../app/sass/common.sass */
+/* line 77, ../../app/sass/common.sass */
 #profile-avatar {
   display: inline;
   float: left;
 }
 
-/* line 71, ../../app/sass/common.sass */
+/* line 80, ../../app/sass/common.sass */
 #user-notify-wrap {
   display: inline;
   float: left;
@@ -228,49 +239,49 @@ footer {
   position: relative;
 }
 
-/* line 76, ../../app/sass/common.sass */
+/* line 85, ../../app/sass/common.sass */
 .log-btn, #log-out {
   display: inline;
   float: right;
   position: relative;
 }
 
-/* line 80, ../../app/sass/common.sass */
+/* line 89, ../../app/sass/common.sass */
 .log-btn {
   top: -6px;
   margin: 0 0 0 3px;
 }
 
-/* line 84, ../../app/sass/common.sass */
+/* line 93, ../../app/sass/common.sass */
 #log-out {
   top: -2px;
 }
 
-/* line 87, ../../app/sass/common.sass */
+/* line 96, ../../app/sass/common.sass */
 .side-profile {
   overflow: hidden;
   *zoom: 1;
 }
 
-/* line 90, ../../app/sass/common.sass */
+/* line 99, ../../app/sass/common.sass */
 #profile-avatar-photo {
   padding: 0 5px 0 0;
   width: 50px;
   height: 50px;
 }
 
-/* line 95, ../../app/sass/common.sass */
+/* line 104, ../../app/sass/common.sass */
 .crumb-link:hover {
   text-decoration: none;
 }
 
-/* line 98, ../../app/sass/common.sass */
+/* line 107, ../../app/sass/common.sass */
 .avatar {
   padding: 0 5px 0 0;
   width: 15px;
 }
 
-/* line 102, ../../app/sass/common.sass */
+/* line 111, ../../app/sass/common.sass */
 .tag {
   display: inline;
   float: left;
@@ -280,7 +291,7 @@ footer {
   margin: 0 7px 0 0;
 }
 
-/* line 109, ../../app/sass/common.sass */
+/* line 118, ../../app/sass/common.sass */
 .last-reply-time {
   display: inline;
   float: right;
@@ -290,84 +301,89 @@ footer {
   margin: -1px 0 0;
 }
 
-/* line 116, ../../app/sass/common.sass */
+/* line 125, ../../app/sass/common.sass */
 .tag:hover {
   background: #4a6d8c;
   color: #e2eaf0;
   text-decoration: none;
 }
 
-/* line 121, ../../app/sass/common.sass */
+/* line 130, ../../app/sass/common.sass */
 .sidebar-block {
   margin: 0 0 10px;
 }
 
-/* line 124, ../../app/sass/common.sass */
+/* line 133, ../../app/sass/common.sass */
 .sidebar-title {
   padding: 0 0 13px;
 }
 
-/* line 127, ../../app/sass/common.sass */
+/* line 136, ../../app/sass/common.sass */
 .sidebar-content {
   overflow: hidden;
   *zoom: 1;
 }
 
-/* line 130, ../../app/sass/common.sass */
+/* line 139, ../../app/sass/common.sass */
 .all-tag-item {
   margin-bottom: 5px;
 }
 
-/* line 133, ../../app/sass/common.sass */
+/* line 142, ../../app/sass/common.sass */
 .sidebar-link {
   display: inline;
   float: right;
 }
-/* line 135, ../../app/sass/common.sass */
+/* line 144, ../../app/sass/common.sass */
 .sidebar-link:hover {
   text-decoration: none;
 }
 
-/* line 138, ../../app/sass/common.sass */
+/* line 147, ../../app/sass/common.sass */
 .sidebar-link-p {
   overflow: hidden;
   *zoom: 1;
 }
 
-/* line 141, ../../app/sass/common.sass */
+/* line 150, ../../app/sass/common.sass */
 .issue-title-link {
   display: block;
   padding: 4px 0 0;
 }
-/* line 144, ../../app/sass/common.sass */
+/* line 153, ../../app/sass/common.sass */
 .issue-title-link:hover {
   text-decoration: none;
 }
 
-/* line 147, ../../app/sass/common.sass */
+/* line 156, ../../app/sass/common.sass */
 .user {
   display: block;
   padding: 0 0 4px;
 }
 
-/* line 151, ../../app/sass/common.sass */
+/* line 160, ../../app/sass/common.sass */
 .user:hover {
   text-decoration: none;
 }
 
-/* line 154, ../../app/sass/common.sass */
+/* line 163, ../../app/sass/common.sass */
 .author {
   display: inline;
   float: right;
 }
-/* line 156, ../../app/sass/common.sass */
+/* line 165, ../../app/sass/common.sass */
 .author:hover {
   text-decoration: none;
 }
 
-/* line 159, ../../app/sass/common.sass */
+/* line 168, ../../app/sass/common.sass */
 .article-pager {
   text-align: center;
+}
+
+/* line 171, ../../app/sass/common.sass */
+.error {
+  color: red;
 }
 
 /* line 5, ../../app/sass/home.sass */

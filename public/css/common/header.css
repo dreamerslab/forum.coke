@@ -1,66 +1,71 @@
-/*
-Syntax error: Undefined mixin 'bg_text'.
-        on line 6 of /srv/www/forum.coke/app/sass/common/header.sass, in `bg_text'
-        from line 6 of /srv/www/forum.coke/app/sass/common/header.sass
+/* line 7, ../../../app/sass/common/header.sass */
+#logo {
+  font: 0/0 serif;
+  text-shadow: none;
+  color: transparent;
+  overflow: hidden;
+  line-height: 0;
+  width: 200px;
+  height: 120px;
+  background: url('/img/sprite-s7f7228bc18.png') no-repeat 0 -25px;
+  display: block;
+}
 
-1: /srv/www/forum.coke/app/sass/common/header.sass
+/* line 11, ../../../app/sass/common/header.sass */
+#header {
+  overflow: hidden;
+  *zoom: 1;
+  width: 940px;
+  margin: 0 auto;
+  padding: 15px 0 4px;
+}
 
-Backtrace:
-/srv/www/forum.coke/app/sass/common/header.sass:6:in `bg_text'
-/srv/www/forum.coke/app/sass/common/header.sass:6
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:170:in `visit_mixin'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:18:in `visit'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:53:in `map'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:37:in `block in visit'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:236:in `visit_rule'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:18:in `visit'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:53:in `map'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:37:in `block in visit'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:47:in `visit_root'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:18:in `visit'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:7:in `visit'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/tree/root_node.rb:20:in `render'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/engine.rb:300:in `_render'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/engine.rb:248:in `block in render'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/util.rb:297:in `silence_sass_warnings'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/sass-3.1.12/lib/sass/engine.rb:248:in `render'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:136:in `block (2 levels) in compile'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:122:in `timed'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:135:in `block in compile'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/logger.rb:45:in `red'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:134:in `compile'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:114:in `compile_if_required'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:99:in `block (2 levels) in run'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:97:in `each'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:97:in `block in run'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:122:in `timed'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/compiler.rb:96:in `run'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/commands/watch_project.rb:142:in `recompile'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/commands/watch_project.rb:68:in `perform'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/commands/base.rb:18:in `execute'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/commands/project_base.rb:19:in `execute'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/exec/sub_command_ui.rb:43:in `perform!'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/lib/compass/exec/sub_command_ui.rb:15:in `run!'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/bin/compass:25:in `block in <top (required)>'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/bin/compass:39:in `call'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/bin/compass:39:in `<top (required)>'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/bin/compass:19:in `load'
-/Users/fred/.rvm/gems/ruby-1.9.2-p290/bin/compass:19:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Syntax error: Undefined mixin 'bg_text'.\A         on line 6 of /srv/www/forum.coke/app/sass/common/header.sass, in `bg_text'\A         from line 6 of /srv/www/forum.coke/app/sass/common/header.sass\A \A 1: /srv/www/forum.coke/app/sass/common/header.sass"; }
+/* line 16, ../../../app/sass/common/header.sass */
+header {
+  display: inline;
+  float: left;
+}
+
+/* line 19, ../../../app/sass/common/header.sass */
+nav {
+  display: inline;
+  float: right;
+  padding: 89px 0 0;
+}
+
+/* line 23, ../../../app/sass/common/header.sass */
+.nav-item {
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  padding: 0 0 0 6px;
+}
+/* line 7, ../../../../../../Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/frameworks/compass/stylesheets/compass/css3/_inline-block.scss */
+.nav-item {
+  *display: inline;
+}
+
+/* line 27, ../../../app/sass/common/header.sass */
+.nav-link {
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  font-family: Kefa, Merriweather, serif;
+  padding: 5px 8px;
+  font-weight: bold;
+}
+/* line 35, ../../../app/sass/common/header.sass */
+.nav-link:hover {
+  background: black;
+  color: white;
+  text-decoration: none;
+}
+
+/* line 40, ../../../app/sass/common/header.sass */
+#nav-selected {
+  background: black;
+  color: white;
+}

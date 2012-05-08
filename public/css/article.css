@@ -1,4 +1,4 @@
-/* line 5, ../../app/sass/common/header.sass */
+/* line 7, ../../app/sass/common/header.sass */
 #logo {
   font: 0/0 serif;
   text-shadow: none;
@@ -8,18 +8,10 @@
   width: 200px;
   height: 120px;
   background: url('/img/sprite-s7f7228bc18.png') no-repeat 0 -25px;
-  display: -moz-inline-box;
-  -moz-box-orient: vertical;
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
-}
-/* line 7, ../../../../../Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/frameworks/compass/stylesheets/compass/css3/_inline-block.scss */
-#logo {
-  *display: inline;
+  display: block;
 }
 
-/* line 9, ../../app/sass/common/header.sass */
+/* line 11, ../../app/sass/common/header.sass */
 #header {
   overflow: hidden;
   *zoom: 1;
@@ -28,20 +20,20 @@
   padding: 15px 0 4px;
 }
 
-/* line 14, ../../app/sass/common/header.sass */
+/* line 16, ../../app/sass/common/header.sass */
 header {
   display: inline;
   float: left;
 }
 
-/* line 17, ../../app/sass/common/header.sass */
+/* line 19, ../../app/sass/common/header.sass */
 nav {
   display: inline;
   float: right;
   padding: 89px 0 0;
 }
 
-/* line 21, ../../app/sass/common/header.sass */
+/* line 23, ../../app/sass/common/header.sass */
 .nav-item {
   display: -moz-inline-box;
   -moz-box-orient: vertical;
@@ -55,7 +47,7 @@ nav {
   *display: inline;
 }
 
-/* line 25, ../../app/sass/common/header.sass */
+/* line 27, ../../app/sass/common/header.sass */
 .nav-link {
   display: block;
   text-decoration: none;
@@ -65,20 +57,20 @@ nav {
   padding: 5px 8px;
   font-weight: bold;
 }
-/* line 33, ../../app/sass/common/header.sass */
+/* line 35, ../../app/sass/common/header.sass */
 .nav-link:hover {
   background: black;
   color: white;
   text-decoration: none;
 }
 
-/* line 38, ../../app/sass/common/header.sass */
+/* line 40, ../../app/sass/common/header.sass */
 #nav-selected {
   background: black;
   color: white;
 }
 
-/* line 3, ../../app/sass/common/footer.sass */
+/* line 6, ../../app/sass/common/footer.sass */
 footer {
   color: #999999;
   font-size: 14px;
@@ -88,7 +80,7 @@ footer {
   letter-spacing: 1px;
 }
 
-/* line 11, ../../app/sass/common/footer.sass */
+/* line 14, ../../app/sass/common/footer.sass */
 #sublogo {
   font: 0/0 serif;
   text-shadow: none;
@@ -111,7 +103,7 @@ footer {
   *display: inline;
 }
 
-/* line 17, ../../app/sass/common/footer.sass */
+/* line 20, ../../app/sass/common/footer.sass */
 #dreamerslab {
   display: -moz-inline-box;
   -moz-box-orient: vertical;

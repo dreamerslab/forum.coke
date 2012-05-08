@@ -57,6 +57,7 @@ Model.Notification = new Schema({
   activity    : { type : String, required : true },
   originator  : { type : Schema.Types.Mixed },
   topic       : { type : Schema.Types.Mixed },
+  content     : { type : String, 'default' : '' },
   is_read     : { type : Boolean, 'default' : false },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number }

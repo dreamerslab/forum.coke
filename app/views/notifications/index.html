@@ -28,6 +28,7 @@
           <a href="/users/<?= notif.originator._id ?>"><?- notif.originator.name ?></a>
           <?= notif.activity ?>
           <a href="/topics/<?= notif.topic._id ?>?nid=<?= notif._id ?>"><?- notif.topic.title ?></a>
+          <p><?- notif.content ?></p>
         </td>
         <td>
           <?= notif.is_read ?>

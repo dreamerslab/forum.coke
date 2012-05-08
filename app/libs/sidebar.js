@@ -119,7 +119,7 @@ module.exports = {
         };
 
         cache.markModified( 'trunk' );
-        cache.save( function ( err, cache ){
+        cache.save( function ( err, cache, count ){
           if( err ) return LOG.error( 500,
             '[libs][sidebar][init] Having trouble updating sidebar cache', err );
 

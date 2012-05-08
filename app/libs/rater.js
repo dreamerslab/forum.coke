@@ -24,7 +24,7 @@ module.exports = {
           var c2 = user.comments.length;
 
           user.rating = c1 * RATE_PER_TOPIC + c2 * RATE_PER_COMMENT;
-          user.save( function ( err, user ){
+          user.save( function ( err, user, count ){
             if( err ) return LOG.error( 500,
               '[libs][rater][init] Having trouble saving the user' );
 

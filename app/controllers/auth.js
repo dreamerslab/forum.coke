@@ -47,7 +47,7 @@ module.exports = Application.extend({
             name       : profile._json.name,
             email      : profile._json.email,
             picture    : profile._json.picture
-          }).save( function ( err, user ){
+          }).save( function ( err, user, count ){
             if( err ){
               LOG.error( 500, res, err );
               res.redirect( '/logout' );

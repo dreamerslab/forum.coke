@@ -114,7 +114,7 @@ Notification.statics = {
                 topic      : topic.obj_attrs(),
                 content    : comment.content,
                 activity   : 'commented on your topic'
-              }).save( function (){
+              }).save( function ( err, notif, count ){
                 err && LOG.error( 500,
                   '[app][models][Notifications] Having trouble saving notification', err );
 
@@ -147,7 +147,7 @@ Notification.statics = {
                 topic      : topic.obj_attrs(),
                 content    : topic.content,
                 activity   : 'updated on the topic'
-              }).save( function ( err ){
+              }).save( function ( err, notif, count ){
                 err && LOG.error( 500,
                   '[app][models][Notifications] Having trouble saving notification', err );
 

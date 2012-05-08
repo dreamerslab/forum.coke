@@ -66,7 +66,7 @@ Tag.statics = {
             return next();
           }
 
-          new self({ name : name }).save( function ( err, tag ){
+          new self({ name : name }).save( function ( err, tag, count ){
             if( err ){
               flow.end( function (){
                 callback && callback( err );

@@ -66,7 +66,7 @@ Tag.statics = {
             return next();
           }
 
-          new self({ name : name }).save( function ( err, tag ){
+          new self({ name : name }).save( function ( err, tag, count ){
             if( err ){
               flow.end( function (){
                 callback && callback( err );
@@ -92,7 +92,7 @@ Tag.statics = {
         { name : { $in : topic.tag_names }},
         { $push : { topics : topic._id }},
         { multi : true },
-        function ( err ){
+        function ( err, count ){
           if( err ){
             callback && callback( err );
             return;
@@ -113,7 +113,7 @@ Tag.statics = {
         { name : { $in : topic.orig_tag_names }},
         { $pull : { topics : topic._id }},
         { multi : true },
-        function ( err ){
+        function ( err, count ){
           if( err ){
             callback && callback( err );
             return;

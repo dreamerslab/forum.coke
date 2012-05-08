@@ -62,7 +62,7 @@ module.exports = {
     for(; i--;){
       flow.parallel( function ( ready ){
         var user = random_user();
-        new User( user ).save( function ( err, user ){
+        new User( user ).save( function ( err, user, count ){
           ready();
         });
       });
@@ -84,7 +84,7 @@ module.exports = {
           topic.user      = user;
           topic.tag_names = Tag.extract_names( string );
 
-          new Topic( topic ).save( function ( err, topic ){
+          new Topic( topic ).save( function ( err, topic, count ){
             ready();
           });
         });
@@ -108,7 +108,7 @@ module.exports = {
             comment.user  = user;
             comment.topic = topic;
 
-            new Comment( comment ).save( function ( err, comment ){
+            new Comment( comment ).save( function ( err, comment, count ){
               ready();
             });
           });

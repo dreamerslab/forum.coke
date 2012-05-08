@@ -44,7 +44,7 @@ module.exports = Controller.extend({
               self._merge( req, { topic : topic, comment : comment }));
           }
 
-          comment.save( function ( err, comment ){
+          comment.save( function ( err, comment, count ){
             if( err ){
               req.flash( 'flash-error', 'Comment creation fail' );
             }else{

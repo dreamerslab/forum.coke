@@ -171,7 +171,7 @@ module.exports = Controller.extend({
     var topic = new Topic({ user : req.user });
 
     topic.set_attrs( req.body.topic );
-    topic.save( function ( err, topic ){
+    topic.save( function ( err, topic, count ){
       if( err ){
         req.flash( 'flash-error', 'Topic creation fail' );
         res.redirect( '/topics' );
@@ -218,7 +218,7 @@ module.exports = Controller.extend({
               self._merge( req, { topic : topic }));
           }
 
-          topic.save( function ( err, topic ){
+          topic.save( function ( err, topic, count ){
             if( err ){
               req.flash( 'flash-error', 'Topic update fail' );
             }else{

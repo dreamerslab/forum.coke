@@ -37,7 +37,7 @@ Topic.statics = {
     this.update(
       { _id : comment.topic },
       { $addToSet : { comments : comment._id }},
-      function ( err ){
+      function ( err, count ){
         callback && callback( err );
       });
   },
@@ -46,7 +46,7 @@ Topic.statics = {
     this.update(
       { _id : comment.topic },
       { $pull : { comments : comment._id }},
-      function ( err ){
+      function ( err, count ){
         callback && callback( err );
       });
   }
@@ -73,7 +73,7 @@ Topic.methods = {
     mongoose.model( 'Topic' ).update(
       { _id : this._id },
       { $inc : { read_count : 1 }},
-      function ( err ){
+      function ( err, count ){
         err && LOG.error( 500,
           '[app][models][Topic] Having trouble increasing read count', err )
       }

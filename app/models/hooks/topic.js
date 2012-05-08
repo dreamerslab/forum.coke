@@ -60,7 +60,7 @@ module.exports = {
       { name : { $in : this.tag_names }},
       { $pull : { topics : this._id }},
       { multi : true },
-      function ( err ){
+      function ( err, count ){
         err && LOG.error( 500,
           '[libs][topic_hooks][pre_remove] Having trouble removing topic\'s id from its tags', err );
       });

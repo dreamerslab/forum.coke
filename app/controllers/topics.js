@@ -79,7 +79,7 @@ module.exports = Controller.extend({
 
   tag : function ( req, res, next ){
     if( !req.query.name ){
-      req.flash( 'flash-error', 'No tag name speciefied' );
+      req.flash( 'flash-error', 'No tag name specified' );
       res.redirect( '/topics/tags' );
 
       return;

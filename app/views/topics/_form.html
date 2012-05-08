@@ -1,13 +1,14 @@
+<div class="control-group">
+  <div class="controls">
+    <h3>Title</h3>
+    <input type="text" name="topic[title]" value="<?= it.val( it.topic, 'title' ) ?>"/>
+  </div>
+  <div class="controls">
+    <h3>Content</h3>
+    <textarea class="input-xlarge" id="textarea" name="topic[content]" rows="10"><?= it.val( it.topic, 'content' ) ?></textarea>
+  </div>
+</div>
+<label for="topic[tag_names]">Tags</label>
+<input type="text" class="span3" name="topic[tag_names]" value="<?= it.val( it.topic, 'tag_names' ) ?>" placeholder="Type in tags...">
+<span class="help-inline">Separate tags with comma</span>
 <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
-<div class="form-row">
-  <label class="form-title" for="topic[title]">Title : </label><br />
-  <input class="text-input" type="text" name="topic[title]" value="<?= it.val( it.topic, 'title' ) ?>"/>
-</div>
-<div class="form-row">
-  <label class="form-title" for="topic[tag_names]">Tag : </label><br />
-  <input class="text-input" type="text" name="topic[tag_names]" value="<?= it.val( it.topic, 'tag_names' ) ?>"/>
-</div>
-<div class="form-row">
-  <label class="form-title" for="topic[content]">Content : </label><br />
-  <textarea class="text-input" name="topic[content]" rows="10" cols="50"><?= it.val( it.topic, 'content' ) ?></textarea>
-</div>

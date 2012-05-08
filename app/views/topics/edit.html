@@ -1,11 +1,18 @@
 <? it.title = 'Editing topics'; ?>
+<? it.styles.push( 'new-edit-topic' ); ?>
 
-<form action="/topics/<?= it.topic._id ?>" method="POST" accept-charset="UTF-8" >
-  <input type="hidden" name="_method" value="put" />
-  <div id="table">
-    <?= it.partial( 'topics/_form' ) ?>
-  </div>
-  <input class="submit-link" type="submit" value="Update topic" /> |
-</form>
-
-<a href="/topics/<?= it.topic._id ?>">Show</a>
+<div class="span9">
+  <?= it.partial( 'common/_breadcrumb' ) ?>
+  <form id="reply-area" action="/topics/<?= it.topic._id ?>" method="POST" accept-charset="UTF-8" >
+    <input type="hidden" name="_method" value="put" />
+    <fieldset>
+      <legend id="new-edit-title">Edit Post</legend>
+      <?= it.partial( 'topics/_form' ) ?>
+      <div class="form-actions reply-actions">
+        <input class="btn btn-primary" type="submit" value="Submit">
+        <a class="btn" href="/topics/<?= it.topic._id ?>">Back</a>
+      </div>
+    </fieldset>
+  </form>
+</div> <!-- .span9 -->
+<?= it.partial( 'common/_side' ) ?>

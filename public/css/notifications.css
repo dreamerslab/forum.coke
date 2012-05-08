@@ -412,9 +412,11 @@ footer {
 /* line 26, ../../app/sass/notifications.sass */
 .profile-avatar-photo {
   display: block;
+  width: 32px;
+  height: 32px;
 }
 
-/* line 29, ../../app/sass/notifications.sass */
+/* line 31, ../../app/sass/notifications.sass */
 .notify-comment {
   display: inline;
   float: left;

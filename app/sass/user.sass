@@ -1,6 +1,6 @@
 @import "common"
 
-$article-item-padding-top: 15px
+$article-item-padding: 8px
 
 #profile
   +clearfix
@@ -16,6 +16,8 @@ $article-item-padding-top: 15px
 
 #user-profile-avatar-img
   display: block
+  width: 80px
+  height: 80px
 
 #meta
   +float-left
@@ -31,7 +33,7 @@ $article-item-padding-top: 15px
 
 .article-item
   +clearfix
-  padding: $article-item-padding-top 0 11px 14px
+  padding: $article-item-padding 0 $article-item-padding 14px
   position: relative
   border-bottom: 1px dotted #aaa
 
@@ -40,6 +42,7 @@ $article-item-padding-top: 15px
   border-bottom: 1px dotted #aaa
 
 .item-title
+  +float-left
   padding: 0 0 2px
   font-weight: normal
   font-size: 16px
@@ -56,14 +59,13 @@ $article-item-padding-top: 15px
   background: #ddd
 
 .comment-count
-  position: absolute
-  top: $article-item-padding-top
-  right: 0
+  +float-right
 
 .comment-count
   background: #d1d6db
   color: #fff
   padding: 1px 4px 0
+  margin: 5px 0 0
   min-width: 20px
   text-align: center
   &:hover

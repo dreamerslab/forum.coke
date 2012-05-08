@@ -410,31 +410,32 @@ footer {
 .user-profile-avatar-img {
   display: block;
   padding: 6px 8px 0 0;
+  width: 72px;
 }
 
-/* line 23, ../../app/sass/users.sass */
+/* line 24, ../../app/sass/users.sass */
 .meta {
   display: inline;
   float: left;
 }
 
-/* line 26, ../../app/sass/users.sass */
+/* line 27, ../../app/sass/users.sass */
 .user-link {
   display: block;
 }
 
-/* line 29, ../../app/sass/users.sass */
+/* line 30, ../../app/sass/users.sass */
 .user-link:hover {
   text-decoration: none;
 }
 
-/* line 32, ../../app/sass/users.sass */
+/* line 33, ../../app/sass/users.sass */
 .user-name {
   font-size: 15px;
   color: #0088cc;
 }
 
-/* line 36, ../../app/sass/users.sass */
+/* line 37, ../../app/sass/users.sass */
 .email, .posts, .comments, .created {
   font-size: 12px;
 }

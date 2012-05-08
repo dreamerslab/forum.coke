@@ -9,7 +9,7 @@
       <h3 id="name"><?= it.user.name ?></h3>
       <h4>Posts: <?= it.user.topic_count ?></h4>
       <h4>Comments: <?= it.user.comment_count ?></h4>
-      <h4>Created at: <?= it.date( it.user.created_at ) ?></h4>
+      <h4>Created at: <?= it.from_now( it.user.created_at ) ?></h4>
     </div>
   </div>
 

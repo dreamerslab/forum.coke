@@ -1,0 +1,36 @@
+<p>
+  Unread notification count: <?= it.sess_user.unread_notifs ?>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Id
+      </th>
+      <th>
+        Message
+      </th>
+      <th>
+        Read?
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <? it.notifs.forEach( function ( notif ){  ?>
+      <tr>
+        <td>
+          <?= notif._id ?>
+        </td>
+        <td>
+          <a href="/users/<?= notif.originator._id ?>"><?- notif.originator.name ?></a>
+          <?= notif.activity ?>
+          <a href="/topics/<?= notif.topic._id ?>?nid=<?= notif._id ?>"><?- notif.topic.title ?></a>
+        </td>
+        <td>
+          <?= notif.is_read ?>
+        </td>
+      </tr>
+    <? }); ?>
+  </tbody>
+</table>

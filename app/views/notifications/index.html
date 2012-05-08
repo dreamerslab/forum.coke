@@ -1,38 +1,29 @@
-<? it.title = 'Listing Notifications'; ?>
+<? it.title = 'COKE - Notifications'; ?>
+<? it.styles.push( 'notifications' ); ?>
 
-<p>
-  Unread notification count: <?= it.sess_user.unread_notifs ?>
-</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>
-        Id
-      </th>
-      <th>
-        Message
-      </th>
-      <th>
-        Read?
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <? it.notifs.forEach( function ( notif ){  ?>
-      <tr>
-        <td>
-          <?= notif._id ?>
-        </td>
-        <td>
-          <a href="/users/<?= notif.originator._id ?>"><?- notif.originator.name ?></a>
-          <?= notif.activity ?>
-          <a href="/topics/<?= notif.topic._id ?>?nid=<?= notif._id ?>"><?- notif.topic.title ?></a>
-        </td>
-        <td>
-          <?= notif.is_read ?>
-        </td>
-      </tr>
-    <? }); ?>
-  </tbody>
-</table>
+
+
+<div class="span9">
+  <?= it.partial( 'common/_breadcrumb' ) ?>
+  <? it.notifs.forEach( function ( notif ){  ?>
+  <div class="notify-item">
+    <a class="close">&times;</a>
+    <p>
+      <a href="/users/<?= notif.originator._id ?>" class="author" ><?- notif.originator.name ?></a>
+      <?= notif.activity ?>
+      <a href="/topics/<?= notif.topic._id ?>?nid=<?= notif._id ?>" class="article-link"><?- notif.topic.title ?></a>
+      <span class="last-reply-time"><?= it.from_now( notif.updated_at ) ?></span>
+    </p>
+    <a href="#" class="notify-user-avatar"><img class="profile-avatar-photo" src="<?= notif.originator.avatar ?>" alt="Avatar"></a>
+    <p class="notify-comment"><%= lorem.name %>'s comment...</p>
+
+    <? console.log( notif.originator ); ?>
+    <? console.log( notif ); ?>
+
+  </div> <!-- .article-item -->
+  <? }); ?>
+  <?= it.partial( 'common/_pagination' ) ?>
+</div> <!-- .span9 -->
+
+<?= it.partial( 'common/_side' ) ?>

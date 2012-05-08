@@ -1,9 +1,14 @@
-<? it.title = 'New topics'; ?>
+<? it.title = 'COKE - New Post'; ?>
+<? it.styles.push( 'new-edit-topic' ); ?>
 
-<form action="/topics" method="POST" accept-charset="UTF-8" >
-  <div id="table">
-    <?= it.partial( 'topics/_form' ) ?>
-  </div>
-  <input class="submit-link" type="submit" value="Create topic" /> |
-  <a href="/topics">Back</a>
-</form>
+<div class="span9">
+  <?= it.partial( 'common/_breadcrumb' ) ?>
+  <form id="reply-area" action="/topics" method="POST" accept-charset="UTF-8" >
+    <fieldset>
+      <legend id="new-edit-title">New Post</legend>
+      <?= it.partial( 'topics/_form' ) ?>
+      <?= it.partial( 'common/_form_actions' ) ?>
+    </fieldset>
+  </form>
+</div> <!-- .span9 -->
+<?= it.partial( 'common/_side' ) ?>

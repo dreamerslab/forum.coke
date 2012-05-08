@@ -31,7 +31,7 @@
               <a id="current-profile-link" href="/users/<?= it.sess_user._id ?>" id="current-user"><?- it.sess_user.name ?></a>
               <div id="notify">
                 <i id="profile-comment" class="icon-exclamation-sign"></i>
-                <a id="notify-link" href="/notifications">12</a>
+                <a id="notify-link" href="/notifications"><?= it.sess_user.unread_notifs ?></a>
                 <a href="/logout" id="log-out" class="btn btn-inverse btn-mini">Log out</a>
               </div>
             </div>

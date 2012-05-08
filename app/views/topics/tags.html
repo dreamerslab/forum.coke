@@ -1,12 +1,18 @@
-<? it.title = 'Listing all tags'; ?>
+<? it.title = 'COKE - All Tags'; ?>
+<? it.styles.push( 'tags' ); ?>
 
-<? it.tags.forEach( function ( tag ){ ;?>
-
-  <a href="/topics/tag?name=<?= tag.name ?>">
-    <?- tag.name ?>
-  </a>
-  (<?= tag.topics.length ?>),
-
-<? }); ?>
-
-<?= it.partial( 'common/_pagination' )?>
+<div class="span12">
+  <?= it.partial( 'common/_breadcrumb' ) ?>
+  <h2>All Tags</h2>
+  <div id="tags-wrap">
+    <ul class="thumbnails">
+      <? it.tags.forEach( function ( tag ){ ;?>
+      <li class="span3">
+        <a href="/topics/tag?name=<?= tag.name ?>" class="all-tag-item tag"><?- tag.name ?></a>
+        <span> x <?= tag.topics.length ?></span>
+      </li>
+      <? }); ?>
+    </ul>
+    <?= it.partial( 'common/_pagination' )?>
+  </div>
+</div>

@@ -20,12 +20,24 @@ css:
   topics:
     site:
       - posts
+  new-edit-topic:
+    site:
+      - new-edit
+  users:
+    site:
+      - users
   user:
     site:
       - user
   article:
     site:
       - article
+  tags:
+    site:
+      - tags
+  notifications:
+    site:
+      - notifications
 
 js:
   # js group name

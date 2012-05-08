@@ -1,61 +1,25 @@
-<? it.title = 'Listing users'; ?>
+<? it.title = 'COKE - Users'; ?>
+<? it.styles.push( 'users' ); ?>
 
-
-<table>
-  <thead>
-    <tr>
-      <th>
-        Id
-      </th>
-      <th>
-        Name
-      </th>
-      <th>
-        Email
-      </th>
-      <th>
-        Avatar
-      </th>
-      <th>
-        TopicCount
-      </th>
-      <th>
-        CommentCount
-      </th>
-      <th>
-        Rating
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <? it.users.forEach( function ( user ){  ?>
-
-      <tr>
-        <td>
-          <?= user._id ?>
-        </td>
-        <td>
-          <?- user.name ?>
-        </td>
-        <td>
-          <?- user.email ?>
-        </td>
-        <td>
-          <img src="<?= user.avatar ?>" />
-        </td>
-        <td>
-          <?= user.topics.length ?>
-        </td>
-        <td>
-          <?= user.comments.length ?>
-        </td>
-        <td>
-          <?= user.rating ?>
-        </td>
-      </tr>
-
-    <? }); ?>
-  </tbody>
-</table>
-
-<?= it.partial( 'common/_pagination' )?>
+<div class="span12">
+  <?= it.partial( 'common/_breadcrumb' ) ?>
+  <h2>All Users</h2>
+  <div id="users-wrap">
+    <ul class="thumbnails">
+      <? it.users.forEach( function ( user ){  ?>
+      <li class="span4">
+        <div class="user-wrap">
+          <div class="user-profile-avatar"><a class="user-link" href="/users/<?= user._id ?>"><img class="user-profile-avatar-img" src="<?= user.avatar ?>" alt="Avatar"></a></div>
+          <div class="meta">
+            <h3 class="user-name"><a class="user-link" href="/users/<?= user._id ?>"><?- user.name ?></a></h3>
+            <h4 class="posts">Posts: <?= user.topics.length ?></h4>
+            <h4 class="comments">Comments: <?= user.comments.length ?></h4>
+            <h4 class="created">Created at: <?= it.from_now( user.created_at ) ?></h4>
+          </div>
+        </div>
+      </li>
+      <? }); ?>
+    </ul>
+    <?= it.partial( 'common/_pagination' )?>
+  </div>
+</div>

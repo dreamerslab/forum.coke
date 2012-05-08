@@ -400,112 +400,116 @@ footer {
 /* line 17, ../../app/sass/user.sass */
 #user-profile-avatar-img {
   display: block;
+  width: 80px;
+  height: 80px;
 }
 
-/* line 20, ../../app/sass/user.sass */
+/* line 22, ../../app/sass/user.sass */
 #meta {
   display: inline;
   float: left;
 }
 
-/* line 23, ../../app/sass/user.sass */
+/* line 25, ../../app/sass/user.sass */
 #posts {
   padding: 0 0 30px;
 }
 
-/* line 26, ../../app/sass/user.sass */
+/* line 28, ../../app/sass/user.sass */
 #posts-title {
   padding: 0 0 10px;
 }
 
-/* line 29, ../../app/sass/user.sass */
+/* line 31, ../../app/sass/user.sass */
 #replies {
   padding: 0 0 30px;
 }
 
-/* line 32, ../../app/sass/user.sass */
+/* line 34, ../../app/sass/user.sass */
 .article-item {
   overflow: hidden;
   *zoom: 1;
-  padding: 15px 0 11px 14px;
+  padding: 8px 0 8px 14px;
   position: relative;
   border-bottom: 1px dotted #aaaaaa;
 }
 
-/* line 38, ../../app/sass/user.sass */
+/* line 40, ../../app/sass/user.sass */
 .block-title {
   padding: 0 0 10px;
   border-bottom: 1px dotted #aaaaaa;
 }
 
-/* line 42, ../../app/sass/user.sass */
+/* line 44, ../../app/sass/user.sass */
 .item-title {
+  display: inline;
+  float: left;
   padding: 0 0 2px;
   font-weight: normal;
   font-size: 16px;
 }
 
-/* line 47, ../../app/sass/user.sass */
+/* line 50, ../../app/sass/user.sass */
 .title-link:hover {
   text-decoration: none;
 }
 
-/* line 50, ../../app/sass/user.sass */
+/* line 53, ../../app/sass/user.sass */
 .article-nav-list {
   overflow: hidden;
   *zoom: 1;
   list-style: none;
 }
 
-/* line 54, ../../app/sass/user.sass */
+/* line 57, ../../app/sass/user.sass */
 #article-nav-selected {
   text-decoration: none;
   background: #dddddd;
 }
 
-/* line 58, ../../app/sass/user.sass */
+/* line 61, ../../app/sass/user.sass */
 .comment-count {
-  position: absolute;
-  top: 15px;
-  right: 0;
+  display: inline;
+  float: right;
 }
 
-/* line 63, ../../app/sass/user.sass */
+/* line 64, ../../app/sass/user.sass */
 .comment-count {
   background: #d1d6db;
   color: white;
   padding: 1px 4px 0;
+  margin: 5px 0 0;
   min-width: 20px;
   text-align: center;
 }
-/* line 69, ../../app/sass/user.sass */
+/* line 71, ../../app/sass/user.sass */
 .comment-count:hover {
   color: #005580;
   text-decoration: none;
 }
 
-/* line 73, ../../app/sass/user.sass */
+/* line 75, ../../app/sass/user.sass */
 #bio-notes {
   padding: 0 0 10px;
 }
 
-/* line 76, ../../app/sass/user.sass */
+/* line 78, ../../app/sass/user.sass */
 #textarea {
   width: 690px;
 }
 
-/* line 79, ../../app/sass/user.sass */
+/* line 81, ../../app/sass/user.sass */
 .reply-actions {
   text-align: right;
 }
 
-/* line 82, ../../app/sass/user.sass */
+/* line 84, ../../app/sass/user.sass */
 .more-link {
   display: inline;
   float: right;
   padding: 5px 0 0;
 }
-/* line 85, ../../app/sass/user.sass */
+/* line 87, ../../app/sass/user.sass */
 .more-link:hover {
   text-decoration: none;
 }

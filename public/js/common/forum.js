@@ -1,3 +1,5 @@
 ( function ( $ ){
-  $( 'pre' ).addClass( 'prettyprint' );
+  $( function (){
+    $( 'pre' ).addClass( 'prettyprint' );
+  });
 })( jQuery );

@@ -459,3 +459,8 @@ footer {
 .comment-author:hover {
   text-decoration: none;
 }
+
+/* line 53, ../../app/sass/article.sass */
+#reply-area {
+  padding: 30px 0 0;
+}

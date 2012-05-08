@@ -427,7 +427,7 @@ footer {
 .article-item {
   overflow: hidden;
   *zoom: 1;
-  padding: 11px 0 11px 14px;
+  padding: 15px 0 11px 14px;
   position: relative;
   border-bottom: 1px dotted #aaaaaa;
 }
@@ -441,34 +441,36 @@ footer {
 /* line 42, ../../app/sass/user.sass */
 .item-title {
   padding: 0 0 2px;
+  font-weight: normal;
+  font-size: 16px;
 }
 
-/* line 45, ../../app/sass/user.sass */
+/* line 47, ../../app/sass/user.sass */
 .title-link:hover {
   text-decoration: none;
 }
 
-/* line 48, ../../app/sass/user.sass */
+/* line 50, ../../app/sass/user.sass */
 .article-nav-list {
   overflow: hidden;
   *zoom: 1;
   list-style: none;
 }
 
-/* line 52, ../../app/sass/user.sass */
+/* line 54, ../../app/sass/user.sass */
 #article-nav-selected {
   text-decoration: none;
   background: #dddddd;
 }
 
-/* line 56, ../../app/sass/user.sass */
+/* line 58, ../../app/sass/user.sass */
 .comment-count {
   position: absolute;
-  top: 11px;
+  top: 15px;
   right: 0;
 }
 
-/* line 61, ../../app/sass/user.sass */
+/* line 63, ../../app/sass/user.sass */
 .comment-count {
   background: #d1d6db;
   color: white;
@@ -476,34 +478,34 @@ footer {
   min-width: 20px;
   text-align: center;
 }
-/* line 67, ../../app/sass/user.sass */
+/* line 69, ../../app/sass/user.sass */
 .comment-count:hover {
   color: #005580;
   text-decoration: none;
 }
 
-/* line 71, ../../app/sass/user.sass */
+/* line 73, ../../app/sass/user.sass */
 #bio-notes {
   padding: 0 0 10px;
 }
 
-/* line 74, ../../app/sass/user.sass */
+/* line 76, ../../app/sass/user.sass */
 #textarea {
   width: 690px;
 }
 
-/* line 77, ../../app/sass/user.sass */
+/* line 79, ../../app/sass/user.sass */
 .reply-actions {
   text-align: right;
 }
 
-/* line 80, ../../app/sass/user.sass */
+/* line 82, ../../app/sass/user.sass */
 .more-link {
   display: inline;
   float: right;
   padding: 5px 0 0;
 }
-/* line 83, ../../app/sass/user.sass */
+/* line 85, ../../app/sass/user.sass */
 .more-link:hover {
   text-decoration: none;
 }

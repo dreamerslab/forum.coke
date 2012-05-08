@@ -1,9 +1,7 @@
 @import "common"
 
 $article-item-padding-top: 11px
-
-#items-wrap
-  padding: 7px 0 0
+$comment-count-pos: $article-item-padding-top + 9px
 
 .article-item
   +clearfix
@@ -49,7 +47,7 @@ $article-item-padding-top: 11px
 
 .comment-count
   position: absolute
-  top: $article-item-padding-top
+  top: $comment-count-pos
   right: 0
 
 .comment-count

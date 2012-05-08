@@ -55,8 +55,9 @@ Topic.statics = {
 Topic.methods = {
   obj_attrs : function (){
     return {
-      _id   : this._id,
-      title : this.title
+      _id           : this._id,
+      title         : this.title,
+      comment_count : this.comments.length
     };
   },
 

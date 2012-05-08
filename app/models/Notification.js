@@ -43,7 +43,7 @@ Notification.statics = {
 
         User.update(
           { _id : self.user },
-          { $inc : { unread_notifs : 1 }},
+          { $inc : { unread_notifs : -1 }},
           function ( err ){
             callback && callback( err );
           });
@@ -93,6 +93,14 @@ Notification.statics = {
               }).save( function ( err ){
                 err && LOG.error( 500,
                   '[app][models][Notifications] Having trouble saving notification', err );
+
+                User.update(
+                  { _id : subr._id },
+                  { $inc : { unread_notifs : 1 }},
+                  function ( err ){
+                    err && LOG.error( 500,
+                      '[app][models][Notifications] Having trouble updating user unread_notifs', err );
+                  });
               });
             });
 
@@ -107,6 +115,14 @@ Notification.statics = {
               }).save( function (){
                 err && LOG.error( 500,
                   '[app][models][Notifications] Having trouble saving notification', err );
+
+                User.update(
+                  { _id : topic_user_id },
+                  { $inc : { unread_notifs : 1 }},
+                  function ( err ){
+                    err && LOG.error( 500,
+                      '[app][models][Notifications] Having trouble updating user unread_notifs', err );
+                  });
               });
             }
           });
@@ -131,6 +147,14 @@ Notification.statics = {
               }).save( function ( err ){
                 err && LOG.error( 500,
                   '[app][models][Notifications] Having trouble saving notification', err );
+
+                User.update(
+                  { _id : subr._id },
+                  { $inc : { unread_notifs : 1 }},
+                  function ( err ){
+                    err && LOG.error( 500,
+                      '[app][models][Notifications] Having trouble updating user unread_notifs', err );
+                  });
               });
             });
           });

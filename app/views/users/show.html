@@ -7,8 +7,8 @@
     <div id="user-profile-avatar"><img id="user-profile-avatar-img" src="<?= it.user.avatar ?>" alt="Avatar"></div>
     <div id="meta">
       <h3 id="name"><?= it.user.name ?></h3>
-      <h4>Posts: 143</h4>
-      <h4>Comments: 256</h4>
+      <h4>Posts: <?= it.user.topic_count ?></h4>
+      <h4>Comments: <?= it.user.comment_count ?></h4>
       <h4>Created at: <?= it.date( it.user.created_at ) ?></h4>
     </div>
   </div>
@@ -29,12 +29,7 @@
   <div id="replies">
     <h2 class="block-title">Recent Posts <?= it.user.name ?> Reply</h2>
 
-    <? it.user.comments.forEach( function ( comment ){ ?>
-    <div class="article-item">
-      <h3 class="item-title"><a class="title-link" href="/article.html"><?- it.truncate( comment.title, 40 ) ?></a></h3>
-      <a class="comment-count" href="/topics/<?= commment._id ?>#comment"><?- comment.comments.length ?></a>
-    </div> <!-- .article-item -->
-    <? }); ?>
+    <? console.log( it.user ); ?>
 
     <a class="more-link" href="/">more &#187</a>
   </div> <!-- #recent-reply-wrap -->

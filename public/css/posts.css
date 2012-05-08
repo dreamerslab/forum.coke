@@ -377,12 +377,7 @@ footer {
   text-align: center;
 }
 
-/* line 5, ../../app/sass/posts.sass */
-#items-wrap {
-  padding: 7px 0 0;
-}
-
-/* line 8, ../../app/sass/posts.sass */
+/* line 6, ../../app/sass/posts.sass */
 .article-item {
   overflow: hidden;
   *zoom: 1;
@@ -391,17 +386,17 @@ footer {
   border-bottom: 1px dotted #aaaaaa;
 }
 
-/* line 14, ../../app/sass/posts.sass */
+/* line 12, ../../app/sass/posts.sass */
 .item-title {
   padding: 0 35px 2px 0;
 }
 
-/* line 17, ../../app/sass/posts.sass */
+/* line 15, ../../app/sass/posts.sass */
 .title-link:hover {
   text-decoration: none;
 }
 
-/* line 20, ../../app/sass/posts.sass */
+/* line 18, ../../app/sass/posts.sass */
 .article-sub-nav-list {
   overflow: hidden;
   *zoom: 1;
@@ -412,14 +407,14 @@ footer {
   list-style: none;
 }
 
-/* line 28, ../../app/sass/posts.sass */
+/* line 26, ../../app/sass/posts.sass */
 .article-sub-nav-item {
   display: inline;
   float: left;
   padding: 0 2px 0 0;
 }
 
-/* line 32, ../../app/sass/posts.sass */
+/* line 30, ../../app/sass/posts.sass */
 .article-sub-nav-link {
   display: inline;
   float: left;
@@ -427,33 +422,33 @@ footer {
   padding: 7px 11px;
   line-height: 14px;
 }
-/* line 37, ../../app/sass/posts.sass */
+/* line 35, ../../app/sass/posts.sass */
 .article-sub-nav-link:hover {
   text-decoration: none;
   background: #dddddd;
 }
 
-/* line 41, ../../app/sass/posts.sass */
+/* line 39, ../../app/sass/posts.sass */
 #new-post {
   position: absolute;
   top: 0;
   right: 0;
 }
 
-/* line 46, ../../app/sass/posts.sass */
+/* line 44, ../../app/sass/posts.sass */
 #article-sub-nav-selected {
   text-decoration: none;
   background: #dddddd;
 }
 
-/* line 50, ../../app/sass/posts.sass */
+/* line 48, ../../app/sass/posts.sass */
 .comment-count {
   position: absolute;
-  top: 11px;
+  top: 20px;
   right: 0;
 }
 
-/* line 55, ../../app/sass/posts.sass */
+/* line 53, ../../app/sass/posts.sass */
 .comment-count {
   background: #d1d6db;
   color: white;
@@ -461,7 +456,7 @@ footer {
   min-width: 20px;
   text-align: center;
 }
-/* line 61, ../../app/sass/posts.sass */
+/* line 59, ../../app/sass/posts.sass */
 .comment-count:hover {
   color: #005580;
   text-decoration: none;

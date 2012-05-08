@@ -380,7 +380,7 @@ footer {
 
 /* line 5, ../../app/sass/notifications.sass */
 .notify-item-wrap {
-  border-top: 1px dotted #aaaaaa;
+  border-bottom: 1px dotted #aaaaaa;
 }
 
 /* line 8, ../../app/sass/notifications.sass */
@@ -388,7 +388,7 @@ footer {
   overflow: hidden;
   *zoom: 1;
   padding: 12px 0 11px 14px;
-  border-bottom: 1px dotted #aaaaaa;
+  border-top: 1px dotted #aaaaaa;
 }
 
 /* line 13, ../../app/sass/notifications.sass */

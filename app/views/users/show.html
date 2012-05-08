@@ -3,6 +3,18 @@
 <div class="user-content">
   <div>Name: <?- it.user.name ?></div>
   <div>Avatar: <img src="<?= it.user.avatar ?>" /></div>
-  <div>Topic count: <?= it.user.topic_count ?> </div>
-  <div>Comment count: <?= it.user.comment_count ?> </div>
+  <div>Topic count: <?= it.user.topics.length ?> </div>
+  <div>Comment count: <?= it.user.comments.length ?> </div>
+
+  <h2>Recent topics</h2>
+  <? it.user.recent_topics.forEach( function ( topic ){ ?>
+    <p><?- topic.title ?> [ <?- topic.comments.length ?> comments ]</p>
+  <? }); ?>
+  <a href="/users/<?= it.user._id ?>/topics">... more</a>
+
+  <h2>Recent replies</h2>
+  <? it.user.recent_replies.forEach( function ( topic ){ ?>
+    <p><?- topic.title ?> [ <?- topic.comments.length ?> comments ]</p>
+  <? }); ?>
+  <a href="/users/<?= it.user._id ?>/replies">... more</a>
 </div>

@@ -1,6 +1,6 @@
 var Tag   = require( BASE_DIR + 'db/schema' ).Tag;
 var hooks = require( MODEL_DIR + 'hooks/tag' );
-var Flow   = require( 'node.flow' );
+var Flow  = require( 'node.flow' );
 
 Tag.pre( 'save', hooks.pre_save );
 

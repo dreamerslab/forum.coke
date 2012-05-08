@@ -14,13 +14,13 @@ module.exports = Application.extend({
     Notif.find({
       user : req.user._id
     }, function ( err, notifs ){
-        if( err ) return next( err );
+      if( err ) return next( err );
 
-        res.render( 'notifications/index', {
-          sidebar   : req.sidebar,
-          sess_user : req.user,
-          notifs    : notifs
-        });
+      res.render( 'notifications/index', {
+        sidebar   : req.sidebar,
+        sess_user : req.user,
+        notifs    : notifs
       });
+    });
   }
 });

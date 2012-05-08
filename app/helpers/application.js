@@ -42,7 +42,7 @@ module.exports = function ( app ){
     },
 
     from_now : function ( date ){
-      return moment( date ).add( 'hours', 1 ).fromNow();
+      return moment( date ).fromNow();
     },
 
     pager : function ( from, count, limit ){

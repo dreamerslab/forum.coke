@@ -1,9 +1,6 @@
 <? it.title = 'COKE - Notifications'; ?>
 <? it.styles.push( 'notifications' ); ?>
 
-
-
-
 <div class="span9">
   <?= it.partial( 'common/_breadcrumb' ) ?>
   <? it.notifs.forEach( function ( notif ){  ?>
@@ -16,7 +13,7 @@
       <span class="last-reply-time"><?= it.from_now( notif.updated_at ) ?></span>
     </p>
     <a href="#" class="notify-user-avatar"><img class="profile-avatar-photo" src="<?= notif.originator.avatar ?>" alt="Avatar"></a>
-    <p class="notify-comment"><%= lorem.name %>'s comment...</p>
+    <p class="notify-comment"><?- notif.content ?></p>
 
     <? console.log( notif.originator ); ?>
     <? console.log( notif ); ?>

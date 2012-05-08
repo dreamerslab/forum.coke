@@ -89,6 +89,7 @@ Notification.statics = {
                 type       : type,
                 originator : user.obj_attrs(),
                 topic      : topic.obj_attrs(),
+                content    : comment.content,
                 activity   : 'commented on the topic'
               }).save( function ( err ){
                 err && LOG.error( 500,
@@ -111,6 +112,7 @@ Notification.statics = {
                 type       : type,
                 originator : user.obj_attrs(),
                 topic      : topic.obj_attrs(),
+                content    : comment.content,
                 activity   : 'commented on your topic'
               }).save( function (){
                 err && LOG.error( 500,
@@ -143,6 +145,7 @@ Notification.statics = {
                 type       : type,
                 originator : user.obj_attrs(),
                 topic      : topic.obj_attrs(),
+                content    : topic.content,
                 activity   : 'updated on the topic'
               }).save( function ( err ){
                 err && LOG.error( 500,

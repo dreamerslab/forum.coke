@@ -1,8 +1,7 @@
 var mongoose    = require( 'mongoose' );
 var User        = mongoose.model( 'User' );
+var Topic       = mongoose.model( 'Topic' );
 var Application = require( CONTROLLER_DIR + 'application' );
-
-
 
 module.exports = Application.extend({
   _merge : function ( req, result, base_query ){
@@ -14,8 +13,24 @@ module.exports = Application.extend({
     });
   },
 
+  find_param_user : function ( req, res, next ){
+    var self    = this;
+    var user_id = req.params.id || req.params.user_id;
+
+    User.findById( user_id, function ( err, user ){
+      if( user ){
+        req.para_user = user;
+        return next();
+      }
+
+      req.msg = 'User';
+      self.record_not_found( err, req, res );
+    });
+  },
+
   init : function ( before, after ){
     before( this.fill_sidebar );
+    before( this.find_param_user, { only : [ 'show', 'topics', 'replies' ]});
   },
 
   index : function ( req, res, next ){
@@ -31,38 +46,51 @@ module.exports = Application.extend({
   },
 
   show : function ( req, res, next ){
-    var self = this;
-    var id = req.params.id;
+    var self  = this;
+    var conds = {};
+    var opts  = { limit : 5, sort : [[ 'updated_at', -1 ]]};
 
-    User.
-      findById( id ).
-      populate( 'topics', null, {}, { sort : [[ 'updated_at', -1 ]], limit : 5 }).
-      populate( 'comments', null, {}, { sort : [[ 'updated_at', -1 ]], limit : 5 }).
-      run( function ( err, populated_user ){
-        if( populated_user ){
-          User.findById( id, function ( err, user ){
-            // NOTE: the following vars will not appear in console.log()
-            populated_user.topic_count   = user.topics.length;
-            populated_user.comment_count = user.comments.length;
+    conds = { user : req.para_user._id };
+    Topic.find( conds, null, opts, function ( err, recent_topics ){
+      if( err ) return next( err );
 
-            res.render( 'users/show', {
-              sidebar   : req.sidebar,
-              sess_user : req.user,
-              user      : populated_user,
-            });
-          });
+      conds = { comments : { $in : req.para_user.comments }};
+      Topic.find( conds, null, opts, function ( err, recent_replies ){
+        if( err ) return next( err );
 
-          return;
-        }
+        req.para_user.recent_topics  = recent_topics;
+        req.para_user.recent_replies = recent_replies;
 
-        req.msg = 'User';
-        self.record_not_found( err, req, res );
+        res.render( 'users/show', {
+          sidebar   : req.sidebar,
+          sess_user : req.user,
+          user      : req.para_user
+        });
       });
+    });
   },
 
-  // topics : function ( req, res, next ){
-  // },
+  topics : function ( req, res, next ){
+    var self  = this;
+    var conds = { user : req.para_user._id };
+    var opts  = { sort  : [ 'updated_at', -1 ],
+                  skip  : req.query.from || 0,
+                  limit : 20 };
 
-  // replies : function ( req, res, next ){
-  // }
+    Topic.paginate( conds, opts, next, function ( result ){
+      res.render( 'users/topics', self._merge( req, result, '?' ));
+    });
+  },
+
+  replies : function ( req, res, next ){
+    var self  = this;
+    var conds = { comments : { $in : req.para_user.comments }};
+    var opts  = { sort  : [ 'updated_at', -1 ],
+                  skip  : req.query.from || 0,
+                  limit : 20 };
+
+    Topic.paginate( conds, opts, next, function ( result ){
+      res.render( 'users/topics', self._merge( req, result, '?' ));
+    });
+  }
 });

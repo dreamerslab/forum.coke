@@ -6,8 +6,10 @@ module.exports = function ( map ){
 
   map.get( 'notifications', 'notifications#index' );
 
-  map.get( 'users', 'users#index' );
-  map.get( 'users/:id', 'users#show' );
+  map.resources( 'users', { only : [ 'index', 'show' ]}, function ( user ){
+    user.get( 'topics', 'users#topics' );
+    user.get( 'replies', 'users#replies' );
+  });
 
   map.get( 'topics/search', 'topics#search' );
   map.get( 'topics/tag', 'topics#tag' );

@@ -35,19 +35,30 @@ Notification.statics = {
     var self = this;
     var User = mongoose.model( 'User' );
 
-    this.update(
-      { _id : id },
-      { $set : { is_read : true }},
-      function ( err, count ){
-        if( err ) return callback && callback( err );
-
-        User.update(
-          { _id : self.user },
-          { $inc : { unread_notifs : -1 }},
+    this.findById( id, function ( err, notif ){
+      if( notif ){
+        self.update(
+          { _id : notif._id },
+          { $set : { is_read : true }},
           function ( err, count ){
-            callback && callback( err );
+            if( err ){
+              callback && callback( err );
+              return;
+            }
+
+            User.update(
+              { _id : notif.user },
+              { $inc : { unread_notifs : -1 }},
+              function ( err, count ){
+                callback && callback( err );
+              });
           });
-      });
+
+        return;
+      }
+
+      callback && callback( err );
+    });
   },
 
   send : function ( type, topic, comment ){

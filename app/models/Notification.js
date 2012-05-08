@@ -38,13 +38,13 @@ Notification.statics = {
     this.update(
       { _id : id },
       { $set : { is_read : true }},
-      function ( err ){
+      function ( err, count ){
         if( err ) return callback && callback( err );
 
         User.update(
           { _id : self.user },
           { $inc : { unread_notifs : -1 }},
-          function ( err ){
+          function ( err, count ){
             callback && callback( err );
           });
       });
@@ -98,7 +98,7 @@ Notification.statics = {
                 User.update(
                   { _id : subr._id },
                   { $inc : { unread_notifs : 1 }},
-                  function ( err ){
+                  function ( err, count ){
                     err && LOG.error( 500,
                       '[app][models][Notifications] Having trouble updating user unread_notifs', err );
                   });
@@ -121,7 +121,7 @@ Notification.statics = {
                 User.update(
                   { _id : topic_user_id },
                   { $inc : { unread_notifs : 1 }},
-                  function ( err ){
+                  function ( err, count ){
                     err && LOG.error( 500,
                       '[app][models][Notifications] Having trouble updating user unread_notifs', err );
                   });
@@ -154,7 +154,7 @@ Notification.statics = {
                 User.update(
                   { _id : subr._id },
                   { $inc : { unread_notifs : 1 }},
-                  function ( err ){
+                  function ( err, count ){
                     err && LOG.error( 500,
                       '[app][models][Notifications] Having trouble updating user unread_notifs', err );
                   });

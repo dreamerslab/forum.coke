@@ -92,7 +92,7 @@ Tag.statics = {
         { name : { $in : topic.tag_names }},
         { $push : { topics : topic._id }},
         { multi : true },
-        function ( err ){
+        function ( err, count ){
           if( err ){
             callback && callback( err );
             return;
@@ -113,7 +113,7 @@ Tag.statics = {
         { name : { $in : topic.orig_tag_names }},
         { $pull : { topics : topic._id }},
         { multi : true },
-        function ( err ){
+        function ( err, count ){
           if( err ){
             callback && callback( err );
             return;

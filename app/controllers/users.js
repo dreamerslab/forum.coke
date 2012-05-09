@@ -41,6 +41,7 @@ module.exports = Application.extend({
                   limit : 20 };
 
     User.paginate( conds, opts, next, function ( result ){
+      result.nav_selected = 'users';
       res.render( 'users/index', self._merge( req, result, '?' ));
     });
   },

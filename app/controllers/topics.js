@@ -34,6 +34,7 @@ module.exports = Controller.extend({
                   limit : 20 };
 
     Tag.paginate( conds, opts, next, function ( result ){
+      result.nav_selected = 'tags';
       res.render( 'topics/tags', self._merge( req, result, '?' ));
     });
   },
@@ -46,6 +47,7 @@ module.exports = Controller.extend({
                   limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result.nav_selected     = 'topics';
       result.sub_nav_selected = 'latest';
       res.render( 'topics/index', self._merge( req, result, '?' ));
     });
@@ -59,6 +61,7 @@ module.exports = Controller.extend({
                   limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result.nav_selected     = 'topics';
       result.sub_nav_selected = 'trending';
       res.render( 'topics/index', self._merge( req, result, '?' ));
     });
@@ -72,6 +75,7 @@ module.exports = Controller.extend({
                   limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result.nav_selected     = 'topics';
       result.sub_nav_selected = 'unsolved';
       res.render( 'topics/index', self._merge( req, result, '?' ));
     });

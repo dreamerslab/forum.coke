@@ -1,0 +1,15 @@
+<div class="thumbnail sidebar-block">
+  <div class="caption">
+    <h4 class="sidebar-title">Hot Tags</h4>
+    <p class="sidebar-content">
+
+      <? it.each( it.sidebar.tags, 20, function ( tag ){ ?>
+      <a href="/topics/tag?name=<?= tag.name ?>" class="all-tag-item tag"><?- tag.name ?></a>
+      <? }); ?>
+
+    </p>
+    <p class="sidebar-link-p">
+      <?= it.show_more( it.sidebar.tags.length, 20, '<a href="/topics/tags" class="sidebar-link">All Tags &#187;</a>' ) ?>
+    </p>
+  </div>
+</div> <!-- .thumbnail -->

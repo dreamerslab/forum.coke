@@ -2,12 +2,12 @@
 <? it.styles.push( 'topics' ); ?>
 
 <div class="span9">
-  <?= it.partial( 'common/_breadcrumb' ) ?>
+  <?= it.partial( 'common/_nav' ) ?>
 
   <? var keyword = it.tag_name || it.keywords; ?>
-  <?= ( it.sub_nav_selected === 'tag' ) || ( it.sub_nav_selected === 'search' ) ?
+  <?= ( it.sub_nav_selected === 'tag' ) || ( it.sub_nav_selected === 'keywords' ) ?
     it.show_title( keyword, it.sub_nav_selected ) :
-    it.partial( 'common/_nav' )
+    it.partial( 'common/_sub_nav' )
   ?>
 
   <div class="tab-content">

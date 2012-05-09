@@ -2,7 +2,7 @@
 <? it.styles.push( 'new-edit-topic' ); ?>
 
 <div class="span9">
-  <?= it.partial( 'common/_breadcrumb' ) ?>
+  <?= it.partial( 'common/_nav' ) ?>
   <form id="reply-area" action="/topics/<?= it.topic._id ?>" method="POST" accept-charset="UTF-8" >
     <input type="hidden" name="_method" value="put" />
     <fieldset>

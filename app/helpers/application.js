@@ -25,27 +25,8 @@ module.exports = function ( app ){
         tmp;
     },
 
-    show_title : function ( keyword, current, label ){
-      var tmp = '<h2 id="page-title">Posts About %s</h2>';
-
-      var title_obj = {
-        tag : function ( keyword ){
-          return 'tag "' + keyword + '"';
-
-          // return '<h2 id="page-title">Posts About tag "' + keyword + '"</h2>';
-        },
-
-        search : function ( keyword ){
-          return 'keywords "' + keyword + '"';
-          // return '<h2 id="page-title">Posts About keywords "' + keyword + '"</h2>';
-        }
-      };
-
-      var title = title_obj[ current ] && title_obj[ current ]( keyword );
-
-      return tmp.replace( /%s/, title );
-
-      // return title_obj[ current ] && title_obj[ current ]( keyword );;
+    show_title : function ( keyword, label ){
+      return '<h2 id="page-title">Posts About %s</h2>'.replace( /%s/, label + ' "' + keyword + '"' );
     },
 
     show_err : function ( err ){

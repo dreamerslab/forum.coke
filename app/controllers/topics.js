@@ -96,6 +96,7 @@ module.exports = Controller.extend({
                   limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result.nav_selected     = 'tags';
       result.sub_nav_selected = 'tag';
       result.tag_name         = req.query.name;
       res.render( 'topics/index',
@@ -120,6 +121,7 @@ module.exports = Controller.extend({
                      limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result.nav_selected     = 'topics';
       result.sub_nav_selected = 'search';
       result.keywords = keywords.join( ' ' );
       res.render( 'topics/index',
@@ -150,7 +152,10 @@ module.exports = Controller.extend({
 
           topic.inc_read_count();
           res.render( 'topics/show',
-            self._merge( req, { topic : topic }));
+            self._merge( req, {
+              topic        : topic,
+              nav_selected : 'topics'
+          }));
 
           return;
         }
@@ -162,7 +167,7 @@ module.exports = Controller.extend({
 
   'new' : function ( req, res, next ){
     res.render( 'topics/new',
-      this._merge( req ));
+      this._merge( req, { nav_selected : 'topics'}));
   },
 
   create : function ( req, res, next ){
@@ -196,7 +201,7 @@ module.exports = Controller.extend({
       if( topic ){
         if( topic.is_owner( req.user )){
           return res.render( 'topics/edit',
-            self._merge( req, { topic : topic }));
+            self._merge( req, { topic : topic, nav_selected : 'topics' }));
         }
 
         req.msg    = 'topic';

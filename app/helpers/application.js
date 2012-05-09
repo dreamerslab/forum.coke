@@ -3,8 +3,8 @@ String.prototype.bytes = function(){
   return arr === null ? this.length : this.length + arr.length;
 };
 
-var moment   = require( 'moment' );
-var markdown = require( 'markdown' ).markdown;
+var moment = require( 'moment' );
+var marked = require( 'marked' );
 
 module.exports = function ( app ){
   app.helpers({
@@ -122,7 +122,7 @@ module.exports = function ( app ){
       return out;
     },
 
-    markdown : markdown.toHTML
+    markdown : marked
   });
 
   app.dynamicHelpers({

@@ -65,9 +65,10 @@ module.exports = Application.extend({
         req.para_user.recent_replies = recent_replies;
 
         res.render( 'users/show', {
-          sidebar   : req.sidebar,
-          sess_user : req.user,
-          user      : req.para_user
+          nav_selected : 'users',
+          sidebar      : req.sidebar,
+          sess_user    : req.user,
+          user         : req.para_user
         });
       });
     });

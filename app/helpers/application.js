@@ -57,7 +57,7 @@ module.exports = function ( app ){
     },
 
     show_title : function ( keyword, label ){
-      return '<h2 id="page-title">Posts About %s</h2>'.replace( /%s/, label + ' "' + keyword + '"' );
+      return '<h2 id="page-title">Posts about %s</h2>'.replace( /%s/, label + ' "' + keyword + '"' );
     },
 
     show_err : function ( err ){

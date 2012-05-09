@@ -1,6 +1,14 @@
 var mongoose = require( 'mongoose' );
 
 module.exports = {
+  // add_to_user : function ( next ){
+  //   var User = mongoose.model( 'User' );
+  //   User.update({ _id : this.user });
+  // },
+
+  // add_to_tags : function ( next ){
+  // },
+
   post_init : function (){
     this.orig_tag_names = this.tag_names;
   },

@@ -1,10 +1,7 @@
-var User = require( BASE_DIR + 'db/schema' ).User;
+var User     = require( BASE_DIR + 'db/schema' ).User;
+var virtuals = require( MODEL_DIR + 'virtuals/user' );
 
-User.virtual( 'avatar' ).get( function (){
-  return UTILS.typeof( this.picture ) === 'string' ?
-    this.picture :
-    'http://www.gravatar.com/avatar/00000000000000000000000000000000';
-});
+virtuals( User );
 
 User.statics = {
   paginate : function ( conds, opts, next, callback ){

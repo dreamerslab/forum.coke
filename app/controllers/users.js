@@ -48,13 +48,15 @@ module.exports = Application.extend({
   show : function ( req, res, next ){
     var self  = this;
     var conds = {};
-    var opts  = { limit : 5, sort : [[ 'updated_at', -1 ]]};
+    var opts  = {};
 
     conds = { user : req.para_user._id };
+    opts  = { limit : 5, sort : [[ 'updated_at', -1 ]]};
     Topic.find( conds, null, opts, function ( err, recent_topics ){
       if( err ) return next( err );
 
       conds = { comments : { $in : req.para_user.comments }};
+      opts  = { limit : 6, sort : [[ 'updated_at', -1 ]]};
       Topic.find( conds, null, opts, function ( err, recent_replies ){
         if( err ) return next( err );
 

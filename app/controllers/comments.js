@@ -24,7 +24,6 @@ module.exports = Controller.extend({
 
   create : function ( req, res, next ){
     var self = this;
-    console.log( req.params.topic_id );
 
     Topic.
       findById( req.params.topic_id ).

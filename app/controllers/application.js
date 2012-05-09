@@ -14,7 +14,7 @@ module.exports = Class.extend({
   permission_denied : function ( req, res, next ){
     LOG.error( 500, res, 'Permission denied' );
 
-    req.flash( 'flash-error', 'Premission denied: not your ' + req.msg );
+    req.flash( 'flash-error', 'Permission denied: not your ' + req.msg );
     res.redirect( req.origin );
   },
 
@@ -81,5 +81,5 @@ module.exports = Class.extend({
     }
 
     res.redirect( '/auth/google' );
-  },
+  }
 });

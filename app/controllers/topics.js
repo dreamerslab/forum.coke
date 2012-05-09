@@ -92,6 +92,8 @@ module.exports = Controller.extend({
                   limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result.sub_nav_selected = 'tag';
+      result.tag_name         = req.query.name;
       res.render( 'topics/index',
         self._merge( req, result, '?name=' + req.query.name ));
     });
@@ -114,8 +116,8 @@ module.exports = Controller.extend({
                      limit : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
+      result.sub_nav_selected = 'search';
       result.keywords = keywords.join( ' ' );
-
       res.render( 'topics/index',
         self._merge( req, result, '?keywords=' + keywords.join( '+' )));
     });

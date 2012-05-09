@@ -29,7 +29,7 @@ module.exports = {
             return compare( b.topics.length, a.topics.length );
           });
 
-          tags = tags.slice( 0, 20 );
+          tags = tags.slice( 0, 21 );
 
           tags.forEach( function ( tag ){
             trunk_tags.push( tag.obj_attrs());
@@ -46,7 +46,7 @@ module.exports = {
       User.
         find().
         sort( 'rating', -1 ).
-        limit( 6 ).
+        limit( 7 ).
         run( function ( err, users ){
           if( err ) return LOG.error( 500,
             '[libs][sidebar][init] Having trouble finding users' );
@@ -78,7 +78,7 @@ module.exports = {
           var issues = JSON.parse( data );
 
           issues.forEach( function ( issue ){
-            if( trunk_issues.length < 5 ){
+            if( trunk_issues.length < 6 ){
               if( issue.state === 'open' ){
                 trunk_issues.push({
                   title   : issue.title,

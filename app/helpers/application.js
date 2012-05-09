@@ -9,6 +9,17 @@ var marked = require( 'marked' );
 module.exports = function ( app ){
   app.helpers({
 
+    each : function ( arr, limit, callback ){
+      var i = 0;
+      var j = arr.length > limit ? limit : arr.length;
+
+      if( !callback ) return;
+
+      for( ; i < j; i++ ){
+        callback( arr[ i ]);
+      }
+    },
+
     selected : function ( target, current, label ){
       return target === current ? label : '';
     },
@@ -23,6 +34,10 @@ module.exports = function ( app ){
       return ( tmp.bytes() - 3 ) > _length ?
         tmp.substr( 0, _length / ( tmp.bytes() / _length )) + '...' :
         tmp;
+    },
+
+    show_more : function ( length, limit, link ){
+      return length > limit ? link : '';
     },
 
     show_sub_nav : function ( _it ){
@@ -144,3 +159,5 @@ module.exports = function ( app ){
     messages : require( 'express-messages' )
   });
 };
+
+

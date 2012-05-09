@@ -27,7 +27,7 @@
     <?= it.markdown( it.topic.content ) ?>
 
     <div class="meta-wrap">
-      <a href="/users/<?= it.topic.as_user._id ;?>" id="article-author"><?- it.topic.as_user.name ?></a>
+      <a href="/users/<?= it.topic.as_user._id ;?>" id="article-author"><img class="article-avatar" src="<?- it.topic.as_user.avatar ?>"><?- it.topic.as_user.name ?></a>
       <span class="last-reply-time"><?= it.from_now( it.topic.updated_at ) ?></span>
 
       <? it.topic.tag_names.forEach( function( tag ){ ?>
@@ -44,7 +44,7 @@
       <?= it.markdown( comment.content ) ?>
 
       <div class="meta-wrap">
-        <a href="/users/<?= comment.as_user._id ;?>" class="comment-author"><?= comment.as_user.name ?></a>
+        <a href="/users/<?= comment.as_user._id ;?>" class="comment-author"><img class="article-avatar" src="<?- comment.as_user.avatar ?>"><?= comment.as_user.name ?></a>
         <span class="last-reply-time"><?= it.from_now( comment.updated_at ) ?></span>
 
         <? if( it.sess_user ){ ?>

@@ -25,11 +25,18 @@
     </div> <!-- .article-item -->
     <? }); ?>
 
+    <? if( it.user.topics.length > it.user.recent_topics.length ){ ?>
     <a class="more-link" href="/users/<?= it.user._id ?>/topics">more &#187</a>
-  </div> <!-- #recent-posts-wrap -->
+    <? } ?>
+  </div> <!-- #posts -->
 
   <div id="replies">
     <h2 class="block-title">Recent Posts <?= it.user.name ?> Reply</h2>
+
+    <? var sixth_reply; ?>
+    <? if( it.user.recent_replies.length === 5 ){
+      sixth_reply = it.user.recent_replies.pop();
+    } ?>
 
     <? it.user.recent_replies.forEach( function ( topic ){ ?>
     <div class="article-item">
@@ -40,7 +47,9 @@
     </div> <!-- .article-item -->
     <? }); ?>
 
+    <? if( sixth_reply ){ ?>
     <a class="more-link" href="/users/<?= it.user._id ?>/replies">more &#187</a>
-  </div> <!-- #recent-reply-wrap -->
+    <? } ?>
+  </div> <!-- #replies -->
 </div>
 <?= it.partial( 'common/_side' ) ?>

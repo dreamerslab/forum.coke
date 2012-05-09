@@ -13,7 +13,7 @@ module.exports = function ( app ){
       return target === current ? 'selected' : '';
     },
 
-    sub_nav_selected : function ( target, current ){
+    sub_nav_current : function ( target, current ){
       return target === current ? 'article-sub-nav-selected' : '';
     },
 

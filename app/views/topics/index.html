@@ -3,12 +3,7 @@
 
 <div class="span9">
   <?= it.partial( 'common/_nav' ) ?>
-
-  <? var keyword = it.tag_name || it.keywords; ?>
-  <?= ( it.sub_nav_selected === 'tag' ) || ( it.sub_nav_selected === 'keywords' ) ?
-    it.show_title( keyword, it.sub_nav_selected ) :
-    it.partial( 'common/_sub_nav' )
-  ?>
+  <?= it.show_sub_nav( it ) ?>
 
   <div class="tab-content">
     <div class="tab-pane active" id="items-wrap">

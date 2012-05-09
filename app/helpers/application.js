@@ -9,12 +9,8 @@ var markdown = require( 'markdown' ).markdown;
 module.exports = function ( app ){
   app.helpers({
 
-    selected : function ( target, current ){
-      return target === current ? 'selected' : '';
-    },
-
-    sub_nav_current : function ( target, current ){
-      return target === current ? 'article-sub-nav-selected' : '';
+    selected : function ( target, current, label ){
+      return target === current ? label : '';
     },
 
     truncate : function ( str, length ){
@@ -27,6 +23,29 @@ module.exports = function ( app ){
       return ( tmp.bytes() - 3 ) > _length ?
         tmp.substr( 0, _length / ( tmp.bytes() / _length )) + '...' :
         tmp;
+    },
+
+    show_title : function ( keyword, current, label ){
+      var tmp = '<h2 id="page-title">Posts About %s</h2>';
+
+      var title_obj = {
+        tag : function ( keyword ){
+          return 'tag "' + keyword + '"';
+
+          // return '<h2 id="page-title">Posts About tag "' + keyword + '"</h2>';
+        },
+
+        search : function ( keyword ){
+          return 'keywords "' + keyword + '"';
+          // return '<h2 id="page-title">Posts About keywords "' + keyword + '"</h2>';
+        }
+      };
+
+      var title = title_obj[ current ] && title_obj[ current ]( keyword );
+
+      return tmp.replace( /%s/, title );
+
+      // return title_obj[ current ] && title_obj[ current ]( keyword );;
     },
 
     show_err : function ( err ){

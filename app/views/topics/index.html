@@ -3,9 +3,11 @@
 
 <div class="span9">
   <?= it.partial( 'common/_breadcrumb' ) ?>
-  <?= it.sub_nav_selected ?
-    it.partial( 'common/_nav' ) :
-    '<h2 id="page-title">All Posts About "fred"</h2>'
+
+  <? var keyword = it.tag_name || it.keywords; ?>
+  <?= ( it.sub_nav_selected === 'tag' ) || ( it.sub_nav_selected === 'search' ) ?
+    it.show_title( keyword, it.sub_nav_selected ) :
+    it.partial( 'common/_nav' )
   ?>
 
   <div class="tab-content">

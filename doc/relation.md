@@ -1,4 +1,5 @@
 # Hooks to handle model relation
+NOTE: In mongoose, current ver is v2.6.3, there is only one 'save' event emitted during a save operatio. To distinguish 'create' from 'update' operation, we must add a pre-save hook to mark new record, so we can tell it is 'create' or 'update' in a post-save hook.
 
 
 
@@ -30,8 +31,9 @@ NOTE: remember not to trigger hooks while updating 'read_count'
 - notify subscribers
 
 ### remove
-- remove all comments
+- remove from user
 - remove from tags
+- remove all comments
 - copy to topic backup
 
 

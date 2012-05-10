@@ -22,6 +22,8 @@ no such action
 NOTE: remember not to trigger hooks while updating 'read_count'
 
 ### create
+- mark new record
+- cache user info
 - add to user
 - add to tags
 
@@ -41,6 +43,9 @@ NOTE: remember not to trigger hooks while updating 'read_count'
 ## Comment
 
 ### create
+- mark new record
+- cache user info
+- cache topic info
 - add to user
 - add to topic
 - notify author
@@ -59,7 +64,9 @@ no such action
 ## Notification
 
 ### create
-- add 1 to user's unread_notifs
+- mark new record
+- add to user
+- debug message
 
 ### update
 no such action

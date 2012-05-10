@@ -1,71 +1,107 @@
 var mongoose = require( 'mongoose' );
 
 module.exports = {
-  pre_save : function ( next ){
-    var self  = this;
-    var User  = mongoose.model( 'User' );
-    var Topic = mongoose.model( 'Topic' );
+
+  // hook into pre-save --------------------------------------------------------
+  mark_new_record : function ( next ){
+    this.is_new = this.isNew;
+    next();
+  },
+
+  cache_user_info : function ( next ){
+    var self = this;
+    var User = mongoose.model( 'User' );
 
     User.findById( this.user, function ( err, user ){
-      if( err ) return next( err );
+      if( err ){
+        LOG.error( 500, '[model/hooks/comment#cache_user_info] Fail to cache comment\'s user info', err );
+        return next();
+      }
 
       self.as_user = user.obj_attrs();
-      Topic.findById( self.topic, function ( err, topic){
-        if( err ) return next( err );
-
-        self.as_topic = topic.obj_attrs();
-        self.as_topic.comment_count += 1;
-        next();
-      });
+      next();
     });
   },
 
-  post_save : function (){
+  cache_topic_info : function ( next ){
     var self  = this;
-    var User  = mongoose.model( 'User' );
+    var Topic = mongoose.model( 'Topic' );
+
+    Topic.findById( this.topic, function ( err, topic ){
+      if( err ){
+        LOG.error( 500, '[model/hooks/comment#cache_topic_info] Fail to cache comment\'s topic info', err );
+        return next();
+      }
+
+      self.as_topic = topic.obj_attrs();
+      next();
+    });
+  },
+
+  // hook into post-save -------------------------------------------------------
+  add_to_user : function (){
+    if( this.is_new ){
+      var User = mongoose.model( 'User' );
+
+      User.update(
+        { _id : this.user },
+        { $push : { comments : this._id }},
+        function ( err, count ){
+           err && LOG.error( 500, '[model/hooks/comment#add_to_user] Fail to add comment\'s _id to its user', err );
+        });
+    }
+  },
+
+  add_to_topic : function (){
+    if( this.is_new ){
+      var Topic = mongoose.model( 'Topic' );
+
+      Topic.update(
+        { _id : this.topic },
+        { $push : { comments : this._id }},
+        function ( err, count ){
+           err && LOG.error( 500, '[model/hooks/comment#add_to_user] Fail to add comment\'s _id to its topic', err );
+        });
+    }
+  },
+
+  notify_subscribers : function (){
+    var self  = this;
     var Topic = mongoose.model( 'Topic' );
     var Notif = mongoose.model( 'Notification' );
 
-    // append comment's _id to its user
-    User.push_comment( this, function ( err, user ){
-      err && LOG.error( 500,
-        '[libs][comment_hooks][post_save] Having trouble pushing comment\'s id to its user', err );
-    });
-
-    // append comment's _id to its topic
-    Topic.push_comment( this, function ( err ){
-      err && LOG.error( 500,
-        '[libs][comment_hooks][post_save] Having trouble pushing comment\'s id to its topic', err );
-    });
-
-    Topic.findById( this.topic, function( err, topic ){
+    Topic.findById( this.topic, function ( err, topic ){
       if( err ){
-        return LOG.error( 500,
-          '[libs][comment_hooks][post_save] Having trouble finding comment\'s topic', err );
+        LOG.error( 500, '[model/hooks/comment#notify_subscribers] Fail to notify subscribers when comment created', err );
+        return;
       }
 
       Notif.send( 'create-comment', topic, self );
     });
   },
 
-  pre_remove : function ( next ){
-    var User  = mongoose.model( 'User' );
+  // hook into post-remove -----------------------------------------------------
+  remove_from_user : function (){
+    var User = mongoose.model( 'User' );
+
+    User.update(
+      { _id : this.user },
+      { $pull : { comments : this._id }},
+      function ( err, count ){
+         err && LOG.error( 500, '[model/hooks/comment#add_to_user] Fail to add comment\'s _id to its user', err );
+      });
+  },
+
+  remove_from_topic : function (){
     var Topic = mongoose.model( 'Topic' );
 
-    // remove comment's _id from its user
-    User.pull_comment( this, function ( err, user ){
-      err && LOG.error( 500,
-        '[libs][comment_hooks][pre_remove] Having trouble pulling comment\'s id from its user', err );
-    });
-
-    // remove comment's _id from its topic
-    Topic.pull_comment( this, function ( err ){
-      err && LOG.error( 500,
-        '[libs][comment_hooks][pre_remove] Having trouble pulling comment\'s id from its topic', err );
-    });
-
-    next();
-  }
+    Topic.update(
+      { _id : this.topic },
+      { $pull : { comments : this._id }},
+      function ( err, count ){
+         err && LOG.error( 500, '[model/hooks/comment#add_to_topic] Fail to add comment\'s _id to its topic', err );
+      });
+  },
 };
 
 

@@ -101,8 +101,6 @@ module.exports = {
         }
 
         comments.forEach( function ( comment ){
-          console.log( "remove comment", comment );
-
           comment.remove( function ( err, comment ){
             err && LOG.error( 500, '[models/hooks/topic#remove_all_comments] Fail to remove topic comments', err );
           });

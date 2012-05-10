@@ -2,6 +2,9 @@ var Notification = require( BASE_DIR + 'db/schema' ).Notification;
 var hooks        = require( MODEL_DIR + 'hooks/notif' );
 var mongoose     = require( 'mongoose' );
 
+Notification.pre( 'save', hooks.mark_new_record );
+
+Notification.post( 'save', hooks.add_to_user );
 // Notification.post( 'save', hooks.debug_message );
 
 var unique = function ( docs ){
@@ -48,7 +51,7 @@ Notification.statics = {
 
             User.update(
               { _id : notif.user },
-              { $inc : { unread_notifs : -1 }},
+              { $pull : { notifications : notif._id }},
               function ( err, count ){
                 callback && callback( err );
               });
@@ -105,14 +108,6 @@ Notification.statics = {
               }).save( function ( err ){
                 err && LOG.error( 500,
                   '[app][models][Notifications] Having trouble saving notification', err );
-
-                User.update(
-                  { _id : subr._id },
-                  { $inc : { unread_notifs : 1 }},
-                  function ( err, count ){
-                    err && LOG.error( 500,
-                      '[app][models][Notifications] Having trouble updating user unread_notifs', err );
-                  });
               });
             });
 
@@ -128,14 +123,6 @@ Notification.statics = {
               }).save( function ( err, notif, count ){
                 err && LOG.error( 500,
                   '[app][models][Notifications] Having trouble saving notification', err );
-
-                User.update(
-                  { _id : topic_user_id },
-                  { $inc : { unread_notifs : 1 }},
-                  function ( err, count ){
-                    err && LOG.error( 500,
-                      '[app][models][Notifications] Having trouble updating user unread_notifs', err );
-                  });
               });
             }
           });
@@ -161,14 +148,6 @@ Notification.statics = {
               }).save( function ( err, notif, count ){
                 err && LOG.error( 500,
                   '[app][models][Notifications] Having trouble saving notification', err );
-
-                User.update(
-                  { _id : subr._id },
-                  { $inc : { unread_notifs : 1 }},
-                  function ( err, count ){
-                    err && LOG.error( 500,
-                      '[app][models][Notifications] Having trouble updating user unread_notifs', err );
-                  });
               });
             });
           });

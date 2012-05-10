@@ -12,9 +12,11 @@ Topic.post( 'save', hooks.add_to_tags );
 Topic.post( 'save', hooks.notify_subscribers );
 
 Topic.post( 'remove', hooks.remove_from_user );
-Topic.post( 'remove', hooks.remove_from_tags )
+Topic.post( 'remove', hooks.remove_from_tags );
+Topic.post( 'remove', hooks.remove_all_comments );
 
 Topic.statics = {
+
   paginate : function ( conds, opts, next, callback ){
     var reslut = {};
     var self   = this;
@@ -38,24 +40,6 @@ Topic.statics = {
         });
     });
   },
-
-  push_comment : function ( comment, callback ){
-    this.update(
-      { _id : comment.topic },
-      { $addToSet : { comments : comment._id }},
-      function ( err, count ){
-        callback && callback( err );
-      });
-  },
-
-  pull_comment : function ( comment, callback ){
-    this.update(
-      { _id : comment.topic },
-      { $pull : { comments : comment._id }},
-      function ( err, count ){
-        callback && callback( err );
-      });
-  }
 };
 
 Topic.methods = {

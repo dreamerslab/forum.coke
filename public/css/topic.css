@@ -1,0 +1,94 @@
+/* line 4, ../../app/sass/topic.sass */
+.tags-wrap {
+  display: inline;
+  float: left;
+  margin: -2px 0 0;
+}
+
+/* line 8, ../../app/sass/topic.sass */
+.reply, .edit, .delete {
+  display: inline;
+  float: right;
+  margin: 3px 0 0 5px;
+}
+
+/* line 12, ../../app/sass/topic.sass */
+#article-wrap {
+  border-bottom: 1px dotted #888888;
+  padding: 0 0 40px;
+}
+
+/* line 16, ../../app/sass/topic.sass */
+#article-title {
+  font-size: 25px;
+  line-height: 28px;
+  padding: 0 0 8px;
+}
+
+/* line 21, ../../app/sass/topic.sass */
+#article-wrap p, #comment p {
+  font-size: 14px;
+  line-height: 19px;
+}
+
+/* line 25, ../../app/sass/topic.sass */
+.comment-wrap {
+  border-bottom: 1px dotted #888888;
+  padding: 40px 0;
+}
+
+/* line 29, ../../app/sass/topic.sass */
+#textarea {
+  width: 690px;
+}
+
+/* line 32, ../../app/sass/topic.sass */
+.reply-actions {
+  text-align: right;
+}
+
+/* line 35, ../../app/sass/topic.sass */
+.meta-wrap {
+  padding: 10px 0 0;
+}
+
+/* line 38, ../../app/sass/topic.sass */
+.comment-reply, .comment-delete {
+  position: relative;
+  top: -7px;
+  float: left;
+  margin: 0 3px 0 0;
+}
+
+/* line 44, ../../app/sass/topic.sass */
+#article-author {
+  display: inline;
+  float: right;
+}
+/* line 46, ../../app/sass/topic.sass */
+#article-author:hover {
+  text-decoration: none;
+}
+
+/* line 49, ../../app/sass/topic.sass */
+.comment-author {
+  display: inline;
+  float: right;
+}
+/* line 51, ../../app/sass/topic.sass */
+.comment-author:hover {
+  text-decoration: none;
+}
+
+/* line 54, ../../app/sass/topic.sass */
+.article-avatar {
+  display: inline;
+  float: left;
+  width: 15px;
+  padding: 1px 4px 0 0;
+}
+
+/* line 59, ../../app/sass/topic.sass */
+#reply-area {
+  padding: 30px 0 0;
+}

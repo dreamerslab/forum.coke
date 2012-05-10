@@ -1,11 +1,11 @@
-@import "common"
+@import "compass"
+@import "common/lib"
 
-$article-item-padding: 11px
-$comment-count-pos: $article-item-padding + 4px
+$item-padding: 11px
 
 .article-item
   +clearfix
-  padding: $article-item-padding 0 $article-item-padding 14px
+  padding: $item-padding 0 $item-padding 14px
   position: relative
   border-bottom: 1px dotted #aaa
 
@@ -47,7 +47,7 @@ $comment-count-pos: $article-item-padding + 4px
 
 .comment-count
   position: absolute
-  top: $comment-count-pos
+  top: $item-padding + 4px
   right: 0
 
 .comment-count

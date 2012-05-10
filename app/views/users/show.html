@@ -1,4 +1,4 @@
-<? it.title = 'COKE - ' + it.user.name + '\'s Profile'; ?>
+<? it.title = it.user.name + '\'s Profile - COKE'; ?>
 <? it.styles.push( 'user' ); ?>
 
 <div class="span9">
@@ -9,7 +9,7 @@
       <h3 id="name"><?= it.user.name ?></h3>
       <h4>Posts: <?= it.user.topics.length ?></h4>
       <h4>Comments: <?= it.user.comments.length ?></h4>
-      <h4>Created at: <?= it.from_now( it.user.created_at ) ?></h4>
+      <h4>Created at: <?= it.ago( it.user.created_at ) ?></h4>
     </div>
   </div>
   <?= it.partial( 'users/_recent_posts' ) ?>

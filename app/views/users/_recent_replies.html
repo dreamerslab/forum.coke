@@ -9,6 +9,6 @@
       <a class="comment-count" href="/topics/<?= reply._id ?>#comment"><?- reply.comments.length ?></a>
     </div> <!-- .article-item -->
   <? });?>
-  <?= it.show_more( it.user.recent_replies.length, 5, '<a class="more-link" href="/users/' + it.user._id + '/replies">more &#187</a>' ) ?>
+  <?= it.more( it.user.recent_replies.length, 5, '<a class="more-link" href="/users/' + it.user._id + '/replies">more &#187</a>' ) ?>
 
 </div> <!-- #replies -->

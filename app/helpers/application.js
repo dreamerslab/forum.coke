@@ -9,6 +9,18 @@ var marked = require( 'marked' );
 module.exports = function ( app ){
   app.helpers({
 
+    ago : function ( date ){
+      return moment( date ).fromNow();
+    },
+
+    date : function ( date, format ){
+      return moment( date ).format( format || 'MMM Do YYYY, h:m:s' );
+    },
+
+    exists : function ( obj ){
+      return obj === undefined ? '' : obj;
+    },
+
     each : function ( arr, limit, callback ){
       var i = 0;
       var j = arr.length > limit ? limit : arr.length;
@@ -20,67 +32,13 @@ module.exports = function ( app ){
       }
     },
 
-    selected : function ( target, current, label ){
-      return target === current ? label : '';
-    },
-
-    truncate : function ( str, length ){
-      var _length = length === undefined ? 20 : length;
-
-      var tmp = str.length > _length ?
-        str.substr( 0, _length ) + '...' :
-        str;
-
-      return ( tmp.bytes() - 3 ) > _length ?
-        tmp.substr( 0, _length / ( tmp.bytes() / _length )) + '...' :
-        tmp;
-    },
-
-    show_more : function ( length, limit, link ){
-      return length > limit ? link : '';
-    },
-
-    show_sub_nav : function ( data, title, nav ){
-      var selected = data.sub_nav_selected;
-      var keyword  = data.tag_name || data.keywords;
-      var new_btn  = data.sess_user ?
-        '<li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>' : '';
-
-      if(( selected === 'tag' ) || ( selected === 'keywords' )){
-        title && title( keyword, selected );
-      }else{
-        nav && nav( new_btn );
-      }
-    },
-
-    show_title : function ( keyword, label ){
-      return '<h2 id="page-title">Posts about %s</h2>'.replace( /%s/, label + ' "' + keyword + '"' );
-    },
-
-    show_err : function ( err ){
-      return err ?
-        '<label class="error">' + err + '</label>' : '';
-    },
-
-    show_info : function ( info ){
+    info : function ( info ){
       return info ?
         '<li class="article-nav-item"><span class="info">' + info + '</span></li>' : '';
     },
 
-    val : function ( obj, prop ){
-      return obj === undefined ? '' : obj[ prop ];
-    },
-
-    exists : function ( obj ){
-      return obj === undefined ? '' : obj;
-    },
-
-    date : function ( date, format ){
-      return moment( date ).format( format || 'MMM Do YYYY, h:m:s' );
-    },
-
-    from_now : function ( date ){
-      return moment( date ).fromNow();
+    more : function ( length, limit, link ){
+      return length > limit ? link : '';
     },
 
     pager : function ( from, count, limit ){
@@ -131,6 +89,48 @@ module.exports = function ( app ){
       return out;
     },
 
+    selected : function ( target, current, label ){
+      return target === current ? label : '';
+    },
+
+    sub_nav : function ( data, title, nav ){
+      var selected = data.sub_nav_selected;
+      var keyword  = data.tag_name || data.keywords;
+      var new_btn  = data.sess_user ?
+        '<li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>' : '';
+
+      if(( selected === 'tag' ) || ( selected === 'keywords' )){
+        title && title( keyword, selected );
+      }else{
+        nav && nav( new_btn );
+      }
+    },
+
+    show_title : function ( keyword, label ){
+      return '<h2 id="page-title">Posts about %s</h2>'.replace( /%s/, label + ' "' + keyword + '"' );
+    },
+
+    show_err : function ( err ){
+      return err ?
+        '<label class="error">' + err + '</label>' : '';
+    },
+
+    truncate : function ( str, length ){
+      var _length = length === undefined ? 20 : length;
+
+      var tmp = str.length > _length ?
+        str.substr( 0, _length ) + '...' :
+        str;
+
+      return ( tmp.bytes() - 3 ) > _length ?
+        tmp.substr( 0, _length / ( tmp.bytes() / _length )) + '...' :
+        tmp;
+    },
+
+    val : function ( obj, prop ){
+      return obj === undefined ? '' : obj[ prop ];
+    },
+
     markdown : marked
   });
 
@@ -143,7 +143,7 @@ module.exports = function ( app ){
       }
     },
 
-    success_info : function ( req, res ){
+    success : function ( req, res ){
       return function (){
         var _info = req.flash();
         var info  = _info ? _info[ 'flash-info' ] : [];

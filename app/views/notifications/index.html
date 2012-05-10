@@ -1,4 +1,4 @@
-<? it.title = 'COKE - Notifications'; ?>
+<? it.title = 'Notifications - COKE'; ?>
 <? it.styles.push( 'notifications' ); ?>
 
 <div class="span9">
@@ -15,7 +15,7 @@
         <a href="/users/<?= notif.originator._id ?>" class="author" ><?- it.truncate( notif.originator.name ) ?></a>
         <?= notif.activity ?>
         <a href="/topics/<?= notif.topic._id ?>?nid=<?= notif._id ?>" class="article-link"><?- it.truncate( notif.topic.title, 30 ) ?></a>
-        <span class="last-reply-time"><?= it.from_now( notif.updated_at ) ?></span>
+        <span class="last-reply-time"><?= it.ago( notif.updated_at ) ?></span>
       </p>
       <a href="#" class="notify-user-avatar"><img class="profile-avatar-photo" src="<?= notif.originator.avatar ?>" alt="Avatar"></a>
       <p class="notify-comment"><?- it.truncate( notif.content, 90 ) ?></p>

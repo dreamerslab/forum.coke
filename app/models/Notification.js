@@ -34,6 +34,31 @@ var exclude = function ( docs, id ){
 };
 
 Notification.statics = {
+
+  paginate : function ( conds, opts, next, callback ){
+    var reslut = {};
+    var self   = this;
+
+    this.count( conds, function ( err, count ){
+      if( err ) return next( err );
+
+      self.
+        find( conds ).
+        sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+        skip( opts.skip ).
+        limit( opts.limit ).run( function ( err, notifs ){
+          if( err ) return next( err );
+
+          callback && callback({
+            notifs : notifs,
+            count  : count,
+            from   : opts.skip,
+            limit  : opts.limit
+          });
+        });
+    });
+  },
+
   mark_read : function( id, callback ){
     var self = this;
     var User = mongoose.model( 'User' );

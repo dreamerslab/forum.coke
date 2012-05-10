@@ -75,6 +75,39 @@ module.exports = {
     var Notif = mongoose.model( 'Notification' );
 
     Notif.send( 'update-topic', this );
+  },
+
+  // hook into post-remove -----------------------------------------------------
+  remove_from_user : function (){
+    var User = mongoose.model( 'User' );
+
+    User.update(
+      { _id : this.user },
+      { $pull : { topics : this._id }},
+      function ( err, count ){
+         err && LOG.error( 500, '[model/hooks/topic#add_to_user] Fail to add topic\'s _id to its user', err );
+      });
+  },
+
+  remove_all_comments : function (){
+    var Comment = mongoose.model( 'Comment' );
+
+    Comment.find(
+      { _id : { $in : this.comments }},
+      function ( err, comments ){
+        if( err ){
+          LOG.error( 500, '[models/hooks/topic#remove_all_comments] Fail to find topic\'s comments', err );
+          return;
+        }
+
+        comments.forEach( function ( comment ){
+          console.log( "remove comment", comment );
+
+          comment.remove( function ( err, comment ){
+            err && LOG.error( 500, '[models/hooks/topic#remove_all_comments] Fail to remove topic comments', err );
+          });
+        });
+    });
   }
 };
 

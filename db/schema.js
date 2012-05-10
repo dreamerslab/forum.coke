@@ -15,9 +15,9 @@ Model.User = new Schema({
   email         : { type : String },
   picture       : { type : String },
   rating        : { type : Number, 'default' : 0 },
-  unread_notifs : { type : Number, 'default' : 0 },
   topics        : [{ type : ObjectId, ref : 'Topic' }],
   comments      : [{ type : ObjectId, ref : 'Comment' }],
+  notifications : [{ type : ObjectId, ref : 'Notification' }],
   created_at    : { type : Number, 'default' : Date.now },
   updated_at    : { type : Number }
 });

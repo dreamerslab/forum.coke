@@ -64,7 +64,9 @@ no such action
 ## Notification
 
 ### create
-- add 1 to user's unread_notifs
+- mark new record
+- add to user
+- debug message
 
 ### update
 no such action

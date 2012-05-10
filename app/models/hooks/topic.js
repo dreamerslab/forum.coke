@@ -14,7 +14,7 @@ module.exports = {
 
     User.findById( this.user, function ( err, user ){
       if( err ){
-        LOG.error( 500, '[model/hooks/topic#cache_user_info] Fail to cache topic\'s user info', err );
+        LOG.error( 500, '[models/hooks/topic#cache_user_info] Fail to cache topic\'s user info', err );
         return next();
       }
 
@@ -32,7 +32,7 @@ module.exports = {
         { _id : this.user },
         { $push : { topics : this._id }},
         function ( err, count ){
-           err && LOG.error( 500, '[model/hooks/topic#add_to_user] Fail to add topic\'s _id to its user', err );
+           err && LOG.error( 500, '[models/hooks/topic#add_to_user] Fail to add topic\'s _id to its user', err );
         });
     }
   },
@@ -46,7 +46,7 @@ module.exports = {
         { $pull : { topics : this._id }},
         { multi : true },
         function ( err, count ){
-          err && LOG.error( 500, '[model][hooks][topic][remove_from_tags] Fail to remove topic\'s _id from its tags', err );
+          err && LOG.error( 500, '[models/hooks/topic#remove_from_tags] Fail to remove topic\'s _id from its tags', err );
         });
     }
   },
@@ -57,7 +57,7 @@ module.exports = {
 
     Tag.create_all( this.tag_names, function ( err ){
       if( err ){
-        LOG.error( 500, '[model][hooks][topic][add_to_tags] Fail to create all topic\'s tags', err );
+        LOG.error( 500, '[models/hooks/topic#add_to_tags] Fail to create all topic\'s tags', err );
         return;
       }
 
@@ -66,7 +66,7 @@ module.exports = {
         { $push : { topics : self._id }},
         { multi : true },
         function ( err, count ){
-          err && LOG.error( 500, '[model][hooks][topic][add_to_tags] Fail to add topic\'s _id to its tags', err );
+          err && LOG.error( 500, '[models/hooks/topic#add_to_tags] Fail to add topic\'s _id to its tags', err );
         });
     });
   },
@@ -85,7 +85,7 @@ module.exports = {
       { _id : this.user },
       { $pull : { topics : this._id }},
       function ( err, count ){
-         err && LOG.error( 500, '[model/hooks/topic#add_to_user] Fail to add topic\'s _id to its user', err );
+         err && LOG.error( 500, '[models/hooks/topic#add_to_user] Fail to add topic\'s _id to its user', err );
       });
   },
 

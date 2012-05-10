@@ -14,7 +14,7 @@ module.exports = {
 
     User.findById( this.user, function ( err, user ){
       if( err ){
-        LOG.error( 500, '[model/hooks/comment#cache_user_info] Fail to cache comment\'s user info', err );
+        LOG.error( 500, '[models/hooks/comment#cache_user_info] Fail to cache comment\'s user info', err );
         return next();
       }
 
@@ -29,7 +29,7 @@ module.exports = {
 
     Topic.findById( this.topic, function ( err, topic ){
       if( err ){
-        LOG.error( 500, '[model/hooks/comment#cache_topic_info] Fail to cache comment\'s topic info', err );
+        LOG.error( 500, '[models/hooks/comment#cache_topic_info] Fail to cache comment\'s topic info', err );
         return next();
       }
 
@@ -47,7 +47,7 @@ module.exports = {
         { _id : this.user },
         { $push : { comments : this._id }},
         function ( err, count ){
-           err && LOG.error( 500, '[model/hooks/comment#add_to_user] Fail to add comment\'s _id to its user', err );
+           err && LOG.error( 500, '[models/hooks/comment#add_to_user] Fail to add comment\'s _id to its user', err );
         });
     }
   },
@@ -60,7 +60,7 @@ module.exports = {
         { _id : this.topic },
         { $push : { comments : this._id }},
         function ( err, count ){
-           err && LOG.error( 500, '[model/hooks/comment#add_to_user] Fail to add comment\'s _id to its topic', err );
+           err && LOG.error( 500, '[models/hooks/comment#add_to_user] Fail to add comment\'s _id to its topic', err );
         });
     }
   },
@@ -72,7 +72,7 @@ module.exports = {
 
     Topic.findById( this.topic, function ( err, topic ){
       if( err ){
-        LOG.error( 500, '[model/hooks/comment#notify_subscribers] Fail to notify subscribers when comment created', err );
+        LOG.error( 500, '[models/hooks/comment#notify_subscribers] Fail to notify subscribers when comment created', err );
         return;
       }
 
@@ -88,7 +88,7 @@ module.exports = {
       { _id : this.user },
       { $pull : { comments : this._id }},
       function ( err, count ){
-         err && LOG.error( 500, '[model/hooks/comment#add_to_user] Fail to add comment\'s _id to its user', err );
+         err && LOG.error( 500, '[models/hooks/comment#add_to_user] Fail to add comment\'s _id to its user', err );
       });
   },
 
@@ -99,7 +99,7 @@ module.exports = {
       { _id : this.topic },
       { $pull : { comments : this._id }},
       function ( err, count ){
-         err && LOG.error( 500, '[model/hooks/comment#add_to_topic] Fail to add comment\'s _id to its topic', err );
+         err && LOG.error( 500, '[models/hooks/comment#add_to_topic] Fail to add comment\'s _id to its topic', err );
       });
   },
 };

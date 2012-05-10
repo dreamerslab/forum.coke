@@ -7,73 +7,10 @@
       </form>
     </div>
     <li class="span3">
-      <div class="thumbnail sidebar-block">
-        <div class="caption side-profile">
-          <div id="current-user-wrap">
-
-            <? if( !it.sess_user ){ ?>
-            <div id="profile-avatar"><img id="profile-avatar-photo" src="http://www.gravatar.com/avatar/00000000000000000000000000000000" alt="Avatar"></div>
-            <div id="user-notify-wrap">
-
-              <a id="current-profile-link" href="/auth/google" id="current-user">Guest</a>
-
-              <div id="notify">
-                <a href="/auth/google" class="btn btn-primary btn-mini log-btn">Log in with Google</a>
-              </div>
-            </div>
-            <? }else{ ?>
-            <div id="profile-avatar"><img id="profile-avatar-photo" src="<?- it.sess_user.picture || 'http://www.gravatar.com/avatar/00000000000000000000000000000000' ?>" alt="Avatar"></div>
-            <div id="user-notify-wrap">
-              <a id="current-profile-link" href="/users/<?= it.sess_user._id ?>" id="current-user"><?- it.sess_user.name ?></a>
-              <div id="notify">
-                <i id="profile-comment" class="icon-exclamation-sign"></i>
-                <a id="notify-link" href="/notifications"><?= it.sess_user.unread_notifs ?></a>
-                <a href="/logout" id="log-out" class="btn btn-inverse btn-mini">Log out</a>
-              </div>
-            </div>
-            <? } ?>
-
-          </div>
-        </div>
-      </div> <!-- .thumbnail -->
-      <div class="thumbnail sidebar-block">
-        <div class="caption">
-          <h4 class="sidebar-title">Hot Tags</h4>
-          <p class="sidebar-content">
-
-            <? it.sidebar.tags.forEach( function ( tag ){ ?>
-            <a href="/topics/tag?name=<?= tag.name ?>" class="all-tag-item tag"><?- tag.name ?></a>
-            <? }); ?>
-
-          </p>
-          <p class="sidebar-link-p"><a href="/topics/tags" class="sidebar-link">All Tags &#187;</a></p>
-        </div>
-      </div> <!-- .thumbnail -->
-      <div class="thumbnail sidebar-block">
-        <div class="caption">
-          <h4 class="sidebar-title">Active Users</h4>
-          <p class="sidebar-content">
-
-            <? it.sidebar.users.forEach( function ( user ){ ?>
-            <a href="/users/<?= user._id ?>" class="user"><img class="avatar" src="<?= user.avatar ?>" alt="Avatar"><?- it.truncate( user.name, 20 ) ?></a>
-            <? }); ?>
-
-          </p>
-          <p class="sidebar-link-p"><a href="/users" class="sidebar-link">All Users &#187;</a></p>
-        </div>
-      </div> <!-- .thumbnail -->
-      <div class="thumbnail sidebar-block">
-        <div class="caption">
-          <h4 class="sidebar-title">Issues</h4>
-
-          <? it.sidebar.issues.forEach( function ( issue ){ ?>
-          <h4><a href="<?= issue.link ?>" class="issue-title-link" target="_blank"><?- it.truncate( issue.title ) ?></a></h4>
-          <p><?- it.truncate( issue.content ) ?></p>
-          <? }); ?>
-
-          <p class="sidebar-link-p"><a href="https://github.com/dreamerslab/coke/issues" class="sidebar-link" target="_blank">All Issues &#187;</a></p>
-        </div>
-      </div> <!-- .thumbnail -->
+      <?= it.partial( 'common/_side_profile' ) ?>
+      <?= it.partial( 'common/_side_tags' ) ?>
+      <?= it.partial( 'common/_side_users' ) ?>
+      <?= it.partial( 'common/_side_issues' ) ?>
     </li>
   </ul>
 </div>

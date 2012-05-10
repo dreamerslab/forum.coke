@@ -1,4 +1,4 @@
-<? it.title = 'COKE - Users'; ?>
+<? it.title = 'Users - COKE'; ?>
 <? it.styles.push( 'users' ); ?>
 
 <div class="span12">
@@ -14,7 +14,7 @@
             <h3 class="user-name"><a class="user-link" href="/users/<?= user._id ?>"><?- it.truncate( user.name, 30 ) ?></a></h3>
             <h4 class="posts">Posts: <?= user.topics.length ?></h4>
             <h4 class="comments">Comments: <?= user.comments.length ?></h4>
-            <h4 class="created">Created at: <?= it.from_now( user.created_at ) ?></h4>
+            <h4 class="created">Created at: <?= it.ago( user.created_at ) ?></h4>
           </div>
         </div>
       </li>

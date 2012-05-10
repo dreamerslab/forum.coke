@@ -1,4 +1,4 @@
-<? it.title = 'COKE - ' + it.user.name + '\'s Profile'; ?>
+<? it.title = it.user.name + '\'s Profile - COKE'; ?>
 <? it.styles.push( 'user' ); ?>
 
 <div class="span9">
@@ -9,47 +9,10 @@
       <h3 id="name"><?= it.user.name ?></h3>
       <h4>Posts: <?= it.user.topics.length ?></h4>
       <h4>Comments: <?= it.user.comments.length ?></h4>
-      <h4>Created at: <?= it.from_now( it.user.created_at ) ?></h4>
+      <h4>Created at: <?= it.ago( it.user.created_at ) ?></h4>
     </div>
   </div>
-
-  <div id="posts">
-    <h2 class="block-title">Recent Posts</h2>
-
-    <? it.user.recent_topics.forEach( function ( topic ){ ?>
-    <div class="article-item">
-      <h3 class="item-title">
-        <a class="title-link" href="/topics/<?= topic._id ?>"><?- it.truncate( topic.title, 40 ) ?></a>
-      </h3>
-      <a class="comment-count" href="/topics/<?= topic._id ?>#comment"><?- topic.comments.length ?></a>
-    </div> <!-- .article-item -->
-    <? }); ?>
-
-    <? if( it.user.topics.length > it.user.recent_topics.length ){ ?>
-    <a class="more-link" href="/users/<?= it.user._id ?>/topics">more &#187</a>
-    <? } ?>
-  </div> <!-- #posts -->
-
-  <div id="replies">
-    <h2 class="block-title">Recent Posts <?= it.user.name ?> Reply</h2>
-
-    <? var sixth_reply; ?>
-    <? if( it.user.recent_replies.length === 5 ){
-      sixth_reply = it.user.recent_replies.pop();
-    } ?>
-
-    <? it.user.recent_replies.forEach( function ( topic ){ ?>
-    <div class="article-item">
-      <h3 class="item-title">
-        <a class="title-link" href="/topics/<?= topic._id ?>"><?- it.truncate( topic.title, 40 ) ?></a>
-      </h3>
-      <a class="comment-count" href="/topics/<?= topic._id ?>#comment"><?- topic.comments.length ?></a>
-    </div> <!-- .article-item -->
-    <? }); ?>
-
-    <? if( sixth_reply ){ ?>
-    <a class="more-link" href="/users/<?= it.user._id ?>/replies">more &#187</a>
-    <? } ?>
-  </div> <!-- #replies -->
+  <?= it.partial( 'users/_recent_posts' ) ?>
+  <?= it.partial( 'users/_recent_replies' )?>
 </div>
 <?= it.partial( 'common/_side' ) ?>

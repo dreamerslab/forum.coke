@@ -9,66 +9,36 @@ var marked = require( 'marked' );
 module.exports = function ( app ){
   app.helpers({
 
-    selected : function ( target, current, label ){
-      return target === current ? label : '';
-    },
-
-    truncate : function ( str, length ){
-      var _length = length === undefined ? 20 : length;
-
-      var tmp = str.length > _length ?
-        str.substr( 0, _length ) + '...' :
-        str;
-
-      return ( tmp.bytes() - 3 ) > _length ?
-        tmp.substr( 0, _length / ( tmp.bytes() / _length )) + '...' :
-        tmp;
-    },
-
-    show_sub_nav : function ( _it ){
-      var keyword = _it.tag_name || _it.keywords;
-      var new_btn = _it.sess_user ? '<li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>' : '';
-
-      if(( _it.sub_nav_selected === 'tag' ) || ( _it.sub_nav_selected === 'keywords' )){
-        return _it.show_title( keyword, _it.sub_nav_selected );
-      }else{
-        return '<ul class="article-sub-nav-list">' +
-          '<li class="article-sub-nav-item"><a id="' + _it.selected( 'latest', _it.sub_nav_selected, 'article-sub-nav-selected' ) + '" class="article-sub-nav-link " href="/topics/latest">Latest</a></li>' +
-          '<li class="article-sub-nav-item"><a id="' + _it.selected( 'trending', _it.sub_nav_selected, 'article-sub-nav-selected' ) + '" class="article-sub-nav-link" href="/topics/trending">Hot</a></li>' +
-          '<li class="article-sub-nav-item"><a id="' + _it.selected( 'unsolved', _it.sub_nav_selected, 'article-sub-nav-selected' ) + '" class="article-sub-nav-link" href="/topics/unsolved">Unsolved</a></li>' +
-          new_btn +
-        '</ul>';
-      }
-    },
-
-    show_title : function ( keyword, label ){
-      return '<h2 id="page-title">Posts About %s</h2>'.replace( /%s/, label + ' "' + keyword + '"' );
-    },
-
-    show_err : function ( err ){
-      return err ?
-        '<label class="error">' + err + '</label>' : '';
-    },
-
-    show_info : function ( info ){
-      return info ?
-        '<li class="article-nav-item"><span class="info">' + info + '</span></li>' : '';
-    },
-
-    val : function ( obj, prop ){
-      return obj === undefined ? '' : obj[ prop ];
-    },
-
-    exists : function ( obj ){
-      return obj === undefined ? '' : obj;
+    ago : function ( date ){
+      return moment( date ).fromNow();
     },
 
     date : function ( date, format ){
       return moment( date ).format( format || 'MMM Do YYYY, h:m:s' );
     },
 
-    from_now : function ( date ){
-      return moment( date ).fromNow();
+    exists : function ( obj ){
+      return obj === undefined ? '' : obj;
+    },
+
+    each : function ( arr, limit, callback ){
+      var i = 0;
+      var j = arr.length > limit ? limit : arr.length;
+
+      if( !callback ) return;
+
+      for( ; i < j; i++ ){
+        callback( arr[ i ]);
+      }
+    },
+
+    info : function ( info ){
+      return info ?
+        '<li class="article-nav-item"><span class="info">' + info + '</span></li>' : '';
+    },
+
+    more : function ( length, limit, link ){
+      return length > limit ? link : '';
     },
 
     pager : function ( from, count, limit ){
@@ -119,6 +89,48 @@ module.exports = function ( app ){
       return out;
     },
 
+    selected : function ( target, current, label ){
+      return target === current ? label : '';
+    },
+
+    sub_nav : function ( data, title, nav ){
+      var selected = data.sub_nav_selected;
+      var keyword  = data.tag_name || data.keywords;
+      var new_btn  = data.sess_user ?
+        '<li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>' : '';
+
+      if(( selected === 'tag' ) || ( selected === 'keywords' )){
+        title && title( keyword, selected );
+      }else{
+        nav && nav( new_btn );
+      }
+    },
+
+    show_title : function ( keyword, label ){
+      return '<h2 id="page-title">Posts about %s</h2>'.replace( /%s/, label + ' "' + keyword + '"' );
+    },
+
+    show_err : function ( err ){
+      return err ?
+        '<label class="error">' + err + '</label>' : '';
+    },
+
+    truncate : function ( str, length ){
+      var _length = length === undefined ? 20 : length;
+
+      var tmp = str.length > _length ?
+        str.substr( 0, _length ) + '...' :
+        str;
+
+      return ( tmp.bytes() - 3 ) > _length ?
+        tmp.substr( 0, _length / ( tmp.bytes() / _length )) + '...' :
+        tmp;
+    },
+
+    val : function ( obj, prop ){
+      return obj === undefined ? '' : obj[ prop ];
+    },
+
     markdown : marked
   });
 
@@ -131,7 +143,7 @@ module.exports = function ( app ){
       }
     },
 
-    success_info : function ( req, res ){
+    success : function ( req, res ){
       return function (){
         var _info = req.flash();
         var info  = _info ? _info[ 'flash-info' ] : [];

@@ -1,0 +1,14 @@
+<div id="replies">
+  <h2 class="block-title">Recent Reply Posts</h2>
+
+  <? it.each( it.user.recent_replies, 5, function( reply ){ ?>
+    <div class="article-item">
+      <h3 class="item-title">
+        <a class="title-link" href="/topics/<?= reply._id ?>"><?- it.truncate( reply.title, 40 ) ?></a>
+      </h3>
+      <a class="comment-count" href="/topics/<?= reply._id ?>#comment"><?- reply.comments.length ?></a>
+    </div> <!-- .article-item -->
+  <? });?>
+  <?= it.more( it.user.recent_replies.length, 5, '<a class="more-link" href="/users/' + it.user._id + '/replies">more &#187</a>' ) ?>
+
+</div> <!-- #replies -->

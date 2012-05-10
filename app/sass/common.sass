@@ -1,10 +1,8 @@
 @import "compass"
 @import "common/lib"
-// You must put a png file in /img/sprite, or the compass won't generate css file, because it can't fint any png to sprite
-@import "common/header"
-@import "common/footer"
 
 $profile-width: 135px
+$body-font: Kefa, Merriweather, serif
 
 .article-nav-list
   +clearfix
@@ -174,3 +172,13 @@ $profile-width: 135px
 
 .error
   color: #f00
+
+#title-404, #title-500
+  text-align: center
+  padding: 40px 0 0
+
+#title-404
+  font-size: 30px
+
+#title-500
+  font-size: 25px

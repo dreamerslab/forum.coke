@@ -15,11 +15,14 @@ css:
     site:
       - bootstrap
       - desert
+      - common/header
+      - common/footer
+      - common
     cdn:
       - http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900
   topics:
     site:
-      - posts
+      - topics
   new-edit-topic:
     site:
       - new-edit
@@ -29,9 +32,9 @@ css:
   user:
     site:
       - user
-  article:
+  topic:
     site:
-      - article
+      - topic
   tags:
     site:
       - tags

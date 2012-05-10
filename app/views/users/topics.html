@@ -1,4 +1,4 @@
-<? it.title = 'User\'s all topics'; ?>
+<? it.title = 'User\'s all topics - COKE'; ?>
 <? it.styles.push( 'topics' ); ?>
 
 <div class="span9">
@@ -14,7 +14,7 @@
           <a href="/topics/tag?name=<?- tag ?>" class="tag"><?- tag ?></a>
         <? }); ?>
         <a href="/users/<?- topic.as_user._id ?>" class="author"><?- topic.as_user.name ?></a>
-        <span class="last-reply-time"><?- it.from_now( topic.updated_at ) ?></span>
+        <span class="last-reply-time"><?- it.ago( topic.updated_at ) ?></span>
         <a class="comment-count" href="/topics/<?= topic._id ?>#comment"><?- topic.comments.length ?></a>
       </div> <!-- .article-item -->
       <? }); ?>

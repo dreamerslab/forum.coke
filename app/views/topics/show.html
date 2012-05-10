@@ -1,9 +1,8 @@
-<? it.title = 'Showing topic'; ?>
-<? it.styles.push( 'article' ); ?>
+<? it.title = it.topic.title + ' - COKE'; ?>
+<? it.styles.push( 'topic' ); ?>
 
 <div class="span9">
   <?= it.partial( 'common/_nav' ) ?>
-  <?= it.show_info( it.success_info()) ?>
 
   <div id="article-wrap">
 
@@ -27,8 +26,8 @@
     <?= it.markdown( it.topic.content ) ?>
 
     <div class="meta-wrap">
-      <a href="/users/<?= it.topic.as_user._id ;?>" id="article-author"><?- it.topic.as_user.name ?></a>
-      <span class="last-reply-time"><?= it.from_now( it.topic.updated_at ) ?></span>
+      <a href="/users/<?= it.topic.as_user._id ;?>" id="article-author"><img class="article-avatar" src="<?- it.topic.as_user.avatar ?>"><?- it.topic.as_user.name ?></a>
+      <span class="last-reply-time"><?= it.ago( it.topic.updated_at ) ?></span>
 
       <? it.topic.tag_names.forEach( function( tag ){ ?>
       <a href="/topics/tag?name=<?- tag ?>" class="tag"><?- tag ?></a>
@@ -44,8 +43,8 @@
       <?= it.markdown( comment.content ) ?>
 
       <div class="meta-wrap">
-        <a href="/users/<?= comment.as_user._id ;?>" class="comment-author"><?= comment.as_user.name ?></a>
-        <span class="last-reply-time"><?= it.from_now( comment.updated_at ) ?></span>
+        <a href="/users/<?= comment.as_user._id ;?>" class="comment-author"><img class="article-avatar" src="<?- comment.as_user.avatar ?>"><?= comment.as_user.name ?></a>
+        <span class="last-reply-time"><?= it.ago( comment.updated_at ) ?></span>
 
         <? if( it.sess_user ){ ?>
         <a class="comment-reply btn btn-primary" href="#reply-area" class="btn btn-primary">Reply</a>

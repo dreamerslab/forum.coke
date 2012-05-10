@@ -40,19 +40,16 @@ module.exports = function ( app ){
       return length > limit ? link : '';
     },
 
-    show_sub_nav : function ( _it ){
-      var keyword = _it.tag_name || _it.keywords;
-      var new_btn = _it.sess_user ? '<li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>' : '';
+    show_sub_nav : function ( data, title, nav ){
+      var selected = data.sub_nav_selected;
+      var keyword  = data.tag_name || data.keywords;
+      var new_btn  = data.sess_user ?
+        '<li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>' : '';
 
-      if(( _it.sub_nav_selected === 'tag' ) || ( _it.sub_nav_selected === 'keywords' )){
-        return _it.show_title( keyword, _it.sub_nav_selected );
+      if(( selected === 'tag' ) || ( selected === 'keywords' )){
+        title && title( keyword, selected );
       }else{
-        return '<ul class="article-sub-nav-list">' +
-          '<li class="article-sub-nav-item"><a id="' + _it.selected( 'latest', _it.sub_nav_selected, 'article-sub-nav-selected' ) + '" class="article-sub-nav-link " href="/topics/latest">Latest</a></li>' +
-          '<li class="article-sub-nav-item"><a id="' + _it.selected( 'trending', _it.sub_nav_selected, 'article-sub-nav-selected' ) + '" class="article-sub-nav-link" href="/topics/trending">Hot</a></li>' +
-          '<li class="article-sub-nav-item"><a id="' + _it.selected( 'unsolved', _it.sub_nav_selected, 'article-sub-nav-selected' ) + '" class="article-sub-nav-link" href="/topics/unsolved">Unsolved</a></li>' +
-          new_btn +
-        '</ul>';
+        nav && nav( new_btn );
       }
     },
 

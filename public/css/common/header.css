@@ -35,16 +35,9 @@ nav {
 
 /* line 23, ../../../app/sass/common/header.sass */
 .nav-item {
-  display: -moz-inline-box;
-  -moz-box-orient: vertical;
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
-  padding: 0 0 0 6px;
-}
-/* line 7, ../../../../../../Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/frameworks/compass/stylesheets/compass/css3/_inline-block.scss */
-.nav-item {
-  *display: inline;
+  display: inline;
+  float: left;
+  padding: 0 0 0 10px;
 }
 
 /* line 27, ../../../app/sass/common/header.sass */

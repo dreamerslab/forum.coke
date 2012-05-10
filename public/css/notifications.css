@@ -392,6 +392,22 @@ footer {
   color: red;
 }
 
+/* line 178, ../../app/sass/common.sass */
+#title-404, #title-500 {
+  text-align: center;
+  padding: 40px 0 0;
+}
+
+/* line 182, ../../app/sass/common.sass */
+#title-404 {
+  font-size: 30px;
+}
+
+/* line 185, ../../app/sass/common.sass */
+#title-500 {
+  font-size: 25px;
+}
+
 /* line 5, ../../app/sass/notifications.sass */
 .notify-item-wrap {
   border-bottom: 1px dotted #aaaaaa;

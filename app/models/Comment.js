@@ -7,7 +7,6 @@ Comment.pre( 'save', hooks.cache_topic_info );
 
 Comment.post( 'save', hooks.add_to_user );
 Comment.post( 'save', hooks.add_to_topic );
-Comment.post( 'save', hooks.notify_author );
 Comment.post( 'save', hooks.notify_subscribers );
 
 Comment.post( 'remove', hooks.remove_from_user );

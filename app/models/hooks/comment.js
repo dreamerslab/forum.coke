@@ -65,10 +65,6 @@ module.exports = {
     }
   },
 
-  notify_author : function (){
-
-  },
-
   notify_subscribers : function (){
     var self  = this;
     var Topic = mongoose.model( 'Topic' );

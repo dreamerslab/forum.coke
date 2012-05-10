@@ -2,7 +2,7 @@ var Notification = require( BASE_DIR + 'db/schema' ).Notification;
 var hooks        = require( MODEL_DIR + 'hooks/notif' );
 var mongoose     = require( 'mongoose' );
 
-Notification.post( 'save', hooks.post_save );
+// Notification.post( 'save', hooks.debug_message );
 
 var unique = function ( docs ){
   var a = [];

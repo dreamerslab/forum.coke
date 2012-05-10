@@ -3,10 +3,17 @@ var hooks    = require( MODEL_DIR + 'hooks/topic' );
 var mongoose = require( 'mongoose' );
 var Flow     = require( 'node.flow' );
 
-Topic.post( 'init', hooks.post_init );
-Topic.pre( 'save', hooks.pre_save );
-Topic.post( 'save', hooks.post_save );
-Topic.pre( 'remove', hooks.pre_remove );
+// Topic.post( 'init', hooks.post_init );
+// Topic.pre( 'save', hooks.pre_save );
+// Topic.post( 'save', hooks.post_save );
+// Topic.pre( 'remove', hooks.pre_remove );
+
+Topic.pre( 'save', hooks.mark_new_record );
+Topic.pre( 'save', hooks.cache_user_info );
+Topic.post( 'save', hooks.add_to_user );
+Topic.post( 'save', hooks.remove_from_tags );
+Topic.post( 'save', hooks.add_to_tags );
+// Topic.post( 'save', hooks.notify_subscribers );
 
 Topic.statics = {
   paginate : function ( conds, opts, next, callback ){

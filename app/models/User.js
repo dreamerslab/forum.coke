@@ -28,16 +28,16 @@ User.statics = {
     });
   },
 
-  push_topic : function ( topic, callback ){
-    this.findById( topic.user, function ( err, user ){
-      if( err ) return callback && callback( err );
+  // push_topic : function ( topic, callback ){
+  //   this.findById( topic.user, function ( err, user ){
+  //     if( err ) return callback && callback( err );
 
-      if( user ){
-        user.topics.$addToSet( topic._id );
-        user.save( callback );
-      }
-    });
-  },
+  //     if( user ){
+  //       user.topics.$addToSet( topic._id );
+  //       user.save( callback );
+  //     }
+  //   });
+  // },
 
   pull_topic : function ( topic, callback ){
     this.findById( topic.user, function ( err, user ){

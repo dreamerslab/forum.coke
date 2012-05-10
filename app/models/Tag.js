@@ -48,11 +48,11 @@ Tag.statics = {
     return names.sort();
   },
 
-  create_all : function ( tag_names, callback ){
+  create_all : function ( names, callback ){
     var self = this;
     var flow = new Flow();
 
-    tag_names.forEach( function ( name ){
+    names.forEach( function ( name ){
       flow.series( function ( name, next ){
         self.findOne({ name : name }, function ( err, tag ){
           if( err ){
@@ -71,7 +71,6 @@ Tag.statics = {
               flow.end( function (){
                 callback && callback( err );
               });
-
               return;
             }
 
@@ -107,26 +106,26 @@ Tag.statics = {
     callback && callback();
   },
 
-  remove_topic : function ( topic, callback ){
-    if( UTILS.typeof( topic.orig_tag_names ) === 'array' ){
-      this.update(
-        { name : { $in : topic.orig_tag_names }},
-        { $pull : { topics : topic._id }},
-        { multi : true },
-        function ( err, count ){
-          if( err ){
-            callback && callback( err );
-            return;
-          }
+  // remove_topic : function ( topic, callback ){
+  //   if( UTILS.typeof( topic.orig_tag_names ) === 'array' ){
+  //     this.update(
+  //       { name : { $in : topic.orig_tag_names }},
+  //       { $pull : { topics : topic._id }},
+  //       { multi : true },
+  //       function ( err, count ){
+  //         if( err ){
+  //           callback && callback( err );
+  //           return;
+  //         }
 
-          callback && callback();
-        });
+  //         callback && callback();
+  //       });
 
-      return;
-    }
+  //     return;
+  //   }
 
-    callback && callback();
-  },
+  //   callback && callback();
+  // },
 };
 
 Tag.methods = {

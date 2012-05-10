@@ -83,49 +83,7 @@ Tag.statics = {
     flow.end( function (){
       callback && callback();
     });
-  },
-
-  append_topic : function ( topic, callback ){
-    if( UTILS.typeof( topic.tag_names ) === 'array' ){
-      this.update(
-        { name : { $in : topic.tag_names }},
-        { $push : { topics : topic._id }},
-        { multi : true },
-        function ( err, count ){
-          if( err ){
-            callback && callback( err );
-            return;
-          }
-
-          callback && callback();
-        });
-
-      return;
-    }
-
-    callback && callback();
-  },
-
-  // remove_topic : function ( topic, callback ){
-  //   if( UTILS.typeof( topic.orig_tag_names ) === 'array' ){
-  //     this.update(
-  //       { name : { $in : topic.orig_tag_names }},
-  //       { $pull : { topics : topic._id }},
-  //       { multi : true },
-  //       function ( err, count ){
-  //         if( err ){
-  //           callback && callback( err );
-  //           return;
-  //         }
-
-  //         callback && callback();
-  //       });
-
-  //     return;
-  //   }
-
-  //   callback && callback();
-  // },
+  }
 };
 
 Tag.methods = {

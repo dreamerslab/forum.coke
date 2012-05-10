@@ -1,8 +1,9 @@
 var Notification = require( BASE_DIR + 'db/schema' ).Notification;
+var common       = require( MODEL_DIR + 'hooks/common' );
 var hooks        = require( MODEL_DIR + 'hooks/notif' );
 var mongoose     = require( 'mongoose' );
 
-Notification.pre( 'save', hooks.mark_new_record );
+Notification.pre( 'save', common.mark_new_record );
 
 Notification.post( 'save', hooks.add_to_user );
 // Notification.post( 'save', hooks.debug_message );

@@ -1,9 +1,10 @@
 var Topic    = require( BASE_DIR + 'db/schema' ).Topic;
+var common   = require( MODEL_DIR + 'hooks/common' );
 var hooks    = require( MODEL_DIR + 'hooks/topic' );
 var mongoose = require( 'mongoose' );
 var Flow     = require( 'node.flow' );
 
-Topic.pre( 'save', hooks.mark_new_record );
+Topic.pre( 'save', common.mark_new_record );
 Topic.pre( 'save', hooks.cache_user_info );
 
 Topic.post( 'save', hooks.add_to_user );

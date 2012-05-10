@@ -3,10 +3,6 @@ var mongoose = require( 'mongoose' );
 module.exports = {
 
   // hook into pre-save --------------------------------------------------------
-  mark_new_record : function ( next ){
-    this.is_new = this.isNew;
-    next();
-  },
 
   // hook into post-save -------------------------------------------------------
   add_to_user : function (){

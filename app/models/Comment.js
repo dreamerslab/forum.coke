@@ -1,7 +1,8 @@
 var Comment = require( BASE_DIR + 'db/schema' ).Comment;
+var common  = require( MODEL_DIR + 'hooks/common' );
 var hooks   = require( MODEL_DIR + 'hooks/comment' );
 
-Comment.pre( 'save', hooks.mark_new_record );
+Comment.pre( 'save', common.mark_new_record );
 Comment.pre( 'save', hooks.cache_user_info );
 Comment.pre( 'save', hooks.cache_topic_info );
 

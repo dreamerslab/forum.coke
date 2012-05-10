@@ -156,5 +156,3 @@ module.exports = function ( app ){
     messages : require( 'express-messages' )
   });
 };
-
-

@@ -28,7 +28,6 @@ module.exports = {
         return next();
       }
 
-      self.as_topic = topic.obj_attrs();
       next();
     });
   },

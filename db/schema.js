@@ -39,7 +39,6 @@ Model.Comment = new Schema({
   user_id     : { type : ObjectId, required : true, ref : 'User' },
   topic_id    : { type : ObjectId, required : true, ref : 'Topic' },
   user        : { type : Schema.Types.Mixed },
-  as_topic    : { type : Schema.Types.Mixed },
   content     : { type : String, required : true },
   created_at  : { type : Number, 'default' : Date.now },
   updated_at  : { type : Number }

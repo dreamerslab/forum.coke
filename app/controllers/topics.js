@@ -3,11 +3,9 @@ var validate    = require( LIB_DIR + 'validate/topics' );
 var Controller  = Application.extend( validate );
 
 var mongoose    = require( 'mongoose' );
-var User        = mongoose.model( 'User' );
 var Notif       = mongoose.model( 'Notification' );
 var Topic       = mongoose.model( 'Topic' );
 var Tag         = mongoose.model( 'Tag' );
-var Comment     = mongoose.model( 'Comment' );
 
 module.exports = Controller.extend({
 

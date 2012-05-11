@@ -25,5 +25,6 @@ module.exports = function ( map ){
   });
 
   map.get( '/','topics#latest' );
-
 };
+
+

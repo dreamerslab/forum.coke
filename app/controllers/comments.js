@@ -77,7 +77,6 @@ module.exports = Controller.extend({
         req.msg    = 'comment';
         req.origin = '/topics/' + req.params.topic_id;
         self.permission_denied( req, res, next );
-
         return;
       }
 

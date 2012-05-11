@@ -11,18 +11,14 @@ module.exports = Application.extend({
   },
 
   index : function ( req, res, next ){
-    var self = this;
+    var self  = this;
     var conds = { user : req.user._id };
     var opts  = { sort  : [ 'is_read', 1 ],
                   skip  : req.query.from || 0,
                   limit : 20 };
 
     Notif.paginate( conds, opts, next, function ( result ){
-      result.sidebar   = req.sidebar;
-      result.sess_user = req.user;
-      result.path      = req.path;
-      result.query     = '?';
-      res.render( 'notifications/index', result );
+      res.render( 'notifications/index', self._merge( req, result, '?' ));
     });
   }
 });

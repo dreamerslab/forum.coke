@@ -26,8 +26,8 @@ module.exports = Controller.extend({
       run( function ( err, topic ){
         if( topic ){
           var comment = new Comment({
-            user_id : req.user,
-            topic   : topic
+            user_id  : req.user,
+            topic_id : topic
           });
 
           comment.set_attrs( req.body.comment );
@@ -44,7 +44,7 @@ module.exports = Controller.extend({
               req.flash( 'flash-info', 'Comment created' );
             }
 
-            res.redirect( '/topics/' + comment.topic );
+            res.redirect( '/topics/' + comment.topic_id );
           });
 
           return;
@@ -68,7 +68,7 @@ module.exports = Controller.extend({
               req.flash( 'flash-info', 'Comment deleted' );
             }
 
-            res.redirect( '/topics/' + comment.topic );
+            res.redirect( '/topics/' + comment.topic_id );
           });
 
           return;

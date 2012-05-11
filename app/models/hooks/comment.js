@@ -22,7 +22,7 @@ module.exports = {
     var self  = this;
     var Topic = mongoose.model( 'Topic' );
 
-    Topic.findById( this.topic, function ( err, topic ){
+    Topic.findById( this.topic_id, function ( err, topic ){
       if( err ){
         LOG.error( 500, '[models/hooks/comment#cache_topic_info] Fail to cache comment\'s topic info', err );
         return next();
@@ -52,7 +52,7 @@ module.exports = {
       var Topic = mongoose.model( 'Topic' );
 
       Topic.update(
-        { _id : this.topic },
+        { _id : this.topic_id },
         { $push : { comments : this._id }},
         function ( err, count ){
            err && LOG.error( 500, '[models/hooks/comment#add_to_user] Fail to add comment\'s _id to its topic', err );
@@ -65,7 +65,7 @@ module.exports = {
     var Topic = mongoose.model( 'Topic' );
     var Notif = mongoose.model( 'Notification' );
 
-    Topic.findById( this.topic, function ( err, topic ){
+    Topic.findById( this.topic_id, function ( err, topic ){
       if( err ){
         LOG.error( 500, '[models/hooks/comment#notify_subscribers] Fail to notify subscribers when comment created', err );
         return;
@@ -91,7 +91,7 @@ module.exports = {
     var Topic = mongoose.model( 'Topic' );
 
     Topic.update(
-      { _id : this.topic },
+      { _id : this.topic_id },
       { $pull : { comments : this._id }},
       function ( err, count ){
          err && LOG.error( 500, '[models/hooks/comment#add_to_topic] Fail to add comment\'s _id to its topic', err );

@@ -105,8 +105,8 @@ module.exports = {
             var topic   = topics[ random( topics.length )];
             var comment = random_comment();
 
-            comment.user_id = user;
-            comment.topic = topic;
+            comment.user_id  = user;
+            comment.topic_id = topic;
 
             new Comment( comment ).save( function ( err, comment, count ){
               ready();

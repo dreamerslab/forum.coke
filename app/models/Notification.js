@@ -97,7 +97,7 @@ Notification.statics = {
     var Comment  = mongoose.model( 'Comment' );
 
     Comment.
-      find({ topic : topic._id }).
+      find({ topic_id : topic._id }).
       populate( 'user_id' ).
       run( function ( err, comments ){
         if( err ){

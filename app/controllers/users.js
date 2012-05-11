@@ -4,14 +4,6 @@ var Topic       = mongoose.model( 'Topic' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
 module.exports = Application.extend({
-  _merge : function ( req, result, base_query ){
-    return UTILS.merge( result || {}, {
-      sidebar   : req.sidebar,
-      sess_user : req.user,
-      path      : req.path,
-      query     : base_query || ''
-    });
-  },
 
   find_param_user : function ( req, res, next ){
     var self    = this;

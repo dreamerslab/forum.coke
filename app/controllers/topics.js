@@ -10,14 +10,6 @@ var Tag         = mongoose.model( 'Tag' );
 var Comment     = mongoose.model( 'Comment' );
 
 module.exports = Controller.extend({
-  _merge : function ( req, result, base_query ){
-    return UTILS.merge( result || {}, {
-      sidebar   : req.sidebar,
-      sess_user : req.user,
-      path      : req.path,
-      query     : base_query || ''
-    });
-  },
 
   init : function ( before, after ){
     before( this.fill_sidebar );

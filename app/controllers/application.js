@@ -4,6 +4,15 @@ var Cache    = mongoose.model( 'Cache' );
 
 module.exports = Class.extend({
 
+  _merge : function ( req, result, base_query ){
+    return UTILS.merge( result || {}, {
+      sidebar   : req.sidebar,
+      sess_user : req.user,
+      path      : req.path,
+      query     : base_query || ''
+    });
+  },
+
   record_not_found : function ( err, req, res, next ){
     err && LOG.error( 500, res, err );
 

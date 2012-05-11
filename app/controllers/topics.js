@@ -14,8 +14,10 @@ module.exports = Controller.extend({
     before( this.fill_sidebar );
     before( this.ensure_authenticated, {
       only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
-    before( this.validate_topic_form, { only : [ 'create', 'update' ]});
-    before( this.verify_permission, { only : [ 'edit', 'update', 'destroy' ]});
+    before( this.validate_topic_form,
+      { only : [ 'create', 'update' ]});
+    before( this.verify_permission,
+      { only : [ 'edit', 'update', 'destroy' ]});
   },
 
   verify_permission : function ( req, res, next ){

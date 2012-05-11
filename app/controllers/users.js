@@ -5,6 +5,12 @@ var Application = require( CONTROLLER_DIR + 'application' );
 
 module.exports = Application.extend({
 
+  // controller filters --------------------------------------------------------
+  init : function ( before, after ){
+    before( this.fill_sidebar );
+    before( this.find_param_user, { only : [ 'show', 'topics', 'replies' ]});
+  },
+
   find_param_user : function ( req, res, next ){
     var self    = this;
     var user_id = req.params.id || req.params.user_id;
@@ -20,11 +26,7 @@ module.exports = Application.extend({
     });
   },
 
-  init : function ( before, after ){
-    before( this.fill_sidebar );
-    before( this.find_param_user, { only : [ 'show', 'topics', 'replies' ]});
-  },
-
+  // controller actions --------------------------------------------------------
   index : function ( req, res, next ){
     var self  = this;
     var conds = {};
@@ -41,26 +43,22 @@ module.exports = Application.extend({
   show : function ( req, res, next ){
     var self  = this;
     var conds = {};
-    var opts  = {};
+    var opts  = { limit : 6, sort : [[ 'updated_at', -1 ]]};;
 
     conds = { user : req.para_user._id };
-    opts  = { limit : 6, sort : [[ 'updated_at', -1 ]]};
-    Topic.find( conds, null, opts, function ( err, recent_topics ){
+    Topic.find( conds, null, opts, function ( err, topics ){
       if( err ) return next( err );
 
       conds = { comments : { $in : req.para_user.comments }};
-      Topic.find( conds, null, opts, function ( err, recent_replies ){
+      Topic.find( conds, null, opts, function ( err, replies ){
         if( err ) return next( err );
 
-        req.para_user.recent_topics  = recent_topics;
-        req.para_user.recent_replies = recent_replies;
-
-        res.render( 'users/show', {
+        req.para_user.recent_topics  = topics;
+        req.para_user.recent_replies = replies;
+        res.render( 'users/show', self._merge( req, {
           nav_selected : 'users',
-          sidebar      : req.sidebar,
-          sess_user    : req.user,
           user         : req.para_user
-        });
+        }));
       });
     });
   },

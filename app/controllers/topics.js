@@ -15,6 +15,29 @@ module.exports = Controller.extend({
     before( this.ensure_authenticated, {
       only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
     before( this.validate_topic_form, { only : [ 'create', 'update' ]});
+    before( this.verify_permission, { only : [ 'edit', 'update', 'destroy' ]});
+  },
+
+  verify_permission : function ( req, res, next ){
+    var self = this;
+    var id   = req.params.id || req.params.topic_id;
+
+    Topic.findById( id, function ( err, topic ){
+      if( topic ){
+        if( topic.is_owner( req.user )){
+          req.para_topic = topic;
+          return next();
+        }
+
+        req.msg    = 'topic';
+        req.origin = '/topics/' + topic._id;
+        self.permission_denied( req, res, next );
+        return;
+      }
+
+      req.msg = 'Topic';
+      self.record_not_found( err, req, res );
+    });
   },
 
   // controller actions --------------------------------------------------------
@@ -187,93 +210,46 @@ module.exports = Controller.extend({
   },
 
   edit : function ( req, res, next ){
-    var self = this;
+    var self  = this;
+    var topic = req.para_topic;
 
-    Topic.findById( req.params.id, function ( err, topic ){
-      if( topic ){
-        if( topic.is_owner( req.user )){
-          return res.render( 'topics/edit',
-            self._merge( req, { topic : topic, nav_selected : 'topics' }));
-        }
-
-        req.msg    = 'topic';
-        req.origin = '/topics/' + topic._id;
-        self.permission_denied( req, res, next );
-
-        return;
-      }
-
-      req.msg = 'Topic';
-      self.record_not_found( err, req, res );
-    });
+    return res.render( 'topics/edit',
+      self._merge( req, { topic : topic, nav_selected : 'topics' }));
   },
 
   update : function ( req, res, next ){
-    var self = this;
+    var self  = this;
+    var topic = req.para_topic;
 
-    Topic.findById( req.params.id, function ( err, topic ){
-      if( topic ){
-        if( topic.is_owner( req.user )){
-          topic.set_attrs( req.body.topic );
+    topic.set_attrs( req.body.topic );
+    if( !req.form.isValid ){
+      return res.render( 'topics/edit',
+        self._merge( req, { topic : topic }));
+    }
 
-          if( !req.form.isValid ){
-            return res.render( 'topics/edit',
-              self._merge( req, { topic : topic }));
-          }
-
-          topic.save( function ( err, topic, count ){
-            if( err ){
-              req.flash( 'flash-error', 'Topic update fail' );
-            }else{
-              req.flash( 'flash-info', 'Topic updated' );
-            }
-
-            res.redirect( '/topics/' + topic._id );
-          });
-
-          return;
-        }
-
-        req.msg    = 'topic';
-        req.origin = '/topics/' + topic._id;
-        self.permission_denied( req, res, next );
-
-        return;
+    topic.save( function ( err, topic, count ){
+      if( err ){
+        req.flash( 'flash-error', 'Topic update fail' );
+      }else{
+        req.flash( 'flash-info', 'Topic updated' );
       }
 
-      req.msg = 'Topic';
-      self.record_not_found( err, req, res, next );
+      res.redirect( '/topics/' + topic._id );
     });
   },
 
   destroy : function ( req, res, next ){
-    var self = this;
+    var self  = this;
+    var topic = req.para_topic;
 
-    Topic.findById( req.params.id, function ( err, topic ){
-      if( topic ){
-        if( topic.is_owner( req.user )){
-          topic.remove( function ( err ){
-            if( err ){
-              req.flash( 'flash-error', 'Topic deletion fail' );
-            }else{
-              req.flash( 'flash-info', 'Topic deleted' );
-            }
-
-            res.redirect( '/topics' );
-          });
-
-          return;
-        }
-
-        req.msg    = 'topic';
-        req.origin = '/topics/' + topic._id;
-        self.permission_denied( req, res, next );
-
-        return;
+    topic.remove( function ( err ){
+      if( err ){
+        req.flash( 'flash-error', 'Topic deletion fail' );
+      }else{
+        req.flash( 'flash-info', 'Topic deleted' );
       }
 
-      req.msg = 'Topic';
-      self.record_not_found( err, req, res, next );
+      res.redirect( '/topics' );
     });
   }
 });

@@ -11,6 +11,7 @@ var Comment     = mongoose.model( 'Comment' );
 
 module.exports = Controller.extend({
 
+  // controller filters --------------------------------------------------------
   init : function ( before, after ){
     before( this.fill_sidebar );
     before( this.ensure_authenticated, {
@@ -18,6 +19,7 @@ module.exports = Controller.extend({
     before( this.validate_topic_form, { only : [ 'create', 'update' ]});
   },
 
+  // controller actions --------------------------------------------------------
   tags : function ( req, res, next ){
     var self = this;
     var conds = {};
@@ -277,3 +279,5 @@ module.exports = Controller.extend({
     });
   }
 });
+
+

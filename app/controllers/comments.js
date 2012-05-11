@@ -8,12 +8,14 @@ var Comment     = mongoose.model( 'Comment' );
 
 module.exports = Controller.extend({
 
+  // controller filters --------------------------------------------------------
   init : function ( before, after ){
     before( this.fill_sidebar );
     before( this.ensure_authenticated, { only : [ 'create', 'destroy' ]});
     before( this.validate_comment_form, { only : [ 'create' ]});
   },
 
+  // controller actions --------------------------------------------------------
   create : function ( req, res, next ){
     var self = this;
 
@@ -84,3 +86,5 @@ module.exports = Controller.extend({
     });
   },
 });
+
+

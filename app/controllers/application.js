@@ -92,3 +92,5 @@ module.exports = Class.extend({
     res.redirect( '/auth/google' );
   }
 });
+
+

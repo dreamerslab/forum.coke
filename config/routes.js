@@ -14,7 +14,6 @@ module.exports = function ( map ){
   map.get( 'topics/search', 'topics#search' );
   map.get( 'topics/tag', 'topics#tag' );
   map.get( 'topics/tags', 'topics#tags' );
-
   map.get( 'topics', 'topics#latest' );
   map.get( 'topics/index', 'topics#latest' );
   map.get( 'topics/latest', 'topics#latest' );
@@ -24,7 +23,7 @@ module.exports = function ( map ){
     topic.resources( 'comments', { only : [ 'create', 'destroy' ]});
   });
 
-  map.get( '/','topics#latest' );
+  map.root( 'topics#latest' );
 };
 
 

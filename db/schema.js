@@ -24,7 +24,7 @@ Model.User = new Schema({
 
 Model.Topic = new Schema({
   user_id     : { type : ObjectId, required : true, ref : 'User' },
-  as_user     : { type : Schema.Types.Mixed },
+  user        : { type : Schema.Types.Mixed },
   title       : { type : String, required : true },
   content     : { type : String, required : true },
   tag_names   : [{ type : String }],
@@ -37,7 +37,7 @@ Model.Topic = new Schema({
 
 Model.Comment = new Schema({
   user_id     : { type : ObjectId, required : true, ref : 'User' },
-  as_user     : { type : Schema.Types.Mixed },
+  user        : { type : Schema.Types.Mixed },
   topic       : { type : ObjectId, required : true, ref : 'Topic' },
   as_topic    : { type : Schema.Types.Mixed },
   content     : { type : String, required : true },

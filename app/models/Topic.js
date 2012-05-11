@@ -73,7 +73,7 @@ Topic.methods = {
 
   is_owner : function( user ){
     return user ?
-      this.as_user._id.toString() === user._id.toString() :
+      this.user._id.toString() === user._id.toString() :
       false;
   },
 };

@@ -13,7 +13,7 @@ module.exports = {
         return next();
       }
 
-      self.as_user = user.obj_attrs();
+      self.user = user.obj_attrs();
       next();
     });
   },

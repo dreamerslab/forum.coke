@@ -34,7 +34,7 @@ module.exports = Application.extend({
 
         var referer = req.cookies.referer ?
           req.cookies.referer :
-          '/topics/latest'
+          '/topics/latest';
 
         if( user ){
           res.redirect( referer );

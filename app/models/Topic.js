@@ -66,7 +66,7 @@ Topic.methods = {
       { $inc : { read_count : 1 }},
       function ( err, count ){
         err && LOG.error( 500,
-          '[app][models][Topic] Having trouble increasing read count', err )
+          '[app][models][Topic] Having trouble increasing read count', err );
       }
     );
   },

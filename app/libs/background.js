@@ -26,4 +26,4 @@ module.exports = {
       LOG.debug( 'All background job finished' );
     });
   }
-}
+};

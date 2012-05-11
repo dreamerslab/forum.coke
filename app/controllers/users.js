@@ -43,7 +43,7 @@ module.exports = Application.extend({
   show : function ( req, res, next ){
     var self  = this;
     var conds = {};
-    var opts  = { limit : 6, sort : [[ 'updated_at', -1 ]]};;
+    var opts  = { limit : 6, sort : [[ 'updated_at', -1 ]]};
 
     conds = { user : req.para_user._id };
     Topic.find( conds, null, opts, function ( err, topics ){

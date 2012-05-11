@@ -17,7 +17,7 @@ module.exports = {
       if( a > b ) return 1;
       if( a < b ) return -1;
       return 0;
-    };
+    }
 
     flow.series( function ( next ){
       Tag.find(

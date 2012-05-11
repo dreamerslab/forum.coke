@@ -168,8 +168,7 @@ module.exports = Controller.extend({
           var comment = { content : '' };
 
           topic.inc_read_count();
-          res.render( 'topics/show',
-            self._merge( req, {
+          res.render( 'topics/show', self._merge( req, {
               topic        : topic,
               nav_selected : 'topics'
           }));

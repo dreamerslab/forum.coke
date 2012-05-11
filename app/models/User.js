@@ -4,6 +4,7 @@ var virtuals = require( MODEL_DIR + 'virtuals/user' );
 virtuals( User );
 
 User.statics = {
+
   paginate : function ( conds, opts, next, callback ){
     var reslut = {};
     var self   = this;
@@ -25,28 +26,6 @@ User.statics = {
             limit  : opts.limit
           });
         });
-    });
-  },
-
-  push_comment : function ( comment, callback ){
-    this.findById( comment.user_id, function ( err, user ){
-      if( err ) return callback && callback( err );
-
-      if( user ){
-        user.comments.$addToSet( comment._id );
-        user.save( callback );
-      }
-    });
-  },
-
-  pull_comment : function ( comment, callback ){
-    this.findById( comment.user_id, function ( err, user ){
-      if( err ) return callback && callback( err );
-
-      if( user ){
-        user.comments.$pull( comment._id );
-        user.save( callback );
-      }
     });
   }
 };

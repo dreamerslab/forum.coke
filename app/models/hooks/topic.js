@@ -7,7 +7,7 @@ module.exports = {
     var self = this;
     var User = mongoose.model( 'User' );
 
-    User.findById( this.user, function ( err, user ){
+    User.findById( this.user_id, function ( err, user ){
       if( err ){
         LOG.error( 500, '[models/hooks/topic#cache_user_info] Fail to cache topic\'s user info', err );
         return next();
@@ -24,7 +24,7 @@ module.exports = {
       var User = mongoose.model( 'User' );
 
       User.update(
-        { _id : this.user },
+        { _id : this.user_id },
         { $push : { topics : this._id }},
         function ( err, count ){
            err && LOG.error( 500, '[models/hooks/topic#add_to_user] Fail to add topic\'s _id to its user', err );
@@ -77,7 +77,7 @@ module.exports = {
     var User = mongoose.model( 'User' );
 
     User.update(
-      { _id : this.user },
+      { _id : this.user_id },
       { $pull : { topics : this._id }},
       function ( err, count ){
          err && LOG.error( 500, '[models/hooks/topic#add_to_user] Fail to add topic\'s _id to its user', err );

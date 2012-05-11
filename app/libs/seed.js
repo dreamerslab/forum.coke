@@ -81,7 +81,7 @@ module.exports = {
           var topic  = random_topic();
           var string = Faker.Lorem.words( random( 5 )).join(', ');
 
-          topic.user      = user;
+          topic.user_id   = user;
           topic.tag_names = Tag.extract_names( string );
 
           new Topic( topic ).save( function ( err, topic, count ){
@@ -105,7 +105,7 @@ module.exports = {
             var topic   = topics[ random( topics.length )];
             var comment = random_comment();
 
-            comment.user  = user;
+            comment.user_id = user;
             comment.topic = topic;
 
             new Comment( comment ).save( function ( err, comment, count ){

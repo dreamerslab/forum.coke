@@ -45,7 +45,7 @@ module.exports = Application.extend({
     var conds = {};
     var opts  = { limit : 6, sort : [[ 'updated_at', -1 ]]};
 
-    conds = { user : req.para_user._id };
+    conds = { user_id : req.para_user._id };
     Topic.find( conds, null, opts, function ( err, topics ){
       if( err ) return next( err );
 
@@ -65,10 +65,10 @@ module.exports = Application.extend({
 
   topics : function ( req, res, next ){
     var self  = this;
-    var conds = { user : req.para_user._id };
-    var opts  = { sort  : [ 'updated_at', -1 ],
-                  skip  : req.query.from || 0,
-                  limit : 20 };
+    var conds = { user_id : req.para_user._id };
+    var opts  = { sort    : [ 'updated_at', -1 ],
+                  skip    : req.query.from || 0,
+                  limit   : 20 };
 
     Topic.paginate( conds, opts, next, function ( result ){
       res.render( 'users/topics', self._merge( req, result, '?' ));

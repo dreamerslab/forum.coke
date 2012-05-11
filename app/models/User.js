@@ -29,7 +29,7 @@ User.statics = {
   },
 
   push_comment : function ( comment, callback ){
-    this.findById( comment.user, function ( err, user ){
+    this.findById( comment.user_id, function ( err, user ){
       if( err ) return callback && callback( err );
 
       if( user ){
@@ -40,7 +40,7 @@ User.statics = {
   },
 
   pull_comment : function ( comment, callback ){
-    this.findById( comment.user, function ( err, user ){
+    this.findById( comment.user_id, function ( err, user ){
       if( err ) return callback && callback( err );
 
       if( user ){

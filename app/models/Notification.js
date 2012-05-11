@@ -76,7 +76,7 @@ Notification.statics = {
             }
 
             User.update(
-              { _id : notif.user },
+              { _id : notif.user_id },
               { $pull : { notifications : notif._id }},
               function ( err, count ){
                 callback && callback( err );
@@ -98,7 +98,7 @@ Notification.statics = {
 
     Comment.
       find({ topic : topic._id }).
-      populate( 'user' ).
+      populate( 'user_id' ).
       run( function ( err, comments ){
         if( err ){
           LOG.error( 500,
@@ -106,13 +106,13 @@ Notification.statics = {
           return;
         }
 
-        var topic_user_id = topic.user.toString();
-        var subscribers   = comments.map( function ( c ){ return c.user; });
+        var topic_user_id = topic.user_id.toString();
+        var subscribers   = comments.map( function ( c ){ return c.user_id; });
 
         subscribers = unique( subscribers );
         subscribers = exclude( subscribers, topic_user_id );
         if( type === 'create-comment' ){
-          var comment_user_id = comment.user.toString();
+          var comment_user_id = comment.user_id.toString();
 
           subscribers = exclude( subscribers, comment_user_id );
           User.findById( comment_user_id, function ( err, user ){
@@ -125,7 +125,7 @@ Notification.statics = {
             // notify all subscribers
             subscribers.forEach( function ( subr ){
               new self({
-                user       : subr._id,
+                user_id    : subr._id,
                 type       : type,
                 originator : user.obj_attrs(),
                 topic      : topic.obj_attrs(),
@@ -140,7 +140,7 @@ Notification.statics = {
             // notify the topic author
             if( topic_user_id !== comment_user_id ){
               new self({
-                user       : topic_user_id,
+                user_id    : topic_user_id,
                 type       : type,
                 originator : user.obj_attrs(),
                 topic      : topic.obj_attrs(),
@@ -165,7 +165,7 @@ Notification.statics = {
             // notify all subscribers
             subscribers.forEach( function ( subr ){
               new self({
-                user       : subr._id,
+                user_id    : subr._id,
                 type       : type,
                 originator : user.obj_attrs(),
                 topic      : topic.obj_attrs(),

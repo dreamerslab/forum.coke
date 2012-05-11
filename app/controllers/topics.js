@@ -161,7 +161,7 @@ module.exports = Controller.extend({
 
     Topic.
       findById( req.params.id ).
-      populate( 'user' ).
+      populate( 'user_id' ).
       populate( 'comments' ).
       run( function ( err, topic ){
         if( topic ){
@@ -195,7 +195,7 @@ module.exports = Controller.extend({
       return;
     }
 
-    var topic = new Topic({ user : req.user });
+    var topic = new Topic({ user_id : req.user });
 
     topic.set_attrs( req.body.topic );
     topic.save( function ( err, topic, count ){

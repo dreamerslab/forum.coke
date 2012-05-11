@@ -21,13 +21,13 @@ module.exports = Controller.extend({
 
     Topic.
       findById( req.params.topic_id ).
-      populate( 'user' ).
+      populate( 'user_id' ).
       populate( 'comments' ).
       run( function ( err, topic ){
         if( topic ){
           var comment = new Comment({
-            user  : req.user,
-            topic : topic
+            user_id : req.user,
+            topic   : topic
           });
 
           comment.set_attrs( req.body.comment );

@@ -9,7 +9,7 @@ module.exports = {
     var User = mongoose.model( 'User' );
 
     User.update(
-      { _id : this.user },
+      { _id : this.user_id },
       { $push : { notifications : this._id }},
       function ( err, count ){
         err && LOG.error( 500,
@@ -22,7 +22,7 @@ module.exports = {
     var self = this;
     var User = mongoose.model( 'User' );
 
-    User.findById( this.user, function( err, user ){
+    User.findById( this.user_id, function( err, user ){
       LOG.debug(
         'Hey ' + user.name + ',\n' +
         self.originator.name + ' ' + self.activity + ': ' + self.topic.title );

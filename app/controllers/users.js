@@ -12,10 +12,10 @@ module.exports = Application.extend({
   },
 
   find_param_user : function ( req, res, next ){
-    var self    = this;
-    var user_id = req.params.id || req.params.user_id;
+    var self = this;
+    var id   = req.params.id || req.params.user_id;
 
-    User.findById( user_id, function ( err, user ){
+    User.findById( id, function ( err, user ){
       if( user ){
         req.para_user = user;
         return next();

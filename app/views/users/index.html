@@ -7,17 +7,15 @@
   <div id="users-wrap">
     <ul class="thumbnails">
       <? it.users.forEach( function ( user ){  ?>
-      <li class="span4">
-        <div class="user-wrap">
-          <div class="user-profile-avatar"><a class="user-link" href="/users/<?= user._id ?>"><img class="user-profile-avatar-img" src="<?= user.avatar ?>" alt="Avatar"></a></div>
-          <div class="meta">
-            <h3 class="user-name"><a class="user-link" href="/users/<?= user._id ?>"><?- it.truncate( user.name, 30 ) ?></a></h3>
-            <h4 class="posts">Posts: <?= user.topics.length ?></h4>
-            <h4 class="comments">Comments: <?= user.comments.length ?></h4>
-            <h4 class="created">Created at: <?= it.ago( user.created_at ) ?></h4>
-          </div>
+      <div class="user-wrap">
+        <div class="user-profile-avatar"><a class="user-link" href="/users/<?= user._id ?>"><img class="user-profile-avatar-img" src="<?= user.avatar ?>" alt="Avatar"></a></div>
+        <div class="meta">
+          <h3 class="user-name"><a class="user-link" href="/users/<?= user._id ?>"><?- it.truncate( user.name, 30 ) ?></a></h3>
+          <h4 class="posts">Posts: <?= user.topics.length ?></h4>
+          <h4 class="comments">Comments: <?= user.comments.length ?></h4>
+          <h4 class="created">Created at: <?= it.ago( user.created_at ) ?></h4>
         </div>
-      </li>
+      </div>
       <? }); ?>
     </ul>
     <?= it.partial( 'common/_pagination' )?>

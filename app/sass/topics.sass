@@ -28,7 +28,7 @@ $item-padding: 11px
   padding: 0 2px 0 0
 
 .article-sub-nav-link
-  +float-left
+  display: block
   border: 1px solid transparent
   padding: 7px 11px
   line-height: 14px
@@ -60,7 +60,14 @@ $item-padding: 11px
     color: #005580
     text-decoration: none
 
-.article-avatar
+.author-avatar
   +float-left
-  width: 15px
+  max-width: 15px
+  height: 15px
   padding: 1px 4px 0 0
+
+.tags
+  +float-left
+  
+.user-data
+  +float-right

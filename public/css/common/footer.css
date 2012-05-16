@@ -6,9 +6,18 @@ footer {
   text-align: center;
   padding: 30px 0 50px;
   letter-spacing: 1px;
+  width: 386px;
+  margin: 0 auto;
 }
 
-/* line 14, ../../../app/sass/common/footer.sass */
+/* line 16, ../../../app/sass/common/footer.sass */
+.footer-text {
+  display: inline;
+  float: left;
+  padding: 0 5px 0 0;
+}
+
+/* line 20, ../../../app/sass/common/footer.sass */
 #sublogo {
   font: 0/0 serif;
   text-shadow: none;
@@ -18,34 +27,25 @@ footer {
   width: 54px;
   height: 25px;
   background: url('/img/sprite-s7f7228bc18.png') no-repeat 0 0;
-  display: -moz-inline-box;
-  -moz-box-orient: vertical;
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
+  display: inline;
+  float: left;
   text-decoration: none;
-  margin: -4px 4px 0 0;
-}
-/* line 7, ../../../../../../Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/frameworks/compass/stylesheets/compass/css3/_inline-block.scss */
-#sublogo {
-  *display: inline;
+  margin: -4px 5px 0 0;
 }
 
-/* line 20, ../../../app/sass/common/footer.sass */
+/* line 26, ../../../app/sass/common/footer.sass */
+#sublogo {
+  margin: -3px \9 5px\9 0 0;
+}
+
+/* line 29, ../../../app/sass/common/footer.sass */
 #dreamerslab {
-  display: -moz-inline-box;
-  -moz-box-orient: vertical;
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
+  display: inline;
+  float: left;
   text-decoration: none;
   background: url("/img/dreamerslab.png") no-repeat top left;
   padding: 0 0 3px 16px;
   color: #333333;
   text-decoration: underline;
   font-weight: bold;
-}
-/* line 7, ../../../../../../Users/fred/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.11.7/frameworks/compass/stylesheets/compass/css3/_inline-block.scss */
-#dreamerslab {
-  *display: inline;
 }

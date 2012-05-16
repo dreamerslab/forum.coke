@@ -1,4 +1,9 @@
 /* line 7, ../../app/sass/common.sass */
+a:focus, input:focus, textarea:focus, button:focus {
+  outline: none;
+}
+
+/* line 10, ../../app/sass/common.sass */
 .article-nav-list {
   overflow: hidden;
   *zoom: 1;
@@ -6,14 +11,14 @@
   margin: 0;
 }
 
-/* line 12, ../../app/sass/common.sass */
+/* line 15, ../../app/sass/common.sass */
 .article-nav-item {
   display: inline;
   float: left;
   padding: 0 10px 0 0;
 }
 
-/* line 16, ../../app/sass/common.sass */
+/* line 19, ../../app/sass/common.sass */
 .article-nav-link {
   display: block;
   background: #eeeeee;
@@ -24,20 +29,26 @@
   padding: 5px 8px;
   font-weight: bold;
 }
-/* line 25, ../../app/sass/common.sass */
+/* line 28, ../../app/sass/common.sass */
 .article-nav-link:hover {
   background: black;
   color: white;
   text-decoration: none;
 }
 
-/* line 30, ../../app/sass/common.sass */
+/* line 33, ../../app/sass/common.sass */
+.article-nav-link {
+  font-size: 16px \9;
+  padding: 7px \9 8px\9 5px\9 8px\9;
+}
+
+/* line 37, ../../app/sass/common.sass */
 #article-nav-selected {
   background: black;
   color: white;
 }
 
-/* line 34, ../../app/sass/common.sass */
+/* line 41, ../../app/sass/common.sass */
 .info {
   display: block;
   background: black;
@@ -48,46 +59,53 @@
   font-weight: bold;
 }
 
-/* line 43, ../../app/sass/common.sass */
+/* line 50, ../../app/sass/common.sass */
+.info {
+  font-size: 16px \9;
+  padding: 7px \9 8px\9 5px\9 8px\9;
+}
+
+/* line 54, ../../app/sass/common.sass */
 #content-wrap {
   padding: 40px 0;
 }
 
-/* line 46, ../../app/sass/common.sass */
+/* line 57, ../../app/sass/common.sass */
 #search-input {
   width: 122px;
+  width: 143px \9;
 }
 
-/* line 49, ../../app/sass/common.sass */
+/* line 61, ../../app/sass/common.sass */
 #search {
   display: inline;
   float: right;
   padding: 3px 0 0;
 }
 
-/* line 53, ../../app/sass/common.sass */
+/* line 65, ../../app/sass/common.sass */
 #new-post {
   display: inline;
   float: right;
 }
 
-/* line 56, ../../app/sass/common.sass */
+/* line 68, ../../app/sass/common.sass */
 #current-profile-link {
   display: block;
   width: 135px;
   line-height: 17px;
 }
-/* line 60, ../../app/sass/common.sass */
+/* line 72, ../../app/sass/common.sass */
 #current-profile-link:hover {
   text-decoration: none;
 }
 
-/* line 63, ../../app/sass/common.sass */
+/* line 75, ../../app/sass/common.sass */
 #current-user:hover {
   text-decoration: none;
 }
 
-/* line 66, ../../app/sass/common.sass */
+/* line 78, ../../app/sass/common.sass */
 #notify {
   text-align: left;
   width: 135px;
@@ -96,24 +114,24 @@
   left: 0;
 }
 
-/* line 73, ../../app/sass/common.sass */
+/* line 85, ../../app/sass/common.sass */
 #notify-link:hover {
   text-decoration: none;
 }
 
-/* line 76, ../../app/sass/common.sass */
+/* line 88, ../../app/sass/common.sass */
 #current-user-wrap {
   display: inline;
   float: left;
 }
 
-/* line 79, ../../app/sass/common.sass */
+/* line 91, ../../app/sass/common.sass */
 #profile-avatar {
   display: inline;
   float: left;
 }
 
-/* line 82, ../../app/sass/common.sass */
+/* line 94, ../../app/sass/common.sass */
 #user-notify-wrap {
   display: inline;
   float: left;
@@ -121,49 +139,50 @@
   position: relative;
 }
 
-/* line 87, ../../app/sass/common.sass */
+/* line 99, ../../app/sass/common.sass */
 .log-btn, #log-out {
   display: inline;
   float: right;
   position: relative;
 }
 
-/* line 91, ../../app/sass/common.sass */
+/* line 103, ../../app/sass/common.sass */
 .log-btn {
   top: -6px;
   margin: 0 0 0 3px;
 }
 
-/* line 95, ../../app/sass/common.sass */
+/* line 107, ../../app/sass/common.sass */
 #log-out {
   top: -2px;
 }
 
-/* line 98, ../../app/sass/common.sass */
+/* line 110, ../../app/sass/common.sass */
 .side-profile {
   overflow: hidden;
   *zoom: 1;
 }
 
-/* line 101, ../../app/sass/common.sass */
+/* line 113, ../../app/sass/common.sass */
 #profile-avatar-photo {
+  display: block;
   padding: 0 5px 0 0;
-  width: 50px;
+  max-width: 50px;
   height: 50px;
 }
 
-/* line 106, ../../app/sass/common.sass */
+/* line 120, ../../app/sass/common.sass */
 .crumb-link:hover {
   text-decoration: none;
 }
 
-/* line 109, ../../app/sass/common.sass */
+/* line 123, ../../app/sass/common.sass */
 .avatar {
   padding: 0 5px 0 0;
   width: 15px;
 }
 
-/* line 113, ../../app/sass/common.sass */
+/* line 127, ../../app/sass/common.sass */
 .tag {
   display: inline;
   float: left;
@@ -173,7 +192,7 @@
   margin: 0 7px 0 0;
 }
 
-/* line 120, ../../app/sass/common.sass */
+/* line 134, ../../app/sass/common.sass */
 .last-reply-time {
   display: inline;
   float: right;
@@ -183,103 +202,103 @@
   margin: -1px 0 0;
 }
 
-/* line 127, ../../app/sass/common.sass */
+/* line 141, ../../app/sass/common.sass */
 .tag:hover {
   background: #4a6d8c;
   color: #e2eaf0;
   text-decoration: none;
 }
 
-/* line 132, ../../app/sass/common.sass */
+/* line 146, ../../app/sass/common.sass */
 .sidebar-block {
   margin: 0 0 10px;
 }
 
-/* line 135, ../../app/sass/common.sass */
+/* line 149, ../../app/sass/common.sass */
 .sidebar-title {
   padding: 0 0 13px;
 }
 
-/* line 138, ../../app/sass/common.sass */
+/* line 152, ../../app/sass/common.sass */
 .sidebar-content {
   overflow: hidden;
   *zoom: 1;
 }
 
-/* line 141, ../../app/sass/common.sass */
+/* line 155, ../../app/sass/common.sass */
 .all-tag-item {
   margin-bottom: 5px;
 }
 
-/* line 144, ../../app/sass/common.sass */
+/* line 158, ../../app/sass/common.sass */
 .sidebar-link {
   display: inline;
   float: right;
 }
-/* line 146, ../../app/sass/common.sass */
+/* line 160, ../../app/sass/common.sass */
 .sidebar-link:hover {
   text-decoration: none;
 }
 
-/* line 149, ../../app/sass/common.sass */
+/* line 163, ../../app/sass/common.sass */
 .sidebar-link-p {
   overflow: hidden;
   *zoom: 1;
 }
 
-/* line 152, ../../app/sass/common.sass */
+/* line 166, ../../app/sass/common.sass */
 .issue-title-link {
   display: block;
   padding: 4px 0 0;
 }
-/* line 155, ../../app/sass/common.sass */
+/* line 169, ../../app/sass/common.sass */
 .issue-title-link:hover {
   text-decoration: none;
 }
 
-/* line 158, ../../app/sass/common.sass */
+/* line 172, ../../app/sass/common.sass */
 .user {
   display: block;
   padding: 0 0 4px;
 }
 
-/* line 162, ../../app/sass/common.sass */
+/* line 176, ../../app/sass/common.sass */
 .user:hover {
   text-decoration: none;
 }
 
-/* line 165, ../../app/sass/common.sass */
+/* line 179, ../../app/sass/common.sass */
 .author {
   display: inline;
   float: right;
 }
-/* line 167, ../../app/sass/common.sass */
+/* line 181, ../../app/sass/common.sass */
 .author:hover {
   text-decoration: none;
 }
 
-/* line 170, ../../app/sass/common.sass */
+/* line 184, ../../app/sass/common.sass */
 .article-pager {
   text-align: center;
 }
 
-/* line 173, ../../app/sass/common.sass */
+/* line 187, ../../app/sass/common.sass */
 .error {
   color: red;
 }
 
-/* line 176, ../../app/sass/common.sass */
+/* line 190, ../../app/sass/common.sass */
 #title-404, #title-500 {
   text-align: center;
   padding: 40px 0 0;
 }
 
-/* line 180, ../../app/sass/common.sass */
+/* line 194, ../../app/sass/common.sass */
 #title-404 {
   font-size: 30px;
 }
 
-/* line 183, ../../app/sass/common.sass */
+/* line 197, ../../app/sass/common.sass */
 #title-500 {
   font-size: 25px;
 }

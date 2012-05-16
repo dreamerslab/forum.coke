@@ -37,8 +37,7 @@
 
 /* line 30, ../../app/sass/topics.sass */
 .article-sub-nav-link {
-  display: inline;
-  float: left;
+  display: block;
   border: 1px solid transparent;
   padding: 7px 11px;
   line-height: 14px;
@@ -84,9 +83,22 @@
 }
 
 /* line 63, ../../app/sass/topics.sass */
-.article-avatar {
+.author-avatar {
   display: inline;
   float: left;
-  width: 15px;
+  max-width: 15px;
+  height: 15px;
   padding: 1px 4px 0 0;
+}
+
+/* line 69, ../../app/sass/topics.sass */
+.tags {
+  display: inline;
+  float: left;
+}
+
+/* line 72, ../../app/sass/topics.sass */
+.user-data {
+  display: inline;
+  float: right;
 }

@@ -18,45 +18,55 @@
 
 /* line 14, ../../app/sass/users.sass */
 .user-wrap {
+  display: inline;
+  float: left;
+  padding: 0 0 18px 20px;
+  width: 300px;
   height: 90px;
 }
 
-/* line 17, ../../app/sass/users.sass */
+/* line 20, ../../app/sass/users.sass */
+* + html > body .user-wrap {
+  padding: 0 0 18px 0;
+}
+
+/* line 23, ../../app/sass/users.sass */
 .user-profile-avatar {
   display: inline;
   float: left;
 }
 
-/* line 20, ../../app/sass/users.sass */
+/* line 26, ../../app/sass/users.sass */
 .user-profile-avatar-img {
   display: block;
   padding: 6px 8px 0 0;
-  width: 72px;
+  max-width: 72px;
+  height: 72px;
 }
 
-/* line 25, ../../app/sass/users.sass */
+/* line 32, ../../app/sass/users.sass */
 .meta {
   display: inline;
   float: left;
 }
 
-/* line 28, ../../app/sass/users.sass */
+/* line 35, ../../app/sass/users.sass */
 .user-link {
   display: block;
 }
 
-/* line 31, ../../app/sass/users.sass */
+/* line 38, ../../app/sass/users.sass */
 .user-link:hover {
   text-decoration: none;
 }
 
-/* line 34, ../../app/sass/users.sass */
+/* line 41, ../../app/sass/users.sass */
 .user-name {
   font-size: 15px;
   color: #0088cc;
 }
 
-/* line 38, ../../app/sass/users.sass */
+/* line 45, ../../app/sass/users.sass */
 .email, .posts, .comments, .created {
   font-size: 12px;
 }

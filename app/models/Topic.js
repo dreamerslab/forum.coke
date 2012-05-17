@@ -4,6 +4,8 @@ var hooks    = require( MODEL_DIR + 'hooks/topic' );
 var mongoose = require( 'mongoose' );
 var Flow     = require( 'node.flow' );
 
+Topic.post( 'init', hooks.catch_old_tag_names );
+
 Topic.pre( 'save', common.mark_new_record );
 Topic.pre( 'save', hooks.cache_user_info );
 

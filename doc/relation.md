@@ -21,6 +21,9 @@ no such action
 ## Topic
 NOTE: remember not to trigger hooks while updating 'read_count'
 
+### init
+- catch old tag names
+
 ### create
 - mark new record
 - cache user info

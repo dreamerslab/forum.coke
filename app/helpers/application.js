@@ -149,7 +149,7 @@ module.exports = function ( app ){
       }
     },
 
-    success : function ( req, res ){
+    get_success : function ( req, res ){
       return function (){
         var _info = req.flash();
         var info  = _info ? _info[ 'flash-info' ] : [];

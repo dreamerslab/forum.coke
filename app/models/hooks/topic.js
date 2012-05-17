@@ -2,6 +2,11 @@ var mongoose = require( 'mongoose' );
 
 module.exports = {
 
+  // hook into pre-init --------------------------------------------------------
+  catch_old_tag_names : function (){
+    this.old_tag_names = this.tag_names;
+  },
+
   // hook into pre-save --------------------------------------------------------
   cache_user_info : function ( next ){
     var self = this;
@@ -39,7 +44,7 @@ module.exports = {
       var Tag = mongoose.model( 'Tag' );
 
       Tag.update(
-        { name : { $in : this.tag_names }},
+        { name : { $in : this.old_tag_names }},
         { $pull : { topics : this._id }},
         { multi : true },
         function ( err, count ){

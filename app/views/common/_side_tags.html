@@ -3,6 +3,8 @@
     <h4 class="sidebar-title">Hot Tags</h4>
     <p class="sidebar-content">
 
+      <?= it.no_record( it.sidebar.tags.length, '<span class="no-record-side">No tags</span>' ) ?>
+
       <? it.each( it.sidebar.tags, 20, function ( tag ){ ?>
       <a href="/topics/tag?name=<?= tag.name ?>" class="all-tag-item tag"><?- tag.name ?></a>
       <? }); ?>

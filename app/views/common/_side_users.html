@@ -3,6 +3,8 @@
     <h4 class="sidebar-title">Active Users</h4>
     <p class="sidebar-content">
 
+      <?= it.no_record( it.sidebar.users.length, '<span class="no-record-side">No users</span>' ) ?>
+
       <? it.each( it.sidebar.users, 6, function ( user ){ ?>
       <a href="/users/<?= user._id ?>" class="user"><img class="avatar" src="<?= user.avatar ?>" alt="Avatar"><?- it.truncate( user.name, 20 ) ?></a>
       <? }); ?>

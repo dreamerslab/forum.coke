@@ -21,6 +21,10 @@ module.exports = function ( app ){
       return obj === undefined ? '' : obj;
     },
 
+    no_record : function ( length, label ){
+      return length == 0 ? label : '';
+    },
+
     each : function ( arr, limit, callback ){
       var i = 0;
       var j = arr.length > limit ? limit : arr.length;
@@ -99,20 +103,22 @@ module.exports = function ( app ){
       var new_btn  = data.sess_user ?
         '<li id="new-post"><a class="btn btn-primary" href="/topics/new">New Post</a></li>' : '';
 
-      if(( selected === 'tag' ) || ( selected === 'keywords' )){
-        title && title( keyword, selected );
-      }else{
-        nav && nav( new_btn );
+      if(( selected === 'tag' ) || ( selected === 'keyword' )){
+        return title( keyword, selected );
       }
+
+      nav( new_btn );
     },
 
     show_title : function ( keyword, label ){
-      return '<h2 id="page-title">Posts about %s</h2>'.replace( /%s/, label + ' "' + keyword + '"' );
+      return '<h2 id="page-title">Search %s</h2>'.
+        replace( /%s/, label + ' "' + keyword + '"' );
     },
 
-    show_err : function ( err ){
-      return err ?
-        '<label class="error">' + err + '</label>' : '';
+    show_err : function ( type ){
+       return this.get_error()[ type ] ?
+        '<label class="error">' + this.get_error()[ type ] + '</label>' :
+        '';
     },
 
     truncate : function ( str, length ){
@@ -135,7 +141,7 @@ module.exports = function ( app ){
   });
 
   app.dynamicHelpers({
-    error : function ( req, res ){
+    get_error : function ( req, res ){
       return function (){
         return req.form ?
           req.form.getErrors() :

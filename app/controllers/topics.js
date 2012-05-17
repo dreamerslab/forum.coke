@@ -139,7 +139,7 @@ module.exports = Controller.extend({
 
     Topic.paginate( conds, opts, next, function ( result ){
       result.nav_selected     = 'topics';
-      result.sub_nav_selected = 'keywords';
+      result.sub_nav_selected = 'keyword';
       result.keywords = keywords.join( ' ' );
       res.render( 'topics/index',
         self._merge( req, result, '?keywords=' + keywords.join( '+' )));

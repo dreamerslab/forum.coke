@@ -6,6 +6,9 @@
   <h2>All Users</h2>
   <div id="users-wrap">
     <ul class="thumbnails">
+
+      <?= it.no_record( it.users.length, '<h3 class="no-record-users">No users</h3>' ) ?>
+
       <? it.users.forEach( function ( user ){  ?>
       <div class="user-wrap">
         <div class="user-profile-avatar"><a class="user-link" href="/users/<?= user._id ?>"><img class="user-profile-avatar-img" src="<?= user.avatar ?>" alt="Avatar"></a></div>

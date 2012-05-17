@@ -6,6 +6,9 @@
   <h2>All Tags</h2>
   <div id="tags-wrap">
     <ul class="thumbnails">
+
+      <?= it.no_record( it.tags.length, '<h3 class="no-record-tags">No tags</h3>' ) ?>
+
       <? it.tags.forEach( function ( tag ){ ;?>
       <div class="tag-wrap">
         <a href="/topics/tag?name=<?= tag.name ?>" class="all-tag-item tag"><?- tag.name ?></a>

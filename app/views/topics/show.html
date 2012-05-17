@@ -75,9 +75,7 @@
       <div class="control-group">
         <div class="controls">
           <textarea class="input-xlarge" id="textarea" name="comment[content]" rows="10"><?= it.val( it.comment, 'content' ) ?></textarea>
-          <?= it.error()[ 'comment.content' ] ?
-              it.show_err( it.error()[ 'comment.content' ]) :
-              '' ?>
+          <?= it.show_err( 'comment.content' ) ?>
         </div>
       </div>
       <?= it.partial( 'common/_form_actions' ) ?>

@@ -2,6 +2,8 @@
   <div class="caption">
     <h4 class="sidebar-title">Issues</h4>
 
+    <?= it.no_record( it.sidebar.issues.length, '<span class="no-record-side">No issues</span>' ) ?>
+
     <? it.each( it.sidebar.issues, 5, function ( issue ){ ?>
     <h4><a href="<?= issue.link ?>" class="issue-title-link" target="_blank"><?- it.truncate( issue.title ) ?></a></h4>
     <p><?- it.truncate( issue.content ) ?></p>

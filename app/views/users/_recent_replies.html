@@ -1,6 +1,8 @@
 <div id="replies">
   <h2 class="block-title">Recent Reply Posts</h2>
 
+  <?= it.no_record( it.user.recent_replies.length, '<h3 class="no-record-index">No reply posts</h3>' ) ?>
+
   <? it.each( it.user.recent_replies, 5, function( reply ){ ?>
     <div class="article-item">
       <h3 class="item-title">

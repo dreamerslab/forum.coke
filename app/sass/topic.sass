@@ -33,6 +33,7 @@
   text-align: right
 
 .meta-wrap
+  +clearfix
   padding: 10px 0 0
 
 .comment-reply, .comment-delete
@@ -41,7 +42,7 @@
   float: left
   margin: 0 3px 0 0
 
-#article-author
+.article-author
   +float-right
   &:hover
     text-decoration: none
@@ -51,10 +52,15 @@
   &:hover
     text-decoration: none
 
-.article-avatar
+.author-avatar
   +float-left
-  width: 15px
+  max-width: 15px
+  height: 15px
   padding: 1px 4px 0 0
+
+.author-name
+  +float-right
+  padding: 0 0 0 4px
 
 #reply-area
   padding: 30px 0 0

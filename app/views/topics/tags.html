@@ -7,10 +7,10 @@
   <div id="tags-wrap">
     <ul class="thumbnails">
       <? it.tags.forEach( function ( tag ){ ;?>
-      <li class="span3">
+      <div class="tag-wrap">
         <a href="/topics/tag?name=<?= tag.name ?>" class="all-tag-item tag"><?- tag.name ?></a>
         <span> x <?= tag.topics.length ?></span>
-      </li>
+      </div>
       <? }); ?>
     </ul>
     <?= it.partial( 'common/_pagination' )?>

@@ -58,6 +58,12 @@ nav {
 }
 
 /* line 40, ../../../app/sass/common/header.sass */
+.nav-link {
+  font-weight: bold\9;
+  padding: 9px \9 8px\9 5px\9 8px\9;
+}
+
+/* line 44, ../../../app/sass/common/header.sass */
 #nav-selected {
   background: black;
   color: white;

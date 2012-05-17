@@ -4,6 +4,9 @@
 $profile-width: 135px
 $body-font: Kefa, Merriweather, serif
 
+a:focus, input:focus, textarea:focus, button:focus
+  outline: none
+
 .article-nav-list
   +clearfix
   padding: 0 0 21px
@@ -27,6 +30,10 @@ $body-font: Kefa, Merriweather, serif
     color: #fff
     text-decoration: none
 
+.article-nav-link
+  font-size: 16px\9
+  padding: 7px\9 8px\9 5px\9 8px\9
+
 #article-nav-selected
   background: #000
   color: #fff
@@ -40,11 +47,16 @@ $body-font: Kefa, Merriweather, serif
   padding: 5px 8px
   font-weight: bold
 
+.info
+  font-size: 16px\9
+  padding: 7px\9 8px\9 5px\9 8px\9
+
 #content-wrap
   padding: 40px 0
 
 #search-input
   width: 122px
+  width: 143px\9
 
 #search
   +float-right
@@ -99,9 +111,11 @@ $body-font: Kefa, Merriweather, serif
   +clearfix
 
 #profile-avatar-photo
+  display: block
   padding: 0 5px 0 0
-  width: 50px
+  max-width: 50px
   height: 50px
+
 
 .crumb-link:hover
   text-decoration: none

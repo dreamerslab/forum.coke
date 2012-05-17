@@ -13,11 +13,18 @@
       <div class="article-item">
         <h3 class="item-title"><a class="title-link" href="/topics/<?= topic._id ?>"><?- it.truncate( topic.title, 40 ) ?></a></h3>
         <p class="item-content"><?- it.truncate( topic.content, 65 ) ?></p>
-        <? topic.tag_names.forEach( function( tag ){ ?>
-          <a href="/topics/tag?name=<?- tag ?>" class="tag"><?- tag ?></a>
-        <? }); ?>
-        <a href="/users/<?- topic.user._id ?>" class="author"><img class="article-avatar" src="<?- topic.user.avatar ?>"><?- topic.user.name ?></a>
-        <span class="last-reply-time"><?- it.ago( topic.updated_at ) ?></span>
+        <div class="tags">
+          <? topic.tag_names.forEach( function( tag ){ ?>
+            <a href="/topics/tag?name=<?- tag ?>" class="tag"><?- tag ?></a>
+          <? }); ?>
+        </div>
+        <div class="user-data">
+          <a href="/users/<?- topic.user._id ?>" class="author"><?- topic.user.name ?></a>
+          <a href="/users/<?- topic.user._id ?>" class="author">
+            <img class="author-avatar" src="<?- topic.user.avatar ?>">
+          </a>
+          <span class="last-reply-time"><?- it.ago( topic.updated_at ) ?></span>
+        </div>
         <a class="comment-count" href="/topics/<?= topic._id ?>#comment"><?- topic.comments.length ?></a>
       </div> <!-- .article-item -->
 

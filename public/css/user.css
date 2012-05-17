@@ -21,7 +21,7 @@
 /* line 18, ../../app/sass/user.sass */
 #user-profile-avatar-img {
   display: block;
-  width: 80px;
+  max-width: 80px;
   height: 80px;
 }
 

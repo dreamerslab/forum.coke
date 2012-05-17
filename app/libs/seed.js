@@ -56,65 +56,65 @@ module.exports = {
       }); // User.collection
     });
 
-    // creating users
-    var i = 10;
+    // // creating users
+    // var i = 10;
 
-    for(; i--;){
-      flow.parallel( function ( ready ){
-        var user = random_user();
-        new User( user ).save( function ( err, user, count ){
-          ready();
-        });
-      });
-    }
+    // for(; i--;){
+    //   flow.parallel( function ( ready ){
+    //     var user = random_user();
+    //     new User( user ).save( function ( err, user, count ){
+    //       ready();
+    //     });
+    //   });
+    // }
 
-    flow.join();
+    // flow.join();
 
-    // creating topics
-    var j = 100;
+    // // creating topics
+    // var j = 100;
 
-    for(; j--;){
-      flow.series( function ( ready ){
-        User.find( function ( err, users ){
-          // get a random user
-          var user   = users[ random( users.length )];
-          var topic  = random_topic();
-          var string = Faker.Lorem.words( random( 5 )).join(', ');
+    // for(; j--;){
+    //   flow.series( function ( ready ){
+    //     User.find( function ( err, users ){
+    //       // get a random user
+    //       var user   = users[ random( users.length )];
+    //       var topic  = random_topic();
+    //       var string = Faker.Lorem.words( random( 5 )).join(', ');
 
-          topic.user_id   = user;
-          topic.tag_names = Tag.extract_names( string );
+    //       topic.user_id   = user;
+    //       topic.tag_names = Tag.extract_names( string );
 
-          new Topic( topic ).save( function ( err, topic, count ){
-            ready();
-          });
-        });
-      });
-    }
+    //       new Topic( topic ).save( function ( err, topic, count ){
+    //         ready();
+    //       });
+    //     });
+    //   });
+    // }
 
-    // create comments
-    var k = 150;
+    // // create comments
+    // var k = 150;
 
-    for(; k--;){
-      flow.series( function ( ready ){
-        User.find( function ( err, users ){
-          // get a random user
-          var user = users[ random( users.length )];
+    // for(; k--;){
+    //   flow.series( function ( ready ){
+    //     User.find( function ( err, users ){
+    //       // get a random user
+    //       var user = users[ random( users.length )];
 
-          Topic.find( function ( err, topics ){
-            // get a random topic
-            var topic   = topics[ random( topics.length )];
-            var comment = random_comment();
+    //       Topic.find( function ( err, topics ){
+    //         // get a random topic
+    //         var topic   = topics[ random( topics.length )];
+    //         var comment = random_comment();
 
-            comment.user_id  = user;
-            comment.topic_id = topic;
+    //         comment.user_id  = user;
+    //         comment.topic_id = topic;
 
-            new Comment( comment ).save( function ( err, comment, count ){
-              ready();
-            });
-          });
-        });
-      });
-    }
+    //         new Comment( comment ).save( function ( err, comment, count ){
+    //           ready();
+    //         });
+    //       });
+    //     });
+    //   });
+    // }
 
     flow.end( function (){
       LOG.debug( 'seed data filled' );

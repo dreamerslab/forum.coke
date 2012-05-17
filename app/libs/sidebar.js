@@ -59,47 +59,47 @@ module.exports = {
         });
     });
 
-    flow.series( function ( next ){
-      var https   = require( 'https' );
-      var data    = '';
-      var options = {
-        host: 'api.github.com',
-        port: 443,
-        path: '/repos/dreamerslab/coke/issues',
-        method: 'GET'
-      };
+    // flow.series( function ( next ){
+    //   var https   = require( 'https' );
+    //   var data    = '';
+    //   var options = {
+    //     host: 'api.github.com',
+    //     port: 443,
+    //     path: '/repos/dreamerslab/coke/issues',
+    //     method: 'GET'
+    //   };
 
-      var req = https.request( options, function( res ){
-        res.on( 'data', function ( chunk ){
-          data = data + chunk.toString();
-        });
+    //   var req = https.request( options, function( res ){
+    //     res.on( 'data', function ( chunk ){
+    //       data = data + chunk.toString();
+    //     });
 
-        res.on( 'end', function (){
-          var issues = JSON.parse( data );
+    //     res.on( 'end', function (){
+    //       var issues = JSON.parse( data );
 
-          issues.forEach( function ( issue ){
-            if( trunk_issues.length < 6 ){
-              if( issue.state === 'open' ){
-                trunk_issues.push({
-                  title   : issue.title,
-                  content : issue.body,
-                  link    : issue.html_url
-                });
-              }
-            }
-          });
+    //       issues.forEach( function ( issue ){
+    //         if( trunk_issues.length < 6 ){
+    //           if( issue.state === 'open' ){
+    //             trunk_issues.push({
+    //               title   : issue.title,
+    //               content : issue.body,
+    //               link    : issue.html_url
+    //             });
+    //           }
+    //         }
+    //       });
 
-          next();
-        });
-      });
+    //       next();
+    //     });
+    //   });
 
-      req.on( 'error', function( err ){
-        err && LOG.error( 500,
-          '[libs][sidebar][init] Having trouble getting github issues', err );
-      });
+    //   req.on( 'error', function( err ){
+    //     err && LOG.error( 500,
+    //       '[libs][sidebar][init] Having trouble getting github issues', err );
+    //   });
 
-      req.end();
-    });
+    //   req.end();
+    // });
 
     flow.series( function ( next ){
       Cache.findOne({

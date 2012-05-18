@@ -8,7 +8,7 @@ var flow    = new Flow();
 module.exports = {
   init : function (){
     flow.series( function ( next ){
-      seed.init( next );
+      if( NODE_ENV !== 'prod' ) seed.init( next );
     });
 
     flow.series( function ( next ){

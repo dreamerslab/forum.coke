@@ -1,4 +1,4 @@
-var Faker    = require( 'faker' );
+var Faker    = require( 'Faker' );
 var mongoose = require( 'mongoose' );
 var User     = mongoose.model( 'User' );
 var Topic    = mongoose.model( 'Topic' );

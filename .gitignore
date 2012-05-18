@@ -8,3 +8,4 @@ logs/*
 /config/dev/config.yml
 /doc/prod
 log/error.log
+tmp/

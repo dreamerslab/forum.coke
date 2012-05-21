@@ -131,7 +131,8 @@ module.exports = {
     flow.end( function (){
       LOG.debug( 'sidebar updated' );
 
-      callback && callback();
+      // callback && callback();
+      if( UTILS.typeof( callback ) === 'function' ) callback();
     });
   }
 };

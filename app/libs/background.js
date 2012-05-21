@@ -7,11 +7,9 @@ var flow    = new Flow();
 module.exports = {
   init : function (){
 
-    if( NODE_ENV === 'dev' ){
-      flow.series( function ( next ){
-        seed.init( next );
-      });
-    }
+    flow.series( function ( next ){
+      if( NODE_ENV === 'dev' ) seed.init( next );
+    });
 
     flow.series( function ( next ){
       rater.init( next );

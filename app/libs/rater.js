@@ -4,8 +4,6 @@ var User     = mongoose.model( 'User' );
 var Topic    = mongoose.model( 'Topic' );
 var Comment  = mongoose.model( 'Comment' );
 
-
-
 module.exports = {
   init : function ( callback ){
     User.find( function ( err, users ){
@@ -20,10 +18,11 @@ module.exports = {
 
       users.forEach( function ( user ){
         flow.series( function ( next ){
-          var c1 = user.topics.length;
-          var c2 = user.comments.length;
 
-          user.rating = c1 * RATE_PER_TOPIC + c2 * RATE_PER_COMMENT;
+          user.rating =
+            user.topics.length * RATE_PER_TOPIC +
+            user.comments.length * RATE_PER_COMMENT;
+
           user.save( function ( err, user, count ){
             if( err ) return LOG.error( 500,
               '[libs][rater][init] Having trouble saving the user' );
@@ -42,3 +41,5 @@ module.exports = {
     });
   }
 };
+
+

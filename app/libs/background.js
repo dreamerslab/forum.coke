@@ -4,12 +4,14 @@ var rater   = require( './rater' );
 var sidebar = require( './sidebar' );
 var flow    = new Flow();
 
-
 module.exports = {
   init : function (){
-    flow.series( function ( next ){
-      seed.init( next );
-    });
+
+    if( NODE_ENV === 'dev' ){
+      flow.series( function ( next ){
+        seed.init( next );
+      });
+    }
 
     flow.series( function ( next ){
       rater.init( next );
@@ -27,3 +29,5 @@ module.exports = {
     });
   }
 };
+
+

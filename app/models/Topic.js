@@ -6,14 +6,14 @@ var Flow     = require( 'node.flow' );
 
 Topic.post( 'init', hooks.catch_old_tag_names );
 
-Topic.pre( 'save', common.mark_new_record );
+Topic.pre( 'save', common.mark_new );
 Topic.pre( 'save', hooks.cache_user_info );
 
 Topic.post( 'save', hooks.add_to_user );
 Topic.post( 'save', hooks.remove_from_tags );
 Topic.post( 'save', hooks.add_to_tags );
-Topic.post( 'save', hooks.notify_subscribers );
-
+Topic.post( 'save', hooks.notify );
+`
 Topic.post( 'remove', hooks.remove_from_user );
 Topic.post( 'remove', hooks.remove_from_tags );
 Topic.post( 'remove', hooks.remove_all_comments );

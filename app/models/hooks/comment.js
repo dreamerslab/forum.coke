@@ -63,7 +63,7 @@ module.exports = {
     }
   },
 
-  notify_subscribers : function (){
+  notify : function (){
     var self  = this;
     var Topic = mongoose.model( 'Topic' );
     var Notif = mongoose.model( 'Notification' );
@@ -71,7 +71,7 @@ module.exports = {
     Topic.findById( this.topic_id, function ( err, topic ){
       if( err ){
         LOG.error( 500,
-          '[models/hooks/comment#notify_subscribers] Fail to notify subscribers when comment created', err );
+          '[models/hooks/comment#notify] Fail to notify subscribers when comment created', err );
         return;
       }
 

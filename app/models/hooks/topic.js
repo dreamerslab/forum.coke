@@ -76,7 +76,7 @@ module.exports = {
     });
   },
 
-  notify_subscribers : function (){
+  notify : function (){
     var Notif = mongoose.model( 'Notification' );
 
     Notif.send( 'update-topic', this );

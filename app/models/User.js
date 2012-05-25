@@ -19,7 +19,7 @@ User.statics = {
         limit( opts.limit ).run( function ( err, users ){
           if( err ) return next( err );
 
-          callback && callback({
+          callback({
             users  : users,
             count  : count,
             from   : opts.skip,

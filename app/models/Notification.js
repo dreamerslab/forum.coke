@@ -50,7 +50,7 @@ Notification.statics = {
         limit( opts.limit ).run( function ( err, notifs ){
           if( err ) return next( err );
 
-          callback && callback({
+          callback({
             notifs : notifs,
             count  : count,
             from   : opts.skip,
@@ -71,7 +71,7 @@ Notification.statics = {
           { $set : { is_read : true }},
           function ( err, count ){
             if( err ){
-              callback && callback( err );
+              callback( err );
               return;
             }
 
@@ -79,14 +79,14 @@ Notification.statics = {
               { _id : notif.user_id },
               { $pull : { notifications : notif._id }},
               function ( err, count ){
-                callback && callback( err );
+                callback( err );
               });
           });
 
         return;
       }
 
-      callback && callback( err );
+      callback( err );
     });
   },
 

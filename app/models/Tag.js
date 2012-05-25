@@ -19,7 +19,7 @@ Tag.statics = {
         limit( opts.limit ).run( function ( err, tags ){
           if( err ) return next( err );
 
-          callback && callback({
+          callback({
             tags  : tags,
             count : count,
             from  : opts.skip,
@@ -57,7 +57,7 @@ Tag.statics = {
         self.findOne({ name : name }, function ( err, tag ){
           if( err ){
             flow.end( function (){
-              callback && callback( err );
+              callback( err );
             });
             return;
           }
@@ -69,7 +69,7 @@ Tag.statics = {
           new self({ name : name }).save( function ( err, tag, count ){
             if( err ){
               flow.end( function (){
-                callback && callback( err );
+                callback( err );
               });
               return;
             }
@@ -81,7 +81,7 @@ Tag.statics = {
     });
 
     flow.end( function (){
-      callback && callback();
+      callback();
     });
   }
 };

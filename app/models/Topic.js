@@ -34,7 +34,7 @@ Topic.statics = {
         limit( opts.limit ).run( function ( err, topics ){
           if( err ) return next( err );
 
-          callback && callback({
+          callback({
             topics : topics,
             count  : count,
             from   : opts.skip,

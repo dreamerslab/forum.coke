@@ -21,7 +21,7 @@ module.exports = Class.extend({
   },
 
   permission_denied : function ( req, res, next ){
-    LOG.error( 500, res, 'Permission denied' );
+    LOG.error( 403, res, 'Permission denied' );
 
     req.flash( 'flash-error', 'Permission denied: not your ' + req.msg );
     res.redirect( req.origin );
@@ -29,15 +29,12 @@ module.exports = Class.extend({
 
   validation : function ( err, req, res, next ){
     if( err.name && err.name == 'ValidationError' ){
-      var error;
-      for( error in err.errors ){
+      Object.keys( err.errors ).forEach( function ( error ){
         req.flash( 'flash-error', err.errors[ error ].message );
-      }
+      });
 
       res.redirect( 'back' );
-      LOG.error( 500, res, err );
-
-      return;
+      return LOG.error( 400, res, err );
     }
 
     next( err );
@@ -45,24 +42,9 @@ module.exports = Class.extend({
 
   unique : function ( err, req, res, next ){
     if( err.name && err.name == 'MongoError' ){
-      // respond with html page
-      if( req.accepts( 'html' )){
-        req.flash( 'flash-error', err.err );
-        res.redirect( 'back' );
-        LOG.error( 46, res, err );
-
-        return;
-      }
-
-      // respond with json
-      if( req.accepts( 'json' )){
-        res.json({
-          status : 46,
-          body : 'The given field has been taken'
-        });
-
-        return;
-      }
+      req.flash( 'flash-error', err.err );
+      res.redirect( 'back' );
+      return LOG.error( 46, res, err );
     }
 
     next( err );
@@ -84,10 +66,7 @@ module.exports = Class.extend({
   },
 
   ensure_authenticated : function ( req, res, next ){
-    if( req.isAuthenticated()){
-      next();
-      return;
-    }
+    if( req.isAuthenticated()) return next();
 
     res.redirect( '/auth/google' );
   }

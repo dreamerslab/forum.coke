@@ -65,7 +65,7 @@ module.exports = Controller.extend({
 
     Topic.trending( req.query.from, next, function ( result ){
       result.nav_selected     = 'topics';
-      result.sub_nav_selected = 'latest';
+      result.sub_nav_selected = 'trending';
       res.render( 'topics/index', self._merge( req, result ));
     });
   },

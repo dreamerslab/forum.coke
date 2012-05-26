@@ -5,7 +5,8 @@ var Application = require( CONTROLLER_DIR + 'application' );
 
 module.exports = Application.extend({
 
-  // controller filters --------------------------------------------------------
+//--- filters ------------------------------------------------------------------
+
   init : function ( before, after ){
     before( this.sidebar );
     before( this.find_user, {
@@ -29,7 +30,8 @@ module.exports = Application.extend({
     });
   },
 
-  // controller actions --------------------------------------------------------
+//--- actions ------------------------------------------------------------------
+
   index : function ( req, res, next ){
     var self  = this;
 

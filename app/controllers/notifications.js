@@ -5,13 +5,11 @@ var Application = require( CONTROLLER_DIR + 'application' );
 
 module.exports = Application.extend({
 
-  // controller filters --------------------------------------------------------
   init : function ( before, after ){
     before( this.sidebar );
     before( this.authenticated );
   },
 
-  // controller actions --------------------------------------------------------
   index : function ( req, res, next ){
     var self = this;
     var args = {

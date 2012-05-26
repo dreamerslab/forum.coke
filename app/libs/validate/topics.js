@@ -6,7 +6,7 @@ form.configure({
 });
 
 module.exports = {
-  validate_topic_form : form(
+  validate_topics : form(
     field( 'topic.title', 'Tilte' ).required(),
     field( 'topic.content', 'Content' ).required()
   ),

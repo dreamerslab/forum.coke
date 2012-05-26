@@ -8,7 +8,7 @@ module.exports = Application.extend({
   google : function ( req, res, next ){
     var referer = req.headers.referer ?
       req.headers.referer :
-      '/topics/latest';
+      '/';
 
     res.cookie( 'referer', referer );
 
@@ -22,47 +22,44 @@ module.exports = Application.extend({
   callback : function ( req, res, next ){
     passport.authenticate( 'google', {
       failureRedirect : '/'
-    })( req, res, function (){
+    })( req, res, function (){ // do not add req, res here
       User.findOne({
         google_id : req.user.id
       }, function ( err, user ){
         if( err ){
           LOG.error( 500, res, err );
-          res.redirect( '/logout' );
-          return;
+          return res.redirect( '/logout' );
         }
 
         var referer = req.cookies.referer ?
           req.cookies.referer :
-          '/topics/latest';
+          '/';
 
-        if( user ){
+        if( user ) return res.redirect( referer );
+
+        var profile = req.user;
+
+        new User({
+          google_id  : profile.id,
+          google_raw : profile,
+          name       : profile._json.name,
+          email      : profile._json.email,
+          picture    : profile._json.picture
+        }).save( function ( err, user, count ){
+          if( err ){
+            LOG.error( 500, res, err );
+            return res.redirect( '/logout' );
+          }
+
           res.redirect( referer );
-        }else{
-          var profile = req.user;
+        });
 
-          new User({
-            google_id  : profile.id,
-            google_raw : profile,
-            name       : profile._json.name,
-            email      : profile._json.email,
-            picture    : profile._json.picture
-          }).save( function ( err, user, count ){
-            if( err ){
-              LOG.error( 500, res, err );
-              res.redirect( '/logout' );
-              return;
-            }
-
-            res.redirect( referer );
-          });
-        }
       });
     });
   },
 
   logout : function ( req, res, next ){
     req.logout();
-    res.redirect( '/topics/latest' );
+    res.redirect( '/topics' );
   },
 });

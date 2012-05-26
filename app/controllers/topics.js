@@ -1,187 +1,135 @@
 var Application = require( CONTROLLER_DIR + 'application' );
 var validate    = require( LIB_DIR + 'validate/topics' );
 var Controller  = Application.extend( validate );
-
 var mongoose    = require( 'mongoose' );
-var Notif       = mongoose.model( 'Notification' );
 var Topic       = mongoose.model( 'Topic' );
-var Tag         = mongoose.model( 'Tag' );
 
 module.exports = Controller.extend({
 
-  // controller filters --------------------------------------------------------
-  init : function ( before, after ){
-    before( this.fill_sidebar );
+//--- filters ------------------------------------------------------------------
 
-    before( this.ensure_authenticated, {
+  init : function ( before, after ){
+    before( this.sidebar );
+
+    before( this.authenticated, {
       only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
 
-    before( this.validate_topic_form,
+    before( this.validate_topics,
       { only : [ 'create', 'update' ]});
 
-    before( this.verify_permission,
+    before( this.authorized,
       { only : [ 'edit', 'update', 'destroy' ]});
   },
 
-  verify_permission : function ( req, res, next ){
+  authorized : function ( req, res, next ){
     var self = this;
-    var id   = req.params.id || req.params.topic_id;
+    var args = {
+      id   : req.params.id || req.params.topic_id,
+      user : req.user
+    };
 
-    Topic.findById( id, function ( err, topic ){
-      if( topic ){
-        if( topic.is_owner( req.user )){
-          req.para_topic = topic;
-          return next();
-        }
-
+    Topic.authorized( args,
+      // no_content
+      function ( err ){
+        req.msg = 'Topic';
+        self.no_content( err, req, res );
+      },
+      // forbidden
+      function (){
         req.msg    = 'topic';
-        req.origin = '/topics/' + topic._id;
-        self.permission_denied( req, res, next );
-        return;
-      }
-
-      req.msg = 'Topic';
-      self.record_not_found( err, req, res );
-    });
+        req.origin = '/topics/' + id;
+        self.forbidden( req, res, next );
+      },
+      // success
+      function ( topic ){
+        req.topic = topic;
+        next();
+      });
   },
 
-  // controller actions --------------------------------------------------------
-  tags : function ( req, res, next ){
-    var self = this;
-    var conds = {};
-    var opts  = { sort  : [ 'name', 1 ],
-                  skip  : req.query.from || 0,
-                  limit : 20 };
+//--- actions ------------------------------------------------------------------
 
-    Tag.paginate( conds, opts, next, function ( result ){
-      result.nav_selected = 'tags';
-      res.render( 'topics/tags', self._merge( req, result, '?' ));
-    });
-  },
-
-  latest : function ( req, res, next ){
+  // latest
+  index : function ( req, res, next ){
     var self  = this;
-    var conds = {};
-    var opts  = { sort  : [ 'updated_at', -1 ],
-                  skip  : req.query.from || 0,
-                  limit : 20 };
 
-    Topic.paginate( conds, opts, next, function ( result ){
+    Topic.latest( req.query.from, next, function ( result ){
       result.nav_selected     = 'topics';
       result.sub_nav_selected = 'latest';
-      res.render( 'topics/index', self._merge( req, result, '?' ));
+      res.render( 'topics/index', self._merge( req, result ));
     });
   },
 
   trending : function ( req, res, next ){
     var self  = this;
-    var conds = {};
-    var opts  = { sort  : [ 'read_count', -1 ],
-                  skip  : req.query.from || 0,
-                  limit : 20 };
 
-    Topic.paginate( conds, opts, next, function ( result ){
+    Topic.trending( req.query.from, next, function ( result ){
       result.nav_selected     = 'topics';
-      result.sub_nav_selected = 'trending';
-      res.render( 'topics/index', self._merge( req, result, '?' ));
+      result.sub_nav_selected = 'latest';
+      res.render( 'topics/index', self._merge( req, result ));
     });
   },
 
   unsolved : function ( req, res, next ){
     var self  = this;
-    var conds = { comments : { $size : 0 }};
-    var opts  = { sort  : [ 'updated_at', -1 ],
-                  skip  : req.query.from || 0,
-                  limit : 20 };
 
-    Topic.paginate( conds, opts, next, function ( result ){
+    Topic.unsolved( req.query.from, next, function ( result ){
       result.nav_selected     = 'topics';
       result.sub_nav_selected = 'unsolved';
-      res.render( 'topics/index', self._merge( req, result, '?' ));
-    });
-  },
-
-  tag : function ( req, res, next ){
-    if( !req.query.name ){
-      req.flash( 'flash-error', 'No tag name specified' );
-      res.redirect( '/topics/tags' );
-
-      return;
-    }
-
-    var self  = this;
-    var conds = { tag_names : { $in : [ req.query.name ]}};
-    var opts  = { sort  : [ 'updated_at', -1 ],
-                  skip  : req.query.from || 0,
-                  limit : 20 };
-
-    Topic.paginate( conds, opts, next, function ( result ){
-      result.nav_selected     = 'tags';
-      result.sub_nav_selected = 'tag';
-      result.tag_name         = req.query.name;
-      res.render( 'topics/index',
-        self._merge( req, result, '?name=' + req.query.name ));
+      res.render( 'topics/index', self._merge( req, result ));
     });
   },
 
   search : function ( req, res, next ){
-    if( !req.query.keywords ){
-      req.flash( 'flash-error', 'No keyword specified' );
-      res.redirect( '/topics' );
-
-      return;
-    }
-
-    var keywords = req.query.keywords.split( /\s+|\+/ );
-    var regexp   = new RegExp( keywords.join( '|' ), 'gi' );
     var self     = this;
-    var conds    = { $or : [{ title : regexp }, { content : regexp }]};
-    var opts     = { sort  : [ 'updated_at', -1 ],
-                     skip  : req.query.from || 0,
-                     limit : 20 };
+    var keywords = req.query.keywords.split( /\s+|\+/ );
+    var args     = {
+      keywords : keywords,
+      skip     : req.query.from
+    };
 
-    Topic.paginate( conds, opts, next, function ( result ){
-      result.nav_selected     = 'topics';
-      result.sub_nav_selected = 'keyword';
-      result.keywords = keywords.join( ' ' );
-      res.render( 'topics/index',
-        self._merge( req, result, '?keywords=' + keywords.join( '+' )));
-    });
+    Topic.search( args, next,
+      // no keyword
+      function (){
+        req.flash( 'flash-error', 'No keyword specified' );
+        res.redirect( '/topics' );
+      },
+      // success
+      function ( result ){
+        result.nav_selected     = 'topics';
+        result.sub_nav_selected = 'keyword';
+        result.keywords         = keywords.join( ' ' );
+        res.render( 'topics/index',
+          self._merge( req, result, '?keywords=' + keywords.join( '+' )));
+      });
   },
 
   show : function ( req, res, next ){
     var self = this;
-
-    if( req.query.nid ){
-      Notif.mark_read( req.query.nid, function ( err ){
-        err && LOG.error( 500, res, 'Fail to mark notification as read' );
-
-        res.redirect( '/topics/' + req.params.id );
-      });
-
-      return;
+    var id   = req.params.id;
+    var args = {
+      id  : id,
+      nid : req.query.nid
     }
 
-    Topic.
-      findById( req.params.id ).
-      populate( 'user_id' ).
-      populate( 'comments' ).
-      run( function ( err, topic ){
-        if( topic ){
-          var comment = { content : '' };
-
-          topic.inc_read_count();
-          res.render( 'topics/show', self._merge( req, {
-              topic        : topic,
-              nav_selected : 'topics'
-          }));
-
-          return;
-        }
-
+    Topic.show( args,
+      // mark as read
+      function ( err ){
+        err && LOG.error( 500, res, 'Fail to mark notification as read' );
+        res.redirect( '/topics/' + id );
+      },
+      // no content
+      function ( err ){
         req.msg = 'Topic';
-        self.record_not_found( err, req, res );
-      });
+        self.no_content( err, req, res );
+      },
+      // success
+      function ( topic ){
+        res.render( 'topics/show', self._merge( req, {
+          topic        : topic,
+          nav_selected : 'topics'
+        }));
+    });
   },
 
   'new' : function ( req, res, next ){
@@ -190,63 +138,69 @@ module.exports = Controller.extend({
   },
 
   create : function ( req, res, next ){
-    var self = this;
+    var self  = this;
+    var topic = req.body.topic;
+    var args  = {
+      valid : req.form.isValid,
+      user  : req.user,
+      topic : topic
+    };
 
-    if( !req.form.isValid ){
-      res.render( 'topics/new',
-        self._merge( req, { topic : req.body.topic }));
-      return;
-    }
+    Topic.create( args,
+      // invalid
+      function (){
+        res.render( 'topics/new',
+          self._merge( req, { topic : topic }));
+      },
+      // success
+      function ( err, topic, count ){
+        if( err ){
+          req.flash( 'flash-error', 'Topic creation fail' );
+          return res.redirect( '/topics' );
+        }
 
-    var topic = new Topic({ user_id : req.user });
-
-    topic.set_attrs( req.body.topic );
-    topic.save( function ( err, topic, count ){
-      if( err ){
-        req.flash( 'flash-error', 'Topic creation fail' );
-        res.redirect( '/topics' );
-        return;
-      }
-
-      req.flash( 'flash-info', 'Topic created' );
-      res.redirect( '/topics/' + topic._id );
-    });
+        req.flash( 'flash-info', 'Topic created' );
+        res.redirect( '/topics/' + topic._id );
+      });
   },
 
   edit : function ( req, res, next ){
     var self  = this;
-    var topic = req.para_topic;
 
     return res.render( 'topics/edit',
-      self._merge( req, { topic : topic, nav_selected : 'topics' }));
+      self._merge( req, { topic : req.topic, nav_selected : 'topics' }));
   },
 
   update : function ( req, res, next ){
-    var self  = this;
-    var topic = req.para_topic;
+    var self = this;
+    var args = {
+      valid : req.form.isValid,
+      topic : req.topic,
+      src   : req.body.topic
+    };
 
-    if( !req.form.isValid ){
-      return res.render( 'topics/edit',
-        self._merge( req, { topic : topic }));
-    }
+    Topic.update_props( args,
+      // invalid
+      function (){
+        res.render( 'topics/edit',
+          self._merge( req, { topic : req.topic }));
+      },
+      // success
+      function ( err, topic, count ){
+        if( err ){
+          req.flash( 'flash-error', 'Topic update fail' );
+        }else{
+          req.flash( 'flash-info', 'Topic updated' );
+        }
 
-    topic.set_attrs( req.body.topic );
-    topic.save( function ( err, topic, count ){
-      if( err ){
-        req.flash( 'flash-error', 'Topic update fail' );
-      }else{
-        req.flash( 'flash-info', 'Topic updated' );
-      }
-
-      res.redirect( '/topics/' + topic._id );
-    });
+        res.redirect( '/topics/' + topic._id );
+      });
   },
 
   destroy : function ( req, res, next ){
     var self  = this;
-    var topic = req.para_topic;
 
-    topic.remove( function ( err ){
+    req.topic.remove( function ( err ){
       if( err ){
         req.flash( 'flash-error', 'Topic deletion fail' );
       }else{

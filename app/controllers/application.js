@@ -9,18 +9,18 @@ module.exports = Class.extend({
       sidebar   : req.sidebar,
       sess_user : req.user,
       path      : req.path,
-      query     : base_query || ''
+      query     : base_query || '?'
     });
   },
 
-  record_not_found : function ( err, req, res, next ){
-    err && LOG.error( 500, res, err );
+  no_content : function ( err, req, res, next ){
+    err && LOG.error( 204, res, err );
 
     req.flash( 'flash-error', req.msg + ' not found' );
     res.redirect( 'back' );
   },
 
-  permission_denied : function ( req, res, next ){
+  forbidden : function ( req, res, next ){
     LOG.error( 403, res, 'Permission denied' );
 
     req.flash( 'flash-error', 'Permission denied: not your ' + req.msg );
@@ -50,7 +50,7 @@ module.exports = Class.extend({
     next( err );
   },
 
-  fill_sidebar : function ( req, res, next ){
+  sidebar : function ( req, res, next ){
     Cache.findOne({
       name : 'sidebar'
     }, function ( err, cache ){
@@ -65,7 +65,7 @@ module.exports = Class.extend({
     });
   },
 
-  ensure_authenticated : function ( req, res, next ){
+  authenticated : function ( req, res, next ){
     if( req.isAuthenticated()) return next();
 
     res.redirect( '/auth/google' );

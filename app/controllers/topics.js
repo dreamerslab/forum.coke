@@ -12,10 +12,13 @@ module.exports = Controller.extend({
   // controller filters --------------------------------------------------------
   init : function ( before, after ){
     before( this.fill_sidebar );
+
     before( this.ensure_authenticated, {
       only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
+
     before( this.validate_topic_form,
       { only : [ 'create', 'update' ]});
+
     before( this.verify_permission,
       { only : [ 'edit', 'update', 'destroy' ]});
   },
@@ -222,12 +225,12 @@ module.exports = Controller.extend({
     var self  = this;
     var topic = req.para_topic;
 
-    topic.set_attrs( req.body.topic );
     if( !req.form.isValid ){
       return res.render( 'topics/edit',
         self._merge( req, { topic : topic }));
     }
 
+    topic.set_attrs( req.body.topic );
     topic.save( function ( err, topic, count ){
       if( err ){
         req.flash( 'flash-error', 'Topic update fail' );

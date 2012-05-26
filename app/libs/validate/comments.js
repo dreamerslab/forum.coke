@@ -6,7 +6,7 @@ form.configure({
 });
 
 module.exports = {
-  validate_comment_form : form(
+  validate_comments : form(
     field( 'comment.content', 'Content' ).required()
   ),
 };

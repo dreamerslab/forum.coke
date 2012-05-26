@@ -11,7 +11,9 @@
 
       <? it.tags.forEach( function ( tag ){ ;?>
       <div class="tag-wrap">
-        <a href="/topics/tag?name=<?= tag.name ?>" class="all-tag-item tag"><?- tag.name ?></a>
+        <a href="/tags/<?= tag.name ?>/topics" class="all-tag-item tag">
+          <?- tag.name ?>
+        </a>
         <span> x <?= tag.topics.length ?></span>
       </div>
       <? }); ?>

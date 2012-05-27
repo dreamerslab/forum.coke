@@ -113,7 +113,7 @@ module.exports = Controller.extend({
     var args = {
       id  : id,
       nid : req.query.nid
-    }
+    };
 
     Topic.show( args,
       // mark as read

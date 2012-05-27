@@ -28,26 +28,26 @@ module.exports = Class.extend({
   },
 
   validation : function ( err, req, res, next ){
-    if( err.name && err.name == 'ValidationError' ){
-      Object.keys( err.errors ).forEach( function ( error ){
-        req.flash( 'flash-error', err.errors[ error ].message );
-      });
-
-      res.redirect( 'back' );
-      return LOG.error( 400, res, err );
+    if( !( err.name && err.name == 'ValidationError' )){
+      next( err );
     }
 
-    next( err );
+    Object.keys( err.errors ).forEach( function ( error ){
+      req.flash( 'flash-error', err.errors[ error ].message );
+    });
+
+    res.redirect( 'back' );
+    LOG.error( 400, res, err );
   },
 
   unique : function ( err, req, res, next ){
-    if( err.name && err.name == 'MongoError' ){
-      req.flash( 'flash-error', err.err );
-      res.redirect( 'back' );
-      return LOG.error( 46, res, err );
+    if( !( err.name && err.name == 'MongoError' )){
+      next( err );
     }
 
-    next( err );
+    req.flash( 'flash-error', err.err );
+    res.redirect( 'back' );
+    LOG.error( 46, res, err );
   },
 
   sidebar : function ( req, res, next ){

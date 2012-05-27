@@ -12,13 +12,16 @@ module.exports = Controller.extend({
     before( this.sidebar );
 
     before( this.authenticated, {
-      only : [ 'new', 'create', 'edit', 'update', 'destroy' ]});
+      only : [ 'new', 'create', 'edit', 'update', 'destroy' ]
+    });
 
-    before( this.validate_topics,
-      { only : [ 'create', 'update' ]});
+    before( this.validate_topics,{
+      only : [ 'create', 'update' ]
+    });
 
-    before( this.authorized,
-      { only : [ 'edit', 'update', 'destroy' ]});
+    before( this.authorized,{
+      only : [ 'edit', 'update', 'destroy' ]
+    });
   },
 
   authorized : function ( req, res, next ){

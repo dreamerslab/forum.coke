@@ -9,19 +9,19 @@ module.exports = Application.extend({
 
   init : function ( before, after ){
     before( this.sidebar );
-    before( this.find_user, {
+    before( this.current_user, {
       only : [ 'show', 'topics', 'replies' ]
     });
   },
 
-  find_user : function ( req, res, next ){
+  current_user : function ( req, res, next ){
     var self = this;
     var id   = req.params.id || req.params.user_id;
 
     User.findById( id, function ( err, user ){
       if( user ){
         // do not usr req.user, its for seesion user
-        req.this_user = user;
+        req.current_user = user;
         return next();
       }
 
@@ -44,17 +44,17 @@ module.exports = Application.extend({
   show : function ( req, res, next ){
     var self  = this;
     var args = {
-      user_id  : req.this_user._id,
-      comments : req.this_user.comments
+      user_id  : req.current_user._id,
+      comments : req.current_user.comments
     };
 
     User.show( args, next, function ( topics, replies ){
-      req.this_user.recent_topics  = topics;
-      req.this_user.recent_replies = replies;
+      req.current_user.recent_topics  = topics;
+      req.current_user.recent_replies = replies;
 
       res.render( 'users/show', self._merge( req, {
         nav_selected : 'users',
-        user         : req.this_user
+        user         : req.current_user
       }));
     });
   },
@@ -62,7 +62,7 @@ module.exports = Application.extend({
   topics : function ( req, res, next ){
     var self  = this;
     var args = {
-      user_id : req.this_user._id,
+      user_id : req.current_user._id,
       skip    : req.query.from
     };
 
@@ -74,7 +74,7 @@ module.exports = Application.extend({
   replies : function ( req, res, next ){
     var self  = this;
     var args = {
-      comments : req.this_user.comments,
+      comments : req.current_user.comments,
       skip     : req.query.from
     };
 

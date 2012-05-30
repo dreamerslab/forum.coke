@@ -5,7 +5,7 @@
 }
 
 /* line 9, ../../app/sass/user.sass */
-#user-profile-avatar {
+#avatar-frame {
   display: inline;
   float: left;
   padding: 6px 8px 0 0;
@@ -19,7 +19,7 @@
 }
 
 /* line 18, ../../app/sass/user.sass */
-#user-profile-avatar-img {
+#avatar-img {
   display: block;
   max-width: 80px;
   height: 80px;
@@ -32,7 +32,7 @@
 }
 
 /* line 26, ../../app/sass/user.sass */
-#posts {
+#posts, #replies {
   padding: 0 0 30px;
 }
 
@@ -42,11 +42,6 @@
 }
 
 /* line 32, ../../app/sass/user.sass */
-#replies {
-  padding: 0 0 30px;
-}
-
-/* line 35, ../../app/sass/user.sass */
 .article-item {
   overflow: hidden;
   *zoom: 1;
@@ -55,13 +50,13 @@
   border-bottom: 1px dotted #aaaaaa;
 }
 
-/* line 41, ../../app/sass/user.sass */
+/* line 38, ../../app/sass/user.sass */
 .block-title {
   padding: 0 0 10px;
   border-bottom: 1px dotted #aaaaaa;
 }
 
-/* line 45, ../../app/sass/user.sass */
+/* line 42, ../../app/sass/user.sass */
 .item-title {
   display: inline;
   float: left;
@@ -70,18 +65,18 @@
   font-size: 16px;
 }
 
-/* line 51, ../../app/sass/user.sass */
+/* line 48, ../../app/sass/user.sass */
 .title-link:hover {
   text-decoration: none;
 }
 
-/* line 54, ../../app/sass/user.sass */
+/* line 51, ../../app/sass/user.sass */
 .comment-count {
   display: inline;
   float: right;
 }
 
-/* line 57, ../../app/sass/user.sass */
+/* line 54, ../../app/sass/user.sass */
 .comment-count {
   background: #d1d6db;
   color: white;
@@ -90,34 +85,34 @@
   min-width: 20px;
   text-align: center;
 }
-/* line 64, ../../app/sass/user.sass */
+/* line 61, ../../app/sass/user.sass */
 .comment-count:hover {
   color: #005580;
   text-decoration: none;
 }
 
-/* line 68, ../../app/sass/user.sass */
+/* line 65, ../../app/sass/user.sass */
 #bio-notes {
   padding: 0 0 10px;
 }
 
-/* line 71, ../../app/sass/user.sass */
+/* line 68, ../../app/sass/user.sass */
 #textarea {
   width: 690px;
 }
 
-/* line 74, ../../app/sass/user.sass */
+/* line 71, ../../app/sass/user.sass */
 .reply-actions {
   text-align: right;
 }
 
-/* line 77, ../../app/sass/user.sass */
+/* line 74, ../../app/sass/user.sass */
 .more-link {
   display: inline;
   float: right;
   padding: 5px 0 0;
 }
-/* line 80, ../../app/sass/user.sass */
+/* line 77, ../../app/sass/user.sass */
 .more-link:hover {
   text-decoration: none;
 }

@@ -11,7 +11,7 @@
     <? exist_unread += 1; ?>
     <div class="notify-item <?= notif.is_read ? '' : 'unread' ?>">
       <p>
-        <a href="/users/<?= notif.originator._id ?>" class="author" ><?- it.truncate( notif.originator.name ) ?></a>
+        <a href="/users/<?= notif.originator._id ?>" class="notify-user-name" ><?- it.truncate( notif.originator.name ) ?></a>
         <?= notif.activity ?>
         <a href="/topics/<?= notif.topic._id ?>?nid=<?= notif._id ?>" class="article-link"><?- it.truncate( notif.topic.title, 30 ) ?></a>
         <span class="last-reply-time"><?= it.ago( notif.updated_at ) ?></span>
@@ -27,4 +27,4 @@
   <?= it.partial( 'common/_pagination' ) ?>
 </div> <!-- .span9 -->
 
-<?= it.partial( 'common/_side' ) ?>
+<?= it.partial( 'common/_sidebar' ) ?>

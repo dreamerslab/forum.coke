@@ -2,6 +2,8 @@
   $( function (){
     $( 'pre' ).addClass( 'prettyprint' );
 
+    prettyPrint();
+
     var $a = $( 'a, button, input[type="submit"], input[type="reset"]' );
 
     $a.click( function (){

@@ -3,6 +3,10 @@ String.prototype.bytes = function (){
   return arr === null ? this.length : this.length + arr.length;
 };
 
+String.prototype.capitalize = function (){
+  return this.replace( /(^|\s)([a-z])/g, function( m, p1, p2 ){ return p1 + p2.toUpperCase(); } );
+};
+
 var moment = require( 'moment' );
 var marked = require( 'marked' );
 
@@ -38,11 +42,20 @@ module.exports = function ( app ){
 
     info : function ( info ){
       return info ?
-        '<li class="article-nav-item"><span class="info">' + info + '</span></li>' : '';
+        '<div class="info-wrap"><div class="info">' + info + '</div></div>' : '';
     },
 
     more : function ( length, limit, link ){
       return length > limit ? link : '';
+    },
+
+    page_title : function ( data ){
+      var selected = data.sub_nav_selected;
+      var keyword  = data.tag_name || data.keywords;
+
+      if(( selected != 'tag') && ( selected != 'keyword' )) return selected.capitalize() + ' Posts';
+
+      return 'Search ' + selected.capitalize() + ' "' + keyword + '"';
     },
 
     pager : function ( from, count, limit ){
@@ -119,6 +132,20 @@ module.exports = function ( app ){
        return this.get_error()[ type ] ?
         '<label class="error">' + this.get_error()[ type ] + '</label>' :
         '';
+    },
+
+    show_keywords : function ( topic ){
+      var _default = 'node.js, javascript, framework, COKE';
+
+      if( !topic ) return _default;
+      if( !topic.tag_names.length ) return _default;
+
+      var _tags = '';
+
+      topic.tag_names.forEach( function ( tag ){
+        _tags += tag + ', ';
+      })
+      return _tags;
     },
 
     truncate : function ( str, length ){

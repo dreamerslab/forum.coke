@@ -1,0 +1,16 @@
+<div class="span3">
+  <ul class="thumbnails">
+    <div class="span3">
+      <form action="/topics/search" method="GET" accept-charset="UTF-8" id="search" class="form-search">
+        <input type="text" id="search-input" class="input-small search-query" name="keywords" value="<?= it.exists( it.keywords ) ?>">
+        <button type="submit" class="btn">Search</button>
+      </form>
+    </div>
+    <li class="span3">
+      <?= it.partial( 'common/_sidebar_profile' ) ?>
+      <?= it.partial( 'common/_sidebar_tags' ) ?>
+      <?= it.partial( 'common/_sidebar_users' ) ?>
+      <?= it.partial( 'common/_sidebar_issues' ) ?>
+    </li>
+  </ul>
+</div>

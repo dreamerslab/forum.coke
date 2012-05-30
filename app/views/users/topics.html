@@ -8,7 +8,9 @@
 
       <? it.topics.forEach( function ( topic ){ ?>
       <div class="article-item">
-        <h3 class="item-title"><a class="title-link" href="/topics/<?= topic._id ?>"><?- it.truncate( topic.title, 40 ) ?></a></h3>
+        <h3 class="item-title">
+          <a class="title-link" href="/topics/<?= topic._id ?>"><?- it.truncate( topic.title, 40 ) ?></a>
+        </h3>
         <p class="item-content"><?- it.truncate( topic.content, 65 ) ?></p>
         <? topic.tag_names.forEach( function( tag ){ ?>
           <a href="/topics/tag?name=<?- tag ?>" class="tag"><?- tag ?></a>
@@ -24,4 +26,4 @@
   </div>
 </div> <!-- .span9 -->
 
-<?= it.partial( 'common/_side' ) ?>
+<?= it.partial( 'common/_sidebar' ) ?>

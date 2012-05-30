@@ -17,8 +17,8 @@
 }
 
 /* line 15, ../../app/sass/notifications.sass */
-.author {
-  float: none;
+.notify-user-name:hover {
+  text-decoration: none;
 }
 
 /* line 18, ../../app/sass/notifications.sass */

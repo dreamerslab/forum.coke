@@ -17,13 +17,10 @@
   width: 300px
   height: 90px
 
-*+html>body .user-wrap
-  padding: 0 0 18px 0
-
-.user-profile-avatar
+.avatar-frame
   +float-left
 
-.user-profile-avatar-img
+.avatar-img
   display: block
   padding: 6px 8px 0 0
   max-width: 72px
@@ -34,9 +31,8 @@
 
 .user-link
   display: block
-
-.user-link:hover
-  text-decoration: none
+  &:hover
+    text-decoration: none
 
 .user-name
   font-size: 15px
@@ -44,3 +40,10 @@
 
 .email, .posts, .comments, .created
   font-size: 12px
+
+
+
+// for IE
+*+html>body .user-wrap
+  padding: 0 0 18px 0
+// end for IE

@@ -1,6 +1,13 @@
 <ul class="article-nav-list">
-  <li class="article-nav-item"><a id="<?= it.selected( 'topics', it.nav_selected, 'article-nav-selected' ) ?>" class="article-nav-link" href="/">Posts</a></li>
-  <li class="article-nav-item"><a id="<?= it.selected( 'users', it.nav_selected, 'article-nav-selected' ) ?>" class="article-nav-link" href="/users">Users</a></li>
-  <li class="article-nav-item"><a id="<?= it.selected( 'tags', it.nav_selected, 'article-nav-selected' ) ?>" class="article-nav-link" href="/topics/tags">Tags</a></li>
-  <?= it.info( it.get_success()) ?>
+  <li class="article-nav-item">
+    <a id="<?= it.selected( 'topics', it.nav_selected, 'article-nav-selected' ) ?>" class="article-nav-link" href="/">Posts</a>
+  </li>
+  <li class="article-nav-item">
+    <a id="<?= it.selected( 'users', it.nav_selected, 'article-nav-selected' ) ?>" class="article-nav-link" href="/users">Users</a>
+  </li>
+  <li class="article-nav-item">
+    <a id="<?= it.selected( 'tags', it.nav_selected, 'article-nav-selected' ) ?>" class="article-nav-link" href="/topics/tags">Tags</a>
+  </li>
 </ul>
+
+<?= it.info( it.get_success()) ?>

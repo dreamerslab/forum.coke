@@ -3,31 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <title><?= it.title ?></title>
-    <meta name="keywords" content="<?= it.keywords || '' ?>" />
+    <meta name="keywords" content="<?= it.show_keywords( it.topic ) || '' ?>" />
     <meta name="description" content="<?= it.description || '' ?>" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <?= it.css( it.styles ) ?>
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style type="text/css">
-      .hidden { display: none; }
-      .selected { text-decoration: none; }
-    </style>
   </head>
 
-  <body onload="prettyPrint()">
+  <body>
     <div id="header">
       <header>
-        <h1><a href="http://coke-js.org" id="logo">COKE - node.js MVC</a></h1>
+        <h1>
+          <a href="http://coke-js.org" id="logo">COKE - node.js MVC</a>
+        </h1>
       </header>
       <nav>
         <ul>
-          <li class="nav-item"><a href="http://coke-js.org" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Demos</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Docs</a></li>
-          <li class="nav-item"><a href="/" id="nav-selected" class="nav-link">Forum</a></li>
-          <li class="nav-item"><a href="https://github.com/dreamerslab/coke" class="nav-link">Source</a></li>
+          <li class="nav-item">
+            <a href="http://coke-js.org" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Demos</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Docs</a>
+          </li>
+          <li class="nav-item">
+            <a href="/" id="nav-selected" class="nav-link">Forum</a>
+          </li>
+          <li class="nav-item">
+            <a href="https://github.com/dreamerslab/coke" class="nav-link">Source</a>
+          </li>
         </ul>
       </nav>
     </div> <!-- #header -->
@@ -42,7 +50,7 @@
       <div class="footer-text">Powered by </div>
       <a href="http://coke-js.org" id="sublogo">Coke</a>
       <div class="footer-text">| Sponsored by </div>
-       <a href="http://dreamerslab.com/" id="dreamerslab">DreamersLab</a>
+      <a href="http://dreamerslab.com/" id="dreamerslab">DreamersLab</a>
     </footer>
     <?= it.js( it.scripts ) ?>
   </body>

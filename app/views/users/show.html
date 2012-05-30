@@ -4,7 +4,7 @@
 <div class="span9">
   <?= it.partial( 'common/_nav' ) ?>
   <div class="well" id="profile">
-    <div id="user-profile-avatar"><img id="user-profile-avatar-img" src="<?= it.user.avatar ?>" alt="Avatar"></div>
+    <div id="avatar-frame"><img id="avatar-img" src="<?= it.user.avatar ?>" alt="Avatar"></div>
     <div id="meta">
       <h3 id="name"><?= it.user.name ?></h3>
       <h4>Posts: <?= it.user.topics.length ?></h4>
@@ -15,4 +15,4 @@
   <?= it.partial( 'users/_recent_posts' ) ?>
   <?= it.partial( 'users/_recent_replies' )?>
 </div>
-<?= it.partial( 'common/_side' ) ?>
+<?= it.partial( 'common/_sidebar' ) ?>

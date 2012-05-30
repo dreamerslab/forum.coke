@@ -12,11 +12,15 @@
       <? it.users.forEach( function ( user ){  ?>
       <div class="user-wrap">
         <div class="avatar-frame">
-          <a class="user-link" href="/users/<?= user._id ?>"><img class="avatar-img" src="<?= user.avatar ?>" alt="Avatar"></a>
+          <a class="user-link" href="/users/<?= user._id ?>">
+            <img class="avatar-img" src="<?= user.avatar ?>" alt="Avatar">
+          </a>
         </div>
         <div class="meta">
           <h3 class="user-name">
-            <a class="user-link" href="/users/<?= user._id ?>"><?- it.truncate( user.name, 30 ) ?></a>
+            <a class="user-link" href="/users/<?= user._id ?>">
+              <?- it.truncate( user.name, 30 ) ?>
+            </a>
           </h3>
           <h4 class="posts">Posts: <?= user.topics.length ?></h4>
           <h4 class="comments">Comments: <?= user.comments.length ?></h4>

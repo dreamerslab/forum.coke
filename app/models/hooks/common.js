@@ -1,7 +1,7 @@
 
 module.exports = {
 
-  mark_new_record : function ( next ){
+  mark_new : function ( next ){
     this.is_new = this.isNew;
     next();
   }

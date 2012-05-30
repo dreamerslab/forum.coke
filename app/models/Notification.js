@@ -3,7 +3,7 @@ var common       = require( MODEL_DIR + 'hooks/common' );
 var hooks        = require( MODEL_DIR + 'hooks/notif' );
 var mongoose     = require( 'mongoose' );
 
-Notification.pre( 'save', common.mark_new_record );
+Notification.pre( 'save', common.mark_new );
 
 Notification.post( 'save', hooks.add_to_user );
 // Notification.post( 'save', hooks.debug_message );
@@ -27,8 +27,7 @@ var exclude = function ( docs, id ){
   var a = [];
 
   docs.forEach( function ( doc ){
-    if( doc._id.toString() !== id )
-      a.push( doc );
+    if( doc._id.toString() !== id ) a.push( doc );
   });
 
   return a;
@@ -50,7 +49,7 @@ Notification.statics = {
         limit( opts.limit ).run( function ( err, notifs ){
           if( err ) return next( err );
 
-          callback && callback({
+          callback({
             notifs : notifs,
             count  : count,
             from   : opts.skip,
@@ -60,33 +59,37 @@ Notification.statics = {
     });
   },
 
+  index : function ( args, next, success ){
+    var conds = { user_id : args.user_id };
+    var opts  = { sort    : [ 'is_read', 1 ],
+                  skip    : args.skip || 0,
+                  limit   : 20 };
+
+    this.paginate( conds, opts, next, success );
+  },
+
   mark_read : function( id, callback ){
     var self = this;
     var User = mongoose.model( 'User' );
 
     this.findById( id, function ( err, notif ){
       if( notif ){
-        self.update(
+        return self.update(
           { _id : notif._id },
           { $set : { is_read : true }},
           function ( err, count ){
-            if( err ){
-              callback && callback( err );
-              return;
-            }
+            if( err ) return callback( err );
 
             User.update(
               { _id : notif.user_id },
               { $pull : { notifications : notif._id }},
               function ( err, count ){
-                callback && callback( err );
+                callback( err );
               });
           });
-
-        return;
       }
 
-      callback && callback( err );
+      callback( err );
     });
   },
 
@@ -100,27 +103,22 @@ Notification.statics = {
       find({ topic_id : topic._id }).
       populate( 'user_id' ).
       run( function ( err, comments ){
-        if( err ){
-          LOG.error( 500,
-            '[app][models][Notifications] Having trouble finding comments', err );
-          return;
-        }
+        if( err ) return LOG.error( 500,
+          '[app][models][Notifications] Having trouble finding comments', err );
 
         var topic_user_id = topic.user_id.toString();
         var subscribers   = comments.map( function ( c ){ return c.user_id; });
 
         subscribers = unique( subscribers );
         subscribers = exclude( subscribers, topic_user_id );
+
         if( type === 'create-comment' ){
           var comment_user_id = comment.user_id.toString();
 
           subscribers = exclude( subscribers, comment_user_id );
           User.findById( comment_user_id, function ( err, user ){
-            if( err ){
-              LOG.error( 500,
-                '[app][models][Notifications] Having trouble finding comment\'s user', err );
-              return;
-            }
+            if( err ) return LOG.error( 500,
+              '[app][models][Notifications] Having trouble finding comment\'s user', err );
 
             // notify all subscribers
             subscribers.forEach( function ( subr ){
@@ -156,11 +154,8 @@ Notification.statics = {
 
         if( type === 'update-topic' ){
           User.findById( topic_user_id, function ( err, user ){
-            if( err ){
-              LOG.error( 500,
+            if( err ) return LOG.error( 500,
                 '[app][models][Notifications] Having trouble finding topic\'s user', err );
-              return;
-            }
 
             // notify all subscribers
             subscribers.forEach( function ( subr ){

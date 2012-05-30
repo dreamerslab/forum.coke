@@ -13,7 +13,7 @@
         </h3>
         <p class="item-content"><?- it.truncate( topic.content, 65 ) ?></p>
         <? topic.tag_names.forEach( function( tag ){ ?>
-          <a href="/topics/tag?name=<?- tag ?>" class="tag"><?- tag ?></a>
+          <a href="/tags/<?- tag ?>/topics" class="tag"><?- tag ?></a>
         <? }); ?>
         <a href="/users/<?- topic.user._id ?>" class="author"><?- topic.user.name ?></a>
         <span class="last-reply-time"><?- it.ago( topic.updated_at ) ?></span>

@@ -5,22 +5,20 @@ var Application = require( CONTROLLER_DIR + 'application' );
 
 module.exports = Application.extend({
 
-  // controller filters --------------------------------------------------------
   init : function ( before, after ){
-    before( this.fill_sidebar );
-    before( this.ensure_authenticated );
+    before( this.sidebar );
+    before( this.authenticated );
   },
 
-  // controller actions --------------------------------------------------------
   index : function ( req, res, next ){
-    var self  = this;
-    var conds = { user_id : req.user._id };
-    var opts  = { sort    : [ 'is_read', 1 ],
-                  skip    : req.query.from || 0,
-                  limit   : 20 };
+    var self = this;
+    var args = {
+      user_id : req.user._id,
+      skip    : req.query.from
+    };
 
-    Notif.paginate( conds, opts, next, function ( result ){
-      res.render( 'notifications/index', self._merge( req, result, '?' ));
+    Notif.index( args, next, function ( result ){
+      res.render( 'notifications/index', self._merge( req, result ));
     });
   }
 });

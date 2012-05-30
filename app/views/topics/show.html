@@ -30,7 +30,7 @@
       <span class="last-reply-time"><?= it.ago( it.topic.updated_at ) ?></span>
 
       <? it.topic.tag_names.forEach( function( tag ){ ?>
-      <a href="/topics/tag?name=<?- tag ?>" class="tag"><?- tag ?></a>
+      <a href="/tags/<?- tag ?>/topics" class="tag"><?- tag ?></a>
       <? }); ?>
 
     </div>

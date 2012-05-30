@@ -15,11 +15,9 @@ passport.deserializeUser( function ( id, done ){
   User.findOne({
     google_id : id
   }, function ( err, user ){
-    if( user ){
-      done( null, user );
-    }else{
-      done( null, id );
-    }
+    if( user ) return done( null, user );
+
+    done( null, id );
   });
 });
 

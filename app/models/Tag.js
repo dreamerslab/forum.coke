@@ -5,6 +5,7 @@ var Flow  = require( 'node.flow' );
 Tag.pre( 'save', hooks.pre_save );
 
 Tag.statics = {
+
   paginate : function ( conds, opts, next, callback ){
     var reslut = {};
     var self   = this;
@@ -19,7 +20,7 @@ Tag.statics = {
         limit( opts.limit ).run( function ( err, tags ){
           if( err ) return next( err );
 
-          callback && callback({
+          callback({
             tags  : tags,
             count : count,
             from  : opts.skip,
@@ -29,12 +30,20 @@ Tag.statics = {
     });
   },
 
-  extract_names : function ( string ){
-    if( UTILS.typeof( string ) !== 'string' || string === '' ){
+  index : function ( skip, next, success ){
+    var opts  = { sort  : [ 'name', 1 ],
+                  skip  : skip || 0,
+                  limit : 20 };
+
+    this.paginate({}, opts, next, success );
+  },
+
+  extract_names : function ( str ){
+    if( UTILS.typeof( str ) !== 'string' || str === '' ){
       return [];
     }
 
-    var candidates = string.split( /\s*[,|;]\s*/ ).slice( 0, 5 );
+    var candidates = str.split( /\s*[,|;]\s*/ ).slice( 0, 5 );
     var names      = [];
 
     candidates.forEach( function ( name ){
@@ -55,24 +64,18 @@ Tag.statics = {
     names.forEach( function ( name ){
       flow.series( function ( name, next ){
         self.findOne({ name : name }, function ( err, tag ){
-          if( err ){
-            flow.end( function (){
-              callback && callback( err );
+          if( err ) return flow.end( function (){
+            callback( err );
+          });
+
+          if( tag ) return next();
+
+          new self({
+            name : name
+          }).save( function ( err, tag, count ){
+            if( err ) return flow.end( function (){
+              callback( err );
             });
-            return;
-          }
-
-          if( tag ){
-            return next();
-          }
-
-          new self({ name : name }).save( function ( err, tag, count ){
-            if( err ){
-              flow.end( function (){
-                callback && callback( err );
-              });
-              return;
-            }
 
             next();
           });
@@ -81,7 +84,7 @@ Tag.statics = {
     });
 
     flow.end( function (){
-      callback && callback();
+      callback();
     });
   }
 };

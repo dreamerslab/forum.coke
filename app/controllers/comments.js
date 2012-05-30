@@ -8,81 +8,74 @@ var Comment     = mongoose.model( 'Comment' );
 
 module.exports = Controller.extend({
 
-  // controller filters --------------------------------------------------------
   init : function ( before, after ){
-    before( this.fill_sidebar );
-    before( this.ensure_authenticated, { only : [ 'create', 'destroy' ]});
-    before( this.validate_comment_form, { only : [ 'create' ]});
+    before( this.sidebar );
+    before( this.authenticated );
+    before( this.validate_comments, { only : [ 'create' ]});
   },
 
-  // controller actions --------------------------------------------------------
   create : function ( req, res, next ){
     var self = this;
+    var args = {
+      valid    : req.form.isValid,
+      user     : req.user,
+      topic_id : req.params.topic_id,
+      comment  : req.body.comment
+    };
 
-    Topic.
-      findById( req.params.topic_id ).
-      populate( 'user_id' ).
-      populate( 'comments' ).
-      run( function ( err, topic ){
-        if( topic ){
-          var comment = new Comment({
-            user_id  : req.user,
-            topic_id : topic
-          });
-
-          comment.set_attrs( req.body.comment );
-
-          if( !req.form.isValid ){
-            return res.render( 'topics/show',
-              self._merge( req, { topic : topic, comment : comment }));
-          }
-
-          comment.save( function ( err, comment, count ){
-            if( err ){
-              req.flash( 'flash-error', 'Comment creation fail' );
-            }else{
-              req.flash( 'flash-info', 'Comment created' );
-            }
-
-            res.redirect( '/topics/' + comment.topic_id );
-          });
-
-          return;
+    Comment.create( args, next,
+      // invalid
+      function ( topic, comment ){
+        res.render( 'topics/show',
+          self._merge( req, { topic : topic, comment : comment }));
+      },
+      // no_content
+      function ( err ){
+        req.msg = 'Topic';
+        self.no_content( err, req, res );
+      },
+      // success
+      function ( err, comment, count ){
+        if( err ){
+          req.flash( 'flash-error', 'Comment creation fail' );
+        }else{
+          req.flash( 'flash-info', 'Comment created' );
         }
 
-        req.msg = 'Topic';
-        self.record_not_found( err, req, res );
+        res.redirect( '/topics/' + comment.topic_id );
       });
   },
 
   destroy : function ( req, res, next ){
-    var self = this;
+    var self     = this;
+    var topic_id = req.params.topic_id;
+    var args     = {
+      id   : req.params.id,
+      user : req.user
+    };
 
-    Comment.findById( req.params.id, function ( err, comment ){
-      if( comment ){
-        if( comment.is_owner( req.user )){
-          comment.remove( function ( err ){
-            if( err ){
-              req.flash( 'flash-error', 'Comment deletion fail' );
-            }else{
-              req.flash( 'flash-info', 'Comment deleted' );
-            }
-
-            res.redirect( '/topics/' + comment.topic_id );
-          });
-
-          return;
+    Comment.destroy( args, next,
+      // no content
+      function ( err ){
+        req.msg = 'Comment';
+        self.no_content( err, req, res );
+      },
+      // forbidden
+      function (){
+        req.msg    = 'comment';
+        req.origin = '/topics/' + topic_id;
+        self.forbidden( req, res, next );
+      },
+      // success
+      function ( err, count ){
+        if( err ){
+          req.flash( 'flash-error', 'Comment deletion fail' );
+        }else{
+          req.flash( 'flash-info', 'Comment deleted' );
         }
 
-        req.msg    = 'comment';
-        req.origin = '/topics/' + req.params.topic_id;
-        self.permission_denied( req, res, next );
-        return;
-      }
-
-      req.msg = 'Comment';
-      self.record_not_found( err, req, res );
-    });
+        res.redirect( '/topics/' + topic_id );
+      });
   },
 });
 

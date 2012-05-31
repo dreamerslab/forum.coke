@@ -160,6 +160,10 @@ module.exports = function ( app ){
         tmp;
     },
 
+    topic_get : function ( topic, get ){
+      return topic ? topic[ get ] : '';
+    },
+
     val : function ( obj, prop ){
       return obj === undefined ? '' : obj[ prop ];
     },

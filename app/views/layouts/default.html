@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <title><?= it.title ?></title>
-    <meta name="keywords" content="<?= it.show_keywords( it.topic ) || '' ?>" />
-    <meta name="description" content="<?= it.description || '' ?>" />
+    <meta name="keywords" content="<?= it.show_keywords( it.topic ) ?>" />
+    <meta name="description" content="<?= it.truncate( it.topic_get( it.topic, 'content' ), 160 ) ?>" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <?= it.css( it.styles ) ?>
     <!--[if lt IE 9]>

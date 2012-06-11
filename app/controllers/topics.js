@@ -185,9 +185,8 @@ module.exports = Controller.extend({
     Topic.update_props( args,
       // invalid
       function (){
-        req.body.topic._id = req.topic._id;
         res.render( 'topics/edit',
-          self._merge( req, { topic : req.body.topic }));
+          self._merge( req, { topic : req.topic }));
       },
       // success
       function ( err, topic, count ){

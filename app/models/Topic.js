@@ -125,7 +125,7 @@ Topic.statics = {
   },
 
   create : function ( args, invalid, success ){
-    if( !args.valid ) invalid();
+    if( !args.valid ) return invalid();
 
     var topic = new this({ user_id : args.user });
 
@@ -134,7 +134,7 @@ Topic.statics = {
   },
 
   update_props : function ( args, invalid, success ){
-    if( !args.valid ) invalid();
+    if( !args.valid ) return invalid();
 
     var topic = args.topic;
 

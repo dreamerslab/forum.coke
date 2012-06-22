@@ -1,8 +1,8 @@
 module.exports = function ( express, app, middleware ){
   app.configure( function (){
+    app.register( '.html', require( 'thunder' ));
     app.set( 'view engine', 'html' );
     app.set( 'views', VIEW_DIR );
-    app.register( '.html', require( 'thunder' ));
     app.set( 'view options', {
       layout : 'layouts/default'
     });
@@ -16,6 +16,7 @@ module.exports = function ( express, app, middleware ){
     app.use( middleware.logger );
     app.use( middleware.csrf( app, express ));
     app.use( express.methodOverride());
+    app.use( middleware.passport());
     app.use( middleware.passport());
     app.use( app.router );
     app.use( express.errorHandler({

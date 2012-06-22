@@ -28,6 +28,29 @@ User.statics = {
     });
   },
 
+  create : function ( src, error, success ){
+    var self = this;
+
+    this.findOne({
+      google_id : src.id
+    }, function ( err, user ){
+      if( err )  return error();
+      if( user ) return success();
+
+      new self({
+        google_id  : src.id,
+        google_raw : src,
+        name       : src._json.name,
+        email      : src._json.email,
+        picture    : src._json.picture
+      }).save( function ( err, user, count ){
+        if( err ) return error();
+
+        success()
+      });
+    });
+  },
+
   index : function ( skip, next, success ){
     var opts  = { sort  : [ 'name', 1 ],
                   skip  : skip || 0,

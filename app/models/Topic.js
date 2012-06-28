@@ -30,7 +30,7 @@ Topic.statics = {
         find( conds ).
         sort( opts.sort[ 0 ], opts.sort[ 1 ]).
         skip( opts.skip ).
-        limit( opts.limit ).run( function ( err, topics ){
+        limit( opts.limit ).exec( function ( err, topics ){
           if( err ) return next( err );
 
           success({
@@ -114,7 +114,7 @@ Topic.statics = {
       findById( args.id ).
       populate( 'user_id' ).
       populate( 'comments' ).
-      run( function ( err, topic ){
+      exec( function ( err, topic ){
         if( topic ){
           topic.inc_read_count();
           return success( topic );

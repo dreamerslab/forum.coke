@@ -17,7 +17,7 @@ Tag.statics = {
         find( conds ).
         sort( opts.sort[ 0 ], opts.sort[ 1 ]).
         skip( opts.skip ).
-        limit( opts.limit ).run( function ( err, tags ){
+        limit( opts.limit ).exec( function ( err, tags ){
           if( err ) return next( err );
 
           callback({

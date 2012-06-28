@@ -15,7 +15,7 @@ User.statics = {
         find( conds ).
         sort( opts.sort[ 0 ], opts.sort[ 1 ]).
         skip( opts.skip ).
-        limit( opts.limit ).run( function ( err, users ){
+        limit( opts.limit ).exec( function ( err, users ){
           if( err ) return next( err );
 
           success({

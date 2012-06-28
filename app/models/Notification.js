@@ -46,7 +46,7 @@ Notification.statics = {
         find( conds ).
         sort( opts.sort[ 0 ], opts.sort[ 1 ]).
         skip( opts.skip ).
-        limit( opts.limit ).run( function ( err, notifs ){
+        limit( opts.limit ).exec( function ( err, notifs ){
           if( err ) return next( err );
 
           callback({
@@ -102,7 +102,7 @@ Notification.statics = {
     Comment.
       find({ topic_id : topic._id }).
       populate( 'user_id' ).
-      run( function ( err, comments ){
+      exec( function ( err, comments ){
         if( err ) return LOG.error( 500,
           '[app][models][Notifications] Having trouble finding comments', err );
 

@@ -47,7 +47,7 @@ module.exports = {
         find().
         sort( 'rating', -1 ).
         limit( 7 ).
-        run( function ( err, users ){
+        exec( function ( err, users ){
           if( err ) return LOG.error( 500,
             '[libs][sidebar][init] Having trouble finding users' );
 

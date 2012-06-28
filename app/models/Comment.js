@@ -24,7 +24,7 @@ Comment.statics = {
       findById( args.topic_id ).
       populate( 'user_id' ).
       populate( 'comments' ).
-      run( function ( err, topic ){
+      exec( function ( err, topic ){
         if( topic ){
           var comment = new self({
             user_id  : args.user,

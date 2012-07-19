@@ -1,4 +1,3 @@
-var Flow     = require( 'node.flow' );
 var mongoose = require( 'mongoose' );
 var Topic    = require( BASE_DIR + 'db/schema' ).Topic;
 var common   = require( MODEL_DIR + 'hooks/common' );

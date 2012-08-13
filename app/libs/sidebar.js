@@ -45,7 +45,7 @@ module.exports = {
     flow.series( function( next ){
       User.
         find().
-        sort( 'rating', -1 ).
+        sort( '-rating' ).
         limit( 7 ).
         exec( function ( err, users ){
           if( err ) return LOG.error( 500,

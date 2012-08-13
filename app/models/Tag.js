@@ -15,7 +15,7 @@ Tag.statics = {
 
       self.
         find( conds ).
-        sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+        sort( opts.sort ).
         skip( opts.skip ).
         limit( opts.limit ).exec( function ( err, tags ){
           if( err ) return next( err );
@@ -31,7 +31,7 @@ Tag.statics = {
   },
 
   index : function ( skip, next, success ){
-    var opts  = { sort  : [ 'name', 1 ],
+    var opts  = { sort  : 'name',
                   skip  : skip || 0,
                   limit : 20 };
 

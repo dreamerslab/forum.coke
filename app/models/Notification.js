@@ -44,7 +44,7 @@ Notification.statics = {
 
       self.
         find( conds ).
-        sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+        sort( opts.sort ).
         skip( opts.skip ).
         limit( opts.limit ).exec( function ( err, notifs ){
           if( err ) return next( err );
@@ -61,7 +61,7 @@ Notification.statics = {
 
   index : function ( args, next, success ){
     var conds = { user_id : args.user_id };
-    var opts  = { sort    : [ 'is_read', 1 ],
+    var opts  = { sort    : 'is_read',
                   skip    : args.skip || 0,
                   limit   : 20 };
 

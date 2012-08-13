@@ -13,7 +13,7 @@ User.statics = {
 
       self.
         find( conds ).
-        sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+        sort( opts.sort ).
         skip( opts.skip ).
         limit( opts.limit ).exec( function ( err, users ){
           if( err ) return next( err );
@@ -52,7 +52,7 @@ User.statics = {
   },
 
   index : function ( skip, next, success ){
-    var opts  = { sort  : [ 'name', 1 ],
+    var opts  = { sort  : 'name',
                   skip  : skip || 0,
                   limit : 20 };
 
@@ -62,7 +62,7 @@ User.statics = {
   show : function ( args, next, success ){
     var Topic = mongoose.model( 'Topic' );
     var conds = { user_id : args.user_id };
-    var opts  = { limit : 6, sort : [[ 'updated_at', -1 ]]};
+    var opts  = { limit : 6, sort : '-updated_at' };
 
     Topic.find( conds, null, opts, function ( err, topics ){
       if( err ) return next( err );
@@ -80,7 +80,7 @@ User.statics = {
   topics : function ( args, next, success ){
     var Topic = mongoose.model( 'Topic' );
     var conds = { user_id : args.user_id };
-    var opts  = { sort    : [ 'updated_at', -1 ],
+    var opts  = { sort    : '-updated_at',
                   skip    : args.skip || 0,
                   limit   : 20 };
 
@@ -90,7 +90,7 @@ User.statics = {
   replies : function ( args, next, success ){
     var Topic = mongoose.model( 'Topic' );
     var conds = { comments : { $in : args.comments }};
-    var opts  = { sort     : [ 'updated_at', -1 ],
+    var opts  = { sort     : '-updated_at',
                   skip     : args.skip || 0,
                   limit    : 20 };
 

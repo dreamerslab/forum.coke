@@ -27,7 +27,7 @@ Topic.statics = {
 
       self.
         find( conds ).
-        sort( opts.sort[ 0 ], opts.sort[ 1 ]).
+        sort( opts.sort ).
         skip( opts.skip ).
         limit( opts.limit ).exec( function ( err, topics ){
           if( err ) return next( err );
@@ -52,7 +52,7 @@ Topic.statics = {
   },
 
   latest : function ( skip, next, success ){
-    var opts  = { sort  : [ 'updated_at', -1 ],
+    var opts  = { sort  : '-updated_at',
                   skip  : skip || 0,
                   limit : 20
                 };
@@ -62,7 +62,7 @@ Topic.statics = {
 
   trending : function ( skip, next, success ){
     var opts  = {
-      sort  : [ 'read_count', -1 ],
+      sort  : '-read_count',
       skip  : skip || 0,
       limit : 20
     };
@@ -73,7 +73,7 @@ Topic.statics = {
   unsolved : function ( skip, next, success ){
     var conds = { comments : { $size : 0 }};
     var opts  = {
-      sort  : [ 'updated_at', -1 ],
+      sort  : '-updated_at',
       skip  : skip || 0,
       limit : 20
     };
@@ -86,7 +86,7 @@ Topic.statics = {
 
     var regexp = new RegExp( args.keywords.join( '|' ), 'gi' );
     var conds  = { $or : [{ title : regexp }, { content : regexp }]};
-    var opts   = { sort  : [ 'updated_at', -1 ],
+    var opts   = { sort  : '-updated_at',
                    skip  : args.skip || 0,
                    limit : 20 };
 
@@ -97,7 +97,7 @@ Topic.statics = {
     if( !args.tag ) return no_tag();
 
     var conds = { tag_names : { $in : [ args.tag ]}};
-    var opts  = { sort  : [ 'updated_at', -1 ],
+    var opts  = { sort  : '-updated_at',
                   skip  : args.skip || 0,
                   limit : 20 };
 

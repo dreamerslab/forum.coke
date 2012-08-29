@@ -1,5 +1,4 @@
-var mongoose    = require( 'mongoose' );
-var Notif        = mongoose.model( 'Notification' );
+var Notif        = Model( 'Notification' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
 

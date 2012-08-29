@@ -1,6 +1,5 @@
-var Class    = require( 'resig-class' );
-var mongoose = require( 'mongoose' );
-var Cache    = mongoose.model( 'Cache' );
+var Class = require( 'resig-class' );
+var Cache = Model( 'Cache' );
 
 module.exports = Class.extend({
 

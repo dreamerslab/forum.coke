@@ -2,9 +2,8 @@ var Application = require( CONTROLLER_DIR + 'application' );
 var validate    = require( LIB_DIR + 'validate/comments' );
 var Controller  = Application.extend( validate );
 
-var mongoose    = require( 'mongoose' );
-var Topic       = mongoose.model( 'Topic' );
-var Comment     = mongoose.model( 'Comment' );
+var Topic       = Model( 'Topic' );
+var Comment     = Model( 'Comment' );
 
 module.exports = Controller.extend({
 

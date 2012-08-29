@@ -1,6 +1,5 @@
 var Application = require( CONTROLLER_DIR + 'application' );
-var mongoose    = require( 'mongoose' );
-var Tag         = mongoose.model( 'Tag' );
+var Tag         = Model( 'Tag' );
 
 module.exports = Application.extend({
 

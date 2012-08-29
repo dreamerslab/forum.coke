@@ -1,9 +1,8 @@
-var Flow     = require( 'node.flow' );
-var mongoose = require( 'mongoose' );
-var User     = mongoose.model( 'User' );
-var Topic    = mongoose.model( 'Topic' );
-var Tag      = mongoose.model( 'Tag' );
-var Cache    = mongoose.model( 'Cache' );
+var Flow  = require( 'node.flow' );
+var User  = Model( 'User' );
+var Topic = Model( 'Topic' );
+var Tag   = Model( 'Tag' );
+var Cache = Model( 'Cache' );
 
 module.exports = {
   init : function ( callback ){

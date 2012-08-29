@@ -1,13 +1,12 @@
-var Faker    = require( 'Faker' );
-var mongoose = require( 'mongoose' );
-var User     = mongoose.model( 'User' );
-var Topic    = mongoose.model( 'Topic' );
-var Comment  = mongoose.model( 'Comment' );
-var Tag      = mongoose.model( 'Tag' );
-var Notif    = mongoose.model( 'Notification' );
-var Cache    = mongoose.model( 'Cache' );
-var Flow     = require( 'node.flow' );
-var flow     = new Flow();
+var Faker   = require( 'Faker' );
+var User    = Model( 'User' );
+var Topic   = Model( 'Topic' );
+var Comment = Model( 'Comment' );
+var Tag     = Model( 'Tag' );
+var Notif   = Model( 'Notification' );
+var Cache   = Model( 'Cache' );
+var Flow    = require( 'node.flow' );
+var flow    = new Flow();
 
 var random = function ( max ){
   return Faker.Helpers.randomNumber( max );

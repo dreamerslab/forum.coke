@@ -1,8 +1,7 @@
-var Flow     = require( 'node.flow' );
-var mongoose = require( 'mongoose' );
-var User     = mongoose.model( 'User' );
-var Topic    = mongoose.model( 'Topic' );
-var Comment  = mongoose.model( 'Comment' );
+var Flow    = require( 'node.flow' );
+var User    = Model( 'User' );
+var Topic   = Model( 'Topic' );
+var Comment = Model( 'Comment' );
 
 module.exports = {
   init : function ( callback ){

@@ -1,12 +1,10 @@
-var mongoose = require( 'mongoose' );
-
 module.exports = {
 
   // hook into pre-save --------------------------------------------------------
 
   // hook into post-save -------------------------------------------------------
   add_to_user : function (){
-    var User = mongoose.model( 'User' );
+    var User = Model( 'User' );
 
     User.update(
       { _id : this.user_id },
@@ -20,7 +18,7 @@ module.exports = {
   // Debugging messages for development use only
   debug_message : function (){
     var self = this;
-    var User = mongoose.model( 'User' );
+    var User = Model( 'User' );
 
     User.findById( this.user_id, function( err, user ){
       LOG.debug(

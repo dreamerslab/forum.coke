@@ -1,11 +1,9 @@
-var mongoose = require( 'mongoose' );
-
 module.exports = {
 
   // hook into pre-save --------------------------------------------------------
   cache_user_info : function ( next ){
     var self = this;
-    var User = mongoose.model( 'User' );
+    var User = Model( 'User' );
 
     User.findById( this.user_id, function ( err, user ){
       if( err ){
@@ -21,7 +19,7 @@ module.exports = {
 
   cache_topic_info : function ( next ){
     var self  = this;
-    var Topic = mongoose.model( 'Topic' );
+    var Topic = Model( 'Topic' );
 
     Topic.findById( this.topic_id, function ( err, topic ){
       if( err ){
@@ -37,7 +35,7 @@ module.exports = {
   // hook into post-save -------------------------------------------------------
   add_to_user : function (){
     if( this.is_new ){
-      var User = mongoose.model( 'User' );
+      var User = Model( 'User' );
 
       User.update(
         { _id : this.user_id },
@@ -51,7 +49,7 @@ module.exports = {
 
   add_to_topic : function (){
     if( this.is_new ){
-      var Topic = mongoose.model( 'Topic' );
+      var Topic = Model( 'Topic' );
 
       Topic.update(
         { _id : this.topic_id },
@@ -65,8 +63,8 @@ module.exports = {
 
   notify : function (){
     var self  = this;
-    var Topic = mongoose.model( 'Topic' );
-    var Notif = mongoose.model( 'Notification' );
+    var Topic = Model( 'Topic' );
+    var Notif = Model( 'Notification' );
 
     Topic.findById( this.topic_id, function ( err, topic ){
       if( err ){
@@ -81,7 +79,7 @@ module.exports = {
 
   // hook into post-remove -----------------------------------------------------
   remove_from_user : function (){
-    var User = mongoose.model( 'User' );
+    var User = Model( 'User' );
 
     User.update(
       { _id : this.user_id },
@@ -93,7 +91,7 @@ module.exports = {
   },
 
   remove_from_topic : function (){
-    var Topic = mongoose.model( 'Topic' );
+    var Topic = Model( 'Topic' );
 
     Topic.update(
       { _id : this.topic_id },

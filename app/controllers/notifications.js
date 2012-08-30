@@ -1,4 +1,4 @@
-var Notif        = Model( 'Notification' );
+var Notif       = Model( 'Notification' );
 var Application = require( CONTROLLER_DIR + 'application' );
 
 

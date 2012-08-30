@@ -1,6 +1,6 @@
+var Application = require( CONTROLLER_DIR + 'application' );
 var User        = Model( 'User' );
 var Topic       = Model( 'Topic' );
-var Application = require( CONTROLLER_DIR + 'application' );
 
 module.exports = Application.extend({
 

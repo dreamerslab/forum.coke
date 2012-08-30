@@ -1,5 +1,5 @@
-var common   = require( MODEL_DIR + 'hooks/common' );
-var hooks    = require( MODEL_DIR + 'hooks/topic' );
+var common = require( MODEL_DIR + 'hooks/common' );
+var hooks  = require( MODEL_DIR + 'hooks/topic' );
 
 module.exports = {
 
@@ -8,10 +8,6 @@ module.exports = {
       save : [
         common.mark_new,
         hooks.cache_user_info
-      ],
-
-      remove : [
-
       ]
     },
 

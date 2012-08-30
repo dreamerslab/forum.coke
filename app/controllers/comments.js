@@ -1,11 +1,9 @@
 var Application = require( CONTROLLER_DIR + 'application' );
 var validate    = require( LIB_DIR + 'validate/comments' );
-var Controller  = Application.extend( validate );
-
 var Topic       = Model( 'Topic' );
 var Comment     = Model( 'Comment' );
 
-module.exports = Controller.extend({
+module.exports = Application.extend( validate, {
 
   init : function ( before, after ){
     before( this.sidebar );

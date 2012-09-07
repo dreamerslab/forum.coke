@@ -1,4 +1,4 @@
-var Class = require( 'resig-class' );
+var Class = require( 'node.class' );
 var Cache = Model( 'Cache' );
 
 module.exports = Class.extend({

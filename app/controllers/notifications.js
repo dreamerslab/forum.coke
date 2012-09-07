@@ -1,5 +1,5 @@
-var Notif       = Model( 'Notification' );
 var Application = require( CONTROLLER_DIR + 'application' );
+var Notif       = Model( 'Notification' );
 
 
 module.exports = Application.extend({

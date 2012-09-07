@@ -1,5 +1,5 @@
-var common   = require( MODEL_DIR + 'hooks/common' );
-var hooks    = require( MODEL_DIR + 'hooks/comment' );
+var common = require( MODEL_DIR + 'hooks/common' );
+var hooks  = require( MODEL_DIR + 'hooks/comment' );
 
 module.exports = {
 

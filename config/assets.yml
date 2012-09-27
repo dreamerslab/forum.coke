@@ -9,6 +9,8 @@ asset_host:
   # - http://assets1.example.com
   # - http://assets2.example.com
 
+s3: false
+
 css:
   # css group name
   common:

@@ -4,11 +4,6 @@ path:
   css: css
   js: js
 
-# cdn setting
-asset_host:
-  # - http://assets1.example.com
-  # - http://assets2.example.com
-
 s3: false
 
 css:

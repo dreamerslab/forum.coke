@@ -131,7 +131,7 @@ module.exports = {
       LOG.debug( 'sidebar updated' );
 
       // callback && callback();
-      if( UTILS.typeof( callback ) === 'function' ) callback();
+      if( UTILS.is( callback ) === 'function' ) callback();
     });
   }
 };

@@ -44,7 +44,7 @@ module.exports = {
     },
 
     extract_names : function ( str ){
-      if( UTILS.typeof( str ) !== 'string' || str === '' ){
+      if( UTILS.is( str ) !== 'string' || str === '' ){
         return [];
       }
 

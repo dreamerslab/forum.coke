@@ -3,7 +3,7 @@
   "version"      : "0.0.1",
   "private"      : true,
   "dependencies" : {
-    "coke"                  : "0.13.3",
+    "coke"                  : "0.13.4",
     "connect-mongodb"       : "1.1.5",
     "express-form2"         : "1.1.5",
     "express-messages"      : "0.0.2",
@@ -15,7 +15,7 @@
     "passport"              : "0.1.12",
     "passport-google-oauth" : "0.1.4",
     "sitemap"               : "0.6.0",
-    "thunder"               : "0.1.5"
+    "thunder"               : "0.1.6"
   },
   "devDependencies": {
     "Faker"  : "0.1.3",

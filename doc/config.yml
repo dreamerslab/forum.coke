@@ -1,0 +1,40 @@
+# production
+server:
+  host: http://your.domain.address
+  port: 80
+  timezone: 'UTC'
+  cluster: true
+
+db:
+  db: forum-coke
+  host: localhost
+  # optional, default: 27017
+  port : 27963
+  # optional
+  username :
+  # optional
+  password :
+
+session:
+  # optional, default: sessions
+  collection:
+  secret: 1234567890123456789012345678901234567890
+
+passport:
+  google_client_id: ask_google_about_this_client_id
+  google_client_secret: ask_google_about_this_client_secret
+  callback_url: http://your.domain.address/auth/callback
+
+logs:
+  - error
+
+libs:
+  - background
+
+# libs that must run after server started
+started: []
+
+# cdn setting
+asset_host:
+  # - http://assets1.example.com
+  # - http://assets2.example.com

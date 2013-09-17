@@ -1,9 +1,12 @@
 module.exports = {
 
-  // hook into pre-save --------------------------------------------------------
+// --- pre save ----------------------------------------------------------------
+
   cache_user_info : function ( next ){
     var self = this;
     var User = Model( 'User' );
+
+    console.log( this );
 
     User.findById( this.user_id, function ( err, user ){
       if( err ){
@@ -32,7 +35,8 @@ module.exports = {
     });
   },
 
-  // hook into post-save -------------------------------------------------------
+// --- post save ---------------------------------------------------------------
+
   add_to_user : function (){
     if( this.is_new ){
       var User = Model( 'User' );
@@ -77,7 +81,8 @@ module.exports = {
     });
   },
 
-  // hook into post-remove -----------------------------------------------------
+// --- post remove -------------------------------------------------------------
+
   remove_from_user : function (){
     var User = Model( 'User' );
 
@@ -100,7 +105,5 @@ module.exports = {
         err && LOG.error( 500,
           '[models/hooks/comment#add_to_topic] Fail to add comment\'s _id to its topic', err );
       });
-  },
+  }
 };
-
-

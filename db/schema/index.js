@@ -8,8 +8,8 @@ var Schema = function ( Schema ){
   var Models   = {};
 
   Models.Cache = new Schema({
-    name        : { type : String, required : true, index : true },
-    trunk       : { type : Schema.Types.Mixed }
+    name  : { type : String, required : true, index : true },
+    trunk : { type : Schema.Types.Mixed }
   });
 
   Models.User = new Schema({
@@ -27,43 +27,42 @@ var Schema = function ( Schema ){
   });
 
   Models.Topic = new Schema({
-    user_id     : { type : ObjectId, required : true, ref : 'User' },
-    user        : { type : Schema.Types.Mixed },
-    title       : { type : String, required : true },
-    content     : { type : String, required : true },
-    tag_names   : [{ type : String }],
-    tags        : [{ type : ObjectId, ref : 'Tag' }],
-    comments    : [{ type : ObjectId, ref : 'Comment' }],
-    read_count  : { type : Number, 'default' : 0 },
-    created_at  : { type : Number, 'default' : Date.now },
-    updated_at  : { type : Number }
+    user_id    : { type : ObjectId, required : true, ref : 'User' },
+    user       : { type : Schema.Types.Mixed },
+    title      : { type : String, required : true },
+    content    : { type : String, required : true },
+    tag_names  : [{ type : String }],
+    tags       : [{ type : ObjectId, ref : 'Tag' }],
+    comments   : [{ type : ObjectId, ref : 'Comment' }],
+    read_count : { type : Number, 'default' : 0 },
+    created_at : { type : Number, 'default' : Date.now },
+    updated_at : { type : Number }
   });
 
   Models.Comment = new Schema({
-    user_id     : { type : ObjectId, required : true, ref : 'User' },
-    topic_id    : { type : ObjectId, required : true, ref : 'Topic' },
-    user        : { type : Schema.Types.Mixed },
-    content     : { type : String, required : true },
-    created_at  : { type : Number, 'default' : Date.now },
-    updated_at  : { type : Number }
+    user_id    : { type : ObjectId, required : true, ref : 'User' },
+    topic_id   : { type : ObjectId, required : true, ref : 'Topic' },
+    user       : { type : Schema.Types.Mixed },
+    content    : { type : String, required : true },
+    created_at : { type : Number, 'default' : Date.now },
+    updated_at : { type : Number }
   });
 
   Models.Tag = new Schema({
-    name        : { type : String, required : true,
-                    index : { unique : true, dropDups : true }},
-    topics      : [{ type : ObjectId, ref : 'Topic' }],
+    name   : { type : String, required : true, index : { unique : true, dropDups : true }},
+    topics : [{ type : ObjectId, ref : 'Topic' }],
   });
 
   Models.Notification = new Schema({
-    user_id     : { type : ObjectId, required : true, ref : 'User' },
-    type        : { type : String, required : true },
-    activity    : { type : String, required : true },
-    originator  : { type : Schema.Types.Mixed },
-    topic       : { type : Schema.Types.Mixed },
-    content     : { type : String, 'default' : '' },
-    is_read     : { type : Boolean, 'default' : false },
-    created_at  : { type : Number, 'default' : Date.now },
-    updated_at  : { type : Number }
+    user_id    : { type : ObjectId, required : true, ref : 'User' },
+    type       : { type : String, required : true },
+    activity   : { type : String, required : true },
+    originator : { type : Schema.Types.Mixed },
+    topic      : { type : Schema.Types.Mixed },
+    content    : { type : String, 'default' : '' },
+    is_read    : { type : Boolean, 'default' : false },
+    created_at : { type : Number, 'default' : Date.now },
+    updated_at : { type : Number }
   });
 
   // auto update `updated_at` on save
@@ -87,5 +86,3 @@ var Schema = function ( Schema ){
  */
 
 module.exports = Schema;
-
-

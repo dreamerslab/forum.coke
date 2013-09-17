@@ -1,11 +1,13 @@
 module.exports = {
 
-  // hook into pre-init --------------------------------------------------------
+// --- post init ---------------------------------------------------------------
+
   catch_old_tag_names : function (){
     this.old_tag_names = this.tag_names;
   },
 
-  // hook into pre-save --------------------------------------------------------
+// --- pre save ----------------------------------------------------------------
+
   cache_user_info : function ( next ){
     var self = this;
     var User = Model( 'User' );
@@ -22,7 +24,8 @@ module.exports = {
     });
   },
 
-  // hook into post-save -------------------------------------------------------
+// --- post save ---------------------------------------------------------------
+
   add_to_user : function (){
     if( this.is_new ){
       var User = Model( 'User' );
@@ -80,7 +83,8 @@ module.exports = {
     Notif.send( 'update-topic', this );
   },
 
-  // hook into post-remove -----------------------------------------------------
+// --- post remove -------------------------------------------------------------
+
   remove_from_user : function (){
     var User = Model( 'User' );
 
@@ -114,5 +118,3 @@ module.exports = {
     });
   }
 };
-
-

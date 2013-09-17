@@ -6,8 +6,6 @@ module.exports = {
     var self = this;
     var User = Model( 'User' );
 
-    console.log( this );
-
     User.findById( this.user_id, function ( err, user ){
       if( err ){
         LOG.error( 500,

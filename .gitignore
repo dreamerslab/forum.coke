@@ -4,7 +4,6 @@ node_modules
 *.gz
 /config/test/config.yml
 /config/prod/config.yml
-/config/dev/config.yml
 /doc/prod
 log/error.log
 tmp/

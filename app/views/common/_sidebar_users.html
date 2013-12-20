@@ -7,7 +7,7 @@
 
       <? it.each( it.sidebar.users, 6, function ( user ){ ?>
       <a href="/users/<?= user._id ?>" class="user"><img class="avatar" src="<?= user.avatar ?>" alt="Avatar"><?- it.truncate( user.name, 20 ) ?></a>
-      <? }); ?>
+      <? }) ?>
 
     </p>
     <p class="sidebar-link-p">

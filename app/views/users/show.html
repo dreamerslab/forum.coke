@@ -1,8 +1,8 @@
-<? it.title = it.user.name + '\'s Profile - COKE'; ?>
-<? it.styles.push( 'user' ); ?>
+<? it.title = it.user.name + '\'s Profile - COKE' ?>
+<? it.styles.push( 'user' ) ?>
 
 <div class="span9">
-  <?= it.partial( 'common/_nav' ) ?>
+  <?= it.partial( '/common/_nav' ) ?>
   <div class="well" id="profile">
     <div id="avatar-frame"><img id="avatar-img" src="<?= it.user.avatar ?>" alt="Avatar"></div>
     <div id="meta">
@@ -13,6 +13,6 @@
     </div>
   </div>
   <?= it.partial( 'users/_recent_posts' ) ?>
-  <?= it.partial( 'users/_recent_replies' )?>
+  <?= it.partial( 'users/_recent_replies' ) ?>
 </div>
-<?= it.partial( 'common/_sidebar' ) ?>
+<?= it.partial( '/common/_sidebar' ) ?>

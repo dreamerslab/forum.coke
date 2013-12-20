@@ -1,15 +1,15 @@
-<? it.title = 'Users - COKE'; ?>
-<? it.styles.push( 'users' ); ?>
+<? it.title = 'Users - COKE' ?>
+<? it.styles.push( 'users' ) ?>
 
 <div class="span12">
-  <?= it.partial( 'common/_nav' ) ?>
+  <?= it.partial( '/common/_nav' ) ?>
   <h2>All Users</h2>
   <div id="users-wrap">
     <ul class="thumbnails">
 
       <?= it.no_record( it.users.length, '<h3 class="no-record-users">No users</h3>' ) ?>
 
-      <? it.users.forEach( function ( user ){  ?>
+      <? it.users.forEach( function ( user ){ ?>
       <div class="user-wrap">
         <div class="avatar-frame">
           <a class="user-link" href="/users/<?= user._id ?>">
@@ -27,8 +27,8 @@
           <h4 class="created">Created at: <?= it.ago( user.created_at ) ?></h4>
         </div>
       </div>
-      <? }); ?>
+      <? }) ?>
     </ul>
-    <?= it.partial( 'common/_pagination' )?>
+    <?= it.partial( '/common/_pagination' ) ?>
   </div>
 </div>

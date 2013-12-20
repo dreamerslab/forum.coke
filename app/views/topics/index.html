@@ -1,9 +1,9 @@
-<? it.title = it.page_title( it ) + ' - COKE'; ?>
-<? it.styles.push( 'topics' ); ?>
+<? it.title = it.page_title( it ) + ' - COKE' ?>
+<? it.styles.push( 'topics' ) ?>
 
 <div class="span9">
-  <?= it.partial( 'common/_nav' ) ?>
-  <?= it.partial( 'common/_sub_nav' ) ?>
+  <?= it.partial( '/common/_nav' ) ?>
+  <?= it.partial( '/common/_sub_nav' ) ?>
 
   <div class="tab-content">
     <div class="tab-pane active" id="items-wrap">
@@ -20,9 +20,9 @@
         </h3>
         <p class="item-content"><?- it.truncate( topic.content, 65 ) ?></p>
         <div class="tags">
-          <? topic.tag_names.forEach( function( tag ){ ?>
+          <? topic.tag_names.forEach( function ( tag ){ ?>
             <a href="/tags/<?- tag ?>/topics" class="tag"><?- tag ?></a>
-          <? }); ?>
+          <? }) ?>
         </div>
         <div class="user-data">
           <a href="/users/<?- topic.user._id ?>" class="author">
@@ -40,11 +40,11 @@
         </a>
       </div> <!-- .article-item -->
 
-      <? }); ?>
+      <? }) ?>
 
-      <?= it.partial( 'common/_pagination' )?>
+      <?= it.partial( '/common/_pagination' ) ?>
     </div>
   </div>
 </div> <!-- .span9 -->
 
-<?= it.partial( 'common/_sidebar' ) ?>
+<?= it.partial( '/common/_sidebar' ) ?>

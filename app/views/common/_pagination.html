@@ -1,9 +1,9 @@
 <? if( it.count > it.limit ){ ?>
-<? var p = it.pager( it.from, it.count, it.limit ); ?>
+<? var p = it.pager( it.from, it.count, it.limit ) ?>
 <div class="pagination article-pager">
   <ul>
     <li class="<?= p.pre ?>">
-      <? var pre_href = p.pre == 'active' ? '' : 'href="' + it.path + it.query + '&from=' + p.pre_from + '"'; ?>
+      <? var pre_href = p.pre == 'active' ? '' : 'href="' + it.path + it.query + '&from=' + p.pre_from + '"' ?>
       <a <?= pre_href ?>>
         &lt
       </a>
@@ -29,7 +29,7 @@
       <li class="<?= active ?>">
         <a <?= _href ?>>
           <?= i ?>
-          <? p.each_from += it.limit; ?>
+          <? p.each_from += it.limit?>
         </a>
       </li>
     <? } ?>

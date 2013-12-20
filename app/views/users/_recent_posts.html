@@ -3,14 +3,14 @@
 
   <?= it.no_record( it.user.recent_topics.length, '<h3 class="no-record-index">No posts</h3>' ) ?>
 
-  <? it.each( it.user.recent_topics, 5, function( topic ){ ?>
+  <? it.each( it.user.recent_topics, 5, function ( topic ){ ?>
   <div class="article-item">
     <h3 class="item-title">
       <a class="title-link" href="/topics/<?= topic._id ?>"><?- it.truncate( topic.title, 40 ) ?></a>
     </h3>
     <a class="comment-count" href="/topics/<?= topic._id ?>#comment"><?- topic.comments.length ?></a>
   </div> <!-- .article-item -->
-  <? });?>
+  <? }) ?>
   <?= it.more( it.user.topics.length, 5, '<a class="more-link" href="/users/' + it.user._id + '/topics">more &#187</a>' ) ?>
 
 </div> <!-- #posts -->

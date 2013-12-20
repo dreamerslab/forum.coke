@@ -1,8 +1,8 @@
-<? it.title = 'User\'s all topics - COKE'; ?>
-<? it.styles.push( 'topics' ); ?>
+<? it.title = 'User\'s all topics - COKE' ?>
+<? it.styles.push( 'topics' ) ?>
 
 <div class="span9">
-  <?= it.partial( 'common/_nav' ) ?>
+  <?= it.partial( '/common/_nav' ) ?>
   <div class="tab-content">
     <div class="tab-pane active" id="items-wrap">
 
@@ -12,18 +12,18 @@
           <a class="title-link" href="/topics/<?= topic._id ?>"><?- it.truncate( topic.title, 40 ) ?></a>
         </h3>
         <p class="item-content"><?- it.truncate( topic.content, 65 ) ?></p>
-        <? topic.tag_names.forEach( function( tag ){ ?>
+        <? topic.tag_names.forEach( function ( tag ){ ?>
           <a href="/tags/<?- tag ?>/topics" class="tag"><?- tag ?></a>
-        <? }); ?>
+        <? }) ?>
         <a href="/users/<?- topic.user._id ?>" class="author"><?- topic.user.name ?></a>
         <span class="last-reply-time"><?- it.ago( topic.updated_at ) ?></span>
         <a class="comment-count" href="/topics/<?= topic._id ?>#comment"><?- topic.comments.length ?></a>
       </div> <!-- .article-item -->
-      <? }); ?>
+      <? }) ?>
 
-      <?= it.partial( 'common/_pagination' )?>
+      <?= it.partial( '/common/_pagination' ) ?>
     </div>
   </div>
 </div> <!-- .span9 -->
 
-<?= it.partial( 'common/_sidebar' ) ?>
+<?= it.partial( '/common/_sidebar' ) ?>

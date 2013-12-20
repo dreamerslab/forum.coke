@@ -1,8 +1,8 @@
-<? it.title = it.topic.title + ' - COKE'; ?>
-<? it.styles.push( 'topic' ); ?>
+<? it.title = it.topic.title + ' - COKE' ?>
+<? it.styles.push( 'topic' ) ?>
 
 <div class="span9">
-  <?= it.partial( 'common/_nav' ) ?>
+  <?= it.partial( '/common/_nav' ) ?>
 
   <div id="article-wrap">
 
@@ -18,20 +18,20 @@
       <input type="hidden" name="_csrf" value="<?= it.csrf ?>" />
       <input class="btn btn-danger" type="submit" value="Delete" />
     </form>
-    <? }; ?>
+    <? }?>
 
     <h2 id="article-title" ><?- it.topic.title ?></h2>
 
     <?= it.markdown( it.topic.content ) ?>
 
     <div class="meta-wrap">
-      <a href="/users/<?= it.topic.user._id ;?>" class="article-author"><?- it.topic.user.name ?></a>
-      <a href="/users/<?= it.topic.user._id ;?>" class="article-author"><img class="author-avatar" src="<?- it.topic.user.avatar ?>"></a>
+      <a href="/users/<?= it.topic.user._id ?>" class="article-author"><?- it.topic.user.name ?></a>
+      <a href="/users/<?= it.topic.user._id ?>" class="article-author"><img class="author-avatar" src="<?- it.topic.user.avatar ?>"></a>
       <span class="last-reply-time"><?= it.ago( it.topic.updated_at ) ?></span>
 
-      <? it.topic.tag_names.forEach( function( tag ){ ?>
+      <? it.topic.tag_names.forEach( function ( tag ){ ?>
       <a href="/tags/<?- tag ?>/topics" class="tag"><?- tag ?></a>
-      <? }); ?>
+      <? }) ?>
 
     </div>
   </div> <!-- #article-wrap -->
@@ -43,7 +43,7 @@
       <?= it.markdown( comment.content ) ?>
 
       <div class="meta-wrap">
-        <a href="/users/<?= comment.user._id ;?>" class="comment-author"><img class="author-avatar" src="<?- comment.user.avatar ?>"><?= comment.user.name ?></a>
+        <a href="/users/<?= comment.user._id ?>" class="comment-author"><img class="author-avatar" src="<?- comment.user.avatar ?>"><?= comment.user.name ?></a>
         <span class="last-reply-time"><?= it.ago( comment.updated_at ) ?></span>
 
         <? if( it.sess_user ){ ?>
@@ -56,15 +56,15 @@
           <input type="hidden" name="_method" value="delete" />
           <input type="submit" class="btn btn-danger" value="Delete">
         </form>
-        <? }; ?>
+        <? }?>
 
       </div>
     </div> <!-- .comment-wrap -->
-    <? }); ?>
+    <? }) ?>
 
   </div><!-- #comment -->
 
-  <?= it.partial( 'common/_pagination' )?>
+  <?= it.partial( '/common/_pagination' ) ?>
 
   <? if( it.sess_user ){ ?>
   <form id="reply-area" action="/topics/<?= it.topic._id ?>/comments" method="POST" accept-charset="UTF-8" >
@@ -77,9 +77,9 @@
           <?= it.show_err( 'comment.content' ) ?>
         </div>
       </div>
-      <?= it.partial( 'common/_form_actions' ) ?>
+      <?= it.partial( '/common/_form_actions' ) ?>
     </fieldset>
   </form>
   <? } ?>
 </div> <!-- .span9 -->
-<?= it.partial( 'common/_sidebar' )  ?>
+<?= it.partial( '/common/_sidebar' )  ?>

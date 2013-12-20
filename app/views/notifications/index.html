@@ -1,14 +1,14 @@
-<? it.title = 'Notifications - COKE'; ?>
-<? it.styles.push( 'notifications' ); ?>
+<? it.title = 'Notifications - COKE' ?>
+<? it.styles.push( 'notifications' ) ?>
 
 <div class="span9">
-  <?= it.partial( 'common/_nav' ) ?>
+  <?= it.partial( '/common/_nav' ) ?>
 
   <div class="notify-item-wrap">
 
-  <? var exist_unread = 0; ?>
-  <? it.notifs.forEach( function ( notif ){  ?>
-    <? exist_unread += 1; ?>
+  <? var exist_unread = 0 ?>
+  <? it.notifs.forEach( function ( notif ){ ?>
+    <? exist_unread += 1 ?>
     <div class="notify-item <?= notif.is_read ? '' : 'unread' ?>">
       <p>
         <a href="/users/<?= notif.originator._id ?>" class="notify-user-name" ><?- it.truncate( notif.originator.name ) ?></a>
@@ -19,12 +19,12 @@
       <a href="#" class="notify-user-avatar"><img class="profile-avatar-photo" src="<?= notif.originator.avatar ?>" alt="Avatar"></a>
       <p class="notify-comment"><?- it.truncate( notif.content, 90 ) ?></p>
     </div> <!-- .article-item -->
-  <? }); ?>
+  <? }) ?>
   <?= exist_unread ? '' : '<h2>You have no notifications.</h2>' ?>
 
   </div>
 
-  <?= it.partial( 'common/_pagination' ) ?>
+  <?= it.partial( '/common/_pagination' ) ?>
 </div> <!-- .span9 -->
 
-<?= it.partial( 'common/_sidebar' ) ?>
+<?= it.partial( '/common/_sidebar' ) ?>

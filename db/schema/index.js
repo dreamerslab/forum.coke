@@ -52,8 +52,8 @@ var Schema = function ( Schema ){
     }),
 
     Tag : new Schema({
-      name       : { type : String, required : true, index : true },
-      topic      : { type : String },
+      name       : { type : String, required : true, index : { unique : true, dropDups : true }},
+      topics     : [{ type : ObjectId, ref : 'Topic' }],
       created_at : { type : Number, 'default' : Date.now },
       updated_at : { type : Number }
     }),

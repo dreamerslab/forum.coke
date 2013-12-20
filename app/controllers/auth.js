@@ -1,4 +1,4 @@
-var Application = require( CONTROLLER_DIR + 'application' );
+var Application = require( CONTROLLER_DIR + '/application' );
 var passport    = require( 'passport' );
 var User        = Model( 'User' );
 

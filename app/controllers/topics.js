@@ -1,4 +1,4 @@
-var Application = require( CONTROLLER_DIR + 'application' );
+var Application = require( CONTROLLER_DIR + '/application' );
 var validate    = require( LIB_DIR + 'validate/topics' );
 var Topic       = Model( 'Topic' );
 
@@ -212,5 +212,3 @@ module.exports = Application.extend( validate, {
     });
   }
 });
-
-

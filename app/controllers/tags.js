@@ -1,4 +1,4 @@
-var Application = require( CONTROLLER_DIR + 'application' );
+var Application = require( CONTROLLER_DIR + '/application' );
 var Tag         = Model( 'Tag' );
 
 module.exports = Application.extend({
@@ -12,5 +12,3 @@ module.exports = Application.extend({
     });
   }
 });
-
-

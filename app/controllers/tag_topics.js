@@ -1,4 +1,4 @@
-var Application = require( CONTROLLER_DIR + 'application' );
+var Application = require( CONTROLLER_DIR + '/application' );
 var Topic       = Model( 'Topic' );
 
 module.exports = Application.extend({
@@ -30,5 +30,3 @@ module.exports = Application.extend({
       });
   }
 });
-
-

@@ -6,4 +6,6 @@ node_modules
 /config/prod/config.yml
 /doc/prod
 log/error.log
-tmp/
+
+tmp/*
+!tmp/.gitkeep

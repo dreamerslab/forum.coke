@@ -1,4 +1,4 @@
-var hooks = require( MODEL_DIR + 'hooks/tag' );
+var hooks = require( MODEL_DIR + '/hooks/tag' );
 var Flow  = require( 'node.flow' );
 
 module.exports = {

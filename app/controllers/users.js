@@ -11,6 +11,8 @@ module.exports = Application.extend({
     before( this.current_user, {
       only : [ 'show', 'topics', 'replies' ]
     });
+
+    before( this.common_locals );
   },
 
   current_user : function ( req, res, next ){
@@ -21,6 +23,7 @@ module.exports = Application.extend({
       if( user ){
         // do not usr req.user, its for seesion user
         req.current_user = user;
+
         return next();
       }
 
@@ -36,7 +39,8 @@ module.exports = Application.extend({
 
     User.index( req.query.from, next, function ( result ){
       result.nav_selected = 'users';
-      res.render( 'users/index', self._merge( req, result ));
+
+      res.render( 'users/index', result );
     });
   },
 
@@ -51,10 +55,10 @@ module.exports = Application.extend({
       req.current_user.recent_topics  = topics;
       req.current_user.recent_replies = replies;
 
-      res.render( 'users/show', self._merge( req, {
+      res.render( 'users/show', {
         nav_selected : 'users',
         user         : req.current_user
-      }));
+      });
     });
   },
 
@@ -66,7 +70,7 @@ module.exports = Application.extend({
     };
 
     User.topics( args, next, function ( result ){
-      res.render( 'users/topics', self._merge( req, result ));
+      res.render( 'users/topics', result );
     });
   },
 
@@ -78,7 +82,7 @@ module.exports = Application.extend({
     };
 
     User.replies( args, next, function ( result ){
-      res.render( 'users/topics', self._merge( req, result ));
+      res.render( 'users/topics', result );
     });
   }
 });

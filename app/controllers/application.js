@@ -3,12 +3,12 @@ var Cache = Model( 'Cache' );
 
 module.exports = Class.extend({
 
-  _merge : function ( req, result, base_query ){
-    return UTILS.merge( result || {}, {
+  common_locals : function ( req, res, next ){
+    res.locals({
       sidebar   : req.sidebar,
       sess_user : req.user,
       path      : req.path,
-      query     : base_query || '?'
+      query     : '?'
     });
   },
 

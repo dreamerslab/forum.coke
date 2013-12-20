@@ -7,6 +7,7 @@ module.exports = Application.extend({
   init : function ( before, after ){
     before( this.sidebar );
     before( this.authenticated );
+    before( this.common_locals );
   },
 
   index : function ( req, res, next ){
@@ -16,8 +17,8 @@ module.exports = Application.extend({
       skip    : req.query.from
     };
 
-    Notif.index( args, next, function ( result ){
-      res.render( 'notifications/index', self._merge( req, result ));
+    Notif.index( args, next, function ( notifs ){
+      res.render( 'notifications/index', notifs );
     });
   }
 });

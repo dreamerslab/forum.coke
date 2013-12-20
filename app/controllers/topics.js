@@ -20,6 +20,8 @@ module.exports = Application.extend( validate, {
     before( this.authorized,{
       only : [ 'edit', 'update', 'destroy' ]
     });
+
+    before( this.common_locals, { except : [ 'destroy' ]});
   },
 
   authorized : function ( req, res, next ){
@@ -33,17 +35,20 @@ module.exports = Application.extend( validate, {
       // no_content
       function ( err ){
         req.msg = 'Topic';
+
         self.no_content( err, req, res );
       },
       // forbidden
       function (){
         req.msg    = 'topic';
         req.origin = '/topics/' + id;
+
         self.forbidden( req, res, next );
       },
       // success
       function ( topic ){
         req.topic = topic;
+
         next();
       });
   },
@@ -52,32 +57,29 @@ module.exports = Application.extend( validate, {
 
   // latest
   index : function ( req, res, next ){
-    var self  = this;
-
     Topic.latest( req.query.from, next, function ( result ){
       result.nav_selected     = 'topics';
       result.sub_nav_selected = 'latest';
-      res.render( 'topics/index', self._merge( req, result ));
+
+      res.render( 'topics/index', result );
     });
   },
 
   trending : function ( req, res, next ){
-    var self  = this;
-
     Topic.trending( req.query.from, next, function ( result ){
       result.nav_selected     = 'topics';
       result.sub_nav_selected = 'trending';
-      res.render( 'topics/index', self._merge( req, result ));
+
+      res.render( 'topics/index', result );
     });
   },
 
   unsolved : function ( req, res, next ){
-    var self  = this;
-
     Topic.unsolved( req.query.from, next, function ( result ){
       result.nav_selected     = 'topics';
       result.sub_nav_selected = 'unsolved';
-      res.render( 'topics/index', self._merge( req, result ));
+
+      res.render( 'topics/index', result );
     });
   },
 
@@ -100,8 +102,9 @@ module.exports = Application.extend( validate, {
         result.nav_selected     = 'topics';
         result.sub_nav_selected = 'keyword';
         result.keywords         = keywords.join( ' ' );
-        res.render( 'topics/index',
-          self._merge( req, result, '?keywords=' + keywords.join( '+' )));
+        result.query            = '?keywords=' + keywords.join( '+' );
+
+        res.render( 'topics/index', result );
       });
   },
 
@@ -122,20 +125,20 @@ module.exports = Application.extend( validate, {
       // no content
       function ( err ){
         req.msg = 'Topic';
+
         self.no_content( err, req, res );
       },
       // success
       function ( topic ){
-        res.render( 'topics/show', self._merge( req, {
+        res.render( 'topics/show', {
           topic        : topic,
           nav_selected : 'topics'
-        }));
+        });
     });
   },
 
   'new' : function ( req, res, next ){
-    res.render( 'topics/new',
-      this._merge( req, { nav_selected : 'topics'}));
+    res.render( 'topics/new', { nav_selected : 'topics' });
   },
 
   create : function ( req, res, next ){
@@ -150,8 +153,7 @@ module.exports = Application.extend( validate, {
     Topic.create( args,
       // invalid
       function (){
-        res.render( 'topics/new',
-          self._merge( req, { topic : topic }));
+        res.render( 'topics/new', { topic : topic });
       },
       // success
       function ( err, topic, count ){
@@ -168,8 +170,10 @@ module.exports = Application.extend( validate, {
   edit : function ( req, res, next ){
     var self  = this;
 
-    return res.render( 'topics/edit',
-      self._merge( req, { topic : req.topic, nav_selected : 'topics' }));
+    return res.render( 'topics/edit', {
+      topic        : req.topic,
+      nav_selected : 'topics'
+    });
   },
 
   update : function ( req, res, next ){
@@ -183,8 +187,7 @@ module.exports = Application.extend( validate, {
     Topic.update_props( args,
       // invalid
       function (){
-        res.render( 'topics/edit',
-          self._merge( req, { topic : req.topic }));
+        res.render( 'topics/edit', { topic : req.topic });
       },
       // success
       function ( err, topic, count ){

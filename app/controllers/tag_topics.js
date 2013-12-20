@@ -5,6 +5,7 @@ module.exports = Application.extend({
 
   init : function ( before, after ){
     before( this.sidebar );
+    before( this.common_locals );
   },
 
   index : function ( req, res, next ){
@@ -26,7 +27,8 @@ module.exports = Application.extend({
         result.nav_selected     = 'tags';
         result.sub_nav_selected = 'tag';
         result.tag_name         = tag;
-        res.render( 'topics/index', self._merge( req, result ));
+
+        res.render( 'topics/index', result );
       });
   }
 });

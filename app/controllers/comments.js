@@ -9,6 +9,7 @@ module.exports = Application.extend( validate, {
     before( this.sidebar );
     before( this.authenticated );
     before( this.validate_comments, { only : [ 'create' ]});
+    before( this.common_locals,     { only : [ 'create' ]});
   },
 
   create : function ( req, res, next ){
@@ -23,12 +24,15 @@ module.exports = Application.extend( validate, {
     Comment.create( args, next,
       // invalid
       function ( topic, comment ){
-        res.render( 'topics/show',
-          self._merge( req, { topic : topic, comment : comment }));
+        res.render( 'topics/show', {
+          topic   : topic,
+          comment : comment
+        });
       },
       // no_content
       function ( err ){
         req.msg = 'Topic';
+
         self.no_content( err, req, res );
       },
       // success
@@ -55,12 +59,14 @@ module.exports = Application.extend( validate, {
       // no content
       function ( err ){
         req.msg = 'Comment';
+
         self.no_content( err, req, res );
       },
       // forbidden
       function (){
         req.msg    = 'comment';
         req.origin = '/topics/' + topic_id;
+
         self.forbidden( req, res, next );
       },
       // success

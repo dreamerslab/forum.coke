@@ -1,21 +1,6 @@
 var common = require( MODEL_DIR + 'hooks/common' );
 var hooks  = require( MODEL_DIR + 'hooks/notif' );
 
-var unique = function ( docs ){
-  var a = [];
-  var h = {};
-
-  docs.forEach( function ( doc ){
-    h[ doc._id.toString()] = doc;
-  });
-
-  Object.keys( h ).forEach( function ( k ){
-    a.push( h[ k ]);
-  });
-
-  return a;
-};
-
 var exclude = function ( docs, id ){
   var a = [];
 
@@ -99,9 +84,9 @@ module.exports = {
     },
 
     send : function ( type, topic, comment ){
-      var self     = this;
-      var User     = Model( 'User' );
-      var Comment  = Model( 'Comment' );
+      var self    = this;
+      var User    = Model( 'User' );
+      var Comment = Model( 'Comment' );
 
       Comment.
         find({ topic_id : topic._id }).
@@ -113,7 +98,7 @@ module.exports = {
           var topic_user_id = topic.user_id.toString();
           var subscribers   = comments.map( function ( c ){ return c.user_id; });
 
-          subscribers = unique( subscribers );
+          subscribers = UTILS.unique( subscribers );
           subscribers = exclude( subscribers, topic_user_id );
 
           if( type === 'create-comment' ){
@@ -181,5 +166,3 @@ module.exports = {
     }
   }
 };
-
-

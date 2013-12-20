@@ -10,6 +10,8 @@ module.exports = Class.extend({
       path      : req.path,
       query     : '?'
     });
+
+    next();
   },
 
   no_content : function ( err, req, res, next ){

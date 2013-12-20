@@ -24,6 +24,11 @@ session:
   collection:
   secret: 2e798a6d81f7235c10a93313dc222b5763a62ba6
 
+passport:
+  google_client_id: 169561998917.apps.googleusercontent.com
+  google_client_secret: gEIf8pag_DBCoouzB75nr66G
+  callback_url: http://localhost:4000/auth/callback
+
 logs:
   - sys
   - request
@@ -35,7 +40,7 @@ libs:
   - background
 
 # libs that must run after server started
-started: []
+started:
 
 aws:
   # your aws key & secret, those must not be empty if you set s3 option to true in assets config
@@ -44,7 +49,3 @@ aws:
   s3:
     bucket: assets.dev.forum-coke
 
-passport:
-  google_client_id: 169561998917.apps.googleusercontent.com
-  google_client_secret: gEIf8pag_DBCoouzB75nr66G
-  callback_url: http://localhost:4000/auth/callback

@@ -18,6 +18,7 @@ module.exports = function ( express, app, middleware ){
     app.use( middleware.csrf( express ));
     app.use( express.methodOverride());
     app.use( middleware.passport());
+    app.use( middleware.dynamic_helpers );
     app.use( app.router );
     app.use( middleware.err404 );
     app.use( middleware.err500 );

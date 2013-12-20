@@ -4,7 +4,8 @@ var sidebar = require( './sidebar' );
 var flow    = new Flow();
 
 module.exports = {
-  init : function (){
+
+  init : function ( express, app ){
 
     flow.series( function ( next ){
       if( NODE_ENV === 'dev' ){

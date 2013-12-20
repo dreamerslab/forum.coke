@@ -4,6 +4,7 @@ var Topic   = Model( 'Topic' );
 var Comment = Model( 'Comment' );
 
 module.exports = {
+
   init : function ( callback ){
     User.find( function ( err, users ){
       if( err ){

@@ -10,7 +10,7 @@ module.exports = function ( express, app, middleware ){
     });
     app.use( express.json());
     app.use( express.urlencoded());
-    app.use( express.methodOverride());
+    app.use( express.multipart());
     app.use( express.cookieParser());
     app.use( middleware.logger );
     app.use( middleware.session( express ));
@@ -22,6 +22,9 @@ module.exports = function ( express, app, middleware ){
     app.use( app.router );
     app.use( middleware.err404 );
     app.use( middleware.err500 );
-    app.use( express.errorHandler());
+    app.use( express.errorHandler({
+      dumpExceptions : true,
+      showStack      : true
+    }));
   });
 };

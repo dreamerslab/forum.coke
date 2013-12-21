@@ -10,7 +10,7 @@ module.exports = function ( express, app, middleware ){
     });
     app.use( express.json());
     app.use( express.urlencoded());
-    app.use( express.methodOverride());
+    app.use( express.multipart());
     app.use( express.cookieParser());
     app.use( middleware.logger );
     app.use( middleware.session( express ));

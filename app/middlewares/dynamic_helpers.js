@@ -10,7 +10,10 @@ module.exports = function ( req, res, next ){
       var info  = _info ? _info[ 'flash-info' ] : [];
 
       return info ? info[ 0 ] : undefined;
-    }
+    },
+
+    styles  : [ 'common' ],
+    scripts : [ 'common' ]
   });
 
   next();
